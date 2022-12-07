@@ -2085,7 +2085,7 @@ class MapdlGrpc(_MapdlCore):
         <60x60 sparse matrix of type '<class 'numpy.float64'>'
             with 1734 stored elements in Compressed Sparse Row format>
         """
-        from ansys.mapdl.core.math import MapdlMath
+        from ansys.math.core.math import MapdlMath
 
         return MapdlMath(self)
 

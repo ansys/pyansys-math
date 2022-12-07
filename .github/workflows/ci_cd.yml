@@ -12,6 +12,21 @@ on:
       - main
 
 env:
+  PACKAGE_NAME: PyMAPDL
+  PYANSYS_OFF_SCREEN: True
+  DPF_START_SERVER: False
+  DPF_PORT: 21002
+  DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
+  DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
+  # Following env vars when changed will "reset" the mentioned cache,
+  # by changing the cache file name. It is rendered as ...-v%RESET_XXX%-...
+  # You should go up in number, if you go down (or repeat a previous value)
+  # you might end up reusing a previous cache if it haven't been deleted already.
+  # It applies 7 days retention policy by default.
+  RESET_PIP_CACHE: 11
+  RESET_EXAMPLES_CACHE: 11
+  RESET_DOC_BUILD_CACHE: 11
+  RESET_AUTOSUMMARY_CACHE: 11 
   MAIN_PYTHON_VERSION: '3.7'
 
 concurrency:
@@ -19,26 +34,85 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
-  pull-requests: write
   packages: read
+
 
 jobs:
 
-  style:
-    name: Code style
+  stylecheck:
+    name: Style Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4.3.0
         with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip tox
-      - name: Test with tox
-        run: tox -e style
+          python-version: 3.9
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Run pre-commit
+        run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+
+  testimport:
+    name: Smoke Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4.3.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Linux pip cache
+        uses: actions/cache@v3
+        if: ${{ runner.os == 'Linux' }}
+        with:
+          path: ~/.cache/pip
+          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}
+
+      - name: Window pip cache
+        uses: actions/cache@v3
+        if: ${{ runner.os == 'Windows' }}
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}
+
+      - name: Install PyMAPDL
+        run: pip install ansys-mapdl-core
+
+      - name: Install Ansys Math
+        run: pip install .
+
+      - name: Test import
+        working-directory: tests
+        run: python -c "from ansys.math import core as anmath; print(anmath.Report(gpu=False))"
+
+      - name: Generate wheelhouse
+        run: pip wheel . -w wheelhouse
+
+      - name: Zip wheelhouse
+        uses: vimtor/action-zip@master
+        with:
+          files: wheelhouse
+          dest: ${{ env.PACKAGE_NAME }}-v${{ steps.version.outputs.PYMAPDL_VERSION }}-wheelhouse-${{ runner.os }}-${{ matrix.python-version }}.zip
+
+      - name: Upload Wheelhouse
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.PACKAGE_NAME }}-v${{ steps.version.outputs.PYMAPDL_VERSION }}-wheelhouse-${{ runner.os }}-${{ matrix.python-version }}
+          path: '*.zip'
+          retention-days: 7
+
 
   # docs-style:
   #   name: Documentation Style Check

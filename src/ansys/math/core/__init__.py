@@ -4,7 +4,7 @@ import os
 
 import appdirs
 
-from ansys.mapdl.core.logging import Logger
+from ansys.math.core.logging import Logger
 
 LOG = Logger(level=logging.ERROR, to_file=False, to_stdout=True)
 LOG.debug("Loaded logging module as LOG")
@@ -27,10 +27,10 @@ except ModuleNotFoundError:  # pragma: no cover
 
 __version__ = importlib_metadata.version(__name__.replace(".", "-"))
 
-from ansys.mapdl.core import examples
-from ansys.mapdl.core._version import SUPPORTED_ANSYS_VERSIONS
-from ansys.mapdl.core.convert import convert_apdl_block, convert_script
-from ansys.mapdl.core.launcher import (
+from ansys.math.core import examples
+from ansys.math.core._version import SUPPORTED_ANSYS_VERSIONS
+from ansys.math.core.convert import convert_apdl_block, convert_script
+from ansys.math.core.launcher import (
     change_default_ansys_path,
     close_all_local_instances,
     find_ansys,

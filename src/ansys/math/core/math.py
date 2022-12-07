@@ -9,9 +9,8 @@ import weakref
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
-import numpy as np
-
 from ansys.mapdl.core.misc import load_file
+import numpy as np
 
 from .check_version import VersionError, meets_version, version_requires
 from .common_grpc import ANSYS_VALUE_TYPE, DEFAULT_CHUNKSIZE, DEFAULT_FILE_CHUNK_SIZE
@@ -1861,3 +1860,19 @@ def dot(vec1, vec2) -> float:
     mapdl = vec1._mapdl
     mapdl.run(f"*DOT,{vec1.id},{vec2.id},py_val", mute=True)
     return mapdl.scalar_param("py_val")
+
+
+def launch_math(mapdl=None, **kwargs):
+    """
+    Launch an MAPDL instance in the background if none is filled.
+
+    Args:
+        mapdl (MAPDL instance, optional): MAPDL instance. Defaults to None.
+    """
+
+    if mapdl is None:
+        from ansys.mapdl.core import launch_mapdl
+
+        mapdl = launch_mapdl(**kwargs)
+
+    return MapdlMath(mapdl)
