@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: documentation-pdf
-          path: doc/_build/latex/anys-math*.pdf
+          path: doc/_build/latex/Ansys-math*.pdf
           retention-days: 7
 
       - name: Display files structure
