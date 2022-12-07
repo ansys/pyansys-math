@@ -15,3 +15,6 @@
 
 .. # Examples
 .. _examples_intro: https://ansyshelp.ansys.com/Views/Secured/corp/v212/en/ans_tec/tecintro.html
+
+.. # Ansys related
+.. _ansys: https://www.ansys.com/
