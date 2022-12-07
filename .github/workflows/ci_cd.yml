@@ -87,10 +87,6 @@ jobs:
 
       - name: Install Python requirements
         run: pip install -r requirements/requirements_doc.txt
-
-      - name: Test virtual framebuffer
-        run: |
-          xvfb-run python .ci/display_test.py
       
       - name: Login in Github Container registry
         uses: docker/login-action@v2.1.0
