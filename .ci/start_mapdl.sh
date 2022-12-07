@@ -1,7 +1,7 @@
 #!/bin/bash
 docker pull $MAPDL_IMAGE
 docker run \
-    --name mapdl \
+    --name ansys-math \
     --restart always \
     --health-cmd="ps aux | grep \"[/]ansys_inc/.*ansys\.e.*grpc\" -q && echo 0 || echo 1" \
     --health-interval=0.5s \
@@ -15,4 +15,4 @@ docker run \
     $MAPDL_IMAGE \
     -smp > log.txt &
 grep -q 'Server listening on' <(timeout 60 tail -f log.txt)
-# python -c "from ansys.mapdl.core import launch_mapdl; print(launch_mapdl())"
+# python -c "from ansys.math.core import launch_math; print(launch_math())"

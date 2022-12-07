@@ -1,0 +1,10 @@
+[run]
+omit =
+    # omit commands
+    ansys/math/core/_commands/*
+
+    # ignore legacy interfaces
+    ansys/math/core/math_console.py
+    ansys/math/core/math_corba.py
+    ansys/math/core/jupyter.py
+
