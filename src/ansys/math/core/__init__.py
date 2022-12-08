@@ -20,4 +20,4 @@ Then add the import within this module to enable:
    referenced at the library level.
 
 """
-from ansys.math.core import __version__
+from ansys.math.core._version import __version__

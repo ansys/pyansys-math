@@ -5,12 +5,12 @@ import re
 from ansys.mapdl.core.check_version import VersionError, meets_version
 from ansys.mapdl.core.errors import ANSYSDataTypeError
 from ansys.mapdl.core.launcher import get_start_instance
-import ansys.mapdl.core.math as apdl_math
 from ansys.mapdl.core.misc import random_string
 import numpy as np
 import pytest
 from scipy import sparse
 
+import ansys.math.core.math as apdl_math
 from ansys.math.core.math import launch_math
 
 # skip entire module unless HAS_GRPC

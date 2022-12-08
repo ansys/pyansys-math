@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
-name = "ansys-pyoptics-speos"
+name = "ansys-maths"
 version = "0.0.dev0"
 description = "A Python wrapper for Ansys Math libraries."
 readme = "README.rst"
