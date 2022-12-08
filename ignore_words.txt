@@ -1,0 +1,6 @@
+pres
+nax
+tickness
+struc
+parm
+nce

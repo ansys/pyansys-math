@@ -1,21 +1,21 @@
-"""Version of ansys-mapdl-core module.
+"""Version of ansys-<product/service>-<library> library.
 
 On the ``main`` branch, use 'dev0' to denote a development version.
 For example:
 
-# major, minor, patch
-version_info = 0, 58, 'dev0'
+version_info = 0, 1, 'dev0'
+
+Examples
+--------
+Print the version
+
+>>> from ansys.product import library
+>>> print(library.__version__)
+0.1.dev0
 
 """
-
-try:
-    import importlib.metadata as importlib_metadata
-except ModuleNotFoundError:  # pragma: no cover
-    import importlib_metadata
-
-# Read from the pyproject.toml
 # major, minor, patch
-__version__ = importlib_metadata.version("ansys-mapdl-core")
+version_info = 0, 1, "dev0"
 
-# In descending order
-SUPPORTED_ANSYS_VERSIONS = [231, 222, 221, 212, 211, 202, 201, 195, 194, 193, 192, 191]
+# Nice string for the version
+__version__ = ".".join(map(str, version_info))

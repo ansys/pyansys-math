@@ -1,9 +1,10 @@
-documentation:
+Documentation:
 - doc/source/**/*
-maintenance:
+Maintenance:
 - .github/**/*
 - .flake8
-- pyproject.toml
-- .codespellrc
-dependencies:
+- ignore_words.txt
+Dependencies:
 - requirements/*
+CI/CD:
+- .github/**/*

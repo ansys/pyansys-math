@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  pyoptics_speos-rpc:
+    image: ghcr.io/pyansys/ansys-math/speos-rpc:2023.2.0.289
+    container_name: ansys-math_speos-rpc
+    ports:
+      - "50051:50051"
+    environment:
+      - SPEOS_LOG_LEVEL=2
+      - ANSYSLMD_LICENSE_FILE=$LICENSE_SERVER
+    entrypoint: ./SpeosRPC_Server.x
+    volumes:
+      - type: bind
+        source: ./tests/assets
+        target: /app/assets
+        read_only: false
