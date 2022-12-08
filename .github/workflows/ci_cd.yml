@@ -23,12 +23,12 @@ concurrency:
 
 jobs:
 
-  style:
-    name: Code style
+  code-style:
+    name: "Code style checks"
     runs-on: ubuntu-latest
     steps:
-      - name: PyAnsys code style checks
-        uses: pyansys/actions/code-style@v1
+      - name: "PyAnsys code style checks"
+        uses: pyansys/actions/code-style@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys documentation style checks
-        uses: pyansys/actions/doc-style@v1
+        uses: pyansys/actions/doc-style@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,7 +55,7 @@ jobs:
   tests:
     name: Build and testing
     runs-on: ubuntu-latest
-    needs: [style,docs-build]
+    needs: [code-style, docs-build]
   
     steps:
       - uses: actions/checkout@v3
