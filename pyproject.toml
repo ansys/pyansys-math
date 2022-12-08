@@ -41,7 +41,7 @@ tests = [
     "pytest-rerunfailures==10.2",
 ]
 doc = [
-    "git+https://github.com/pyansys/pymapdl@main",
+    "ansys-mapdl-core>=0.63.3",
     "Sphinx==5.3.0",
     "ansys-sphinx-theme==0.7.1",
     "jupyter_sphinx==0.4.0",
