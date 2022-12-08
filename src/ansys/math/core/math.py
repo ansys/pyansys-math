@@ -93,15 +93,14 @@ def list_allowed_dtypes():
 
 
 class MapdlMath:
-    """Abstract mapdl math class.  Created from a ``Mapdl`` instance.
+    """Abstract mapdl math class.
 
     Examples
     --------
     Create an instance.
 
-    >>> from ansys.mapdl.core import launch_mapdl
-    >>> mapdl = launch_mapdl()
-    >>> mm = mapdl.math
+    >>> from ansys.math.core import launch_math
+    >>> mm = launch_math()
 
     Vector addition
 
@@ -118,6 +117,8 @@ class MapdlMath:
     """
 
     def __init__(self, mapdl):
+        # if mapdl is None:
+        #     mapdl=launch_mapdl()
         if not isinstance(mapdl, MapdlGrpc):
             raise TypeError("``mapdl`` must be a MapdlGrpc instance")
         self._mapdl_weakref = weakref.ref(mapdl)
@@ -129,7 +130,7 @@ class MapdlMath:
 
     @property
     def _server_version(self):
-        """Return the version of MAPDL."""
+        """Return the version of MAPDL which is running in the background."""
         return self._mapdl._server_version
 
     def free(self):
@@ -295,9 +296,8 @@ class MapdlMath:
         --------
         Create a zero vector.
 
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math()
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> vec = mm.zeros(10)
 
         Create a zero matrix.
@@ -335,9 +335,8 @@ class MapdlMath:
         --------
         Create a ones vector.
 
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math()
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> vec = mm.ones(10)
 
         Create a ones matrix.
@@ -376,9 +375,8 @@ class MapdlMath:
         --------
         Create a random vector.
 
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math()
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> vec = mm.rand(10)
 
         Create a random matrix.
@@ -547,7 +545,7 @@ class MapdlMath:
         """
         return load_file(self._mapdl, fname)
 
-    def stiff(self, dtype=np.double, name=None, fname="file.full", asarray=False):
+    def stiff(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
         """Load the stiffness matrix from a full file.
 
         Parameters
@@ -571,7 +569,7 @@ class MapdlMath:
 
         Examples
         --------
-        >>> k = mapdl.math.stiff()
+        >>> k = mm.stiff()
         APDLMATH Matrix 60 x 60
 
         Convert to a scipy array
@@ -584,7 +582,7 @@ class MapdlMath:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "STIFF", asarray)
 
-    def mass(self, dtype=np.double, name=None, fname="file.full", asarray=False):
+    def mass(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
         """Load the mass matrix from a full file.
 
         Parameters
@@ -622,7 +620,7 @@ class MapdlMath:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "MASS", asarray)
 
-    def damp(self, dtype=np.double, name=None, fname="file.full", asarray=False):
+    def damp(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
         """Load the damping matrix from the full file.
 
         Parameters
@@ -661,7 +659,7 @@ class MapdlMath:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "DAMP", asarray)
 
-    def get_vec(self, dtype=None, name=None, fname="file.full", mat_id="RHS", asarray=False):
+    def get_vec(self, dtype=None, name=None, fname="file.full", mat_id="RHS", asarray=False):  # to be moved to .io
         """Load a vector from a file.
 
         Parameters
@@ -753,7 +751,7 @@ class MapdlMath:
         self._set_vec(name, data)
         return AnsVec(name, self._mapdl)
 
-    def rhs(self, dtype=np.double, name=None, fname="file.full", asarray=False):
+    def rhs(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
         """Return the load vector from a full file.
 
         Parameters
@@ -1014,7 +1012,6 @@ class MapdlMath:
         --------
         Factorize a random matrix.
 
-        >>> mm = mapdl.math
         >>> dim = 1000
         >>> m2 = mm.rand(dim, dim)
         >>> m3 = m2.copy()
@@ -1178,6 +1175,8 @@ class ApdlMathObj:
     """Common class for MAPDL Math objects"""
 
     def __init__(self, id_, mapdl, dtype=ObjType.GEN):
+        # if mapdl is None:
+        #     mapdl= launch_mapdl()
         self.id = id_
         self._mapdl = mapdl
         self.type = dtype
@@ -1245,7 +1244,6 @@ class ApdlMathObj:
 
         Examples
         --------
-        >>> mm = mapdl.math
         >>> dim = 1000
         >>> m2 = mm.rand(dim, dim)
         >>> nrm = mm.norm( m2)
@@ -1409,9 +1407,8 @@ class AnsVec(ApdlMathObj):
 
         Examples
         --------
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> v = mm.ones(10)
         >>> v.asarray()
         [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
@@ -1485,9 +1482,8 @@ class AnsMat(ApdlMathObj):
 
         Examples
         --------
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> v = mm.ones(10)
         >>> v.asarray()
         [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
@@ -1557,9 +1553,8 @@ class AnsMat(ApdlMathObj):
 
         Examples
         --------
-        >>> from ansys.mapdl.core import launch_mapdl
-        >>> mapdl = launch_mapdl()
-        >>> mm = mapdl.math
+        >>> from ansys.math.core import launch_math
+        >>> mm = launch_math()
         >>> mat = mm.rand(2, 3)
         >>> mat_t = mat.T
 
@@ -1674,7 +1669,7 @@ class AnsSolver(ApdlMathObj):
 
         Parameters
         ----------
-        mat : ansys.mapdl.math.AnsMat
+        mat : ansys.math.core.math.AnsMat
             An ansys.mapdl.math matrix.
         algo : str, optional
             Factorization algorithm.  Either ``"LAPACK"`` (default for
@@ -1688,7 +1683,6 @@ class AnsSolver(ApdlMathObj):
         --------
         Factorize a random matrix and solve a linear system.
 
-        >>> mm = mapdl.math
         >>> dim = 1000
         >>> m2 = mm.rand(dim, dim)
         >>> solver = mm.factorize(m2)
