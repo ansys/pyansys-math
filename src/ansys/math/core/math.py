@@ -9,14 +9,17 @@ import weakref
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
+from ansys.mapdl.core.check_version import VersionError, meets_version, version_requires
+from ansys.mapdl.core.common_grpc import (
+    ANSYS_VALUE_TYPE,
+    DEFAULT_CHUNKSIZE,
+    DEFAULT_FILE_CHUNK_SIZE,
+)
+from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
+from ansys.mapdl.core.mapdl_grpc import MapdlGrpc
 from ansys.mapdl.core.misc import load_file
+from ansys.mapdl.core.parameters import interp_star_status
 import numpy as np
-
-from .check_version import VersionError, meets_version, version_requires
-from .common_grpc import ANSYS_VALUE_TYPE, DEFAULT_CHUNKSIZE, DEFAULT_FILE_CHUNK_SIZE
-from .errors import ANSYSDataTypeError, protect_grpc
-from .mapdl_grpc import MapdlGrpc
-from .parameters import interp_star_status
 
 MYCTYPE = {
     np.int32: "I",

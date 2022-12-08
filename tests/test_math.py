@@ -11,6 +11,8 @@ import numpy as np
 import pytest
 from scipy import sparse
 
+from ansys.math.core.math import launch_math
+
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
 
@@ -25,7 +27,8 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    return mapdl.math
+    mod = launch_math(mapdl)
+    return mod
 
 
 def test_ones(mm):
