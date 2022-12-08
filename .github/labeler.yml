@@ -4,7 +4,8 @@ Maintenance:
 - .github/**/*
 - .flake8
 - ignore_words.txt
+- pyproject.toml
 Dependencies:
-- requirements/*
+- pyproject.toml
 CI/CD:
 - .github/**/*
