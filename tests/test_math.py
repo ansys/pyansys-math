@@ -2,15 +2,14 @@
 import os
 import re
 
-import numpy as np
-import pytest
-from scipy import sparse
-
 from ansys.mapdl.core.check_version import VersionError, meets_version
 from ansys.mapdl.core.errors import ANSYSDataTypeError
 from ansys.mapdl.core.launcher import get_start_instance
 import ansys.mapdl.core.math as apdl_math
 from ansys.mapdl.core.misc import random_string
+import numpy as np
+import pytest
+from scipy import sparse
 
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
@@ -317,9 +316,7 @@ def test_load_stiff_mass_different_dtype(mm, cube_solve, dtype_):
 
 
 def test_load_matrix_from_file_incorrect_mat_id(mm, cube_solve):
-    with pytest.raises(
-        ValueError, match=r"The 'mat_id' parameter supplied.*is not allowed."
-    ):
+    with pytest.raises(ValueError, match=r"The 'mat_id' parameter supplied.*is not allowed."):
         mm.load_matrix_from_file(fname="file.full", mat_id="DUMMY")
 
 
@@ -452,9 +449,7 @@ def test_solve_py(mapdl, mm, cube_solve):
     assert np.allclose(rhs0, rhs1)
 
 
-@pytest.mark.parametrize(
-    "vec_type", ["RHS", "BACK", pytest.param("dummy", marks=pytest.mark.xfail)]
-)
+@pytest.mark.parametrize("vec_type", ["RHS", "BACK", pytest.param("dummy", marks=pytest.mark.xfail)])
 def test_get_vec(mapdl, mm, cube_solve, vec_type):
     if vec_type.upper() == "BACK":
         vec = mm.get_vec(mat_id=vec_type, asarray=True)  # To test asarray arg.
@@ -673,9 +668,7 @@ def test_status(mm, capsys):
     printed_output = captured.out
 
     assert "APDLMATH PARAMETER STATUS-" in printed_output
-    assert all(
-        [each in printed_output for each in ["Name", "Type", "Dims", "Workspace"]]
-    )
+    assert all([each in printed_output for each in ["Name", "Type", "Dims", "Workspace"]])
 
     # Checking also _status property
     assert "APDLMATH PARAMETER STATUS-" in mm._status

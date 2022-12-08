@@ -132,14 +132,10 @@ def get_file_chunks(filename, progress_bar=False):
                 pbar.update(length)
 
             chunk = anskernel.Chunk(payload=piece, size=length)
-            yield pb_types.UploadFileRequest(
-                file_name=os.path.basename(filename), chunk=chunk
-            )
+            yield pb_types.UploadFileRequest(file_name=os.path.basename(filename), chunk=chunk)
 
 
-def save_chunks_to_file(
-    chunks, filename, progress_bar=False, file_size=None, target_name=""
-):
+def save_chunks_to_file(chunks, filename, progress_bar=False, file_size=None, target_name=""):
     """Saves chunks to a local file
 
     Returns
@@ -308,9 +304,7 @@ class MapdlGrpc(_MapdlCore):
 
         if channel is not None:
             if ip is not None or port is not None:
-                raise ValueError(
-                    "If `channel` is specified, neither `port` nor `ip` can be specified."
-                )
+                raise ValueError("If `channel` is specified, neither `port` nor `ip` can be specified.")
         elif ip is None:
             ip = "127.0.0.1"
 
@@ -415,9 +409,7 @@ class MapdlGrpc(_MapdlCore):
         i = 0
         while time.time() < max_time and i <= n_attempts:
             self._log.debug("Connection attempt %d", i + 1)
-            connected = self._connect(
-                timeout=attempt_timeout, set_no_abort=set_no_abort
-            )
+            connected = self._connect(timeout=attempt_timeout, set_no_abort=set_no_abort)
             i += 1
             if connected:
                 self._log.debug("Connected")
@@ -430,9 +422,7 @@ class MapdlGrpc(_MapdlCore):
             )
 
         if not connected:
-            raise IOError(
-                f"Unable to connect to MAPDL gRPC instance at {self._channel_str}"
-            )
+            raise IOError(f"Unable to connect to MAPDL gRPC instance at {self._channel_str}")
         else:
             self._exited = False
 
@@ -529,9 +519,7 @@ class MapdlGrpc(_MapdlCore):
             self._initialised = threading.Event()
             self._t_trigger = time.time()
             self._t_delay = 30
-            self._timer = threading.Thread(
-                target=MapdlGrpc._threaded_heartbeat, args=(weakref.proxy(self),)
-            )
+            self._timer = threading.Thread(target=MapdlGrpc._threaded_heartbeat, args=(weakref.proxy(self),))
             self._timer.daemon = True
             self._timer.start()
 
@@ -629,9 +617,7 @@ class MapdlGrpc(_MapdlCore):
             return
 
         if status.status != health_pb2.HealthCheckResponse.SERVING:
-            raise MapdlRuntimeError(
-                "Unable to enable health check and/or connect to" " the MAPDL server"
-            )
+            raise MapdlRuntimeError("Unable to enable health check and/or connect to" " the MAPDL server")
 
         self._health_response_queue = Queue()
 
@@ -649,9 +635,7 @@ class MapdlGrpc(_MapdlCore):
         This should only need to be used for legacy ``open_gui``
         """
         if not self._local:
-            raise RuntimeError(
-                "Can only launch the GUI with a local instance of " "MAPDL"
-            )
+            raise RuntimeError("Can only launch the GUI with a local instance of " "MAPDL")
         from ansys.mapdl.core.launcher import launch_grpc
 
         self._exited = False  # reset exit state
@@ -997,9 +981,7 @@ class MapdlGrpc(_MapdlCore):
                     )
                     # always communicate to allow process to run
                     output, err = process.communicate()
-                    self._log.debug(
-                        "Cleanup output:\n\n%s\n%s", output.decode(), err.decode()
-                    )
+                    self._log.debug("Cleanup output:\n\n%s\n%s", output.decode(), err.decode())
 
     def list_files(self, refresh_cache=True):
         """List the files in the working directory of MAPDL.
@@ -1188,8 +1170,7 @@ class MapdlGrpc(_MapdlCore):
             else:
                 remote_files_str = "\n".join("\t%s" % item for item in remote_files)
                 raise FileNotFoundError(
-                    "Unable to locate any result file from the "
-                    "following remote result files:\n\n" + remote_files_str
+                    "Unable to locate any result file from the " "following remote result files:\n\n" + remote_files_str
                 )
         _download(targets)
         return os.path.join(path, jobname + "0." + preference)
@@ -1490,9 +1471,7 @@ class MapdlGrpc(_MapdlCore):
         """
 
         if os.path.isdir(fname):
-            raise ValueError(
-                f"`fname` should be a full file path or name, not the directory '{fname}'."
-            )
+            raise ValueError(f"`fname` should be a full file path or name, not the directory '{fname}'.")
 
         fpath = os.path.dirname(fname)
         fname = os.path.basename(fname)
@@ -1577,9 +1556,7 @@ class MapdlGrpc(_MapdlCore):
         self._log.info(self._response)
 
         if "*** ERROR ***" in self._response:
-            raise RuntimeError(
-                self._response.split("*** ERROR ***")[1].splitlines()[1].strip()
-            )
+            raise RuntimeError(self._response.split("*** ERROR ***")[1].splitlines()[1].strip())
 
         # try/except here because MAPDL might have not closed the temp file
         try:
@@ -1615,8 +1592,7 @@ class MapdlGrpc(_MapdlCore):
 
         if getresponse.type == 0:
             self._log.debug(
-                "The 'grpc' get method seems to have failed. Trying old "
-                "implementation for more verbose output."
+                "The 'grpc' get method seems to have failed. Trying old " "implementation for more verbose output."
             )
             try:
                 out = self.run("*GET,__temp__," + cmd)
@@ -1659,9 +1635,7 @@ class MapdlGrpc(_MapdlCore):
         """
         if not extensions:
             files = self.list_files()
-            list_of_files = self.download(
-                files, target_dir=target_dir, progress_bar=progress_bar
-            )
+            list_of_files = self.download(files, target_dir=target_dir, progress_bar=progress_bar)
 
         else:
             list_of_files = []
@@ -1768,9 +1742,7 @@ class MapdlGrpc(_MapdlCore):
                             "glob expressions in the local client."
                         )
                 else:
-                    raise ValueError(
-                        f"The files parameter ('{files}') does not match any file or pattern."
-                    )
+                    raise ValueError(f"The files parameter ('{files}') does not match any file or pattern.")
 
             else:  # Remote or looking into MAPDL working directory
                 if files in self_files:
@@ -1779,8 +1751,7 @@ class MapdlGrpc(_MapdlCore):
                     # try filter on the list_files
                     if recursive:
                         warn(
-                            "The 'recursive' keyword argument does not work with remote "
-                            "instances. So it is ignored."
+                            "The 'recursive' keyword argument does not work with remote " "instances. So it is ignored."
                         )
                     list_files = fnmatch.filter(self_files, files)
                     if not list_files:
@@ -1789,15 +1760,12 @@ class MapdlGrpc(_MapdlCore):
                             f"glob expressions in the remote server."
                         )
                 else:
-                    raise ValueError(
-                        f"The `'files'` parameter ('{files}') does not match any file or pattern."
-                    )
+                    raise ValueError(f"The `'files'` parameter ('{files}') does not match any file or pattern.")
 
         elif isinstance(files, (list, tuple)):
             if not all([isinstance(each, str) for each in files]):
                 raise ValueError(
-                    "The parameter `'files'` can be a list or tuple, but it should "
-                    "only contain strings."
+                    "The parameter `'files'` can be a list or tuple, but it should " "only contain strings."
                 )
             list_files = files
         else:
@@ -1816,9 +1784,7 @@ class MapdlGrpc(_MapdlCore):
 
         for each_file in list_files:
             try:
-                file_name = os.path.basename(
-                    each_file
-                )  # Getting only the name of the file.
+                file_name = os.path.basename(each_file)  # Getting only the name of the file.
                 #  We try to avoid that when the full path is supplied, it will crash when trying
                 # to do `os.path.join(target_dir"os.getcwd()", file_name "full filename path"`
                 # This will produce the file structure to flat out, but it is find, because
@@ -1884,9 +1850,7 @@ class MapdlGrpc(_MapdlCore):
         request = pb_types.DownloadFileRequest(name=target_name)
         metadata = [("time_step_stream", "200"), ("chunk_size", str(chunk_size))]
         chunks = self._stub.DownloadFile(request, metadata=metadata)
-        file_size = save_chunks_to_file(
-            chunks, out_file_name, progress_bar=progress_bar, target_name=target_name
-        )
+        file_size = save_chunks_to_file(chunks, out_file_name, progress_bar=progress_bar, target_name=target_name)
 
         if not file_size:
             raise FileNotFoundError(f'File "{target_name}" is empty or does not exist.')
@@ -2195,9 +2159,7 @@ class MapdlGrpc(_MapdlCore):
             if raw:  # for debug
                 return vals, indices, indptr, shape
             else:
-                return sparse.csr_matrix(
-                    (vals, indices, indptr), dtype=stype, shape=shape
-                )
+                return sparse.csr_matrix((vals, indices, indptr), dtype=stype, shape=shape)
 
         raise ValueError(f'Invalid matrix type "{mtype}"')
 
@@ -2301,9 +2263,7 @@ class MapdlGrpc(_MapdlCore):
         if self.local:
             return open(os.path.join(self.directory, error_file)).read()
         elif self._exited:
-            raise MapdlExitedError(
-                "Cannot list error file when MAPDL Service has " "exited"
-            )
+            raise MapdlExitedError("Cannot list error file when MAPDL Service has " "exited")
 
         return self._download_as_raw(error_file).decode("latin-1")
 
@@ -2388,10 +2348,7 @@ class MapdlGrpc(_MapdlCore):
             out = super().igesin(fname, ext, **kwargs)
         else:
             if not os.path.isfile(fname):
-                raise FileNotFoundError(
-                    f"Unable to find {fname}.  You may need to "
-                    "input the full path to the file."
-                )
+                raise FileNotFoundError(f"Unable to find {fname}.  You may need to " "input the full path to the file.")
 
             basename = self.upload(fname, progress_bar=False)
             out = super().igesin(basename, **kwargs)
@@ -2399,9 +2356,7 @@ class MapdlGrpc(_MapdlCore):
         return out
 
     @wraps(_MapdlCore.cmatrix)
-    def cmatrix(
-        self, symfac="", condname="", numcond="", grndkey="", capname="", **kwargs
-    ):
+    def cmatrix(self, symfac="", condname="", numcond="", grndkey="", capname="", **kwargs):
         """Run CMATRIX in non-interactive mode and return the response
         from file.
         """
@@ -2566,8 +2521,7 @@ class MapdlGrpc(_MapdlCore):
         else:
             if not os.path.isfile(filename):
                 raise FileNotFoundError(
-                    f"Unable to find '{filename}'. You may need to "
-                    "input the full path to the file."
+                    f"Unable to find '{filename}'. You may need to " "input the full path to the file."
                 )
 
             progress_bar = kwargs.pop("progress_bar", False)
@@ -2613,9 +2567,7 @@ class MapdlGrpc(_MapdlCore):
         return variable
 
     @wraps(_MapdlCore.nsol)
-    def nsol(
-        self, nvar=VAR_IR, node="", item="", comp="", name="", sector="", **kwargs
-    ):
+    def nsol(self, nvar=VAR_IR, node="", item="", comp="", name="", sector="", **kwargs):
         """Wraps NSOL to return the variable as an array."""
         super().nsol(
             nvar=nvar,
@@ -2712,9 +2664,7 @@ class MapdlGrpc(_MapdlCore):
             kwargs=kwargs,
         )
 
-    def get_esol(
-        self, elem, node, item, comp, name="", sector="", tstrt="", kcplx="", **kwargs
-    ):
+    def get_esol(self, elem, node, item, comp, name="", sector="", tstrt="", kcplx="", **kwargs):
         """Get ESOL data.
 
         /POST26 APDL Command: ESOL

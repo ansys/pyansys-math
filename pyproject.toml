@@ -29,7 +29,7 @@ dependencies = [
     "ansys-api-mapdl==0.5.1",  # supports at least 2020R2 - 2022R1
     "ansys-corba; python_version < '3.9'",
     "ansys-mapdl-reader>=0.51.7",
-    "ansys-mapdl-core>=0.63.3"
+    "ansys-mapdl-core>=0.63.3",
     "numpy>=1.14.0",
 ]
 
