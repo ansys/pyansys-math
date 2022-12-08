@@ -4,7 +4,7 @@ name: GitHub CI
 # run only on main branch.  This avoids duplicated actions on PRs
 on:
   workflow_dispatch:
-  schedule: UTC at 0300
+  schedule: # UTC at 0300
     - cron: "0 3 * * *"
   pull_request:
   push:
@@ -32,12 +32,6 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip flit tox
-      - name: Test with tox
-        run: tox -e style
-
   docs-style:
     name: Documentation Style Check
     runs-on: ubuntu-latest
@@ -54,7 +48,7 @@ jobs:
     needs: docs-style
     steps:
       - name: "Run Ansys documentation building action"
-        uses: pyansys/actions/doc-build@v1
+        uses: pyansys/actions/doc-build@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -83,31 +77,10 @@ jobs:
       - name: Install library
         run: pip install .
 
-      - name: Login to GitHub Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io/pyansys/ansys-math
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Unit testing
         run: |
           pip install .[tests]
-          docker-compose up -d
-          cd tests  # so we're testing the install, not local
-          pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
-          docker kill ansys-math_speos-rpc 
-          docker rm ansys-math_speos-rpc
-          
-        env:
-          LICENSE_SERVER: ${{ format('1055@{0}', secrets.LICENSE_SERVER) }}
-
-      - name: Upload wheel
-        uses: actions/upload-artifact@v3
-        with:
-          name: ansys-math-wheel
-          path: dist/
-          retention-days: 7
+          pytest -v
 
   release:
 
