@@ -56,30 +56,26 @@ jobs:
         default: true
         type: boolean
 
-    runs:
-      using: "composite"
-      steps:
-      
-        - name: "Install Git and clone project"
-          uses: actions/checkout@v3
-      
-        - name: "Set up Python"
-          uses: pyansys/actions/_setup-python@main
-          with:
-            python-version: ${{ inputs.python-version }}
-            use-cache: ${{ inputs.use-python-cache }}
-      
-        - name: "Install pre-commit"
-          shell: bash
-          run: |
-            python -m pip install --upgrade pip pre-commit
-            pre-commit install
-      
-        - name: "Run pre-commit"
-          shell: bash
-          run: pre-commit run --all-files --show-diff-on-failure
-
-
+    steps:
+    
+      - name: "Install Git and clone project"
+        uses: actions/checkout@v3
+    
+      - name: "Set up Python"
+        uses: pyansys/actions/_setup-python@main
+        with:
+          python-version: ${{ inputs.python-version }}
+          use-cache: ${{ inputs.use-python-cache }}
+    
+      - name: "Install pre-commit"
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip pre-commit
+          pre-commit install
+    
+      - name: "Run pre-commit"
+        shell: bash
+        run: pre-commit run --all-files --show-diff-on-failure
 
 
 # docs-style:
@@ -107,66 +103,61 @@ jobs:
         required: true
         type: string
 
-    runs:
-      using: "composite"
-      steps:
-
-        - name: "Install Git and clone project"
-          uses: actions/checkout@v3
-
-        - name: "Run Vale"
-          uses: errata-ai/vale-action@reviewdog
-          env:
-            GITHUB_TOKEN: ${{ inputs.token }}
-          with:
-            files: doc
-            reporter: github-pr-check
-            level: error
-            filter_mode: nofilter
-            fail_on_error: true
-            vale_flags: "--config=${{ inputs.vale-config }}"
-
-
-doc-build:
-  name: "Documentation build."
-  description: "Build library documentation using Sphinx."
-
-  inputs:
-    python-version:
-      description: 'Desired Python version for sphinx-build.'
-      default: ${{ env.MAIN_PYTHON_VERSION }}
-      required: false
-      type: string
-    use-python-cache:
-      description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
-      required: false
-      default: true
-      type: boolean
-    sphinxopts:
-      description: 'Set of options to pass to the Sphinx builder.'
-      default: '-j auto -W --keep-going'
-      required: false
-      type: string
-    dependencies:
-      description: 'Set of system dependencies.'
-      default: ''
-      required: false
-      type: string
-    requires-xvfb:
-        description: 'Requires the usage of X Virtual Frame Buffer.'
-        default: false
-        required: false
-        type: boolean
-    skip-install:
-        description: 'Whether to skip the installation of the Python library.'
-        default: false
-        required: false
-        type: boolean
-
-  runs:
-    using: "composite"
     steps:
-    
+
+      - name: "Install Git and clone project"
+        uses: actions/checkout@v3
+
+      - name: "Run Vale"
+        uses: errata-ai/vale-action@reviewdog
+        env:
+          GITHUB_TOKEN: ${{ inputs.token }}
+        with:
+          files: doc
+          reporter: github-pr-check
+          level: error
+          filter_mode: nofilter
+          fail_on_error: true
+          vale_flags: "--config=${{ inputs.vale-config }}"
+
+
+  doc-build:
+    name: "Documentation build."
+    description: "Build library documentation using Sphinx."
+
+    inputs:
+      python-version:
+        description: 'Desired Python version for sphinx-build.'
+        default: ${{ env.MAIN_PYTHON_VERSION }}
+        required: false
+        type: string
+      use-python-cache:
+        description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
+        required: false
+        default: true
+        type: boolean
+      sphinxopts:
+        description: 'Set of options to pass to the Sphinx builder.'
+        default: '-j auto -W --keep-going'
+        required: false
+        type: string
+      dependencies:
+        description: 'Set of system dependencies.'
+        default: ''
+        required: false
+        type: string
+      requires-xvfb:
+          description: 'Requires the usage of X Virtual Frame Buffer.'
+          default: false
+          required: false
+          type: boolean
+      skip-install:
+          description: 'Whether to skip the installation of the Python library.'
+          default: false
+          required: false
+          type: boolean
+
+    steps:
       - name: "Install Git and clone project"
         uses: actions/checkout@v3
 
