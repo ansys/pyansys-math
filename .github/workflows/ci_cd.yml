@@ -41,29 +41,14 @@ jobs:
   #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
   
 
-  code-style:
-    name: "Code style."
+  style:
+    name: Code style
     runs-on: ubuntu-latest
     steps:
-    
-      - name: "Install Git and clone project"
-        uses: actions/checkout@v3
-    
-      - name: "Set up Python"
-        uses: pyansys/actions/_setup-python@main
+      - name: PyAnsys code style checks
+        uses: pyansys/actions/code-style@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-          use-cache: ${{ env.RESET_PIP_CACHE }}
-    
-      - name: "Install pre-commit"
-        shell: bash
-        run: |
-          python -m pip install --upgrade pip pre-commit
-          pre-commit install
-    
-      - name: "Run pre-commit"
-        shell: bash
-        run: pre-commit run --all-files --show-diff-on-failure
 
 
 # docs-style:
