@@ -43,7 +43,7 @@ jobs:
     name: Style Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: pyansys/actions/checkout@v3
       - name: Setup Python
         uses: pyansys/actions/setup-python@v4
         with:
@@ -86,10 +86,10 @@ jobs:
       PYMAPDL_START_INSTANCE: FALSE
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: pyansys/actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: pyansys/actions/setup-python@v4
         with:
           python-version: 3.9
 
@@ -99,7 +99,7 @@ jobs:
           sudo apt install libgl1-mesa-glx xvfb
 
       - name: Cache pip
-        uses: actions/cache@v3
+        uses: pyansys/actions/cache@v3
         with:
           path: ~/.cache/pip
           key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
@@ -156,7 +156,7 @@ jobs:
           twine check dist/*
 
       - name: Upload wheel and binaries
-        uses: actions/upload-artifact@v3
+        uses: pyansys/actions/upload-artifact@v3
         with:
           name: PyMAPDL-packages
           path: dist/
@@ -204,7 +204,7 @@ jobs:
 
       - name: Upload logs to GitHub
         if: always()
-        uses: actions/upload-artifact@master
+        uses: pyansys/actions/upload-artifact@master
         with:
           name: logs-${{ matrix.mapdl-version }}.tgz
           path: ./logs-${{ matrix.mapdl-version }}.tgz
@@ -225,10 +225,10 @@ jobs:
     runs-on: [self-hosted, Windows, pymapdl]
     needs: [build_test]
     steps:
-      - uses: actions/checkout@v3
+      - uses: pyansys/actions/checkout@v3
 
       # - name: Setup Python
-      #   uses: actions/setup-python@v4
+      #   uses: pyansys/actions/setup-python@v4
       #   with:
       #     python-version: 3.9
 
@@ -277,10 +277,10 @@ jobs:
   #   needs: [code-style, docs-build]
   
   #   steps:
-  #     - uses: actions/checkout@v3
+  #     - uses: pyansys/actions/checkout@v3
 
   #     - name: Set up Python
-  #       uses: actions/setup-python@v4
+  #       uses: pyansys/actions/setup-python@v4
   #       with:
   #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
