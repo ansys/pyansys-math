@@ -20,6 +20,7 @@ env:
   DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
   RESET_PIP_CACHE: 11
+  SPHINXOPTS: '-j auto -W --keep-going'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -42,20 +43,7 @@ jobs:
 
   code-style:
     name: "Code style."
-    description: "Check code style using pre-commit."
-
-    inputs:
-      python-version:
-        description: 'Desired Python version for pre-commit.'
-        default: ${{ env.MAIN_PYTHON_VERSION }}
-        required: false
-        type: string
-      use-python-cache:
-        description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
-        required: false
-        default: true
-        type: boolean
-
+    runs-on: ubuntu-latest
     steps:
     
       - name: "Install Git and clone project"
@@ -64,8 +52,8 @@ jobs:
       - name: "Set up Python"
         uses: pyansys/actions/_setup-python@main
         with:
-          python-version: ${{ inputs.python-version }}
-          use-cache: ${{ inputs.use-python-cache }}
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          use-cache: ${{ env.RESET_PIP_CACHE }}
     
       - name: "Install pre-commit"
         shell: bash
@@ -90,18 +78,10 @@ jobs:
 
   doc-style:
     name: "Documentation style."
-    description: "Check documentation style using Vale."
-
-    inputs:
-      vale-config:
-        description: "Path to the Vale configuration file."
-        default: "doc/.vale.ini"
-        required: false
-        type: string
-      token:
-        description: "Required token for Vale commenter."
-        required: true
-        type: string
+    runs-on: ubuntu-latest
+    needs: [code-style]
+    env:
+        VALE_CONFIG: "doc/.vale.ini"
 
     steps:
 
@@ -111,61 +91,27 @@ jobs:
       - name: "Run Vale"
         uses: errata-ai/vale-action@reviewdog
         env:
-          GITHUB_TOKEN: ${{ inputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: doc
           reporter: github-pr-check
           level: error
           filter_mode: nofilter
           fail_on_error: true
-          vale_flags: "--config=${{ inputs.vale-config }}"
+          vale_flags: "--config=${{ env.VALE_CONFIG }}"
 
 
   doc-build:
     name: "Documentation build."
-    description: "Build library documentation using Sphinx."
-
-    inputs:
-      python-version:
-        description: 'Desired Python version for sphinx-build.'
-        default: ${{ env.MAIN_PYTHON_VERSION }}
-        required: false
-        type: string
-      use-python-cache:
-        description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
-        required: false
-        default: true
-        type: boolean
-      sphinxopts:
-        description: 'Set of options to pass to the Sphinx builder.'
-        default: '-j auto -W --keep-going'
-        required: false
-        type: string
-      dependencies:
-        description: 'Set of system dependencies.'
-        default: ''
-        required: false
-        type: string
-      requires-xvfb:
-          description: 'Requires the usage of X Virtual Frame Buffer.'
-          default: false
-          required: false
-          type: boolean
-      skip-install:
-          description: 'Whether to skip the installation of the Python library.'
-          default: false
-          required: false
-          type: boolean
+    runs-on: ubuntu-latest
+    needs: [doc-style]
+    env:
+      SKIP-INSTALL: FALSE
 
     steps:
       - name: "Install Git and clone project"
         uses: actions/checkout@v3
 
-      - name: "Check if X Virtual Frame Buffer is needed"
-        shell: bash
-        if: inputs.requires-xvfb == 'true'
-        run: |
-          echo "NEEDED_DEPS=$(echo '${{ inputs.dependencies }} xvfb')" >> $GITHUB_ENV
       - name: "Cache apt packages needed"
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
@@ -179,8 +125,8 @@ jobs:
       - name: "Set up Python"
         uses: pyansys/actions/_setup-python@main
         with:
-          python-version: ${{ inputs.python-version }}
-          use-cache: ${{ inputs.use-python-cache }}
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          use-cache: ${{ env.RESET_PIP_CACHE }}
 
       - name: "Update pip"
         shell: bash
@@ -188,43 +134,21 @@ jobs:
 
       - name: "Install Python library"
         shell: bash
-        if: inputs.skip-install == 'false'
+        if: env.SKIP-INSTALL == 'false'
         run:
           python -m pip install .
 
-      - name: "Check if requirements.txt file exists"
+      - name: "Install documentation dependencies"
         shell: bash
-        run: |
-          echo "EXISTS_DOC_REQUIREMENTS=$(if [ -f requirements/requirements_doc.txt ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
-      - name: "Print previous output"
-        shell: bash
-        run:
-          echo "Output was found ${{ env.EXISTS_DOC_REQUIREMENTS }}"
-
-      - name: "Install documentation dependencies from requirements file"
-        shell: bash
-        if: env.EXISTS_DOC_REQUIREMENTS == 'true'
-        run: python -m pip install -r requirements/requirements_doc.txt
-
-      - name: "Install documentation dependencies from pyproject.toml"
-        shell: bash
-        if: env.EXISTS_DOC_REQUIREMENTS == 'false'
         run: python -m pip install .[doc]
-      
+
       - name: "Build HTML, PDF, and JSON documentation"
-        if: inputs.requires-xvfb == 'false'
         shell: bash
         run: |
-          make -C doc html SPHINXOPTS="${{ inputs.sphinxopts }}"
+          make -C doc html SPHINXOPTS="${{ env.SPHINXOPTS }}"
           make -C doc pdf
-          make -C doc json SPHINXOPTS="${{ inputs.sphinxopts }}"
-      - name: "Build HTML and JSON documentation using xvfb"
-        if: inputs.requires-xvfb == 'true'
-        shell: bash
-        run: |
-          xvfb-run make -C doc html SPHINXOPTS="${{ inputs.sphinxopts }}"
-          xvfb-run make -C doc pdf
-          xvfb-run make -C doc json SPHINXOPTS="${{ inputs.sphinxopts }}"
+          make -C doc json SPHINXOPTS="${{ env.SPHINXOPTS }}"
+
       - name: "Upload HTML documentation artifact"
         uses: actions/upload-artifact@v3
         with:
@@ -267,7 +191,7 @@ jobs:
       - name: Setup Python
         uses: pyansys/actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Install OS packages
         run: |
@@ -278,9 +202,9 @@ jobs:
         uses: pyansys/actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
-            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}
+            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-$${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Test virtual framebuffer
         run: |
