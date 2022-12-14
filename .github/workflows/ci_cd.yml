@@ -41,7 +41,7 @@ jobs:
   #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
   
 
-  style:
+  code-style:
     name: Code style
     runs-on: ubuntu-latest
     steps:
