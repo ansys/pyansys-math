@@ -53,7 +53,6 @@ jobs:
       - name: Run pre-commit
         run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-
   testimport:
     name: Smoke Tests
     runs-on: ${{ matrix.os }}
@@ -117,10 +116,10 @@ jobs:
           path: '*.zip'
           retention-days: 7
 
-
   docs-style:
     name: Documentation Style Check
     runs-on: ubuntu-latest
+    needs: [stylecheck]
     steps:
       - name: PyAnsys documentation style checks
         uses: pyansys/actions/doc-style@v2
@@ -130,7 +129,7 @@ jobs:
   docs-build:
     name: Doc building
     runs-on: ubuntu-latest
-    needs: docs-style
+    needs: [docs-style]
     steps:
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
@@ -141,6 +140,7 @@ jobs:
   build_test:
     name: Build and Unit Testing
     runs-on: ubuntu-latest
+    needs: [testimport]
     strategy:
       matrix:
         mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
@@ -287,7 +287,7 @@ jobs:
   test_windows:
     name: Unit Testing on Windows
     runs-on: [self-hosted, Windows, pymapdl]
-
+    needs: [build_test]
     steps:
       - uses: actions/checkout@v3
 
@@ -374,7 +374,7 @@ jobs:
 
     name: "Release project to private PyPI, public PyPI and GitHub"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs: [tests]
+    needs: [test_windows, docs-build]
     runs-on: ubuntu-latest
     steps:
     #  - name: "Release to the private PyPI repository"
