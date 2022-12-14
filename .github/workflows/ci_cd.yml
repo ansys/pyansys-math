@@ -39,39 +39,224 @@ jobs:
   #       with:
   #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
   
-  stylecheck:
-    name: Style Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: pyansys/actions/checkout@v3
-      - name: Setup Python
-        uses: pyansys/actions/setup-python@v4
-        with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      - name: Install pre-commit
-        run: pip install pre-commit
-      - name: Run pre-commit
-        run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-  docs-style:
-    name: Documentation Style Check
-    runs-on: ubuntu-latest
-    needs: [stylecheck]
-    steps:
-      - name: PyAnsys documentation style checks
-        uses: pyansys/actions/doc-style@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+  code-style:
+    name: "Code style."
+    description: "Check code style using pre-commit."
 
-  docs-build:
-    name: Doc building
-    runs-on: ubuntu-latest
-    needs: [docs-style]
+    inputs:
+      python-version:
+        description: 'Desired Python version for pre-commit.'
+        default: ${{ env.MAIN_PYTHON_VERSION }}
+        required: false
+        type: string
+      use-python-cache:
+        description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
+        required: false
+        default: true
+        type: boolean
+
+    runs:
+      using: "composite"
+      steps:
+      
+        - name: "Install Git and clone project"
+          uses: actions/checkout@v3
+      
+        - name: "Set up Python"
+          uses: pyansys/actions/_setup-python@main
+          with:
+            python-version: ${{ inputs.python-version }}
+            use-cache: ${{ inputs.use-python-cache }}
+      
+        - name: "Install pre-commit"
+          shell: bash
+          run: |
+            python -m pip install --upgrade pip pre-commit
+            pre-commit install
+      
+        - name: "Run pre-commit"
+          shell: bash
+          run: pre-commit run --all-files --show-diff-on-failure
+
+
+
+
+# docs-style:
+#   name: Documentation Style Check
+#   runs-on: ubuntu-latest
+#   needs: [stylecheck]
+#   steps:
+#     - name: PyAnsys documentation style checks
+#       uses: pyansys/actions/doc-style@v2
+#       with:
+#         token: ${{ secrets.GITHUB_TOKEN }}
+
+  doc-style:
+    name: "Documentation style."
+    description: "Check documentation style using Vale."
+
+    inputs:
+      vale-config:
+        description: "Path to the Vale configuration file."
+        default: "doc/.vale.ini"
+        required: false
+        type: string
+      token:
+        description: "Required token for Vale commenter."
+        required: true
+        type: string
+
+    runs:
+      using: "composite"
+      steps:
+
+        - name: "Install Git and clone project"
+          uses: actions/checkout@v3
+
+        - name: "Run Vale"
+          uses: errata-ai/vale-action@reviewdog
+          env:
+            GITHUB_TOKEN: ${{ inputs.token }}
+          with:
+            files: doc
+            reporter: github-pr-check
+            level: error
+            filter_mode: nofilter
+            fail_on_error: true
+            vale_flags: "--config=${{ inputs.vale-config }}"
+
+
+doc-build:
+  name: "Documentation build."
+  description: "Build library documentation using Sphinx."
+
+  inputs:
+    python-version:
+      description: 'Desired Python version for sphinx-build.'
+      default: ${{ env.MAIN_PYTHON_VERSION }}
+      required: false
+      type: string
+    use-python-cache:
+      description: 'Whether to use Python cache or not. Requires a pyproject.toml file.'
+      required: false
+      default: true
+      type: boolean
+    sphinxopts:
+      description: 'Set of options to pass to the Sphinx builder.'
+      default: '-j auto -W --keep-going'
+      required: false
+      type: string
+    dependencies:
+      description: 'Set of system dependencies.'
+      default: ''
+      required: false
+      type: string
+    requires-xvfb:
+        description: 'Requires the usage of X Virtual Frame Buffer.'
+        default: false
+        required: false
+        type: boolean
+    skip-install:
+        description: 'Whether to skip the installation of the Python library.'
+        default: false
+        required: false
+        type: boolean
+
+  runs:
+    using: "composite"
     steps:
-      - name: "Run Ansys documentation building action"
-        uses: pyansys/actions/doc-build@v2
+    
+      - name: "Install Git and clone project"
+        uses: actions/checkout@v3
+
+      - name: "Check if X Virtual Frame Buffer is needed"
+        shell: bash
+        if: inputs.requires-xvfb == 'true'
+        run: |
+          echo "NEEDED_DEPS=$(echo '${{ inputs.dependencies }} xvfb')" >> $GITHUB_ENV
+      - name: "Cache apt packages needed"
+        uses: awalsh128/cache-apt-pkgs-action@v1
         with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          packages: ${{ env.NEEDED_DEPS }}
+          version: 1.0
+
+      - name: "Install LaTeX"
+        shell: bash
+        run: |
+          sudo apt-get install texlive-latex-extra latexmk
+      - name: "Set up Python"
+        uses: pyansys/actions/_setup-python@main
+        with:
+          python-version: ${{ inputs.python-version }}
+          use-cache: ${{ inputs.use-python-cache }}
+
+      - name: "Update pip"
+        shell: bash
+        run: python -m pip install -U pip
+
+      - name: "Install Python library"
+        shell: bash
+        if: inputs.skip-install == 'false'
+        run:
+          python -m pip install .
+
+      - name: "Check if requirements.txt file exists"
+        shell: bash
+        run: |
+          echo "EXISTS_DOC_REQUIREMENTS=$(if [ -f requirements/requirements_doc.txt ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
+      - name: "Print previous output"
+        shell: bash
+        run:
+          echo "Output was found ${{ env.EXISTS_DOC_REQUIREMENTS }}"
+
+      - name: "Install documentation dependencies from requirements file"
+        shell: bash
+        if: env.EXISTS_DOC_REQUIREMENTS == 'true'
+        run: python -m pip install -r requirements/requirements_doc.txt
+
+      - name: "Install documentation dependencies from pyproject.toml"
+        shell: bash
+        if: env.EXISTS_DOC_REQUIREMENTS == 'false'
+        run: python -m pip install .[doc]
+      
+      - name: "Build HTML, PDF, and JSON documentation"
+        if: inputs.requires-xvfb == 'false'
+        shell: bash
+        run: |
+          make -C doc html SPHINXOPTS="${{ inputs.sphinxopts }}"
+          make -C doc pdf
+          make -C doc json SPHINXOPTS="${{ inputs.sphinxopts }}"
+      - name: "Build HTML and JSON documentation using xvfb"
+        if: inputs.requires-xvfb == 'true'
+        shell: bash
+        run: |
+          xvfb-run make -C doc html SPHINXOPTS="${{ inputs.sphinxopts }}"
+          xvfb-run make -C doc pdf
+          xvfb-run make -C doc json SPHINXOPTS="${{ inputs.sphinxopts }}"
+      - name: "Upload HTML documentation artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation-html
+          path: doc/_build/html
+          retention-days: 7
+
+      - name: "Upload PDF documentation artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation-pdf
+          path: doc/_build/latex/*.pdf
+          retention-days: 7
+
+  # docs-build:
+  #   name: Doc building
+  #   runs-on: ubuntu-latest
+  #   needs: [docs-style]
+  #   steps:
+  #     - name: "Run Ansys documentation building action"
+  #       uses: pyansys/actions/doc-build@v2
+  #       with:
+  #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
 
   build_test:
