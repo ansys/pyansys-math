@@ -26,20 +26,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  packages: read
-
 jobs:
-
-  # code-style:
-  #   name: "Code style checks"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "PyAnsys code style checks"
-  #       uses: pyansys/actions/code-style@v2
-  #       with:
-  #         python-version: ${{ env.MAIN_PYTHON_VERSION }}
-  
 
   code-style:
     name: Code style
