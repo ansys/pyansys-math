@@ -1,5 +1,5 @@
 """
-.. _ref_mapdl_math_basic:
+.. _ref_ansys-math_basic:
 
 PyMAPDL APDLMath Basic Operations
 ---------------------------------
@@ -12,12 +12,13 @@ The `ansys.mapdl.math` submodule gives access to APDLMath features
 inside PyMAPDL.
 
 """
-from ansys.mapdl.core import launch_mapdl
+
 import numpy as np
 
-# Start MAPDL as a service and create an APDLMath object.
-mapdl = launch_mapdl()
-mm = mapdl.math
+from ansys.math.core.math import launch_math
+
+# Start Ansys Math as a service.
+mm = launch_math()
 
 
 ###############################################################################
@@ -221,5 +222,5 @@ np_array = apdl_mat.asarray()
 print(np.allclose(apdl_mat, np_array))
 
 ###############################################################################
-# stop mapdl
-mapdl.exit()
+# Stop Ansys Math
+exit_math(mm)

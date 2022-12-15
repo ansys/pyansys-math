@@ -10,12 +10,12 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_scipy_sparse_matrix.py>`
+        Click :ref:`here <sphx_glr_download_examples_scipy_sparse_matrix.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr_examples_gallery_examples_01-apdlmath-examples_scipy_sparse_matrix.py:
+.. _sphx_glr_examples_scipy_sparse_matrix.py:
 
 
 APDLMath Sparse Matrices and SciPy Sparse Matrices
@@ -293,7 +293,7 @@ stop mapdl
    **Total running time of the script:** ( 0 minutes  2.250 seconds)
 
 
-.. _sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_scipy_sparse_matrix.py:
+.. _sphx_glr_download_examples_scipy_sparse_matrix.py:
 
 .. only:: html
 

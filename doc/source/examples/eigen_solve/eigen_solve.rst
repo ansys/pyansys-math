@@ -10,12 +10,12 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_eigen_solve.py>`
+        Click :ref:`here <sphx_glr_download_examples_eigen_solve.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr_examples_gallery_examples_01-apdlmath-examples_eigen_solve.py:
+.. _sphx_glr_examples_eigen_solve.py:
 
 
 .. _ref_mapdl_math_eigen_solve:
@@ -422,7 +422,7 @@ stop mapdl
    **Total running time of the script:** ( 0 minutes  7.387 seconds)
 
 
-.. _sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_eigen_solve.py:
+.. _sphx_glr_download_examples_eigen_solve.py:
 
 .. only:: html
 

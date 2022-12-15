@@ -10,12 +10,12 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_use_numpy_arrays.py>`
+        Click :ref:`here <sphx_glr_download_examples_use_numpy_arrays.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr_examples_gallery_examples_01-apdlmath-examples_use_numpy_arrays.py:
+.. _sphx_glr_examples_use_numpy_arrays.py:
 
 
 Manipulate APDLMath vectors or dense matrices as NumPy Arrays
@@ -361,7 +361,7 @@ stop mapdl
    **Total running time of the script:** ( 0 minutes  0.536 seconds)
 
 
-.. _sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_use_numpy_arrays.py:
+.. _sphx_glr_download_examples_use_numpy_arrays.py:
 
 .. only:: html
 

@@ -10,12 +10,12 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_solve_dense_matrix.py>`
+        Click :ref:`here <sphx_glr_download_examples_solve_dense_matrix.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr_examples_gallery_examples_01-apdlmath-examples_solve_dense_matrix.py:
+.. _sphx_glr_examples_solve_dense_matrix.py:
 
 
 Use APDLMath to Solve a Dense Matrix Linear System
@@ -218,7 +218,7 @@ stop mapdl
    **Total running time of the script:** ( 0 minutes  0.842 seconds)
 
 
-.. _sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_solve_dense_matrix.py:
+.. _sphx_glr_download_examples_solve_dense_matrix.py:
 
 .. only:: html
 

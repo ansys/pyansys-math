@@ -10,12 +10,12 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_basic_operations.py>`
+        Click :ref:`here <sphx_glr_download_examples_basic_operations.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr_examples_gallery_examples_01-apdlmath-examples_basic_operations.py:
+.. _sphx_glr_examples_basic_operations.py:
 
 
 .. _ref_mapdl_math_basic:
@@ -662,7 +662,7 @@ stop mapdl
    **Total running time of the script:** ( 0 minutes  2.795 seconds)
 
 
-.. _sphx_glr_download_examples_gallery_examples_01-apdlmath-examples_basic_operations.py:
+.. _sphx_glr_download_examples_basic_operations.py:
 
 .. only:: html
 

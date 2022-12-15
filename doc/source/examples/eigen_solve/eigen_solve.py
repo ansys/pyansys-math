@@ -16,9 +16,13 @@ from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 import numpy as np
 
-# Start MAPDL as a service and create an APDLMath object
+from ansys.math.core.math import launch_math
+
+# Start MAPDL as a service
 mapdl = launch_mapdl(loglevel="ERROR")
-mm = mapdl.math
+
+# Start Ansys Math
+mm = launch_math(mapdl)
 
 
 ###############################################################################
