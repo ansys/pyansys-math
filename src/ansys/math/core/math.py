@@ -19,6 +19,7 @@ from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
 from ansys.mapdl.core.mapdl_grpc import MapdlGrpc
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
+from ansys.mapdl.core.launcher import launch_mapdl
 import numpy as np
 
 MYCTYPE = {
@@ -116,22 +117,32 @@ class MapdlMath:
 
     """
 
-    def __init__(self, mapdl):
-        # if mapdl is None:
-        #     mapdl=launch_mapdl()
-        if not isinstance(mapdl, MapdlGrpc):
-            raise TypeError("``mapdl`` must be a MapdlGrpc instance")
-        self._mapdl_weakref = weakref.ref(mapdl)
+    def __init__(self, mapdl=None):
+        if mapdl is None:
+            mapdl = launch_mapdl()
+            # if not isinstance(mapdl, MapdlGrpc):
+            #     raise TypeError("``mapdl`` must be a MapdlGrpc instance")
+        self._mapdl = mapdl
+        # self._mapdl_weakref = weakref.ref(mapdl)
 
-    @property
-    def _mapdl(self):
-        """Return the weakly referenced instance of mapdl."""
-        return self._mapdl_weakref()
+    # @property
+    # def _mapdl(self):
+    #     """Return the weakly referenced instance of mapdl."""
+    #     return self._mapdl_weakref()
 
     @property
     def _server_version(self):
         """Return the version of MAPDL which is running in the background."""
         return self._mapdl._server_version
+    
+    @property
+    def _status(self):
+        """Print out the status of all APDLMath Objects"""
+        return self._mapdl.run("*STATUS,MATH", mute=False)
+
+    @property
+    def _parm(self):
+        return interp_star_status(self._status)
 
     def free(self):
         """Delete all vectors.
@@ -160,15 +171,6 @@ class MapdlMath:
 
         """
         print(self._status)
-
-    @property
-    def _status(self):
-        """Print out the status of all APDLMath Objects"""
-        return self._mapdl.run("*STATUS,MATH", mute=False)
-
-    @property
-    def _parm(self):
-        return interp_star_status(self._status)
 
     def vec(self, size=0, dtype=np.double, init=None, name=None, asarray=False):
         """Create a vector.
@@ -1174,9 +1176,9 @@ class MapdlMath:
 class ApdlMathObj:
     """Common class for MAPDL Math objects"""
 
-    def __init__(self, id_, mapdl, dtype=ObjType.GEN):
-        # if mapdl is None:
-        #     mapdl= launch_mapdl()
+    def __init__(self, id_, mapdl=None, dtype=ObjType.GEN):
+        if mapdl is None:
+            mapdl = launch_mapdl()
         self.id = id_
         self._mapdl = mapdl
         self.type = dtype
@@ -1792,17 +1794,17 @@ def dot(vec1, vec2) -> float:
     return mapdl.scalar_param("py_val")
 
 
-def launch_math(mapdl=None, **kwargs):
-    """
-    Launch an MAPDL instance in the background if none is filled.
+# def launch_math(mapdl=None, **kwargs):
+#     """
+#     Launch an MAPDL instance in the background if none is filled.
 
-    Args:
-        mapdl (MAPDL instance, optional): MAPDL instance. Defaults to None.
-    """
+#     Args:
+#         mapdl (MAPDL instance, optional): MAPDL instance. Defaults to None.
+#     """
 
-    if mapdl is None:
-        from ansys.mapdl.core import launch_mapdl
+#     if mapdl is None:
+#         from ansys.mapdl.core import launch_mapdl
 
-        mapdl = launch_mapdl(**kwargs)
+#         mapdl = launch_mapdl(**kwargs)
 
-    return MapdlMath(mapdl)
+#     return MapdlMath(mapdl)

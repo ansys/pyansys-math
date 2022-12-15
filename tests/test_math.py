@@ -10,8 +10,8 @@ import numpy as np
 import pytest
 from scipy import sparse
 
-import ansys.math.core.math as apdl_math
-from ansys.math.core.math import launch_math
+import ansys.math.core.math as amath
+# from ansys.math.core.math import launch_math
 
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
@@ -24,18 +24,15 @@ directory creation.
 """,
 )
 
-
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mod = launch_math(mapdl)
-    return mod
-
+    mm = amath.MapdlMath(mapdl)
+    return mm
 
 def test_ones(mm):
     v = mm.ones(10)
     assert v.size == 10
     assert v[0] == 1
-
 
 def test_rand(mm):
     w = mm.rand(10)
@@ -101,7 +98,7 @@ def test_invalid_dtype(mm):
 
 def test_vec(mm):
     vec = mm.vec(10, asarray=False)
-    assert isinstance(vec, apdl_math.AnsVec)
+    assert isinstance(vec, amath.AnsVec)
 
     arr = mm.vec(10, asarray=True)
     assert isinstance(arr, np.ndarray)
@@ -251,8 +248,8 @@ def test_load_stiff_mass_as_array(mm, cube_solve):
 
 
 def test_stiff_mass_name(mm, cube_solve):
-    kname = apdl_math.id_generator()
-    mname = apdl_math.id_generator()
+    kname = amath.id_generator()
+    mname = amath.id_generator()
 
     k = mm.stiff(name=kname)
     m = mm.mass(name=mname)
@@ -371,7 +368,7 @@ def test_solve(mm, cube_solve):
 def test_solve_alt(mm, cube_solve):
     k = mm.stiff()
     b = mm.rand(k.nrow)
-    eig_val = apdl_math.solve(k, b)
+    eig_val = amath.solve(k, b)
     assert eig_val.size == k.nrow
 
 
@@ -534,7 +531,7 @@ def test_get_dense(mm):
 
 
 def test_zeros_vec(mm):
-    assert isinstance(mm.zeros(10), apdl_math.AnsVec)
+    assert isinstance(mm.zeros(10), amath.AnsVec)
 
 
 def test_get_sparse(mm):
@@ -587,7 +584,7 @@ def test_dense(mm):
         # test if a APDLMath object can treated as an array
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
-        assert isinstance(apdl_mat, apdl_math.AnsMat)
+        assert isinstance(apdl_mat, amath.AnsMat)
         assert np.allclose(array, apdl_mat)
 
         with pytest.raises(TypeError):
@@ -614,11 +611,6 @@ def test_invalid_sparse_name(mm):
     mat = sparse.random(10, 10, density=0.05, format="csr", dtype=np.uint8)
     with pytest.raises(TypeError, match="must be a string"):
         mm.matrix(mat, name=1)
-
-
-def test_invalid_init():
-    with pytest.raises(TypeError):
-        apdl_math.MapdlMath(None)
 
 
 def test_free(mm):
@@ -707,12 +699,12 @@ def test_mult(mapdl, mm):
         assert mapdl.mult(m1=AA.id, m2=BB_trans.id, t2="Trans", m3=CC.id)
 
 
-def test__parm(mm, mapdl):
+def test__parm(mm):
     sz = 5000
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not meets_version(mapdl._server_version, (0, 4, 0)):
+    if not meets_version(mm._mapdl._server_version, (0, 4, 0)):
 
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
@@ -749,8 +741,8 @@ def test__parm(mm, mapdl):
         assert mm._parm["CC_PTR"]["type"] == "VEC"
 
 
-def test_vec2(mm, mapdl):
-    mapdl.clear()
+def test_vec2(mm):
+    mm._mapdl.clear()
 
     assert mm._parm == {}
 
@@ -778,3 +770,8 @@ def test_vec2(mm, mapdl):
     parameter_ = mm._parm["ASDF"]
     assert parameter_["type"] == "VEC"
     assert parameter_["dimensions"] == vec_.size
+
+
+@pytest.fixture(scope="module")
+def exit(mm):
+    return mm._mapdl.exit()
