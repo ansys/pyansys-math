@@ -391,10 +391,10 @@ Plot Accuracy of Eigenresults
 
 
 
-.. image-sg:: /examples/gallery_examples/01-apdlmath-examples/images/sphx_glr_eigen_solve_001.png
+.. figure:: ../images/sphx_glr_eigen_solve_001.png
    :alt: APDL Math Residual Error (%)
-   :srcset: /examples/gallery_examples/01-apdlmath-examples/images/sphx_glr_eigen_solve_001.png
-   :class: sphx-glr-single-img
+   :align: center
+   :figclass: sphx-glr-single-img
 
 
 

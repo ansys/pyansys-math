@@ -13,6 +13,9 @@
 .. _pymapdl_github: https://github.com/pyansys/pymapdl
 .. _pymapdl_examples: https://mapdl.docs.pyansys.com/examples/index.html
 
+.. #Ansys Math related
+.. _ansys_math: https://github.com/pyansys/ansys-math.git
+
 .. # Examples
 .. _examples_intro: https://ansyshelp.ansys.com/Views/Secured/corp/v212/en/ans_tec/tecintro.html
 

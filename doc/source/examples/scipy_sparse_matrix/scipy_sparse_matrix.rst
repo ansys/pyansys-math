@@ -87,10 +87,10 @@ graph of the sparse matrix
 
 
 
-.. image-sg:: /examples/gallery_examples/01-apdlmath-examples/images/sphx_glr_scipy_sparse_matrix_001.png
+.. figure:: ../images/sphx_glr_scipy_sparse_matrix_001.png
    :alt: scipy sparse matrix
-   :srcset: /examples/gallery_examples/01-apdlmath-examples/images/sphx_glr_scipy_sparse_matrix_001.png
-   :class: sphx-glr-single-img
+   :align: center
+   :figclass: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
