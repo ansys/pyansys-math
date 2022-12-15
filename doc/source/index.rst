@@ -1,5 +1,5 @@
 
-Ansys Math Python Libraries
+Ansys math python libraries
 ===========================
 
 This repository holds the Python Ansys mathematical libraries.

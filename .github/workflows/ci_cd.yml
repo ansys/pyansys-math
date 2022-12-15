@@ -15,8 +15,7 @@ on:
 
 env:
   MAIN_PYTHON_VERSION: '3.9'
-  PACKAGE_NAME: 'Ansys Math'
-  PYANSYS_OFF_SCREEN: True
+  PACKAGE_NAME: 'ansys-math-core'
   DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
   RESET_PIP_CACHE: 11
@@ -82,22 +81,18 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt update
-          sudo apt install libgl1-mesa-glx xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
-            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.python-version }}
+            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}
 
       - name: Install ansys-mapdl-core
         run: |
-          python -m pip install build
-          python -m build
-          python -m pip install dist/*.whl
-          xvfb-run python -c "from ansys.mapdl import core as pymapdl; print(pymapdl.Report())"
+          python -m pip ansys-mapdl-core
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v2.1.0
@@ -113,12 +108,6 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
-      - name: "Pull, launch, and validate Ubuntu MAPDL service from private"
-        run: .ci/start_mapdl_ubuntu.sh
-        if: ${{ contains( matrix.mapdl-version, 'ubuntu') }}
-        env:
-          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_IMAGE: ghcr.io/pyansys/mapdl:${{ matrix.mapdl-version }}
 
       - name: "Unit testing requirements installation"
         run: |
@@ -126,7 +115,7 @@ jobs:
 
       - name: "Unit testing"
         run: |
-          xvfb-run pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
+          pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
 
       - uses: codecov/codecov-action@v3
         name: "Upload coverage to Codecov"
@@ -239,7 +228,6 @@ jobs:
   #       name: 'Upload coverage to Codecov'
 
   release:
-
     name: "Release project to private PyPI, public PyPI and GitHub"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     needs: [build_test, doc-build]
