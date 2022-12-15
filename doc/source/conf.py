@@ -2,6 +2,7 @@
 from datetime import datetime
 
 from ansys_sphinx_theme import pyansys_logo_black as logo
+from ansys_sphinx_theme import ansys_favicon
 
 # Project information
 project = "ansys-math-core"
@@ -36,12 +37,12 @@ html_theme_options = {
 # Sphinx extensions
 extensions = [
     "jupyter_sphinx",
+    "notfound.extension",  # for the not found page.
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "numpydoc",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
-    "notfound.extension",  # for the not found page.
 ]
 
 # # -- Sphinx Gallery Options ---------------------------------------------------
@@ -99,6 +100,8 @@ numpydoc_validation_checks = {
     # type, unless multiple values are being returned"
 }
 
+# Favicon
+html_favicon = ansys_favicon
 
 # notfound.extension
 notfound_template = "404.rst"
