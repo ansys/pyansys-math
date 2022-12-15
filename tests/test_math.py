@@ -11,6 +11,7 @@ import pytest
 from scipy import sparse
 
 import ansys.math.core.math as amath
+
 # from ansys.math.core.math import launch_math
 
 # skip entire module unless HAS_GRPC
@@ -24,15 +25,18 @@ directory creation.
 """,
 )
 
+
 @pytest.fixture(scope="module")
 def mm(mapdl):
     mm = amath.MapdlMath(mapdl)
     return mm
 
+
 def test_ones(mm):
     v = mm.ones(10)
     assert v.size == 10
     assert v[0] == 1
+
 
 def test_rand(mm):
     w = mm.rand(10)

@@ -5,7 +5,6 @@ import os
 import random
 import string
 from warnings import warn
-import weakref
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
@@ -16,10 +15,9 @@ from ansys.mapdl.core.common_grpc import (
     DEFAULT_FILE_CHUNK_SIZE,
 )
 from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
-from ansys.mapdl.core.mapdl_grpc import MapdlGrpc
+from ansys.mapdl.core.launcher import launch_mapdl
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
-from ansys.mapdl.core.launcher import launch_mapdl
 import numpy as np
 
 MYCTYPE = {
@@ -134,7 +132,7 @@ class MapdlMath:
     def _server_version(self):
         """Return the version of MAPDL which is running in the background."""
         return self._mapdl._server_version
-    
+
     @property
     def _status(self):
         """Print out the status of all APDLMath Objects"""
