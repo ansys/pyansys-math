@@ -1,5 +1,5 @@
 """Contains the MapdlMath classes, allowing for math operations within
-MAPDL from Python.  """
+Ansys Math from Python."""
 from enum import Enum
 import os
 import random
