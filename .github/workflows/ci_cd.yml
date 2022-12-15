@@ -18,8 +18,7 @@ env:
   PACKAGE_NAME: 'ansys-math-core'
   DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
-  RESET_PIP_CACHE: 11
-  SPHINXOPTS: '-j auto -W --keep-going'
+  RESET_PIP_CACHE: 0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -128,7 +127,7 @@ jobs:
       - name: "Upload wheel and binaries"
         uses: actions/upload-artifact@v3
         with:
-          name: PyMAPDL-packages
+          name: Ansys-Math-packages
           path: dist/
           retention-days: 7
 
