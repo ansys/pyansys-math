@@ -91,7 +91,7 @@ jobs:
 
       - name: Install ansys-mapdl-core
         run: |
-          python -m pip ansys-mapdl-core
+          python -m pip install ansys-mapdl-core
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v2.1.0
