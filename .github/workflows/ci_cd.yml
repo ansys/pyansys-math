@@ -48,19 +48,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
 
-  doc-build:
-    name: Doc building
-    runs-on: ubuntu-latest
-    needs: [doc-style]
-    steps:
-      - name: "Run Ansys documentation building action"
-        uses: pyansys/actions/doc-build@v2
-        with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
-
   build_test:
     name: "Build and unit testing"
     runs-on: ubuntu-latest
+    needs: [doc-style, code-style]
     strategy:
       matrix:
         mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0'] #'v22.2-ubuntu'
@@ -198,6 +189,17 @@ jobs:
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
 
+  doc-build:
+    name: Doc building
+    runs-on: ubuntu-latest
+    needs: [build_test]
+    steps:
+      - name: "Run Ansys documentation building action"
+        uses: pyansys/actions/doc-build@v2
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+
   doc-deploy-dev:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
@@ -208,23 +210,23 @@ jobs:
       - name: "Deploy the latest documentation"
         uses: pyansys/actions/doc-deploy-dev@v2
         with:
-            doc-artifact-name: '<html-artifact-name>'
             cname: ${{ env.DOCUMENTATION_CNAME }}
             token: ${{ secrets.GITHUB_TOKEN }}
+
 
   doc-deploy-stable:
     name: "Deploy stable documentation"
     # Deploy release documentation when creating a new tag
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     runs-on: ubuntu-latest
-    needs: doc-deploy-dev
+    needs: doc-build
     steps:
       - name: "Deploy the stable documentation"
         uses: pyansys/actions/doc-deploy-stable@v2
         with:
-            doc-artifact-name: '<html-artifact-name>'
             cname: ${{ env.DOCUMENTATION_CNAME }}
             token: ${{ secrets.GITHUB_TOKEN }}
+            python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
 
   release:
