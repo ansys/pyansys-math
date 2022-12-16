@@ -19,6 +19,7 @@ env:
   DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
   RESET_PIP_CACHE: 0
+  DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -195,6 +196,36 @@ jobs:
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.err' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.log' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
+
+
+  doc-deploy-dev:
+    name: "Deploy development documentation"
+    # Deploy development only when merging to main
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: doc-build
+    steps:
+      - name: "Deploy the latest documentation"
+        uses: pyansys/actions/doc-deploy-dev@v2
+        with:
+            doc-artifact-name: '<html-artifact-name>'
+            cname: ${{ env.DOCUMENTATION_CNAME }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+
+  doc-deploy-stable:
+    name: "Deploy stable documentation"
+    # Deploy release documentation when creating a new tag
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    needs: doc-deploy-dev
+    steps:
+      - name: "Deploy the stable documentation"
+        uses: pyansys/actions/doc-deploy-stable@v2
+        with:
+            doc-artifact-name: '<html-artifact-name>'
+            cname: ${{ env.DOCUMENTATION_CNAME }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+
 
   release:
     name: "Release project to private PyPI, public PyPI and GitHub"

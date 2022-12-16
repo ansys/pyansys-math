@@ -1,8 +1,11 @@
 """Sphinx documentation configuration file."""
+import os
+
 from datetime import datetime
 
 from ansys_sphinx_theme import ansys_favicon
 from ansys_sphinx_theme import pyansys_logo_black as logo
+from ansys_sphinx_theme import get_version_match
 
 # Project information
 project = "ansys-math-core"
@@ -14,6 +17,10 @@ release = version = "0.1.dev0"
 html_logo = logo
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "Ansys Math"
+
+cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
+"""The canonical name of the webpage hosting the documentation."""
+
 
 # specify the location of your github repo
 html_theme_options = {
@@ -30,6 +37,11 @@ html_theme_options = {
             "icon": "fa fa-comment fa-fw",
         },
     ],
+    "switcher": {
+        "json_url": f"https://{cname}/release/versions.json",
+        "version_match": get_version_match(__version__),
+    },
+    "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
 }
 
 # Sphinx extensions
