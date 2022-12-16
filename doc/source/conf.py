@@ -2,8 +2,12 @@
 from datetime import datetime
 import os
 
-from ansys_sphinx_theme import ansys_favicon, get_version_match
-from ansys_sphinx_theme import pyansys_logo_black as logo
+from ansys_sphinx_theme import (
+    ansys_favicon, 
+    get_version_match,
+    pyansys_logo_black,
+)
+from ansys.math.core import __version__
 
 # Project information
 project = "ansys-math-core"
@@ -12,7 +16,7 @@ author = "ANSYS, Inc."
 release = version = "0.1.dev0"
 
 # Select desired logo, theme, and declare the html title
-html_logo = logo
+html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "Ansys Math"
 
