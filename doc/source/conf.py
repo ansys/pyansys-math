@@ -1,11 +1,9 @@
 """Sphinx documentation configuration file."""
+from datetime import datetime
 import os
 
-from datetime import datetime
-
-from ansys_sphinx_theme import ansys_favicon
+from ansys_sphinx_theme import ansys_favicon, get_version_match
 from ansys_sphinx_theme import pyansys_logo_black as logo
-from ansys_sphinx_theme import get_version_match
 
 # Project information
 project = "ansys-math-core"
