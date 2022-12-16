@@ -1,0 +1,241 @@
+# check spelling, codestyle
+name: GitHub CI
+
+# run only on main branch.  This avoids duplicated actions on PRs
+on:
+  workflow_dispatch:
+  schedule: # UTC at 0300
+    - cron: "0 3 * * *"
+  pull_request:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+
+env:
+  MAIN_PYTHON_VERSION: '3.9'
+  PACKAGE_NAME: 'ansys-math-core'
+  DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
+  DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
+  RESET_PIP_CACHE: 0
+  DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  code-style:
+    name: "Code style"
+    runs-on: ubuntu-latest
+    steps:
+      - name: PyAnsys code style checks
+        uses: pyansys/actions/code-style@v2
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+
+  doc-style:
+    name: "Documentation Style Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: PyAnsys documentation style checks
+        uses: pyansys/actions/doc-style@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  build_test:
+    name: "Build and unit testing"
+    runs-on: ubuntu-latest
+    needs: [doc-style, code-style]
+    strategy:
+      matrix:
+        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0'] #'v22.2-ubuntu'
+    env:
+      PYMAPDL_PORT: 21000  # default won't work on GitHub runners
+      PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
+      PYMAPDL_START_INSTANCE: FALSE
+
+    steps:
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+      - name: "Install os packages"
+        run: |
+          sudo apt update
+
+      - name: "Cache pip"
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}
+
+      - name: Install ansys-mapdl-core
+        run: |
+          python -m pip install ansys-mapdl-core
+
+      # - name: Install ansys-math-core
+      #   run: |
+      #     python -m pip install build
+      #     python -m build
+      #     python -m pip install dist/*.whl
+      #     xvfb-run python -c "from ansys.math import core as amath; print(amath.Report())"
+
+      - name: "Login in Github container registry"
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        if: ${{ !contains( matrix.mapdl-version, 'ubuntu') }}
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
+
+
+      - name: "Unit testing requirements installation"
+        run: |
+          python -m pip install .[tests]
+
+      - name: "Unit testing"
+        run: |
+          pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
+
+      - uses: codecov/codecov-action@v3
+        name: "Upload coverage to Codecov"
+
+      # - name: "Check package"
+      #   run: |
+      #     pip install twine
+      #     twine check dist/*
+
+      - name: "Upload wheel and binaries"
+        uses: actions/upload-artifact@v3
+        with:
+          name: Ansys-Math-packages
+          path: dist/
+          retention-days: 7
+
+      - name: "Display files structure"
+        if: always()
+        run: |
+          mkdir logs-${{ matrix.mapdl-version }} && echo "Successfully generated directory ${{ matrix.mapdl-version }}"
+          echo "::group:: Display files structure" && ls -R && echo "::endgroup::"
+          ls -R > ./logs-${{ matrix.mapdl-version }}/files_structure.txt
+
+      - name: "Display docker files structures"
+        if: always()
+        run: |
+          echo "::group:: Display files structure" && docker exec mapdl /bin/bash -c "ls -R" && echo "::endgroup::"
+          docker exec mapdl /bin/bash -c "ls -R" > ./logs-${{ matrix.mapdl-version }}/docker_files_structure.txt
+
+      - name: "Collect MAPDL logs on failure"
+        if: ${{ always() && !contains( matrix.mapdl-version, 'ubuntu') }}
+        run: |
+          docker exec mapdl /bin/bash -c "mkdir -p /mapdl_logs && echo 'Successfully created directory inside docker container'"
+          docker exec mapdl /bin/bash -c "if compgen -G 'file*.out' > /dev/null ;then cp -f /file*.out /mapdl_logs && echo 'Successfully copied out files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G 'file*.err' > /dev/null ;then cp -f /file*.err /mapdl_logs && echo 'Successfully copied err files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G 'file*.log' > /dev/null ;then cp -f /file*.log /mapdl_logs && echo 'Successfully copied log files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G '*.crash' > /dev/null ;then cp -f /*.crash /mapdl_logs && echo 'Successfully copied crash files.'; fi"
+          docker cp mapdl:/mapdl_logs/. ./logs-${{ matrix.mapdl-version }}/.
+
+
+      - name: "Collect MAPDL logs on failure for ubuntu image"
+        if: ${{ always() && contains( matrix.mapdl-version,'ubuntu') }}
+        run: |
+          docker exec mapdl /bin/bash -c "mkdir -p /mapdl_logs && echo 'Successfully created directory inside docker container'"
+          docker exec mapdl /bin/bash -c "if compgen -G '/jobs/file*.out' > /dev/null ;then cp -f /jobs/file*.out /mapdl_logs && echo 'Successfully copied out files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G '/jobs/file*.err' > /dev/null ;then cp -f /jobs/file*.err /mapdl_logs && echo 'Successfully copied err files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G '/jobs/file*.log' > /dev/null ;then cp -f /jobs/file*.log /mapdl_logs && echo 'Successfully copied log files.'; fi"
+          docker exec mapdl /bin/bash -c "if compgen -G '/jobs/*.crash' > /dev/null ;then cp -f /jobs/*.crash /mapdl_logs && echo 'Successfully copied crash files.'; fi"
+          docker cp mapdl:/mapdl_logs/. ./logs-${{ matrix.mapdl-version }}/.
+
+      - name: "Tar logs"
+        if: always()
+        run: |
+          cp log.txt ./logs-${{ matrix.mapdl-version }}/log.txt
+          tar cvzf ./logs-${{ matrix.mapdl-version }}.tgz ./logs-${{ matrix.mapdl-version }}
+
+      - name: "Upload logs to GitHub"
+        if: always()
+        uses: actions/upload-artifact@master
+        with:
+          name: logs-${{ matrix.mapdl-version }}.tgz
+          path: ./logs-${{ matrix.mapdl-version }}.tgz
+
+      - name: "Display MAPDL Logs"
+        if: always()
+        run: cat log.txt
+
+      - name: "List main files"
+        if: always()
+        run: |
+          if compgen -G './logs-${{ matrix.mapdl-version }}/*.err' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-${{ matrix.mapdl-version }}/*.log' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
+
+
+  doc-build:
+    name: Doc building
+    runs-on: ubuntu-latest
+    needs: [build_test]
+    steps:
+      - name: "Run Ansys documentation building action"
+        uses: pyansys/actions/doc-build@v2
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+
+  doc-deploy-dev:
+    name: "Deploy development documentation"
+    # Deploy development only when merging to main
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: doc-build
+    steps:
+      - name: "Deploy the latest documentation"
+        uses: pyansys/actions/doc-deploy-dev@v2
+        with:
+            cname: ${{ env.DOCUMENTATION_CNAME }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  doc-deploy-stable:
+    name: "Deploy stable documentation"
+    # Deploy release documentation when creating a new tag
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    needs: doc-build
+    steps:
+      - name: "Deploy the stable documentation"
+        uses: pyansys/actions/doc-deploy-stable@v2
+        with:
+            cname: ${{ env.DOCUMENTATION_CNAME }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+            python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+
+  release:
+    name: "Release project to private PyPI, public PyPI and GitHub"
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    needs: [build_test, doc-deploy-stable]
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: "Release to GitHub"
+      uses: pyansys/actions/release-github@v1
+      with:
+        library-name: ${{ env.PACKAGE_NAME }}

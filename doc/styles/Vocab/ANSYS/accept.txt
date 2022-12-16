@@ -1,0 +1,8 @@
+ANSYS
+Ansys
+ansyspres
+nax
+tickness
+struc
+parm
+nce
