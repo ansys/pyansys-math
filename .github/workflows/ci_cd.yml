@@ -28,7 +28,7 @@ concurrency:
 jobs:
 
   code-style:
-    name: Code style
+    name: "Code style"
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys code style checks
@@ -38,7 +38,7 @@ jobs:
 
 
   doc-style:
-    name: Documentation Style Check
+    name: "Documentation Style Check"
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys documentation style checks
