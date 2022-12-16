@@ -17,13 +17,11 @@ html_short_title = html_title = "Ansys Math"
 
 # specify the location of your github repo
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/pymapdl-examples",
+    "github_url": "https://github.com/pyansys/ansys-math",
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "additional_breadcrumbs": [
         ("PyAnsys", "https://docs.pyansys.com/"),
-        ("Ansys Math", "https://ansys-math.docs.pyansys.com/"),
-        ("Examples", "https://ansys-math.docs.pyansys.com/examples/"),
     ],
     "icon_links": [
         {
