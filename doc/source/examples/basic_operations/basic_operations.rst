@@ -36,17 +36,10 @@ inside PyMAPDL.
 
     import numpy as np
 
-    from ansys.mapdl.core import launch_mapdl
+    import ansys.math.core.math as amath
 
-    # Start MAPDL as a service and create an APDLMath object.
-    mapdl = launch_mapdl()
-    mm = mapdl.math
-
-
-
-
-
-
+    # Start Ansys Math as a service.
+    mm = amath.Math()
 
 
 
@@ -648,7 +641,7 @@ stop mapdl
 
 .. code-block:: default
 
-    mapdl.exit()
+    mm._mapdl.exit()
 
 
 

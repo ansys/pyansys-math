@@ -31,12 +31,11 @@ Sparse Matrices.
 
     import matplotlib.pylab as plt
 
-    from ansys.mapdl.core import launch_mapdl
     from ansys.mapdl.core.examples import vmfiles
+    import ansys.math.core.math as amath
 
-    mapdl = launch_mapdl()
-    mm = mapdl.math
-
+    # Start Ansys Math
+    mm = amath.MapdlMath()
 
 
 
@@ -54,7 +53,7 @@ stiffness matrix into APDLmath.
 
 .. code-block:: default
 
-    out = mapdl.input(vmfiles["vm153"])
+    out = mm._mapdl.input(vmfiles["vm153"])
     k = mm.stiff(fname="PRSMEMB.full")
     k
 
@@ -279,7 +278,7 @@ stop mapdl
 
 .. code-block:: default
 
-    mapdl.exit()
+    mm._mapdl.exit()
 
 
 

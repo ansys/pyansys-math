@@ -15,11 +15,10 @@ inside PyMAPDL.
 
 import numpy as np
 
-from ansys.math.core.math import launch_math
+import ansys.math.core.math as amath
 
 # Start Ansys Math as a service.
-mm = launch_math()
-
+mm = amath.Math()
 
 ###############################################################################
 # Create and Manipulate Vectors
@@ -75,6 +74,7 @@ z.norm()
 # Equivalent APDLMath Commands:
 # - `*VEC,Z,D,COPY,V`
 # - `*AXPY,1,,W,1,,Z`
+
 z = mm.add(v, w)
 z.norm()
 
@@ -87,9 +87,9 @@ z.norm()
 # Equivalent APDLMath Commands:
 # - `*VEC,Z,D,COPY,V`
 # - `*AXPY,-1,,W,1,,Z`
+
 z = mm.subtract(v, w)
 print(z)
-
 
 ###############################################################################
 # Dot product of 2 vectors
@@ -109,6 +109,7 @@ print("Dot product :", str(vw))
 # MAPDL Commands:
 # - `*AXPY,1,,V,1,,Z`
 # - `*PRINT,Z`
+
 v += v
 print(v)
 
@@ -117,12 +118,13 @@ print(v)
 # In-Place Multiplication
 #
 # MAPDL Command: `*SCAL,v,2`
+
 v *= 2
 print(v)
 
 ###############################################################################
 # In-Place Multiplication
-#
+
 v /= 2.0
 print(v)
 
@@ -149,6 +151,7 @@ m1, m2
 # Mapdl Commands
 # - `*DMAT,m3,D,COPY,m1`
 # - `*AXPY,1,,m2,1,,m3`
+
 m3 = m1 + m2
 print(m3)
 
@@ -157,20 +160,21 @@ print(m3)
 
 ###############################################################################
 # ***Transpose*** a Matrix
-#
+
 m4 = m3.T
 print(m4)
 
 
 ###############################################################################
 # As for vectors, methods are also available as an alternative to operators.
+
 m3 = mm.add(m1, m2)
 print(m3)
 
 
 ###############################################################################
 # Compute a matrix vector multiplication
-#
+
 mw = m3.dot(m4)
 print(mw)
 
@@ -181,6 +185,7 @@ print(mw)
 #
 # APDLMath Matrix
 # ~~~~~~~~~~~~~~~
+
 type(m1)
 print(m1)
 m1
@@ -188,7 +193,7 @@ m1
 
 ###############################################################################
 # APDLMath Vector
-#
+
 type(w)
 print(w)
 w
@@ -199,6 +204,7 @@ w
 # Regardless of the underlying APDLMath object type, you are generally
 # able to perform most numpy or scipy operations on these arrays.  You
 # can do this one of two ways.  First, you can convert a matrix to a numpy array:
+
 apdl_mat = mm.rand(5, 5)
 np_mat = apdl_mat.asarray()
 print(np_mat)
@@ -209,6 +215,7 @@ print(np_mat)
 #
 # This works because PyMAPDL copies over the matrix to the local
 # python memory and then computes the max using numpy.
+
 print(np.max(apdl_mat))
 
 
@@ -216,11 +223,12 @@ print(np.max(apdl_mat))
 # This works for most numpy operations, but keep in mind that
 # operations that are supported within MAPDL (such as adding or
 # multiplying arrays) will compute much faster as the data is not copied.
-#
+
 apdl_arr = mm.rand(5, 5)
 np_array = apdl_mat.asarray()
 print(np.allclose(apdl_mat, np_array))
 
 ###############################################################################
 # Stop Ansys Math
-exit_math(mm)
+
+mm._mapdl.exit()

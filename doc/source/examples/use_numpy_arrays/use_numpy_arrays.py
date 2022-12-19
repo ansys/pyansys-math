@@ -8,13 +8,12 @@ Python via numpy arrays.
     This example requires Ansys 2021R2.
 
 """
-from ansys.mapdl.core import launch_mapdl
 import numpy as np
 
-# Start MAPDL as a service and disable all but error messages.
-# Create an APDLMath object.
-mapdl = launch_mapdl()
-mm = mapdl.math
+import ansys.math.core.math as amath
+
+# Start Ansys Math
+mm = amath.Math()
 
 
 ###############################################################################
@@ -103,4 +102,4 @@ print(np.allclose(from_ans, np_rand))
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

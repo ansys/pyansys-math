@@ -48,7 +48,7 @@ This example shows:
 
 .. GENERATED FROM PYTHON SOURCE LINES 20-21
 
-First load python packages we need for this example
+Load python packages we need for this example
 
 .. GENERATED FROM PYTHON SOURCE LINES 21-30
 
@@ -61,12 +61,8 @@ First load python packages we need for this example
     import scipy
     from scipy.sparse.linalg import eigsh
 
-    from ansys.mapdl.core import examples, launch_mapdl
-
-
-
-
-
+    from ansys.mapdl.core import examples
+    import ansys.math.core.math as amath
 
 
 
@@ -74,19 +70,15 @@ First load python packages we need for this example
 
 Next:
 
-- Load the ansys.mapdl module
-- Get the ``Math`` module of PyMapdl
+- Get the ``Math`` module of PyAnsys
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 36-40
 
 .. code-block:: default
 
-    mapdl = launch_mapdl()
-    print(mapdl)
-    mm = mapdl.math
-
-
+    # Start Ansys Math
+    mm = amath.Math()
 
 
 
@@ -112,7 +104,7 @@ First load the input file using MAPDL.
 
 .. code-block:: default
 
-    print(mapdl.input(examples.examples.wing_model))
+    print(mm._mapdl.input(examples.examples.wing_model))
 
 
 
@@ -158,7 +150,7 @@ Plot and mesh using the ``eplot`` method.
 
 .. code-block:: default
 
-    mapdl.eplot()
+    mm._mapdl.eplot()
 
 
 
@@ -184,13 +176,13 @@ file.
 .. code-block:: default
 
 
-    print(mapdl.slashsolu())
-    print(mapdl.antype(antype="MODAL"))
-    print(mapdl.modopt(method="LANB", nmode="10", freqb="1."))
-    print(mapdl.wrfull(ldstep="1"))
+    print(mm._mapdl.slashsolu())
+    print(mm._mapdl.antype(antype="MODAL"))
+    print(mm._mapdl.modopt(method="LANB", nmode="10", freqb="1."))
+    print(mm._mapdl.wrfull(ldstep="1"))
 
     # store the output of the solve command
-    output = mapdl.solve()
+    output = mm._mapdl.solve()
 
 
 
@@ -223,7 +215,7 @@ Read the sparse matrices using PyMapdl.
 
 .. code-block:: default
 
-    mapdl.finish()
+    mm._mapdl.finish()
     mm.free()
     k = mm.stiff(fname="file.full")
     M = mm.mass(fname="file.full")
@@ -582,7 +574,7 @@ stop mapdl
 
 .. code-block:: default
 
-    mapdl.exit()
+    mm._mapdl.exit()
 
 
 

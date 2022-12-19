@@ -28,13 +28,11 @@ sparse or dense matrices.
 
 .. code-block:: default
 
-    from ansys.mapdl.core import launch_mapdl
     from ansys.mapdl.core.examples import vmfiles
+    import ansys.math.core.math as amath
 
-    # Start MAPDL as a service and create an APDLMath object.
-    mapdl = launch_mapdl()
-    mm = mapdl.math
-
+    # Start Ansys Math
+    mm = amath.Math()
 
 
 
@@ -58,7 +56,7 @@ matrix, mass matrix, and the load vector.
 
 .. code-block:: default
 
-    out = mapdl.input(vmfiles["vm153"])
+    out = mm._mapdl.input(vmfiles["vm153"])
 
 
 
@@ -76,7 +74,7 @@ List the files in current directory
 
 .. code-block:: default
 
-    mapdl.list_files()
+    mm._mapdl.list_files()
 
 
 
@@ -333,13 +331,13 @@ Delete all APDLMath Objects
 
 .. GENERATED FROM PYTHON SOURCE LINES 99-100
 
-stop mapdl
+Stop mapdl
 
 .. GENERATED FROM PYTHON SOURCE LINES 100-101
 
 .. code-block:: default
 
-    mapdl.exit()
+    mm._mapdl.exit()
 
 
 

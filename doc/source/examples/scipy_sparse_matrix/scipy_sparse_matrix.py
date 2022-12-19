@@ -7,18 +7,18 @@ stiffness or mass matrices extracted from APDL .Full Files) into SciPy
 Sparse Matrices.
 
 """
-from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 
-mapdl = launch_mapdl()
-mm = mapdl.math
+import ansys.math.core.math as amath
 
+# Start Ansys Math
+mm = amath.Math()
 
 ################################################################################
 # Load and solve verification manual example 153.  Then load the
 # stiffness matrix into APDLmath.
-out = mapdl.input(vmfiles["vm153"])
+out = mm._mapdl.input(vmfiles["vm153"])
 k = mm.stiff(fname="PRSMEMB.full")
 k
 
@@ -93,4 +93,4 @@ print("name(msub)=" + msub.id)
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

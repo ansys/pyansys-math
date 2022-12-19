@@ -1,4 +1,4 @@
-"""Contains the MapdlMath classes, allowing for math operations within
+"""Contains the Math classes, allowing for math operations within
 Ansys Math from Python."""
 from enum import Enum
 import os
@@ -6,7 +6,6 @@ import random
 import string
 from warnings import warn
 
-from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
 from ansys.mapdl.core.check_version import VersionError, meets_version, version_requires
 from ansys.mapdl.core.common_grpc import (
@@ -91,8 +90,8 @@ def list_allowed_dtypes():
     return "\n".join([f"{dtype}" for dtype in dtypes])
 
 
-class MapdlMath:
-    """Abstract mapdl math class.
+class Math:
+    """Abstract math class.
 
     Examples
     --------
@@ -403,7 +402,7 @@ class MapdlMath:
         Returns
         -------
         AnsMat
-            MapdlMath matrix.
+            Math matrix.
 
         Examples
         --------
@@ -1745,8 +1744,8 @@ def rand(obj):
 
     Parameters
     ----------
-    obj : ansys.math.MapdlMath object
-        MapdlMath object
+    obj : ansys.math.Math object
+        Math object
 
     Examples
     --------
@@ -1805,4 +1804,4 @@ def dot(vec1, vec2) -> float:
 
 #         mapdl = launch_mapdl(**kwargs)
 
-#     return MapdlMath(mapdl)
+#     return Math(mapdl)

@@ -7,18 +7,17 @@ Use the APDLMath module to solve a Dense Matrix Linear System.
 
 import time
 
-from ansys.mapdl.core import launch_mapdl
-import numpy.linalg as np
+import numpy.linalg as npl
 
-# Start MAPDL as a service and create an APDLMath object.
-mapdl = launch_mapdl()
-mm = mapdl.math
+import ansys.math.core.math as amath
 
+# Start Ansys Math
+mm = amath.Math()
 
 ###############################################################################
 # Allocate a Dense Matrix in the APDLMath workspace
 #
-mapdl.clear()
+mm._mapdl.clear()
 dim = 1000
 a = mm.rand(dim, dim)
 b = mm.rand(dim)
@@ -53,15 +52,15 @@ mm.norm(x)
 print(f"Solving a ({dim} x {dim}) dense linear system using numpy...")
 
 t1 = time.time()
-x_py = np.linalg.solve(a_py, b_py)
+x_py = npl.solve(a_py, b_py)
 t2 = time.time()
 print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 
 ###############################################################################
 # Norm of the numpy Solution
 #
-np.linalg.norm(x_py)
+npl.norm(x_py)
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

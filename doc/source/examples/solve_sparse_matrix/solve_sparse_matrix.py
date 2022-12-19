@@ -6,13 +6,12 @@ Using APDLMath, you can solve linear systems of equations based on
 sparse or dense matrices.
 
 """
-from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core.examples import vmfiles
 
-# Start MAPDL as a service and create an APDLMath object.
-mapdl = launch_mapdl()
-mm = mapdl.math
+import ansys.math.core.math as amath
 
+# Start Ansys Math
+mm = amath.Math()
 
 ###############################################################################
 # Factorize and Solve Sparse Linear Systems
@@ -23,12 +22,12 @@ mm = mapdl.math
 # After a solve command, the full contains the assemblied stiffness
 # matrix, mass matrix, and the load vector.
 #
-out = mapdl.input(vmfiles["vm153"])
+out = mm._mapdl.input(vmfiles["vm153"])
 
 ###############################################################################
 # List the files in current directory
 #
-mapdl.list_files()
+mm._mapdl.list_files()
 
 ###############################################################################
 # Extract the Stiffness matrix from the ``FULL`` file, in a sparse
@@ -97,4 +96,4 @@ mm.free()
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

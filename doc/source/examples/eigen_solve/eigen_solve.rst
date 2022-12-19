@@ -36,15 +36,12 @@ your own sparse or dense matrices and solve those.
     import matplotlib.pylab as plt
     import numpy as np
 
-    from ansys.mapdl.core import launch_mapdl
     from ansys.mapdl.core.examples import vmfiles
 
-    # Start MAPDL as a service and create an APDLMath object
-    mapdl = launch_mapdl(loglevel="ERROR")
-    mm = mapdl.math
+    import ansys.math.core.math as amath
 
-
-
+    # Start Ansys Math
+    mm = amath.Math()
 
 
 
@@ -408,7 +405,7 @@ stop mapdl
 
 .. code-block:: default
 
-    mapdl.exit()
+    mm._mapdl.exit()
 
 
 

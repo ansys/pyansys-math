@@ -17,35 +17,30 @@ This example shows:
 import math
 
 ###############################################################################
-# First load python packages we need for this example
+# Load python packages we need for this example
 import time
 
-from ansys.mapdl.core import examples, launch_mapdl
+from ansys.mapdl.core import examples
 import matplotlib.pylab as plt
 import numpy as np
 import scipy
 from scipy.sparse.linalg import eigsh
 
-###############################################################################
-# Next:
-#
-# - Load the ansys.mapdl module
-# - Get the ``Math`` module of PyMapdl
-#
-mapdl = launch_mapdl()
-print(mapdl)
-mm = mapdl.math
+import ansys.math.core.math as amath
+
+# Start Ansys Math
+mm = amath.Math()
 
 ###############################################################################
 # APDLMath EigenSolve
 # First load the input file using MAPDL.
 #
-print(mapdl.input(examples.examples.wing_model))
+print(mm._mapdl.input(examples.examples.wing_model))
 
 
 ###############################################################################
 # Plot and mesh using the ``eplot`` method.
-mapdl.eplot()
+mm._mapdl.eplot()
 
 
 ###############################################################################
@@ -53,19 +48,19 @@ mapdl.eplot()
 # matrices to be formed. MAPDL stores these matrices in a ``.FULL``
 # file.
 
-print(mapdl.slashsolu())
-print(mapdl.antype(antype="MODAL"))
-print(mapdl.modopt(method="LANB", nmode="10", freqb="1."))
-print(mapdl.wrfull(ldstep="1"))
+print(mm._mapdl.slashsolu())
+print(mm._mapdl.antype(antype="MODAL"))
+print(mm._mapdl.modopt(method="LANB", nmode="10", freqb="1."))
+print(mm._mapdl.wrfull(ldstep="1"))
 
 # store the output of the solve command
-output = mapdl.solve()
+output = mm._mapdl.solve()
 
 
 ###############################################################################
 # Read the sparse matrices using PyMapdl.
 #
-mapdl.finish()
+mm._mapdl.finish()
 mm.free()
 k = mm.stiff(fname="file.full")
 M = mm.mass(fname="file.full")
@@ -216,4 +211,4 @@ print(f"Mapdl is {ratio:.3} times faster")
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

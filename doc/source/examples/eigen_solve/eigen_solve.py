@@ -11,25 +11,20 @@ your own sparse or dense matrices and solve those.
 """
 import time
 
-from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 import numpy as np
 
-from ansys.math.core.math import launch_math
-
-# Start MAPDL as a service
-mapdl = launch_mapdl(loglevel="ERROR")
+import ansys.math.core.math as amath
 
 # Start Ansys Math
-mm = launch_math(mapdl)
-
+mm = amath.Math()
 
 ###############################################################################
 # First we get the `STIFF` and `MASS` matrices from the full file
 # after running the input file from Verification Manual 153
 #
-out = mapdl.input(vmfiles["vm153"])
+out = mm._mapdl.input(vmfiles["vm153"])
 
 k = mm.stiff(fname="PRSMEMB.full")
 m = mm.mass(fname="PRSMEMB.full")
@@ -178,4 +173,4 @@ plt.show()
 
 ###############################################################################
 # stop mapdl
-mapdl.exit()
+mm._mapdl.exit()

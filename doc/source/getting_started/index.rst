@@ -48,11 +48,11 @@ Check that you can start Ansys Math from Python by running:
 
 .. code:: python
 
-    >>> from ansys.math.core.math import launch_math
-    >>> mm = launch_math()
-    >>> print(mm)
+    import ansys.math.core.math as amath
 
-        !!!!!!!!! TO BE MODIFIED  !!!!!!!!!!!!!!!!!
+    # Start Ansys Math
+    mm = amath.Math()
+    print(mm)
 
 
 If you see a response from the server, congratulations. You're ready
