@@ -560,6 +560,7 @@ can do this one of two ways.  First, you can convert a matrix to a numpy array:
 
 
 
+
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none

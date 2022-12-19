@@ -192,7 +192,7 @@ Get a copy of the load vector as a numpy array
 
 .. GENERATED FROM PYTHON SOURCE LINES 64-66
 
-Factorize the Stifness Matrix using the MAPDL DSPARSE solver
+Factorize the Stiffness Matrix using the MAPDL DSPARSE solver
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 66-68
