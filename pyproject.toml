@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "ansys-maths"
-version = "0.0.dev0"
+version = "0.1.dev0"
 description = "A Python wrapper for Ansys Math libraries."
 readme = "README.rst"
 requires-python = ">=3.7"
@@ -27,8 +27,6 @@ classifiers=[
 ]
 dependencies = [
     "ansys-api-mapdl==0.5.1",  # supports at least 2020R2 - 2022R1
-    "ansys-corba; python_version < '3.9'",
-    "ansys-mapdl-reader>=0.51.7",
     "ansys-mapdl-core>=0.63.3",
     "numpy>=1.14.0",
 ]
@@ -44,11 +42,12 @@ tests = [
 doc = [
     "ansys-mapdl-core>=0.63.3",
     "Sphinx==5.3.0",
-    "ansys-sphinx-theme==0.7.1",
+    "ansys-sphinx-theme==0.8.0",
     "jupyter_sphinx==0.4.0",
     "jupyterlab>=3.2.8",
     "numpydoc==1.5.0",
     "sphinx-copybutton==0.5.1",
+    "sphinx-notfound-page==0.8.3",
 ]
 
 [tool.flit.module]
@@ -69,3 +68,8 @@ src_paths = ["doc", "src", "tests"]
 
 [tool.coverage.report]
 show_missing = true
+
+[tool.codespell]
+skip = '*.pyc,*.txt,*.gif,*.png,*.jpg,*.js,*.html,*.doctree,*.ttf,*.woff,*.woff2,*.eot,*.mp4,*.inv,*.pickle,*.ipynb,flycheck*,./.git/*,./.hypothesis/*,*.yml,./doc/build/*,./doc/images/*,./dist/*,*~,.hypothesis*,./doc/source/examples/*,*cover,*.dat,*.mac,build,./docker/mapdl/v*,./factory/*,./ansys/mapdl/core/mapdl_functions.py,PKG-INFO,*.mypy_cache/*,./docker/mapdl/*,./_unused/*'
+ignore-words = "doc/styles/Vocab/ANSYS/accept.txt"
+quiet-level = 3

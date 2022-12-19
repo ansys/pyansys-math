@@ -15,7 +15,7 @@ Print the version
 
 """
 # major, minor, patch
-version_info = 0, 0, "dev0"
+version_info = 0, 1, "dev0"
 
 # Nice string for the version
 __version__ = ".".join(map(str, version_info))
