@@ -614,6 +614,7 @@ def test_invalid_sparse_name(mm):
     with pytest.raises(TypeError, match="must be a string"):
         mm.matrix(mat, name=1)
 
+
 def test_free(mm):
     my_mat = mm.ones(10)
     mm.free()
@@ -740,6 +741,7 @@ def test__parm(mm):
         assert mm._parm["CC_IND"]["type"] == "VEC"
         assert mm._parm["CC_PTR"]["dimensions"] == mat.indices.shape[0]
         assert mm._parm["CC_PTR"]["type"] == "VEC"
+
 
 def test_vec2(mm):
     mm._mapdl.clear()

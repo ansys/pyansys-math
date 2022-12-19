@@ -141,7 +141,7 @@ class MapdlMath:
     @property
     def _parm(self):
         return interp_star_status(self._status)
-      
+
     def free(self):
         """Delete all vectors.
 
