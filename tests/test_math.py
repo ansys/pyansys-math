@@ -85,8 +85,8 @@ def test_set_vec_large(mm):
 
 
 def test_dot(mm):
-    a = np.arange(10000, dtype=np.float32)
-    b = np.arange(10000, dtype=np.float32)
+    a = np.arange(10000, dtype=np.float)
+    b = np.arange(10000, dtype=np.float)
     np_rst = a.dot(b)
 
     vec_a = mm.set_vec(a)
