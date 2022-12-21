@@ -20,10 +20,10 @@
 
 .. _ref_mapdl_math_basic:
 
-PyMAPDL APDLMath Basic Operations
----------------------------------
+Ansys Math Basic Operations
+---------------------------
 
-This tutorial shows how you can use pymapdl to use APDL math for basic
+This tutorial shows how you can use PyMAPDL to use APDL math for basic
 operations on APDLMath vectors and matrices in the APDL memory
 workspace.
 
@@ -350,7 +350,7 @@ MAPDL Commands:
 
 **Add** these 2 dense matrices, and **scale** the result matrix.
 
-Mapdl Commands
+MAPDL Commands
 - `*DMAT,m3,D,COPY,m1`
 - `*AXPY,1,,m2,1,,m3`
 
@@ -544,8 +544,8 @@ APDLMath Vector
 Numpy methods on APDLMath objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Regardless of the underlying APDLMath object type, you are generally
-able to perform most numpy or scipy operations on these arrays.  You
-can do this one of two ways.  First, you can convert a matrix to a numpy array:
+able to perform most numpy or scipy operations on these arrays. You
+can do this one of two ways. First, you can convert a matrix to a numpy array:
 
 .. GENERATED FROM PYTHON SOURCE LINES 201-206
 

@@ -48,7 +48,7 @@ Factorize and Solve Sparse Linear Systems
 First, run a MAPDL solve to create a .full file
 We use a model from the official verification manual.
 
-After a solve command, the full contains the assemblied stiffness
+After a solve command, the full contains the assembled stiffness
 matrix, mass matrix, and the load vector.
 
 
