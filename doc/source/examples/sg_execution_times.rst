@@ -5,7 +5,7 @@
 
 Computation times
 =================
-**00:32.123** total execution time for **examples_gallery_examples_01-apdlmath-examples** files:
+**00:32.123** total execution time for **examples** files:
 
 +------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_examples_ansys-math_vs_scipy.py` (``ansys-math_vs_scipy.py``) | 00:15.087 | 0.0 MB |

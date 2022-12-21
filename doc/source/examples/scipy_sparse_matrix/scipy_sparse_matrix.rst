@@ -109,7 +109,7 @@ You can access the 3 vectors that describe this sparse matrix with.
 - ``pk.indices``
 - ``pk.indptr``
 
-See the ``scipy`` documentation of the csr matrix at `scipy.sparse.csr_matrix <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ for additional details.
+See the ``scipy`` documentation of the CSR matrix at `scipy.sparse.csr_matrix <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ for additional details.
 
 .. GENERATED FROM PYTHON SOURCE LINES 41-47
 

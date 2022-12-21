@@ -125,10 +125,10 @@ where `nev` is the number of eigenvalues requested
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-54
 
-Perform the the modal analysis.
+Perform the modal analysis.
 
 The algorithm is automatically chosen with respect to the matrices
-properties (e.g. scalar, storage, symmetry...)
+properties (for example: scalar, storage, symmetry...)
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 54-61
@@ -212,7 +212,7 @@ First, we compute :math:`\lambda_1 = \omega_1^2 = (2.\pi.f_1)^2`
 
 .. GENERATED FROM PYTHON SOURCE LINES 81-83
 
-Then we get the 1st Eigenshape :math:`\phi_1`, and compute
+Then we get the first Eigenshape :math:`\phi_1`, and compute
 :math:`K.\phi_1` and :math:`M.\phi_1`
 
 .. GENERATED FROM PYTHON SOURCE LINES 83-94

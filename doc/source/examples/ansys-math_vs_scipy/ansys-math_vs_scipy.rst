@@ -208,7 +208,7 @@ file.
 
 .. GENERATED FROM PYTHON SOURCE LINES 67-69
 
-Read the sparse matrices using PyMapdl.
+Read the sparse matrices using PyMAPDL.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 69-75
@@ -230,7 +230,7 @@ Read the sparse matrices using PyMapdl.
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-78
 
-Solve the eigenproblem using PyMapdl with APDLMath.
+Solve the eigenproblem using PyMAPDL with APDLMath.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 78-87
@@ -354,7 +354,7 @@ matrices.
 
 .. GENERATED FROM PYTHON SOURCE LINES 134-139
 
-Make the sparse matrices for SciPy unsymmetric as symmetric matrices in SciPy
+Make the sparse matrices for SciPy asymmetric as symmetric matrices in SciPy
 are memory inefficient.
 
 :math:`K = K + K^T - diag(K)`
