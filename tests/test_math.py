@@ -26,7 +26,7 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mm = amath.MapdlMath(mapdl)
+    mm = amath.Math(mapdl)
     return mm
 
 

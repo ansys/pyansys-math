@@ -35,7 +35,7 @@ Sparse Matrices.
     import ansys.math.core.math as amath
 
     # Start Ansys Math
-    mm = amath.MapdlMath()
+    mm = amath.Math()
 
 
 
