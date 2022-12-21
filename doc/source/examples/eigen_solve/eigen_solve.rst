@@ -21,7 +21,7 @@
 .. _ref_mapdl_math_eigen_solve:
 
 Using Ansys Math to solve Eigenproblems
--------------------------------------
+---------------------------------------
 Use Ansys Math to solve Eigenproblems.
 
 This example uses a verification manual input file, but you can use
