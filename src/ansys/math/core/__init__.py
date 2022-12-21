@@ -1,4 +1,3 @@
-maint / add - examples
 """This init file allows python to treat directories containing it as modules.
 
 Import any methods you want exposed at your library level here.
