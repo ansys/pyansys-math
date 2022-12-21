@@ -6,6 +6,7 @@ import random
 import string
 from warnings import warn
 
+from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
 from ansys.mapdl.core.check_version import VersionError, meets_version, version_requires
 from ansys.mapdl.core.common_grpc import (
