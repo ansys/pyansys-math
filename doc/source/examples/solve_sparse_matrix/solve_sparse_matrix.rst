@@ -121,7 +121,7 @@ Printout the dimensions of this Sparse Matrix
 
 .. GENERATED FROM PYTHON SOURCE LINES 45-47
 
-Get a copy of the K Sparse Matrix as a Numpy Array
+Get a copy of the K Sparse Matrix as a NumPy Array
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 47-50

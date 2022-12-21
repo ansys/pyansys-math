@@ -20,9 +20,9 @@
 
 .. _ref_mapdl_math_eigen_solve:
 
-Using APDLMath to solve Eigenproblems
+Using Ansys Math to solve Eigenproblems
 -------------------------------------
-Use APDLMath to solve eigenproblems.
+Use Ansys Math to solve Eigenproblems.
 
 This example uses a verification manual input file, but you can use
 your own sparse or dense matrices and solve those.

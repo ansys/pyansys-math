@@ -2,6 +2,16 @@ ANSYS
 Ansys
 ansys
 APDLMath
+eigenfrequencies
+eigenmodes
+Eigenproblem
+eigenproblem
+Eigenproblems
+eigenresult
+Eigenresults
+eigenresults
+Eigenshape
+eigenshapes
 MAPDL
 Mapdl
 mapdl

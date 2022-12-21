@@ -47,7 +47,7 @@ Sparse Matrices.
 .. GENERATED FROM PYTHON SOURCE LINES 20-22
 
 Load and solve verification manual example 153.  Then load the
-stiffness matrix into APDLmath.
+stiffness matrix into APDLMath.
 
 .. GENERATED FROM PYTHON SOURCE LINES 22-26
 

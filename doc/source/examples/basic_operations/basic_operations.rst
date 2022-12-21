@@ -86,7 +86,7 @@ Corresponding APDLMath commands
 Use operators on vectors
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Just like `numpy` PyMAPDL APDLMath vectors can be have most of the
-standard operators (e.g. ``+, -, +=, -=, *=``)
+standard operators (for example ``+, -, +=, -=, *=``)
 
 Here we form :math:`\vec{z}=\vec{v}+\vec{w}`
 
@@ -125,7 +125,7 @@ APDLMath Commands:
 
 Methods
 ~~~~~~~
-Alternatively you can use methods, following the numpy
+Alternatively you can use methods, following the NumPy
 standards. Available methods are:
 
 - `mm.add()`
@@ -541,7 +541,7 @@ APDLMath Vector
 
 .. GENERATED FROM PYTHON SOURCE LINES 196-201
 
-Numpy methods on APDLMath objects
+NumPy methods on APDLMath objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Regardless of the underlying APDLMath object type, you are generally
 able to perform most numpy or scipy operations on these arrays. You
