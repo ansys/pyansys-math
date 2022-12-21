@@ -246,7 +246,7 @@ Create a Python handle to this vector by specifying its name
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-82
 
-Dense Numpy Arrays
+Dense NumPy Arrays
 ~~~~~~~~~~~~~~~~~~
 The same features apply to dense APDL matrices and numpy arrays.
 
