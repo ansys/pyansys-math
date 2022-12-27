@@ -2,8 +2,8 @@
 Performing Sparse Factorization and Solve Operations
 ----------------------------------------------------
 
-Using APDLMath, you can solve linear systems of equations based on
-sparse or dense matrices.
+Using Ansys Math, you can solve linear systems of equations
+based on sparse or dense matrices.
 
 """
 from ansys.mapdl.core.examples import vmfiles

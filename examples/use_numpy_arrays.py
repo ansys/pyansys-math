@@ -1,8 +1,8 @@
 """
-Manipulate APDLMath vectors or dense matrices as NumPy Arrays
--------------------------------------------------------------
-This example demonstrates how to exchange data between MAPDL and
-Python via numpy arrays.
+Manipulate AnsMath vectors or dense matrices as NumPy Arrays
+------------------------------------------------------------
+This example demonstrates how to exchange data between Ansys Math
+and Python via numpy arrays.
 
 .. note::
     This example requires Ansys 2021R2.
@@ -17,15 +17,15 @@ mm = amath.Math()
 
 
 ###############################################################################
-# Convert an APDLMath Vector into an NumPy Array
+# Convert an AnsMath Vector into an NumPy Array
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# First, allocate a APDLMath vector with 10 doubles
+# First, allocate an AnsMath vector with 10 doubles
 
 apdl_vec = mm.ones(10)
 print(apdl_vec)
 
 ###############################################################################
-# Then create an numpy array from this APDLMath vector.
+# Then create an numpy array from this AnsMath vector.
 #
 # Note that these are two separate objects: memory is
 # duplicated. Modifying one object does not modify its clone.
@@ -41,7 +41,7 @@ print(pv)
 
 
 ###############################################################################
-# Alternatively, the APDLMath object can be operated on directly with
+# Alternatively, the AnsMath object can be operated on directly with
 # numpy with the numpy methods.
 print(np.max(apdl_vec))
 print(np.linalg.norm(apdl_vec))
@@ -54,7 +54,7 @@ print(np.linalg.norm(apdl_vec))
 print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 
 ###############################################################################
-# Copy a NumPy Array to an APDLMath vector
+# Copy a NumPy Array to an AnsMath vector
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # You can push back any numpy vector or 2D array to MAPDL.  This
 # creates a new APDLMath, which in this case is named ``'NewVec'``.

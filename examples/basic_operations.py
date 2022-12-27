@@ -1,15 +1,12 @@
 """
 .. _ref_ansys-math_basic:
 
-PyMAPDL APDLMath Basic Operations
----------------------------------
+Ansys Math Basic Operations
+---------------------------
 
-This tutorial shows how you can use pymapdl to use APDL math for basic
+This tutorial shows how you can use Ansys Math for basic
 operations on APDLMath vectors and matrices in the APDL memory
 workspace.
-
-The `ansys.mapdl.math` submodule gives access to APDLMath features
-inside PyMAPDL.
 
 """
 

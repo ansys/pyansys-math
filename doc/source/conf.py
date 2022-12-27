@@ -3,8 +3,28 @@ from datetime import datetime
 import os
 
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
+import numpy as np
+import pyvista
+from sphinx_gallery.sorting import FileNameSortKey
 
 from ansys.math.core import __version__
+
+# Manage errors
+pyvista.set_error_output_file("errors.txt")
+
+# Ensure that offscreen rendering is used for docs generation
+pyvista.OFF_SCREEN = True
+
+# must be less than or equal to the XVFB window size
+pyvista.rcParams["window_size"] = np.array([1024, 768])
+
+# Save figures in specified directory
+pyvista.FIGURE_PATH = os.path.join(os.path.abspath("./images/"), "auto-generated/")
+if not os.path.exists(pyvista.FIGURE_PATH):
+    os.makedirs(pyvista.FIGURE_PATH)
+
+# necessary when building the sphinx gallery
+pyvista.BUILDING_GALLERY = True
 
 # Project information
 project = "ansys-math-core"
@@ -50,30 +70,35 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "numpydoc",
+    "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
+    "sphinx_gallery.gen_gallery",
+    "sphinx.ext.graphviz",
 ]
 
-# # -- Sphinx Gallery Options ---------------------------------------------------
-# sphinx_gallery_conf = {
-#     # convert rst to md for ipynb
-#     "pypandoc": True,
-#     # path to your examples scripts
-#     "examples_dirs": ["../source/"],
-#     # path where to save gallery generated examples
-#     "gallery_dirs": ["verif-manual"],
-#     # Pattern to search for example files
-#     "filename_pattern": r"\.py",
-#     # Remove the "Download all examples" button from the top level gallery
-#     "download_all_examples": False,
-#     # directory where function granular galleries are stored
-#     "backreferences_dir": None,
-#     # Modules for which function level galleries are created.  In
-#     "doc_module": "ansys-mapdl-core",
-#     "image_scrapers": ("pyvista", "matplotlib"),
-#     "ignore_pattern": "flycheck*",
-#     "thumbnail_size": (350, 350),
-# }
+# -- Sphinx Gallery Options ---------------------------------------------------
+sphinx_gallery_conf = {
+    # convert rst to md for ipynb
+    "pypandoc": True,
+    # path to your examples scripts
+    "examples_dirs": ["../../examples"],
+    # path where to save gallery generated examples
+    "gallery_dirs": ["examples"],
+    # Pattern to search for example files
+    "filename_pattern": r"\.py",
+    # Remove the "Download all examples" button from the top level gallery
+    "download_all_examples": False,
+    # Sort gallery example by file name instead of number of lines (default)
+    "within_subsection_order": FileNameSortKey,
+    # directory where function granular galleries are stored
+    "backreferences_dir": None,
+    # Modules for which function level galleries are created.  In
+    "doc_module": "ansys-mapdl-core",
+    "image_scrapers": ("pyvista", "matplotlib"),
+    "ignore_pattern": "flycheck*",
+    "thumbnail_size": (350, 350),
+}
 
 # Intersphinx mapping
 intersphinx_mapping = {

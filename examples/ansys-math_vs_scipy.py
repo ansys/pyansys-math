@@ -1,8 +1,8 @@
 """
 .. _ref_mapdl_math_mapdl_vs_scipy:
 
-Compute Eigenvalues using MAPDL or SciPy
-----------------------------------------
+Compute Eigenvalues using Ansys Math or SciPy
+---------------------------------------------
 
 This example shows:
 

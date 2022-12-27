@@ -1,9 +1,8 @@
 """
-APDLMath Sparse Matrices and SciPy Sparse Matrices
--------------------------------------------------------------------
+AnsMath Sparse Matrices and SciPy Sparse Matrices
+-------------------------------------------------
 
-This tutorial will show how to get APDLMath sparse matrices (typically
-stiffness or mass matrices extracted from APDL .Full Files) into SciPy
+This tutorial will show how to get AnsMath sparse matrices into SciPy
 Sparse Matrices.
 
 """
