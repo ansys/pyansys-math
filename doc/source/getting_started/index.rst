@@ -14,7 +14,7 @@ Installation
 
 Python module
 ~~~~~~~~~~~~~
-The ``ansys.mapdl.core`` package currently supports Python 3.7 through
+The ``ansys.math.core`` package currently supports Python 3.7 through
 Python 3.10 on Windows, Mac OS, and Linux.
 
 .. code::
