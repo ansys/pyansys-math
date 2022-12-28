@@ -71,7 +71,7 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt update
-          sudo apt install zip pandoc
+          sudo apt-get install pandoc
 
       - name: "Cache pip"
         uses: actions/cache@v3
