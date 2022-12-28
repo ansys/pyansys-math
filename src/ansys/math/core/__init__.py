@@ -21,3 +21,5 @@ Then add the import within this module to enable:
 
 """
 from ansys.math.core._version import __version__
+
+BUILDING_GALLERY = False
