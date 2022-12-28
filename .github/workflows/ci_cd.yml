@@ -186,6 +186,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test]
     steps:
+      - name: "Install pandoc package"
+        run: |
+          sudo apt update
+          sudo apt-get install pandoc
+
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
         with:
