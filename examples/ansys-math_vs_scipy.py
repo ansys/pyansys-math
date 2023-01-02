@@ -207,7 +207,7 @@ plt.show()
 # MAPDL is faster than SciPy.
 #
 ratio = scipy_elapsed_time / mapdl_elapsed_time
-print(f"Mapdl is {ratio:.3} times faster")
+print(f"Ansys Math is {ratio:.3} times faster")
 
 ###############################################################################
 # stop mapdl
