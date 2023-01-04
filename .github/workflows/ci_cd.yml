@@ -192,11 +192,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test]
     steps:
-      - name: "Install pandoc package"
-        run: |
-          sudo apt update
-          sudo apt-get install pandoc
-
       - name: "Pull, launch, and validate MAPDL service"
         run: .ci/start_mapdl.sh
         env:
@@ -208,6 +203,11 @@ jobs:
       #   run: |
       #     docker pull ghcr.io/pyansys/dpf-core:22.2dev
       #     docker run -d --name dpfserver -p ${{ env.DPF_PORT }}:50052 ghcr.io/pyansys/dpf-core:22.2dev && echo "DPF Server active on port ${{ env.DPF_PORT }}."
+
+      - name: "Install pandoc package"
+        run: |
+          sudo apt update
+          sudo apt-get install pandoc
 
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
