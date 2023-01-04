@@ -223,6 +223,7 @@ jobs:
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
         with:
+          requires-xvfb: true
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
   doc-deploy-dev:
