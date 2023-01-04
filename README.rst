@@ -44,7 +44,7 @@ Code style can be checked by running:
 
     tox -e style
 
-Previous command will run `pre-commit`_ for checking code quality.
+Previous command will run `pre-commit <https://pre-commit.com/>`_ for checking code quality.
 
 
 Documentation
