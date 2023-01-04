@@ -56,7 +56,7 @@ jobs:
     needs: [doc-style, code-style]
     strategy:
       matrix:
-        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0'] #'v22.2-ubuntu'
+        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
 
     steps:
       - name: "Install Git and checkout project"
@@ -98,9 +98,9 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
-      - name: "Pull, launch, and validate MAPDL service"
-        run: .ci/start_mapdl.sh
-        if: ${{ !contains( matrix.mapdl-version, 'ubuntu') }}
+      - name: "Pull, launch, and validate Ubuntu MAPDL service from private"
+        run: .ci/start_mapdl_ubuntu.sh
+        if: ${{ contains( matrix.mapdl-version, 'ubuntu') }}
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
