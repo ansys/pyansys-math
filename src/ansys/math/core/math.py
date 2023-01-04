@@ -117,58 +117,7 @@ class Math:
 
     def __init__(self, mapdl=None, **kwargs):
         if mapdl is None:
-            exec_file = kwargs.get("exec_file", None)
-            run_location = kwargs.get("run_location", None)
-            jobname = kwargs.get("jobname", "file")
-            nproc = kwargs.get("nproc", 2)
-            ram = kwargs.get("ram", None)
-            mode = kwargs.get("mode", None)
-            override = kwargs.get("override", False)
-            loglevel = kwargs.get("loglevel", "ERROR")
-            additional_switches = kwargs.get("additional_switches", "")
-            start_timeout = kwargs.get("start_timeout", 15)
-            port = kwargs.get("port", None)
-            cleanup_on_exit = kwargs.get("cleanup_on_exit", True)
-            start_instance = kwargs.get("start_instance", None)
-            ip = kwargs.get("ip", None)
-            clear_on_connect = kwargs.get("clear_on_connect", True)
-            log_apdl = kwargs.get("log_apdl", None)
-            remove_temp_files = kwargs.get("remove_temp_files", None)
-            remove_temp_dir_on_exit = kwargs.get("remove_temp_dir_on_exit", False)
-            verbose_mapdl = kwargs.get("verbose_mapdl", False)
-            license_server_check = kwargs.get("license_server_check", True)
-            license_type = kwargs.get("license_type", None)
-            print_com = kwargs.get("print_com", False)
-            add_env_vars = kwargs.get("add_env_vars", None)
-            replace_env_vars = kwargs.get("replace_env_vars", None)
-
-            mapdl = launch_mapdl(
-                exec_file=exec_file,
-                run_location=run_location,
-                jobname=jobname,
-                nproc=nproc,
-                ram=ram,
-                mode=mode,
-                override=override,
-                loglevel=loglevel,
-                additional_switches=additional_switches,
-                start_timeout=start_timeout,
-                port=port,
-                cleanup_on_exit=cleanup_on_exit,
-                start_instance=start_instance,
-                ip=ip,
-                clear_on_connect=clear_on_connect,
-                log_apdl=log_apdl,
-                remove_temp_files=remove_temp_files,
-                remove_temp_dir_on_exit=remove_temp_dir_on_exit,
-                verbose_mapdl=verbose_mapdl,
-                license_server_check=license_server_check,
-                license_type=license_type,
-                print_com=print_com,
-                add_env_vars=add_env_vars,
-                replace_env_vars=replace_env_vars,
-                **kwargs,
-            )
+            mapdl = launch_mapdl(**kwargs)
             # if not isinstance(mapdl, MapdlGrpc):
             #     raise TypeError("``mapdl`` must be a MapdlGrpc instance")
         self._mapdl = mapdl
