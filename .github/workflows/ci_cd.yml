@@ -20,6 +20,9 @@ env:
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
   RESET_PIP_CACHE: 0
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
+  PYMAPDL_PORT: 21000  # default won't work on GitHub runners
+  PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
+  PYMAPDL_START_INSTANCE: FALSE
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -54,10 +57,6 @@ jobs:
     strategy:
       matrix:
         mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0'] #'v22.2-ubuntu'
-    env:
-      PYMAPDL_PORT: 21000  # default won't work on GitHub runners
-      PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-      PYMAPDL_START_INSTANCE: FALSE
 
     steps:
       - name: "Install Git and checkout project"
@@ -91,6 +90,13 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        if: ${{ !contains( matrix.mapdl-version, 'ubuntu') }}
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
       - name: "Pull, launch, and validate MAPDL service"
         run: .ci/start_mapdl.sh
@@ -191,11 +197,22 @@ jobs:
           sudo apt update
           sudo apt-get install pandoc
 
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
+
+      # If DPF server is needed, uncomment
+      # - name: "DPF server activation"
+      #   run: |
+      #     docker pull ghcr.io/pyansys/dpf-core:22.2dev
+      #     docker run -d --name dpfserver -p ${{ env.DPF_PORT }}:50052 ghcr.io/pyansys/dpf-core:22.2dev && echo "DPF Server active on port ${{ env.DPF_PORT }}."
+
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-
 
   doc-deploy-dev:
     name: "Deploy development documentation"
