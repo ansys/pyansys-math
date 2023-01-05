@@ -19,7 +19,7 @@ Python 3.10 on Windows, Mac OS, and Linux.
 
 .. code::
 
-   pip install ansys-ansys-math-core
+   pip install ansys-math-core
 
 Alternatively, install the latest from 
 `Ansys Math GitHub <ansys_math_github_>`_ via:
@@ -34,7 +34,7 @@ For a local *development* version, install with:
 .. code::
 
    git clone https://github.com/pyansys/ansys-math.git
-   cd pymapdl
+   cd ansys-math
    pip install -e .
 
 This allows you to install the ``ansys-math-core`` module
