@@ -115,11 +115,15 @@ jobs:
 
       - uses: codecov/codecov-action@v3
         name: "Upload coverage to Codecov"
+        with:
+          name: centos-${{ matrix.mapdl-version }}-remote.xml
+          flags: centos,remote,${{ matrix.mapdl-version }}
 
-      # - name: "Check package"
-      #   run: |
-      #     pip install twine
-      #     twine check dist/*
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: centos-${{ matrix.mapdl-version }}-remote.xml
+          path: ./centos-${{ matrix.mapdl-version }}-remote.xml
 
       - name: "Upload wheel and binaries"
         uses: actions/upload-artifact@v3
