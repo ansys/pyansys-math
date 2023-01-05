@@ -7,17 +7,17 @@ Ansys Math
    :target: https://docs.pyansys.com/
    :alt: PyAnsys
 
-.. |pypi| image:: https://img.shields.io/pypi/v/ansys-mapdl-core.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/ansys-mapdl-core/
+.. |pypi| image:: https://img.shields.io/pypi/v/ansys-math-core.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/ansys-math-core/
 
-.. |PyPIact| image:: https://img.shields.io/pypi/dm/ansys-mapdl-core.svg?label=PyPI%20downloads
-   :target: https://pypi.org/project/ansys-mapdl-core/
+.. |PyPIact| image:: https://img.shields.io/pypi/dm/ansys-math-core.svg?label=PyPI%20downloads
+   :target: https://pypi.org/project/ansys-math-core/
 
-.. |codecov| image:: https://codecov.io/gh/pyansys/pymapdl/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/pyansys/pymapdl
+.. |codecov| image:: https://codecov.io/gh/pyansys/ansys-math/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/pyansys/ansys-math
 
-.. |GH-CI| image:: https://github.com/pyansys/pymapdl/actions/workflows/ci.yml/badge.svg
-   :target: https://github.com/pyansys/pymapdl/actions/workflows/ci.yml
+.. |GH-CI| image:: https://github.com/pyansys/ansys-math/actions/workflows/ci_cd.yml/badge.svg
+   :target: https://github.com/pyansys/ansys-math/actions/workflows/ci_cd.yml
 
 .. |zenodo| image:: https://zenodo.org/badge/70696039.svg
    :target: https://zenodo.org/badge/latestdoi/70696039

@@ -22,7 +22,7 @@ Python 3.10 on Windows, Mac OS, and Linux.
    pip install ansys-ansys-math-core
 
 Alternatively, install the latest from 
-`Ansys Math GitHub <ansys_math_>`_ via:
+`Ansys Math GitHub <ansys_math_github_>`_ via:
 
 .. code::
 
