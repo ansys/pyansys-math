@@ -192,6 +192,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test]
     steps:
+        # This checkout is repeated later at the 'doc-build' action. This could be avoided by copything the sh file here, but introduces some code duplicity.
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
+      - name: "Login in Github container registry"
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: "Pull, launch, and validate MAPDL service"
         run: .ci/start_mapdl.sh
         env:
@@ -212,6 +223,7 @@ jobs:
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
         with:
+          requires-xvfb: true
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
   doc-deploy-dev:
