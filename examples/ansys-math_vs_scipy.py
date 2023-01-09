@@ -9,7 +9,7 @@ This example shows:
 - How to extract the stiffness and mass matrices from a MAPDL model.
 - How to use the ``Math`` module of PyMapdl to compute the first
   eigenvalues.
-- How to can get these matrices in the SciPy world, to get the same
+- How to get these matrices in the SciPy world, to get the same
   solutions using Python resources.
 - How MAPDL is really faster than SciPy :)
 """
