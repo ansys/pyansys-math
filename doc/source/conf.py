@@ -1,6 +1,7 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
 import os
+import warnings
 
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 import numpy as np
@@ -28,7 +29,14 @@ if not os.path.exists(pyvista.FIGURE_PATH):
 pyvista.BUILDING_GALLERY = True
 amath.BUILDING_GALLERY = True
 
-# Project information
+# suppress annoying matplotlib bug
+warnings.filterwarnings(
+    "ignore",
+    category=UserWarning,
+    message="Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.",
+)
+
+# -- Project information -----------------------------------------------------
 project = "ansys-math-core"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS, Inc."
@@ -48,6 +56,8 @@ html_theme_options = {
     "github_url": "https://github.com/pyansys/ansys-math",
     "show_prev_next": False,
     "show_breadcrumbs": True,
+    "collapse_navigation": True,
+    "use_edit_page_button": True,
     "additional_breadcrumbs": [
         ("PyAnsys", "https://docs.pyansys.com/"),
     ],
@@ -63,6 +73,14 @@ html_theme_options = {
         "version_match": get_version_match(__version__),
     },
     "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
+}
+
+html_context = {
+    "display_github": True,  # Integrate GitHub
+    "github_user": "pyansys",
+    "github_repo": "pymapdl",
+    "github_version": "main",
+    "doc_path": "doc/source",
 }
 
 # Sphinx extensions
@@ -114,6 +132,8 @@ intersphinx_mapping = {
     # "grpc": ("https://grpc.github.io/grpc/python/", None),
 }
 
+suppress_warnings = ["label.*"]
+# supress_warnings = ["ref.option"]
 # numpydoc configuration
 numpydoc_show_class_members = False
 numpydoc_xref_param_type = True
