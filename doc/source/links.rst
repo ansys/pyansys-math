@@ -7,12 +7,15 @@
 
 .. #Pyansys
 .. _pyansys: https://docs.pyansys.com
-.. _PyAnsys Developer's guide: https://dev.docs.pyansys.com/
+.. _pyansys_dev_guide: https://dev.docs.pyansys.com/
 
 .. #PyMAPDL related
 .. _pymapdl_docs: https://mapdl.docs.pyansys.com
 .. _pymapdl_github: https://github.com/pyansys/pymapdl
 .. _pymapdl_examples: https://mapdl.docs.pyansys.com/examples/index.html
+
+.. #Ansys Math related
+.. _ansys_math_github: https://github.com/pyansys/ansys-math.git
 
 .. # Examples
 .. _examples_intro: https://ansyshelp.ansys.com/Views/Secured/corp/v212/en/ans_tec/tecintro.html

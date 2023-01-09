@@ -12,8 +12,6 @@ from scipy import sparse
 
 import ansys.math.core.math as amath
 
-# from ansys.math.core.math import launch_math
-
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
 
@@ -28,7 +26,7 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mm = amath.MapdlMath(mapdl)
+    mm = amath.Math(mapdl)
     return mm
 
 

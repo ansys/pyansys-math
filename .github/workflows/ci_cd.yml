@@ -20,6 +20,9 @@ env:
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
   RESET_PIP_CACHE: 0
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
+  PYMAPDL_PORT: 21000  # default won't work on GitHub runners
+  PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
+  PYMAPDL_START_INSTANCE: FALSE
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -53,11 +56,7 @@ jobs:
     needs: [doc-style, code-style]
     strategy:
       matrix:
-        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0'] #'v22.2-ubuntu'
-    env:
-      PYMAPDL_PORT: 21000  # default won't work on GitHub runners
-      PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-      PYMAPDL_START_INSTANCE: FALSE
+        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
 
     steps:
       - name: "Install Git and checkout project"
@@ -71,6 +70,7 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt update
+          sudo apt-get install pandoc
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -83,13 +83,6 @@ jobs:
       - name: Install ansys-mapdl-core
         run: |
           python -m pip install ansys-mapdl-core
-
-      # - name: Install ansys-math-core
-      #   run: |
-      #     python -m pip install build
-      #     python -m build
-      #     python -m pip install dist/*.whl
-      #     xvfb-run python -c "from ansys.math import core as amath; print(amath.Report())"
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v2.1.0
@@ -105,6 +98,12 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
+      - name: "Pull, launch, and validate Ubuntu MAPDL service from private"
+        run: .ci/start_mapdl_ubuntu.sh
+        if: ${{ contains( matrix.mapdl-version, 'ubuntu') }}
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
       - name: "Unit testing requirements installation"
         run: |
@@ -114,13 +113,17 @@ jobs:
         run: |
           pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
 
-      - uses: codecov/codecov-action@v3
-        name: "Upload coverage to Codecov"
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v3
+        with:
+          name: centos-${{ matrix.mapdl-version }}-remote.xml
+          flags: centos,remote,${{ matrix.mapdl-version }}
 
-      # - name: "Check package"
-      #   run: |
-      #     pip install twine
-      #     twine check dist/*
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: centos-${{ matrix.mapdl-version }}-remote.xml
+          path: ./centos-${{ matrix.mapdl-version }}-remote.xml
 
       - name: "Upload wheel and binaries"
         uses: actions/upload-artifact@v3
@@ -193,11 +196,39 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test]
     steps:
+        # This checkout is repeated later at the 'doc-build' action. This could be avoided by copything the sh file here, but introduces some code duplicity.
+      - name: "Install Git and checkout project"
+        uses: actions/checkout@v3
+
+      - name: "Login in Github container registry"
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
+
+      # If DPF server is needed, uncomment
+      # - name: "DPF server activation"
+      #   run: |
+      #     docker pull ghcr.io/pyansys/dpf-core:22.2dev
+      #     docker run -d --name dpfserver -p ${{ env.DPF_PORT }}:50052 ghcr.io/pyansys/dpf-core:22.2dev && echo "DPF Server active on port ${{ env.DPF_PORT }}."
+
+      - name: "Install pandoc package"
+        run: |
+          sudo apt update
+          sudo apt-get install pandoc
+
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v2
         with:
+          requires-xvfb: true
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-
 
   doc-deploy-dev:
     name: "Deploy development documentation"
