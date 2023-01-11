@@ -1,28 +1,23 @@
+.. # Ansys related
+.. _ansys: https://www.ansys.com/
+
+.. #AnsysMath related
+.. _amath_docs: https://math.docs.pyansys.com/
+.. _amath_dev_docs: https://dev.math.docs.pyansys.com/
+.. _amath_issues: https://github.com/pyansys/ansys-math/issues
+.. _amath_github: https://github.com/pyansys/ansys-math.git
+
 .. #MAPDL related
 .. _mapdl_tech_show: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v222/en/wb_wbtec/wb_wbtec.html
 .. _mapdl_vm: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v222/en/ai_rn/ansys_rn_verif.html
 
+.. #Other libraries
+.. _numpy_docs: https://numpy.org/doc/stable/
+.. _precommit: https://pre-commit.com/
+.. _scipy_docs: https://docs.scipy.org/doc/scipy/reference/
+
 .. #Other projects
 .. _dpf_post_docs: https://post.docs.pyansys.com/
-
-.. #Pyansys
-.. _pyansys: https://docs.pyansys.com
-.. _pyansys_dev_guide: https://dev.docs.pyansys.com/
-
-.. #PyMAPDL related
-.. _pymapdl_docs: https://mapdl.docs.pyansys.com
-.. _pymapdl_github: https://github.com/pyansys/pymapdl
-.. _pymapdl_examples: https://mapdl.docs.pyansys.com/examples/index.html
-
-.. #AnsysMath related
-.. _ansys_math_github: https://github.com/pyansys/ansys-math.git
-
-.. # Examples
-.. _examples_intro: https://ansyshelp.ansys.com/Views/Secured/corp/v212/en/ans_tec/tecintro.html
-
-.. # Ansys related
-.. _ansys: https://www.ansys.com/
-
 
 .. # Other tools
 .. _black: https://github.com/psf/black
@@ -34,3 +29,17 @@
 .. _pip: https://pypi.org/project/pip/
 .. _tox: https://tox.wiki/
 .. _venv: https://docs.python.org/3/library/venv.html
+
+.. #PyAnsys
+.. _pyansys: https://docs.pyansys.com
+.. _pyansys_support: pyansys.support@ansys.com
+
+.. #PyAnsys Developer Guide
+.. _dev_guide_pyansys: https://dev.docs.pyansys.com/
+.. _dev_guide_contributing: https://dev.docs.pyansys.com/how-to/contributing.html
+.. _dev_guide_coding_style: https://dev.docs.pyansys.com/coding-style/index.html
+
+.. #PyMAPDL related
+.. _pymapdl_docs: https://mapdl.docs.pyansys.com
+.. _pymapdl_github: https://github.com/pyansys/pymapdl
+.. _pymapdl_examples: https://mapdl.docs.pyansys.com/examples/index.html

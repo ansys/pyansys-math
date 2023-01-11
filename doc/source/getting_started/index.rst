@@ -59,3 +59,13 @@ Check that you can start AnsysMath from Python by running:
 
 If you see a response from the server, congratulations. You're ready
 to get started using AnsysMath as a service.
+
+Ansys software requirements
+---------------------------
+
+You must have a copy of Ansys 2021 R1 or later installed locally.
+
+.. note::
+
+    The latest versions of Ansys provide significantly better support
+    and features. AnsysMath is not supported on earlier Ansys versions.
