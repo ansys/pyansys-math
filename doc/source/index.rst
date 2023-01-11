@@ -1,5 +1,5 @@
 
-AnsysMath Documentation
+AnsysMath documentation
 =======================
 
 Introduction

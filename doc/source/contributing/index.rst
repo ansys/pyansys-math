@@ -53,7 +53,7 @@ Documentation for the latest development version, which tracks the
 This version is automatically kept up to date via GitHub actions.
 
 
-Code Style
+Code style
 ----------
 
 AnsysMath follows PEP8 standard as outlined in the `PyAnsys Development Guide
