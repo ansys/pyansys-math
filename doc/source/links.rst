@@ -12,6 +12,7 @@
 .. _mapdl_vm: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v222/en/ai_rn/ansys_rn_verif.html
 
 .. #Other libraries
+.. _grpc: https://grpc.io/
 .. _numpy_docs: https://numpy.org/doc/stable/
 .. _precommit: https://pre-commit.com/
 .. _scipy_docs: https://docs.scipy.org/doc/scipy/reference/

@@ -14,9 +14,7 @@ The following contribution information is specific to PyMAPDL.
 Cloning the AnsysMath repository
 --------------------------------
 
-Run this code to clone and install the latest version of PyMAPDL in development mode:
-
-.. code:: console
+Run this code to clone and install the latest version of PyMAPDL in development mode::
 
     git clone https://github.com/pyansys/ansys-math
     cd ansys-math
@@ -41,9 +39,7 @@ To reach the project support team, email `pyansys.support@ansys.com <pyansys_sup
 Building documentation
 ----------------------
 
-To build the AnsysMath documentation locally, in the root directory of the repository, run:
-
-.. code:: console
+To build the AnsysMath documentation locally, in the root directory of the repository, run::
     
     pip install .[doc]
     .\doc\make.bat html 

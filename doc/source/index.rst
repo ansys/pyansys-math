@@ -28,10 +28,10 @@ an entirely new language because APDL Math has been written in a similar manner
 as the ``numpy`` and ``scipy`` libraries. For example, here is a comparison between
 the NumPy and SciPy linear algebra solvers and the AnsysMath solver:
 
-.. table:: ``numpy`` vs AnsysMath Implementation
+.. table:: ``numpy`` vs ``ansys.math.core`` Implementation
 
    +--------------------------------------------+-----------------------------------+
-   | ``numpy`` and ``scipy``                    | ``ansys.math.core.math``          |
+   | ``numpy`` and ``scipy``                    | ``ansys.math.core``               |
    +============================================+===================================+
    | .. code:: python                           | .. code:: python                  |
    |                                            |                                   |
@@ -50,7 +50,7 @@ AnsysMath is a library using the ANSYS Mechanical APDL (MAPDL) solver in the
 background.
 
 It is based on the `launch_mapdl()` function from the `ansys-mapdl-core
-<pymapdl_github_>` library. The latter uses `gRPC <grpc_>`_ which allows
+<pymapdl_github_>`_ library. The latter uses `gRPC <grpc_>`_ which allows
 the MAPDL solver to function as a server, ready to respond to connecting
 clients.
 

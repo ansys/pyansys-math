@@ -1,3 +1,5 @@
+.. _ref_getting_started:
+
 Getting started
 ===============
 To use AnsysMath, you must have a local installation of Ansys.
@@ -20,7 +22,7 @@ Python 3.10 on Windows, Mac OS, and Linux.
    pip install ansys-math-core
 
 Alternatively, install the latest from 
-`AnsysMath GitHub <ansys_math_github_>`_ via:
+`AnsysMath GitHub <amath_github_>`_ via:
 
 .. code::
 
