@@ -1,5 +1,5 @@
-Ansys Math
-==========
+AnsysMath
+=========
 
 |pyansys| |pypi| |PyPIact| |GH-CI| |codecov| |zenodo| |MIT| |black|
 
@@ -33,7 +33,7 @@ Ansys Math
 Overview
 --------
 
-Ansys Math is a Python repository holding Ansys mathematical libraries.
+AnsysMath is a Python repository holding Ansys mathematical libraries.
 
 
 Code Style
@@ -62,4 +62,8 @@ The resultant HTML files can be inspected using your favorite web browser:
   <browser> .tox/doc_out_html/index.html
 
 Previous will open the rendered documentation in the desired browser.
+
+
+Background
+----------
 

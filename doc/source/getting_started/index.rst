@@ -1,19 +1,17 @@
-===============
 Getting started
 ===============
-To use Ansys Math, you must have a local installation of Ansys.
+To use AnsysMath, you must have a local installation of Ansys.
 
 For more information on getting a licensed copy of Ansys, visit
 `Ansys <ansys_>`_ .
 
 
 
-************
 Installation
-************
+------------
 
-Python module
-~~~~~~~~~~~~~
+For users
+~~~~~~~~~
 The ``ansys.math.core`` package currently supports Python 3.7 through
 Python 3.10 on Windows, Mac OS, and Linux.
 
@@ -22,13 +20,16 @@ Python 3.10 on Windows, Mac OS, and Linux.
    pip install ansys-math-core
 
 Alternatively, install the latest from 
-`Ansys Math GitHub <ansys_math_github_>`_ via:
+`AnsysMath GitHub <ansys_math_github_>`_ via:
 
 .. code::
 
    pip install git+https://github.com/pyansys/ansys-math.git
 
 
+
+For developers
+~~~~~~~~~~~~~~~
 For a local *development* version, install with:
 
 .. code::
@@ -43,17 +44,18 @@ after restarting the Python kernel.
 
 
 Verify your installation
-~~~~~~~~~~~~~~~~~~~~~~~~
-Check that you can start Ansys Math from Python by running:
+------------------------
+
+Check that you can start AnsysMath from Python by running:
 
 .. code:: python
 
     import ansys.math.core.math as amath
 
-    # Start Ansys Math
+    # Start AnsysMath
     mm = amath.Math()
     print(mm)
 
 
 If you see a response from the server, congratulations. You're ready
-to get started using Ansys Math as a service.
+to get started using AnsysMath as a service.

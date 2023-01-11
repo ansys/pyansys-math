@@ -2,7 +2,7 @@
 Performing Sparse Factorization and Solve Operations
 ----------------------------------------------------
 
-Using Ansys Math, you can solve linear systems of equations
+Using AnsysMath, you can solve linear systems of equations
 based on sparse or dense matrices.
 
 """
@@ -10,7 +10,7 @@ from ansys.mapdl.core.examples import vmfiles
 
 import ansys.math.core.math as amath
 
-# Start Ansys Math
+# Start AnsysMath
 mm = amath.Math()
 
 ###############################################################################
@@ -60,7 +60,7 @@ b.norm()
 by = b.asarray()
 
 ###############################################################################
-# Factorize the Stifness Matrix using the MAPDL DSPARSE solver
+# Factorize the Stifness Matrix using the AnsysMath solver
 #
 s = mm.factorize(k)
 
@@ -95,5 +95,6 @@ mm.free()
 
 
 ###############################################################################
-# stop mapdl
+# stop AnsysMath
+
 mm._mapdl.exit()

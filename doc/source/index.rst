@@ -1,15 +1,29 @@
 
-Ansys math
-==========
+AnsysMath Documentation
+=======================
+
+Introduction
+------------
 
 This repository holds the Python Ansys mathematical libraries.
 
 
-.. === EXAMPLE GALLERY ===
+Background
+----------
 
-.. include:: examples/index.rst
-   :start-line: 2
-   :end-line: 136
+
+
+
+Quick code
+----------
+
+
+
+
+Licensing
+---------
+
+
 
 
 
@@ -18,4 +32,6 @@ This repository holds the Python Ansys mathematical libraries.
    :maxdepth: 1
 
    getting_started/index
+   commands/index
    examples/index
+   contributing/index

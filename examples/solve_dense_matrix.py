@@ -1,7 +1,7 @@
 """
-Use Ansys Math to Solve a Dense Matrix Linear System
+Use AnsysMath to Solve a Dense Matrix Linear System
 ----------------------------------------------------
-Use Ansys Math to solve a Dense Matrix Linear System.
+Use AnsysMath to solve a Dense Matrix Linear System.
 
 """
 
@@ -11,7 +11,7 @@ import numpy.linalg as npl
 
 import ansys.math.core.math as amath
 
-# Start Ansys Math
+# Start AnsysMath
 mm = amath.Math()
 
 ###############################################################################
@@ -33,16 +33,16 @@ b_py = b.asarray()
 ###############################################################################
 # Solve using APDLMath
 #
-print(f"Solving a ({dim} x {dim}) dense linear system using MAPDL...")
+print(f"Solving a ({dim} x {dim}) dense linear system using AnsysMath...")
 
 t1 = time.time()
 s = mm.factorize(a)
 x = s.solve(b, x)
 t2 = time.time()
-print(f"Elapsed time to solve the linear system using Mapdl: {t2 - t1} seconds")
+print(f"Elapsed time to solve the linear system using AnsysMath: {t2 - t1} seconds")
 
 ###############################################################################
-# Norm of the MAPDL Solution
+# Norm of the AnsysMath Solution
 mm.norm(x)
 
 
@@ -62,5 +62,6 @@ print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 npl.norm(x_py)
 
 ###############################################################################
-# stop mapdl
+# stop AnsysMath
+
 mm._mapdl.exit()

@@ -1,9 +1,9 @@
 """
-.. _ref_mapdl_math_eigen_solve:
+.. _ref_amath_eigen_solve:
 
-Using Ansys Math to solve Eigenproblems
+Using AnsysMath to solve Eigenproblems
 ---------------------------------------
-Use Ansys Math to solve eigenproblems.
+Use AnsysMath to solve eigenproblems.
 
 This example uses a verification manual input file, but you can use
 your own sparse or dense matrices and solve those.
@@ -17,7 +17,7 @@ import numpy as np
 
 import ansys.math.core.math as amath
 
-# Start Ansys Math
+# Start AnsysMath
 mm = amath.Math()
 
 ###############################################################################
@@ -49,7 +49,7 @@ a
 # The algorithm is automatically chosen with respect to the matrices
 # properties (e.g. scalar, storage, symmetry...)
 #
-print("Calling MAPDL to solve the eigenproblem...")
+print("Calling AnsysMath to solve the eigenproblem...")
 
 t1 = time.time()
 ev = mm.eigs(nev, k, m, phi=a)
@@ -150,12 +150,12 @@ def get_res(i):
     return kphi.norm() / kphinrm
 
 
-mapdl_acc = np.zeros(nev)
+amath_acc = np.zeros(nev)
 
 for i in range(nev):
     f = ev[i]
-    mapdl_acc[i] = get_res(i)
-    print(f"[{i}] : Freq = {f}\t - Residual = {mapdl_acc[i]}")
+    amath_acc[i] = get_res(i)
+    print(f"[{i}] : Freq = {f}\t - Residual = {amath_acc[i]}")
 
 ###############################################################################
 # Plot Accuracy of Eigenresults
@@ -168,9 +168,9 @@ plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
 plt.ylabel("Errors (%)")
-ax.bar(x, mapdl_acc, label="MAPDL Results")
+ax.bar(x, amath_acc, label="AnsysMath Results")
 plt.show()
 
 ###############################################################################
-# stop mapdl
+# stop AnsysMath
 mm._mapdl.exit()

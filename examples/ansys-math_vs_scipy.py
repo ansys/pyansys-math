@@ -1,17 +1,16 @@
 """
-.. _ref_mapdl_math_mapdl_vs_scipy:
+.. _ref_ansys_math_vs_scipy:
 
-Compute Eigenvalues using Ansys Math or SciPy
+Compute Eigenvalues using AnsysMath or SciPy
 ---------------------------------------------
 
 This example shows:
 
 - How to extract the stiffness and mass matrices from a MAPDL model.
-- How to use the ``Math`` module of PyMapdl to compute the first
-  eigenvalues.
+- How to use the AnsysMath to compute the first eigenvalues.
 - How to get these matrices in the SciPy world, to get the same
   solutions using Python resources.
-- How MAPDL is really faster than SciPy :)
+- How AnsysMath is really faster than SciPy :)
 """
 
 import math
@@ -28,7 +27,7 @@ from scipy.sparse.linalg import eigsh
 
 import ansys.math.core.math as amath
 
-# Start Ansys Math
+# Start AnsysMath
 mm = amath.Math()
 
 ###############################################################################
@@ -58,7 +57,7 @@ output = mm._mapdl.solve()
 
 
 ###############################################################################
-# Read the sparse matrices using PyMapdl.
+# Read the sparse matrices using AnsysMath.
 #
 mm._mapdl.finish()
 mm.free()
@@ -67,7 +66,7 @@ M = mm.mass(fname="file.full")
 
 
 ###############################################################################
-# Solve the eigenproblem using PyMapdl with APDLMath.
+# Solve the eigenproblem using AnsysMath.
 #
 nev = 10
 A = mm.mat(k.nrow, nev)
@@ -75,15 +74,15 @@ A = mm.mat(k.nrow, nev)
 t1 = time.time()
 ev = mm.eigs(nev, k, M, phi=A, fmin=1.0)
 t2 = time.time()
-mapdl_elapsed_time = t2 - t1
-print("\nElapsed time to solve this problem : ", mapdl_elapsed_time)
+amath_elapsed_time = t2 - t1
+print("\nElapsed time to solve this problem : ", amath_elapsed_time)
 
 ###############################################################################
 # Print eigenfrequencies and accuracy.
 #
 # Accuracy : :math:`\frac{||(K-\lambda.M).\phi||_2}{||K.\phi||_2}`
 #
-mapdl_acc = np.empty(nev)
+amath_acc = np.empty(nev)
 
 for i in range(nev):
     f = ev[i]  # Eigenfrequency (Hz)
@@ -99,8 +98,8 @@ for i in range(nev):
     mphi *= lam  # (K-\lambda.M).Phi
     kphi -= mphi
 
-    mapdl_acc[i] = kphi.norm() / kphi_nrm  # compute the residual
-    print(f"[{i}] : Freq = {f:8.2f} Hz\t Residual = {mapdl_acc[i]:.5}")
+    amath_acc[i] = kphi.norm() / kphi_nrm  # compute the residual
+    print(f"[{i}] : Freq = {f:8.2f} Hz\t Residual = {amath_acc[i]:.5}")
 
 
 ###############################################################################
@@ -189,7 +188,7 @@ for i in range(nev):
 
 
 ###############################################################################
-# MAPDL is more accurate than SciPy.
+# AnsysMath is more accurate than SciPy.
 #
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
@@ -199,16 +198,16 @@ plt.yscale("log")
 plt.xlabel("Mode")
 plt.ylabel("% Error")
 ax.bar(x, scipy_acc, label="SciPy Results")
-ax.bar(x, mapdl_acc, label="MAPDL Results")
+ax.bar(x, amath_acc, label="AnsysMath Results")
 plt.legend(loc="lower right")
 plt.show()
 
 ###############################################################################
-# MAPDL is faster than SciPy.
+# AnsysMath is faster than SciPy.
 #
-ratio = scipy_elapsed_time / mapdl_elapsed_time
-print(f"Ansys Math is {ratio:.3} times faster")
+ratio = scipy_elapsed_time / amath_elapsed_time
+print(f"AnsysMath is {ratio:.3} times faster")
 
 ###############################################################################
-# stop mapdl
+# stop AnsysMath
 mm._mapdl.exit()

@@ -1,3 +1,3 @@
 Examples
 ========
-These examples demonstrate using the Ansys Math library.
+These examples demonstrate using the AnsysMath library.

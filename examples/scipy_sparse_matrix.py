@@ -11,7 +11,7 @@ import matplotlib.pylab as plt
 
 import ansys.math.core.math as amath
 
-# Start Ansys Math
+# Start AnsysMath
 mm = amath.Math()
 
 ################################################################################
@@ -47,9 +47,9 @@ print(pk.indptr[:10])
 ################################################################################
 # ### Create a APDLMath Sparse Matrix from a SciPy Sparse CSR Matrix
 #
-# Here, we transfer the ``scipy`` CSR matrix back to MAPDL.  While
+# Here, we transfer the ``scipy`` CSR matrix back to AnsysMath.  While
 # this example uses a matrix that was originally within MAPDL, you can
-# load any CSR matrix to MAPDL.
+# load any CSR matrix to AnsysMath.
 
 my_mat = mm.matrix(pk, "my_mat", triu=True)
 my_mat
@@ -63,10 +63,10 @@ mm.norm(msub)
 
 
 ################################################################################
-# CSR Representation in MAPDL
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CSR Representation in AnsysMath
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# Printing the list of objects in the MAPDL space, we find:
+# Printing the list of objects in the AnsysMath space, we find:
 #
 # - 2 SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
 # - with encrypted names
@@ -79,10 +79,10 @@ mm.status()
 
 
 ################################################################################
-# MAPDL Python Matrix Correspondence
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# AnsysMath Python Matrix Correspondence
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# To determine which MAPDL object corresponds to which Python object,
+# To determine which AnsysMath object corresponds to which Python object,
 # access the id property of the Python object.
 
 print("name(k)=" + k.id)
@@ -91,5 +91,6 @@ print("name(msub)=" + msub.id)
 
 
 ###############################################################################
-# stop mapdl
+# stop AnsysMath
+
 mm._mapdl.exit()

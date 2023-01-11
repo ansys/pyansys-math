@@ -45,7 +45,7 @@ release = version = "0.1.dev0"
 # Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = "Ansys Math"
+html_short_title = html_title = "AnsysMath"
 
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 """The canonical name of the webpage hosting the documentation."""
