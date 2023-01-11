@@ -1,7 +1,3 @@
-ansysmath
-dof
-eigensolvers
-eigenproblems
 nax
 nce
 nin
