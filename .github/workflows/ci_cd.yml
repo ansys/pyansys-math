@@ -18,11 +18,12 @@ env:
   PACKAGE_NAME: 'ansys-math-core'
   DOCKER_PACKAGE: ghcr.io/pyansys/pymapdl/mapdl
   DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
-  RESET_PIP_CACHE: 0
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
   PYMAPDL_START_INSTANCE: FALSE
+  RESET_PIP_CACHE: 0
+  RESET_EXAMPLES_CACHE: 0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -212,6 +213,20 @@ jobs:
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
+
+      - name: "Retrieve AnsysMath version"
+        run: |
+          echo "{ANSYSMATH_VERSION}={$(python -c 'from ansys.math.core._version import __version__; print(__version__)')}" >> $GITHUB_OUTPUT
+          echo "AnsysMath version is: $(python -c "from ansys.math.core._version import __version__; print(__version__)")"
+        id: version
+
+      - name: "Cache examples"
+        uses: actions/cache@v3
+        with:
+          path: doc/source/examples
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
+          restore-keys: |
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       # If DPF server is needed, uncomment
       # - name: "DPF server activation"
