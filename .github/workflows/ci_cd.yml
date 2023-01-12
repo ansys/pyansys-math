@@ -210,7 +210,7 @@ jobs:
       - name: Create Python venv
         run: |
           python -m venv .venv
-          .\.venv\Scripts\Activate.ps1
+          source ./.venv/Script/activate
 
       # - name: "Install docs build requirements"
       #   run: |
