@@ -7,6 +7,8 @@ import pytest
 
 pytest_plugins = ["pytester"]
 
+import pyvista
+
 from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core._version import SUPPORTED_ANSYS_VERSIONS
 from ansys.mapdl.core.errors import MapdlExitedError
@@ -16,6 +18,8 @@ from ansys.mapdl.core.misc import get_ansys_bin
 # Check if MAPDL is installed
 # NOTE: checks in this order to get the newest installed version
 
+# Necessary for CI plotting
+pyvista.OFF_SCREEN = True
 
 valid_rver = [str(each) for each in SUPPORTED_ANSYS_VERSIONS]
 
@@ -72,18 +76,23 @@ def mapdl(request, tmpdir_factory):
 
     # don't allow mapdl to exit upon collection unless mapdl is local
     cleanup = START_INSTANCE
-
+    
     if request.param:
         # usage of a just closed channel on same port causes connectivity issues
         port = MAPDL_DEFAULT_PORT + 10
     else:
         port = MAPDL_DEFAULT_PORT
+    
+    start_instance = ON_CI["PYMAPDL_START_INSTANCE"]
+    port = ON_CI["PYMAPDL_PORT"]
 
     mapdl = launch_mapdl(
         EXEC_FILE,
         override=True,
         run_location=run_path,
         cleanup_on_exit=cleanup,
+        port = port, 
+        start_instance = start_instance
     )
     mapdl._show_matplotlib_figures = False  # CI: don't show matplotlib figures
 
