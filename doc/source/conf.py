@@ -78,7 +78,7 @@ html_theme_options = {
 html_context = {
     "display_github": True,  # Integrate GitHub
     "github_user": "pyansys",
-    "github_repo": "pymapdl",
+    "github_repo": "ansys-math",
     "github_version": "main",
     "doc_path": "doc/source",
 }
@@ -123,9 +123,9 @@ sphinx_gallery_conf = {
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
+    "numpy": ("https://numpy.org/devdocs", None),
     # kept here as an example
-    # "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
-    # "numpy": ("https://numpy.org/devdocs", None),
     # "matplotlib": ("https://matplotlib.org/stable", None),
     # "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     # "pyvista": ("https://docs.pyvista.org/", None),
@@ -204,14 +204,6 @@ pygments_style = "sphinx"
 copybutton_prompt_text = r">>> ?|\.\.\. "
 copybutton_prompt_is_regexp = True
 
-
-html_context = {
-    "display_github": True,  # Integrate GitHub
-    "github_user": "pyansys",
-    "github_repo": "ansys-math",
-    "github_version": "main",
-    "doc_path": "doc/source",
-}
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.

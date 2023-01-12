@@ -33,6 +33,6 @@ AnsysMath
 AnsysMath is a Python repository holding Ansys mathematical libraries.
 
 
-.. include:: ref_getting_started_
+.. include:: ./doc/source/getting_started/index
 
 
