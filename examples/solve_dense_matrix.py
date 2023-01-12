@@ -1,6 +1,6 @@
 """
 Use AnsysMath to Solve a Dense Matrix Linear System
-----------------------------------------------------
+---------------------------------------------------
 Use AnsysMath to solve a Dense Matrix Linear System.
 
 """

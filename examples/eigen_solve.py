@@ -2,7 +2,7 @@
 .. _ref_amath_eigen_solve:
 
 Using AnsysMath to solve Eigenproblems
----------------------------------------
+--------------------------------------
 Use AnsysMath to solve eigenproblems.
 
 This example uses a verification manual input file, but you can use

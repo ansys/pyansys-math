@@ -78,7 +78,7 @@ html_theme_options = {
 html_context = {
     "display_github": True,  # Integrate GitHub
     "github_user": "pyansys",
-    "github_repo": "pymapdl",
+    "github_repo": "ansys-math",
     "github_version": "main",
     "doc_path": "doc/source",
 }
@@ -133,7 +133,6 @@ intersphinx_mapping = {
 }
 
 suppress_warnings = ["label.*"]
-# supress_warnings = ["ref.option"]
 # numpydoc configuration
 numpydoc_show_class_members = False
 numpydoc_xref_param_type = True

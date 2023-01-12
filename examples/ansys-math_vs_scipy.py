@@ -2,7 +2,7 @@
 .. _ref_ansys_math_vs_scipy:
 
 Compute Eigenvalues using AnsysMath or SciPy
----------------------------------------------
+--------------------------------------------
 
 This example shows:
 
