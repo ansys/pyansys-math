@@ -2,7 +2,7 @@
 .. _ref_ansys-math_basic:
 
 AnsysMath Basic Operations
----------------------------
+--------------------------
 
 This tutorial shows how you can use AnsysMath for basic
 operations on APDLMath vectors and matrices in the APDL memory

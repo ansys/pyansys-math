@@ -133,7 +133,6 @@ intersphinx_mapping = {
 }
 
 suppress_warnings = ["label.*"]
-# supress_warnings = ["ref.option"]
 # numpydoc configuration
 numpydoc_show_class_members = False
 numpydoc_xref_param_type = True

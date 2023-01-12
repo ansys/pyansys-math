@@ -3,7 +3,7 @@
 
 .. #AnsysMath related
 .. _amath_docs: https://math.docs.pyansys.com/
-.. _amath_dev_docs: https://dev.math.docs.pyansys.com/
+.. _amath_dev_docs: https://math.docs.pyansys.com/dev/
 .. _amath_issues: https://github.com/pyansys/ansys-math/issues
 .. _amath_github: https://github.com/pyansys/ansys-math.git
 
@@ -43,4 +43,4 @@
 .. #PyMAPDL related
 .. _pymapdl_docs: https://mapdl.docs.pyansys.com
 .. _pymapdl_github: https://github.com/pyansys/pymapdl
-.. _pymapdl_examples: https://mapdl.docs.pyansys.com/examples/index.html
+.. _pymapdl_examples: https://mapdl.docs.pyansys.com/dev/examples/index.html

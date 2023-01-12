@@ -31,7 +31,7 @@ Alternatively, install the latest from
 
 
 For developers
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 For a local *development* version, install with:
 
 .. code::

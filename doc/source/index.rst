@@ -12,6 +12,7 @@ This library provides the ability to access and manipulate large
 sparse matrices and solve a variety of eigenproblems. It is presented in a
 similar manner to the popular  `NumPy <numpy_docs_>`_ and
 `SciPy <scipy_docs_>`_ libraries.
+
 The AnsysMath command set is based on tools for manipulating large mathematical
 matrices and vectors that provide access to standard linear algebra
 operations, access to the powerful sparse linear solvers of the ANSYS
