@@ -58,10 +58,6 @@ jobs:
     strategy:
       matrix:
         mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
-    env:
-      PYMAPDL_PORT: 21000  # default won't work on GitHub runners
-      PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-      PYMAPDL_START_INSTANCE: FALSE
 
     steps:
       - name: "Install Git and checkout project"
@@ -85,38 +81,30 @@ jobs:
           restore-keys: |
             Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}
 
-      # - name: "Test virtual framebuffer"                             TO BE ADDED
-      #   run: |
-      #     pip install -r .ci/requirements_test_xvfb.txt
-      #     xvfb-run python .ci/display_test.py
-
-      - name: Install ansys-math-core
+      - name: Install ansys-mapdl-core
         run: |
-          python -m pip install build
-          python -m build
-          python -m pip install dist/*.whl
-          xvfb-run python -c "from ansys.math import core as amath"
+          python -m pip install ansys-mapdl-core
 
-      # - name: "Login in Github container registry"
-      #   uses: docker/login-action@v2.1.0
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ secrets.GH_USERNAME }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Login in Github container registry"
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: "Pull, launch, and validate MAPDL service"
-      #   run: .ci/start_mapdl.sh
-      #   if: ${{ !contains( matrix.mapdl-version, 'ubuntu') }}
-      #   env:
-      #     LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-      #     MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        if: ${{ !contains( matrix.mapdl-version, 'ubuntu') }}
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
-      # - name: "Pull, launch, and validate Ubuntu MAPDL service from private"
-      #   run: .ci/start_mapdl_ubuntu.sh
-      #   if: ${{ contains( matrix.mapdl-version, 'ubuntu') }}
-      #   env:
-      #     LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-      #     MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
+      - name: "Pull, launch, and validate Ubuntu MAPDL service from private"
+        run: .ci/start_mapdl_ubuntu.sh
+        if: ${{ contains( matrix.mapdl-version, 'ubuntu') }}
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: ${{ env.DOCKER_PACKAGE }}:${{ matrix.mapdl-version }}
 
       - name: "Unit testing requirements installation"
         run: |
@@ -124,9 +112,7 @@ jobs:
 
       - name: "Unit testing"
         run: |
-          xvfb-run pytest -v --durations=10 \
-            --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError \
-            --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
+          pytest -v --durations=10 --maxfail=10  --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError  --cov=ansys.mapdl.core --cov-report=xml --cov-report=html
 
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v3
@@ -205,7 +191,6 @@ jobs:
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.log' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
-
   doc-build:
     name: Doc building
     runs-on: ubuntu-latest
@@ -224,6 +209,11 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
+      - name: Create Python venv
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\Activate.ps1
+
       # - name: "Install docs build requirements"
       #   run: |
       #     pip install .[doc]
@@ -235,6 +225,13 @@ jobs:
           key: Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
             Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}
+
+      - name: Install packages for documentation build
+        run: |
+          .\.venv\Scripts\Activate.ps1
+          python -m pip install --upgrade pip
+          pip install --upgrade build wheel
+          pip install .[doc]
 
       # - name: "Test virtual framebuffer"                             TO BE ADDED
       #   run: |
