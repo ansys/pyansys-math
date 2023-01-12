@@ -4,4 +4,4 @@ Getting started
 ===============
 
 .. include:: ../../../README.rst
-   :start-line: 33
+   :start-line: 32
