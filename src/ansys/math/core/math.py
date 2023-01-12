@@ -242,7 +242,10 @@ class Math:
             APDLMath matrix.
         """
         if dtype not in MYCTYPE:
-            raise ValueError("Invalid datatype.  Must be one of the following:\n" "np.int32, np.int64, or np.double")
+            raise ValueError(
+                "Invalid datatype.  Must be one of the following:\n"
+                "np.int32, np.int64, or np.double"
+            )
 
         if not name:
             name = id_generator()
@@ -522,7 +525,10 @@ class Math:
                 dtype_ = "'D'"
 
         if dtype_ == "'Z'" and mat_id.upper() in ("STIFF", "MASS", "DAMP"):
-            raise ValueError("Reading the stiffness, mass or damping matrices to a complex " "array is not supported.")
+            raise ValueError(
+                "Reading the stiffness, mass or damping matrices to a complex "
+                "array is not supported."
+            )
 
         self._mapdl.run(f"*SMAT,{name},{dtype_},IMPORT,FULL,{fname},{mat_id}", mute=True)
         ans_sparse_mat = AnsSparseMat(name, self._mapdl)
@@ -545,7 +551,9 @@ class Math:
         """
         return load_file(self._mapdl, fname)
 
-    def stiff(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
+    def stiff(
+        self, dtype=np.double, name=None, fname="file.full", asarray=False
+    ):  # to be moved to .io
         """Load the stiffness matrix from a full file.
 
         Parameters
@@ -582,7 +590,9 @@ class Math:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "STIFF", asarray)
 
-    def mass(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
+    def mass(
+        self, dtype=np.double, name=None, fname="file.full", asarray=False
+    ):  # to be moved to .io
         """Load the mass matrix from a full file.
 
         Parameters
@@ -620,7 +630,9 @@ class Math:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "MASS", asarray)
 
-    def damp(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
+    def damp(
+        self, dtype=np.double, name=None, fname="file.full", asarray=False
+    ):  # to be moved to .io
         """Load the damping matrix from the full file.
 
         Parameters
@@ -659,7 +671,9 @@ class Math:
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "DAMP", asarray)
 
-    def get_vec(self, dtype=None, name=None, fname="file.full", mat_id="RHS", asarray=False):  # to be moved to .io
+    def get_vec(
+        self, dtype=None, name=None, fname="file.full", mat_id="RHS", asarray=False
+    ):  # to be moved to .io
         """Load a vector from a file.
 
         Parameters
@@ -705,7 +719,8 @@ class Math:
 
         if mat_id.upper() not in ["RHS", "GVEC", "BACK", "FORWARD"]:
             raise ValueError(
-                f"The 'mat_id' value ({mat_id}) is not allowed." 'Only "RHS", "GVEC", "BACK", or "FORWARD" are allowed.'
+                f"The 'mat_id' value ({mat_id}) is not allowed."
+                'Only "RHS", "GVEC", "BACK", or "FORWARD" are allowed.'
             )
 
         if mat_id.upper() in ["BACK", "FORWARD"] and not dtype:
@@ -751,7 +766,9 @@ class Math:
         self._set_vec(name, data)
         return AnsVec(name, self._mapdl)
 
-    def rhs(self, dtype=np.double, name=None, fname="file.full", asarray=False):  # to be moved to .io
+    def rhs(
+        self, dtype=np.double, name=None, fname="file.full", asarray=False
+    ):  # to be moved to .io
         """Return the load vector from a full file.
 
         Parameters
@@ -1063,7 +1080,9 @@ class Math:
 
         """
         if ":" in vname:
-            raise ValueError('The character ":" is not permitted in a MAPDL MATH' " vector parameter name")
+            raise ValueError(
+                'The character ":" is not permitted in a MAPDL MATH' " vector parameter name"
+            )
         if not isinstance(arr, np.ndarray):
             arr = np.asarray(arr)
 
@@ -1073,7 +1092,9 @@ class Math:
 
         if arr.dtype not in list(MYCTYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n" f"Must be one of the following:\n" f"{list_allowed_dtypes()}"
+                f"Invalid array datatype {arr.dtype}\n"
+                f"Must be one of the following:\n"
+                f"{list_allowed_dtypes()}"
             )
 
         chunks_generator = get_nparray_chunks(vname, arr, chunk_size)
@@ -1100,7 +1121,9 @@ class Math:
         from scipy import sparse
 
         if ":" in mname:
-            raise ValueError('The character ":" is not permitted in a MAPDL MATH' " matrix parameter name")
+            raise ValueError(
+                'The character ":" is not permitted in a MAPDL MATH' " matrix parameter name"
+            )
         if not len(mname):
             raise ValueError("Empty MAPDL matrix name not permitted")
 
@@ -1124,7 +1147,9 @@ class Math:
 
         if arr.dtype not in list(NP_VALUE_TYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n" f"Must be one of the following:\n" f"{list_allowed_dtypes()}"
+                f"Invalid array datatype {arr.dtype}\n"
+                f"Must be one of the following:\n"
+                f"{list_allowed_dtypes()}"
             )
 
         chunks_generator = get_nparray_chunks_mat(mname, arr, chunk_size)
@@ -1147,7 +1172,9 @@ class Math:
 
         if arr.dtype not in list(NP_VALUE_TYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n" f"Must be one of the following:\n" f"{list_allowed_dtypes()}"
+                f"Invalid array datatype {arr.dtype}\n"
+                f"Must be one of the following:\n"
+                f"{list_allowed_dtypes()}"
             )
 
         # data vector
@@ -1168,7 +1195,10 @@ class Math:
         self.set_vec(idx, indxname)
 
         flagsym = "TRUE" if sym else "FALSE"
-        self._mapdl.run(f"*SMAT,{mname},{MYCTYPE[dtype]},ALLOC,CSR,{indptrname},{indxname}," f"{dataname},{flagsym}")
+        self._mapdl.run(
+            f"*SMAT,{mname},{MYCTYPE[dtype]},ALLOC,CSR,{indptrname},{indxname},"
+            f"{dataname},{flagsym}"
+        )
 
 
 class ApdlMathObj:
@@ -1314,7 +1344,9 @@ class AnsVec(ApdlMathObj):
         ApdlMathObj.__init__(self, id_, mapdl, ObjType.VEC)
 
         if init not in ["ones", "zeros", "rand", None]:
-            raise ValueError(f"Invalid init option {init}.\n" 'Should be "ones", "zeros", "rand", or None')
+            raise ValueError(
+                f"Invalid init option {init}.\n" 'Should be "ones", "zeros", "rand", or None'
+            )
 
         if init == "rand":
             self.rand()
@@ -1464,7 +1496,10 @@ class AnsMat(ApdlMathObj):
         if meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
             return info.mattype in [0, 1, 2]  # [UPPER, LOWER, DIAG] respectively
 
-        warn("Call to ``sym`` cannot evaluate if this matrix " "is symmetric with this version of MAPDL.")
+        warn(
+            "Call to ``sym`` cannot evaluate if this matrix "
+            "is symmetric with this version of MAPDL."
+        )
         return True
 
     def asarray(self, dtype=None) -> np.ndarray:
@@ -1497,7 +1532,9 @@ class AnsMat(ApdlMathObj):
             return self._mapdl._mat_data(self.id)
 
     def __mul__(self, vec):
-        raise AttributeError("Array multiplication is not yet available.  " "For dot product, please use `dot()`")
+        raise AttributeError(
+            "Array multiplication is not yet available.  " "For dot product, please use `dot()`"
+        )
 
     def dot(self, obj):
         """Perform the matrix multiplication by another vector or matrix.
