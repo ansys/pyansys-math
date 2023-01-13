@@ -1,12 +1,11 @@
 """
 .. _ref_amath_eigen_solve:
 
-Using AnsysMath to solve Eigenproblems
+Use AnsysMath to solve eigenproblems
 --------------------------------------
-Use AnsysMath to solve eigenproblems.
 
 This example uses a verification manual input file, but you can use
-your own sparse or dense matrices and solve those.
+your own sparse or dense matrices.
 
 """
 import time
@@ -46,8 +45,8 @@ a
 ###############################################################################
 # Perform the the modal analysis.
 #
-# The algorithm is automatically chosen with respect to the matrices
-# properties (e.g. scalar, storage, symmetry...)
+# The algorithm is automatically chosen with respect to the properties
+# of the matrices (such as scalar, storage, or symmetry).
 #
 print("Calling AnsysMath to solve the eigenproblem...")
 

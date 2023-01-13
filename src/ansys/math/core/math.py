@@ -526,7 +526,7 @@ class Math:
 
         if dtype_ == "'Z'" and mat_id.upper() in ("STIFF", "MASS", "DAMP"):
             raise ValueError(
-                "Reading the stiffness, mass or damping matrices to a complex "
+                "Reading the stiffness, mass, or damping matrices to a complex "
                 "array is not supported."
             )
 
@@ -1092,8 +1092,8 @@ class Math:
 
         if arr.dtype not in list(MYCTYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n"
-                f"Must be one of the following:\n"
+                f"Invalid array data type {arr.dtype}\n."
+                f"The data type must be one of the following:\n"
                 f"{list_allowed_dtypes()}"
             )
 
@@ -1125,7 +1125,7 @@ class Math:
                 'The character ":" is not permitted in a MAPDL MATH' " matrix parameter name"
             )
         if not len(mname):
-            raise ValueError("Empty MAPDL matrix name not permitted")
+            raise ValueError("An empty MAPDL matrix name is not permitted.")
 
         if isinstance(arr, np.ndarray):
             if arr.ndim == 1:
@@ -1147,8 +1147,8 @@ class Math:
 
         if arr.dtype not in list(NP_VALUE_TYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n"
-                f"Must be one of the following:\n"
+                f"Invalid array data type {arr.dtype}\n."
+                f"The data type must be one of the following:\n"
                 f"{list_allowed_dtypes()}"
             )
 
@@ -1172,8 +1172,8 @@ class Math:
 
         if arr.dtype not in list(NP_VALUE_TYPE.keys()):
             raise TypeError(
-                f"Invalid array datatype {arr.dtype}\n"
-                f"Must be one of the following:\n"
+                f"Invalid array datatype {arr.dtype}\n."
+                f"The data type must be one of the following:\n"
                 f"{list_allowed_dtypes()}"
             )
 
@@ -1345,7 +1345,7 @@ class AnsVec(ApdlMathObj):
 
         if init not in ["ones", "zeros", "rand", None]:
             raise ValueError(
-                f"Invalid init option {init}.\n" 'Should be "ones", "zeros", "rand", or None'
+                f"Invalid init option {init}.\n" 'The option should be "ones", "zeros", "rand", or None.'
             )
 
         if init == "rand":
@@ -1533,7 +1533,7 @@ class AnsMat(ApdlMathObj):
 
     def __mul__(self, vec):
         raise AttributeError(
-            "Array multiplication is not yet available.  " "For dot product, please use `dot()`"
+            "Array multiplication is not yet available.  For dot product, use `dot()`."
         )
 
     def dot(self, obj):

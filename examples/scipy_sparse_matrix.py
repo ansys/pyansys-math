@@ -63,7 +63,7 @@ mm.norm(msub)
 
 
 ################################################################################
-# CSR Representation in AnsysMath
+# CSR representation in AnsysMath
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # Printing the list of objects in the AnsysMath space, we find:
@@ -79,7 +79,7 @@ mm.status()
 
 
 ################################################################################
-# AnsysMath Python Matrix Correspondence
+# AnsysMath Python matrix correspondence
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # To determine which AnsysMath object corresponds to which Python object,

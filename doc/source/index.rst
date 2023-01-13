@@ -87,7 +87,7 @@ Here is a brief example of how you use AnsysMath:
       1.417e+00   1.997e+00   1.720e+00   1.933e+00   1.000e+00      <       5
 
 
-For additional PyMAPDL Math examples, see :ref:`ref_amath_examples`.
+For additional AnsysMath examples, see :ref:`ref_amath_examples`.
 
 
 .. toctree::

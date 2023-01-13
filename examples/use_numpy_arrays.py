@@ -50,13 +50,13 @@ print(np.linalg.norm(apdl_vec))
 # Note that some methods have APDL corollaries, and these methods are
 # more efficient if performed within AnsysMath.
 #
-# For example, the norm method can be performed within AnsysMath
+# For example, the norm method can be performed within AnsysMath.
 print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 
 ###############################################################################
 # Copy a NumPy Array to an AnsMath vector
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# You can push back any numpy vector or 2D array to AnsysMath.  This
+# You can push back any numpy vector or 2D array to AnsysMath. This
 # creates a new APDLMath, which in this case is named ``'NewVec'``.
 mm.set_vec(pv, "NewVec")
 
@@ -101,6 +101,6 @@ print(np.allclose(from_ans, np_rand))
 
 
 ###############################################################################
-# stop AnsysMath
+# Stop AnsysMath
 
 mm._mapdl.exit()

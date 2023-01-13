@@ -1,6 +1,6 @@
 """
-Performing Sparse Factorization and Solve Operations
-----------------------------------------------------
+Perform sparse factorization and solve operations
+-------------------------------------------------
 
 Using AnsysMath, you can solve linear systems of equations
 based on sparse or dense matrices.
@@ -60,7 +60,7 @@ b.norm()
 by = b.asarray()
 
 ###############################################################################
-# Factorize the Stifness Matrix using the AnsysMath solver
+# Factorize the stifness matrix using AnsysMath
 #
 s = mm.factorize(k)
 

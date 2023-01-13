@@ -1,7 +1,7 @@
 """
-Use AnsysMath to Solve a Dense Matrix Linear System
+Use AnsysMath to solve a dense matrix linear system
 ---------------------------------------------------
-Use AnsysMath to solve a Dense Matrix Linear System.
+This example shows how so use AnsysMath to solve a dense matrix linear system.
 
 """
 
@@ -31,7 +31,7 @@ a_py = a.asarray()
 b_py = b.asarray()
 
 ###############################################################################
-# Solve using APDLMath
+# Solve using AnsysMath
 #
 print(f"Solving a ({dim} x {dim}) dense linear system using AnsysMath...")
 
@@ -42,7 +42,7 @@ t2 = time.time()
 print(f"Elapsed time to solve the linear system using AnsysMath: {t2 - t1} seconds")
 
 ###############################################################################
-# Norm of the AnsysMath Solution
+# Norm of the AnsysMath solution
 mm.norm(x)
 
 

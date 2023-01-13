@@ -1,7 +1,7 @@
 """
 .. _ref_ansys-math_basic:
 
-AnsysMath Basic Operations
+AnsysMath basic operations
 --------------------------
 
 This tutorial shows how you can use AnsysMath for basic
@@ -37,10 +37,10 @@ print(w)
 ###############################################################################
 # Use operators on vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# Just like `numpy` AnsysMath vectors can be have most of the
+# Just like `numpy` AnsysMath vectors can use most of the
 # standard operators (e.g. ``+, -, +=, -=, *=``)
 #
-# Here we form :math:`\vec{z}=\vec{v}+\vec{w}`
+# Here this form is used :math:`\vec{z}=\vec{v}+\vec{w}`
 #
 # Then we compute :math:`\|z\|_2` (the default `norm` is nrm2, but you
 # can use `.norm('nrm1')` or `.norm('nrminf')` for different normals.
@@ -101,14 +101,14 @@ print("Dot product :", str(vw))
 # Perform an in-place operations (without copying vectors)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# In-Place Addition
+# In-place addition
 
 v += v
 print(v)
 
 
 ###############################################################################
-# In-Place Multiplication
+# In-place multiplication
 
 v *= 2
 print(v)
@@ -121,7 +121,7 @@ print(v)
 
 
 ###############################################################################
-# Working with Dense Matrices
+# Working with dense matrices
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Allocate two dense matrices with random values.
 
@@ -130,7 +130,7 @@ m2 = mm.ones(4, 5)
 m1, m2
 
 ###############################################################################
-# **Add** these 2 dense matrices, and **scale** the result matrix.
+# **Add** these 2 dense matrices and **scale** the result matrix.
 
 m3 = m1 + m2
 print(m3)
@@ -191,10 +191,10 @@ print(np_mat)
 
 
 ###############################################################################
-# Alternatively, you can simply use numpy to compute the max of the array
+# Alternatively, you can use NumPy to compute the maximum of the array.
 #
 # This works because AnsysMath copies over the matrix to the local
-# python memory and then computes the max using numpy.
+# Python memory and then computes the maximum using NumPy.
 
 print(np.max(apdl_mat))
 
@@ -202,7 +202,7 @@ print(np.max(apdl_mat))
 ###############################################################################
 # This works for most numpy operations, but keep in mind that
 # operations that are supported within AnsysMath (such as adding or
-# multiplying arrays) will compute much faster as the data is not copied.
+# multiplying arrays) compute much faster because the data is not copied.
 
 apdl_arr = mm.rand(5, 5)
 np_array = apdl_mat.asarray()
