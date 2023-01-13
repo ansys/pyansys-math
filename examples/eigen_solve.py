@@ -17,7 +17,7 @@ import numpy as np
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ###############################################################################
 # First we get the `STIFF` and `MASS` matrices from the full file

@@ -12,10 +12,10 @@ import numpy.linalg as npl
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ###############################################################################
-# Allocate a Dense Matrix in the APDLMath workspace
+# Allocate a Dense Matrix in the MAPDL workspace
 #
 mm._mapdl.clear()
 dim = 1000

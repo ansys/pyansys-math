@@ -28,10 +28,10 @@ from scipy.sparse.linalg import eigsh
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ###############################################################################
-# APDLMath EigenSolve
+# AnsMath EigenSolve
 # First load the input file using MAPDL.
 #
 print(mm._mapdl.input(examples.examples.wing_model))

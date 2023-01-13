@@ -1,8 +1,8 @@
 ANSYS
 Ansys
 ansys
+AnsMath
 AnsysMath
-APDLMath
 dof
 eigenfrequencies
 eigenmodes

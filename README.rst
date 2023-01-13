@@ -84,7 +84,7 @@ Check that you can start AnsysMath from Python by running:
     import ansys.math.core.math as amath
 
     # Start AnsysMath
-    mm = amath.Math()
+    mm = amath.AnsMath()
     print(mm)
 
 

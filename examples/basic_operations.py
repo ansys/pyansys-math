@@ -5,7 +5,7 @@ AnsysMath basic operations
 --------------------------
 
 This tutorial shows how you can use AnsysMath for basic
-operations on APDLMath vectors and matrices in the APDL memory
+operations on AnsMath vectors and matrices in the APDL memory
 workspace.
 
 """
@@ -15,19 +15,14 @@ import numpy as np
 import ansys.math.core.math as amath
 
 # Start AnsysMath as a service.
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ###############################################################################
 # Create and Manipulate Vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Create 2 APDLMath vectors of size 5. :math:`\vec{v}` is initialized with
+# Create 2 AnsMath vectors of size 5. :math:`\vec{v}` is initialized with
 # ones, $\vec{w}$ is filled with random values
 #
-# Corresponding APDLMath commands
-# - `*VEC,V,D,ALLOC,5`
-# - `*INIT,V,CONST,1`
-# - `*VEC,W,D,ALLOC,5`
-# - `*INIT,W,RAND`
 
 v = mm.ones(5)
 w = mm.rand(5)
@@ -46,10 +41,6 @@ print(w)
 # can use `.norm('nrm1')` or `.norm('nrminf')` for different normals.
 # See `help(z.norm)` for additional details.
 #
-# APDLMath Commands:
-# - `*VEC,Z,D,COPY,V`
-# - `*AXPY,1,,W,1,,Z`
-# - `*NRM,Z,,nrmval`
 
 z = v + w
 z.norm()
@@ -68,9 +59,6 @@ z.norm()
 # Equivalent operator:
 # `z = v + w`
 #
-# Equivalent APDLMath Commands:
-# - `*VEC,Z,D,COPY,V`
-# - `*AXPY,1,,W,1,,Z`
 
 z = mm.add(v, w)
 z.norm()
@@ -81,9 +69,6 @@ z.norm()
 # Equivalent operator:
 # z = v - w
 #
-# Equivalent APDLMath Commands:
-# - `*VEC,Z,D,COPY,V`
-# - `*AXPY,-1,,W,1,,Z`
 
 z = mm.subtract(v, w)
 print(z)
@@ -91,7 +76,6 @@ print(z)
 ###############################################################################
 # Dot product of 2 vectors
 #
-# Equivalent APDLMath Command: `*DOT,V,W,dotval`
 
 vw = mm.dot(v, w)
 print("Dot product :", str(vw))
@@ -160,10 +144,10 @@ print(mw)
 
 
 ###############################################################################
-# APDLMath matrices can be identified by printing, viewing their types, or with
+# AnsMath matrices can be identified by printing, viewing their types, or with
 # using the `__repr__` method by simply typing out the variable
 #
-# APDLMath Matrix
+# AnsMath Matrix
 # ~~~~~~~~~~~~~~~
 
 type(m1)
@@ -172,16 +156,16 @@ m1
 
 
 ###############################################################################
-# APDLMath Vector
+# AnsMath Vector
 
 type(w)
 print(w)
 w
 
 ###############################################################################
-# Numpy methods on APDLMath objects
+# Numpy methods on AnsMath objects
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Regardless of the underlying APDLMath object type, you are generally
+# Regardless of the underlying AnsMath object type, you are generally
 # able to perform most numpy or scipy operations on these arrays.  You
 # can do this one of two ways.  First, you can convert a matrix to a numpy array:
 

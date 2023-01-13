@@ -43,7 +43,7 @@ def id_generator(size=6, chars=string.ascii_uppercase):
 
 
 class ObjType(Enum):
-    """Generic APDLMath Object ( Shared features between Vec Mat and
+    """Generic AnsMath Object ( Shared features between Vec Mat and
     Solver components"""
 
     GEN = 1
@@ -84,14 +84,14 @@ def get_nparray_chunks_mat(name, array, chunk_size=DEFAULT_FILE_CHUNK_SIZE):
 
 
 def list_allowed_dtypes():
-    """Return a list of human readable Mapdl supported datatypes"""
+    """Return a list of human readable AnsMath supported datatypes"""
     dtypes = list(NP_VALUE_TYPE.keys())
     if None in dtypes:
         dtypes.remove(None)
     return "\n".join([f"{dtype}" for dtype in dtypes])
 
 
-class Math:
+class AnsMath:
     """Abstract math class.
 
     Examples
@@ -135,7 +135,7 @@ class Math:
 
     @property
     def _status(self):
-        """Print out the status of all APDLMath Objects"""
+        """Print out the status of all AnsMath Objects"""
         return self._mapdl.run("*STATUS,MATH", mute=False)
 
     @property
@@ -155,7 +155,7 @@ class Math:
         return self._status
 
     def status(self):
-        """Print out the status of all APDLMath Objects.
+        """Print out the status of all AnsMath Objects.
 
         Examples
         --------
@@ -191,12 +191,12 @@ class Math:
             generated.
 
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         ansys.mapdl.math.AnsVec or numpy.ndarray
-            APDLMath Vector or :class:`numpy.ndarray`.
+            AnsMath Vector or :class:`numpy.ndarray`.
         """
         if dtype not in MYCTYPE:
             raise ANSYSDataTypeError
@@ -215,7 +215,7 @@ class Math:
             return ans_vec
 
     def mat(self, nrow=0, ncol=0, dtype=np.double, init=None, name=None, asarray=False):
-        """Create an APDLMath matrix.
+        """Create an AnsMath matrix.
 
         Parameters
         ----------
@@ -230,16 +230,16 @@ class Math:
             Initialization options.  Can be ``"ones"``, ``"zeros"``,
             or ``"rand"``.
         name : str, optional
-            Matrix name.  If given, assigns a MAPDL matrix based on
+            Matrix name.  If given, assigns a AnsMath matrix based on
             the existing named matrix.  Otherwise one will be
             automatically generated.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         AnsMat
-            APDLMath matrix.
+            AnsMath matrix.
         """
         if dtype not in MYCTYPE:
             raise ValueError(
@@ -267,7 +267,7 @@ class Math:
             elif info.objtype == pb_types.DataType.SMAT:
                 mat = AnsSparseMat(name, self._mapdl)
             else:  # pragma: no cover
-                raise ValueError(f"Unhandled MAPDL matrix object type {info.objtype}")
+                raise ValueError(f"Unhandled AnsMath matrix object type {info.objtype}")
 
         if asarray:
             mat = mat.asarray()
@@ -286,14 +286,14 @@ class Math:
             Datatype of the vector.  Must be either ``np.int32``,
             ``np.int64``, or ``np.double``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         AnsVec or AnsMat
-            APDLMath vector or matrix depending on if ``ncol`` is specified.
+            AnsMath vector or matrix depending on if ``ncol`` is specified.
 
         Examples
         --------
@@ -324,14 +324,14 @@ class Math:
             Datatype of the vector.  Must be either ``np.int32``,
             ``np.int64``, or ``np.double``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         AnsVec or AnsMat
-            APDLMath vector or matrix depending on if "ncol" is
+            AnsMath vector or matrix depending on if "ncol" is
             specified.
 
         Examples
@@ -364,14 +364,14 @@ class Math:
             Datatype of the vector.  Must be either ``np.int32``,
             ``np.int64``, or ``np.double``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         AnsVec or AnsMat
-            APDLMath vector or matrix depending on if "ncol" is
+            AnsMath vector or matrix depending on if "ncol" is
             specified.
 
         Examples
@@ -398,7 +398,7 @@ class Math:
         matrix : np.ndarray
             Numpy array to send as a matrix to MAPDL.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         triu : bool, optional
             ``True`` when the matrix is upper triangular, ``False``
             when unsymmetric.
@@ -417,7 +417,7 @@ class Math:
         >>> mat = sparse.random(sz, sz, density=0.05, format='csr')
         >>> ans_mat = mm.matrix(mat, name)
         >>> ans_mat
-        APDLMath Matrix 5000 x 5000
+        AnsMath Matrix 5000 x 5000
 
         Transfer the matrix back to Python.
 
@@ -457,7 +457,7 @@ class Math:
         fname : str, optional
             Filename to read the matrix from.  Defaults to ``"file.full"``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         mat_id : str, optional
             Matrix type.  Defaults to ``"STIFF"``.
 
@@ -468,12 +468,12 @@ class Math:
             * ``"K_RE"`` - Real part of the stiffness matrix
             * ``"K_IM"`` - Imaginary part of the stiffness matrix
         asarray : bool, optional
-            Return a ``scipy`` array rather than an APDLMath matrix.
+            Return a ``scipy`` array rather than an AnsMath matrix.
 
         Returns
         -------
         scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or APDLMath matrix depending on
+            Scipy sparse matrix or AnsMath matrix depending on
             ``asarray``.
 
         """
@@ -563,22 +563,22 @@ class Math:
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or APDLMath matrix depending on
+            Scipy sparse matrix or AnsMath matrix depending on
             ``asarray``.
 
         Examples
         --------
         >>> k = mm.stiff()
-        APDLMATH Matrix 60 x 60
+        AnsMath Matrix 60 x 60
 
         Convert to a scipy array
 
@@ -602,23 +602,23 @@ class Math:
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or APDLMath matrix depending on
+            Scipy sparse matrix or AnsMath matrix depending on
             ``asarray``.
 
         Examples
         --------
         >>> mass = mapdl.math.mass()
         >>> mass
-        APDLMATH Matrix 60 x 60
+        AnsMath Matrix 60 x 60
 
         Convert to a scipy array
 
@@ -642,23 +642,23 @@ class Math:
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or APDLMath matrix depending on
+            Scipy sparse matrix or AnsMath matrix depending on
             ``asarray``.
 
         Examples
         --------
         >>> ans_mat = mapdl.math.damp()
         >>> ans_mat
-        APDLMATH Matrix 60 x 60
+        AnsMath Matrix 60 x 60
 
         Convert to a scipy array
 
@@ -682,7 +682,7 @@ class Math:
             Numpy data type to store the vector as.  Defaults to
             ``np.double``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         fname : str, optional
             Filename to read the vector from.
         mat_id : str, optional
@@ -696,18 +696,18 @@ class Math:
             * ``"FORWARD"`` - nodal mapping vector (user to internal)
               If this is used, the default ``dtype`` is ``np.int32``.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         numpy.ndarray or AnsVec
-            Numpy array or APDLMath vector depending on ``asarray``.
+            Numpy array or AnsMath vector depending on ``asarray``.
 
         Examples
         --------
         >>> vec = mm.get_vec(fname='PRSMEMB.full', mat_id="RHS")
         >>> vec
-        APDLMath Vector Size 126
+        AnsMath Vector Size 126
 
         """
         if name is None:
@@ -744,13 +744,13 @@ class Math:
             Numpy array or Python list to push to MAPDL.  Must be 1
             dimensional.
         name : str, optional
-            APDLMath vector name.  If unset, one will be automatically
+            AnsMath vector name.  If unset, one will be automatically
             generated.
 
         Returns
         -------
         ansys.mapdl.math.AnsVec
-            MAPDL vector instance generated from the pushed vector.
+            AnsMath vector instance generated from the pushed vector.
 
         Examples
         --------
@@ -776,21 +776,21 @@ class Math:
         dtype : numpy.dtype, optional
             Data type to store the vector as.  Defaults to ``np.double``.
         name : str, optional
-            APDLMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name.  Optional and defaults to a random name.
         fname : str, optional
             Filename to read the vector from.  Defaults to ``"file.full"``.
         asarray : bool, optional
-            Return a `scipy` array rather than an APDLMath matrix.
+            Return a `scipy` array rather than an AnsMath matrix.
 
         Returns
         -------
         numpy.ndarray or ansys.mapdl.math.AnsVec
-            Numpy or APDL vector instance generated from the file.
+            Numpy or AnsMath vector instance generated from the file.
 
         Examples
         --------
         >>> rhs = mm.rhs(fname='PRSMEMB.full')
-        APDLMath Vector Size 126
+        AnsMath Vector Size 126
 
         """
         fname = self._load_file(fname)
@@ -953,7 +953,7 @@ class Math:
         return dot(vec_a, vec_b)
 
     def add(self, obj1, obj2):
-        """Add two APDLMath vectors or matrices.
+        """Add two AnsMath vectors or matrices.
 
         Parameters
         ----------
@@ -996,7 +996,7 @@ class Math:
 
         Examples
         --------
-        Subtract two APDLMath vectors.
+        Subtract two AnsMath vectors.
 
         >>> v = mm.ones(10)
         >>> w = mm.ones(10)
@@ -1010,7 +1010,7 @@ class Math:
         Parameters
         ----------
         mat : ansys.mapdl.math.AnsMat
-            An APDLMath matrix
+            An AnsMath matrix
         algo : str, optional
             Factorization algorithm.  Either ``"LAPACK"`` (default for
             dense matrices) or ``"DSP"`` (default for sparse matrices).
@@ -1045,7 +1045,7 @@ class Math:
         Parameters
         ----------
         obj : ansys.mapdl.math.AnsMat or ansys.mapdl.math.AnsVec
-            ApdlMath object to compute the norm from.
+            AnsMath object to compute the norm from.
         order : str
             Mathematical norm to use.  One of:
 
@@ -1057,7 +1057,7 @@ class Math:
 
         Examples
         --------
-        Compute the norm of a APDLMath vector.
+        Compute the norm of a AnsMath vector.
         v = mm.ones(10)
         3.1622776601683795
         """
@@ -1065,7 +1065,7 @@ class Math:
 
     @protect_grpc
     def _set_vec(self, vname, arr, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
-        """Transfer a numpy array to MAPDL as a MAPDL Math vector.
+        """Transfer a numpy array to MAPDL as a AnsMath vector.
 
         Parameters
         ----------
@@ -1081,7 +1081,7 @@ class Math:
         """
         if ":" in vname:
             raise ValueError(
-                'The character ":" is not permitted in a MAPDL MATH' " vector parameter name"
+                "The character ':' is not permitted in an AnsMath vector parameter name"
             )
         if not isinstance(arr, np.ndarray):
             arr = np.asarray(arr)
@@ -1102,7 +1102,7 @@ class Math:
 
     @protect_grpc
     def _set_mat(self, mname, arr, sym=None, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
-        """Transfer a 2D dense or sparse scipy array to MAPDL as a MAPDL Math matrix.
+        """Transfer a 2D dense or sparse scipy array to MAPDL as a AnsMath matrix.
 
         Parameters
         ----------
@@ -1122,10 +1122,10 @@ class Math:
 
         if ":" in mname:
             raise ValueError(
-                'The character ":" is not permitted in a MAPDL MATH' " matrix parameter name"
+                "The character ':' is not permitted in a AnsMath matrix parameter name"
             )
         if not len(mname):
-            raise ValueError("An empty MAPDL matrix name is not permitted.")
+            raise ValueError("An empty AnsMath matrix name is not permitted.")
 
         if isinstance(arr, np.ndarray):
             if arr.ndim == 1:
@@ -1164,7 +1164,7 @@ class Math:
         arr = sparse.csr_matrix(arr)
 
         if arr.shape[0] != arr.shape[1]:
-            raise ValueError("APDLMath only supports square matrices")
+            raise ValueError("AnsMath only supports square matrices")
 
         if dtype is not None:
             if arr.data.dtype != dtype:
@@ -1201,8 +1201,8 @@ class Math:
         )
 
 
-class ApdlMathObj:
-    """Common class for MAPDL Math objects"""
+class AnsMathObj:
+    """Common class for AnsMath objects"""
 
     def __init__(self, id_, mapdl=None, dtype=ObjType.GEN):
         if mapdl is None:
@@ -1212,7 +1212,7 @@ class ApdlMathObj:
         self.type = dtype
 
     def __repr__(self):
-        return f"APDLMath Object {self.id}"
+        return f"AnsMath Object {self.id}"
 
     def __str__(self):
         return self._mapdl.run(f"*PRINT,{self.id}", mute=False)
@@ -1232,7 +1232,7 @@ class ApdlMathObj:
         else:
             raise TypeError(f"Copy aborted: Unknown obj type {self.type}")
 
-        # APDLMath cmd to COPY vin to vout
+        # AnsMath cmd to COPY vin to vout
         self._mapdl.run(f"{acmd},{name},{MYCTYPE[dtype]},COPY,{self.id}", mute=True)
         return name
 
@@ -1285,14 +1285,14 @@ class ApdlMathObj:
     def axpy(self, op, val1, val2):
         """Perform the matrix operation: ``M2= v*M1 + w*M2``"""
         if not hasattr(op, "id"):
-            raise TypeError("Must be an ApdlMathObj")
+            raise TypeError("Must be an AnsMathObj")
         self._mapdl._log.info("Call Mapdl to perform AXPY operation")
         self._mapdl.run(f"*AXPY,{val1},0,{op.id},{val2},0,{self.id}", mute=True)
         return self
 
     def __add__(self, op2):
         if not hasattr(op2, "id"):
-            raise TypeError("Must be an ApdlMathObj")
+            raise TypeError("Must be an AnsMathObj")
 
         opout = self.copy()
         self._mapdl._log.info("Call Mapdl to perform AXPY operation")
@@ -1301,7 +1301,7 @@ class ApdlMathObj:
 
     def __sub__(self, op2):
         if not hasattr(op2, "id"):
-            raise TypeError("Must be an ApdlMathObj")
+            raise TypeError("Must be an AnsMathObj")
 
         opout = self.copy()
         self._mapdl._log.info("Call Mapdl to perform AXPY operation")
@@ -1337,11 +1337,11 @@ class ApdlMathObj:
         return self._stub.GetDataInfo(request)
 
 
-class AnsVec(ApdlMathObj):
-    """APDLMath Vector Object"""
+class AnsVec(AnsMathObj):
+    """AnsMath Vector Object"""
 
     def __init__(self, id_, mapdl, dtype=np.double, init=None):
-        ApdlMathObj.__init__(self, id_, mapdl, ObjType.VEC)
+        AnsMathObj.__init__(self, id_, mapdl, ObjType.VEC)
 
         if init not in ["ones", "zeros", "rand", None]:
             raise ValueError(
@@ -1365,7 +1365,7 @@ class AnsVec(ApdlMathObj):
         return int(sz)
 
     def __repr__(self):
-        return f"APDLMath Vector Size {self.size}"
+        return f"AnsMath Vector Size {self.size}"
 
     def __getitem__(self, num):
         if num < 0:
@@ -1414,10 +1414,10 @@ class AnsVec(ApdlMathObj):
 
     def copy(self):
         """Return a copy of this vector"""
-        return AnsVec(ApdlMathObj.copy(self), self._mapdl)
+        return AnsVec(AnsMathObj.copy(self), self._mapdl)
 
     def dot(self, vec) -> float:
-        """Dot product with another APDLMath vector.
+        """Dot product with another AnsMath vector.
 
         Parameters
         ----------
@@ -1453,11 +1453,11 @@ class AnsVec(ApdlMathObj):
         return self.asarray()
 
 
-class AnsMat(ApdlMathObj):
-    """APDLMath Matrix Object"""
+class AnsMat(AnsMathObj):
+    """AnsMath Matrix Object"""
 
     def __init__(self, id_, mapdl, type_=ObjType.DMAT):
-        ApdlMathObj.__init__(self, id_, mapdl, type_)
+        AnsMathObj.__init__(self, id_, mapdl, type_)
 
     @property
     def nrow(self) -> int:
@@ -1587,7 +1587,7 @@ class AnsMat(ApdlMathObj):
 
     @property
     def T(self):
-        """Returns the transpose of a MAPDL matrix.
+        """Returns the transpose of a AnsMath matrix.
 
         Examples
         --------
@@ -1616,7 +1616,7 @@ class AnsMat(ApdlMathObj):
 
 
 class AnsDenseMat(AnsMat):
-    """Dense APDLMath Matrix"""
+    """Dense AnsMath Matrix"""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
@@ -1626,21 +1626,21 @@ class AnsDenseMat(AnsMat):
         return self.asarray()
 
     def __repr__(self):
-        return f"Dense APDLMath Matrix ({self.nrow}, {self.ncol})"
+        return f"Dense AnsMath Matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix"""
-        return AnsDenseMat(ApdlMathObj.copy(self), self._mapdl)
+        return AnsDenseMat(AnsMathObj.copy(self), self._mapdl)
 
 
 class AnsSparseMat(AnsMat):
-    """Sparse APDLMath Matrix"""
+    """Sparse AnsMath Matrix"""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
-        return f"Sparse APDLMath Matrix ({self.nrow}, {self.ncol})"
+        return f"Sparse AnsMath Matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix.
@@ -1650,14 +1650,14 @@ class AnsSparseMat(AnsMat):
         Examples
         --------
         >>> k
-        Sparse APDLMath Matrix (126, 126)
+        Sparse AnsMath Matrix (126, 126)
 
         >>> kcopy = k.copy()
         >>> kcopy
-        Sparse APDLMath Matrix (126, 126)
+        Sparse AnsMath Matrix (126, 126)
 
         """
-        return AnsSparseMat(ApdlMathObj.copy(self), self._mapdl)
+        return AnsSparseMat(AnsMathObj.copy(self), self._mapdl)
 
     def todense(self) -> np.ndarray:
         """Return this array as a dense np.ndarray
@@ -1665,7 +1665,7 @@ class AnsSparseMat(AnsMat):
         Examples
         --------
         >>> k
-        Sparse APDLMath Matrix (126, 126)
+        Sparse AnsMath Matrix (126, 126)
 
         >>> mat = k.todense()
         >>> mat
@@ -1691,11 +1691,11 @@ class AnsSparseMat(AnsMat):
         return self.todense()
 
 
-class AnsSolver(ApdlMathObj):
-    """APDLMath Solver Class"""
+class AnsSolver(AnsMathObj):
+    """AnsMath Solver Class"""
 
     def __repr__(self):
-        return "APDLMath Linear Solver"
+        return "AnsMath Linear Solver"
 
     def factorize(self, mat, algo=None, inplace=True):
         """Factorize a matrix
@@ -1752,9 +1752,9 @@ class AnsSolver(ApdlMathObj):
         Parameters
         ----------
         b : ansys.mapdl.math.AnsVec
-            APDLmath vector.
+            AnsMath vector.
         x : ansys.mapdl.math.AnsVec, optional
-            APDLmath vector to place the solution.
+            AnsMath vector to place the solution.
 
         Returns
         -------
@@ -1768,7 +1768,7 @@ class AnsSolver(ApdlMathObj):
         >>> b = mm.get_vec(fname='PRSMEMB.full', mat_id="RHS")
         >>> x = s.solve(b)
         >>> x
-        APDLMath Vector Size 20000
+        AnsMath Vector Size 20000
 
         """
         if not x:
@@ -1779,11 +1779,11 @@ class AnsSolver(ApdlMathObj):
 
 
 def rand(obj):
-    """Set all values of a mapdl math object to random values.
+    """Set all values of a AnsMath object to random values.
 
     Parameters
     ----------
-    obj : ansys.math.Math object
+    obj : ansys.math.core.math.AnsMath object
         Math object
 
     Examples
@@ -1806,15 +1806,15 @@ def solve(mat, b, x=None, algo=None):
 
 
 def dot(vec1, vec2) -> float:
-    """Dot product between two APDLMath vectors.
+    """Dot product between two AnsMath vectors.
 
     Parameters
     ----------
     vec1 : ansys.mapdl.math.AnsVec
-        APDLMath vector.
+        AnsMath vector.
 
     vec1 : ansys.mapdl.math.AnsVec
-        APDLMath vector.
+        AnsMath vector.
 
     Returns
     -------
@@ -1828,19 +1828,3 @@ def dot(vec1, vec2) -> float:
     mapdl = vec1._mapdl
     mapdl.run(f"*DOT,{vec1.id},{vec2.id},py_val", mute=True)
     return mapdl.scalar_param("py_val")
-
-
-# def launch_math(mapdl=None, **kwargs):
-#     """
-#     Launch an MAPDL instance in the background if none is filled.
-
-#     Args:
-#         mapdl (MAPDL instance, optional): MAPDL instance. Defaults to None.
-#     """
-
-#     if mapdl is None:
-#         from ansys.mapdl.core import launch_mapdl
-
-#         mapdl = launch_mapdl(**kwargs)
-
-#     return Math(mapdl)

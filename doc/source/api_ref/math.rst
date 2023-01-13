@@ -5,7 +5,7 @@
 .. autosummary::
    :toctree: _autosummary
 
-   math.Math
+   math.AnsMath
    math.ApdlMathObj
    math.AnsVec
    math.AnsMat

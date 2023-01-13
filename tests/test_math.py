@@ -1,4 +1,4 @@
-"""Test APDL Math functionality"""
+"""Test AnsMath functionality"""
 import os
 import re
 
@@ -26,7 +26,7 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mm = amath.Math(mapdl)
+    mm = amath.AnsMath(mapdl)
     return mm
 
 
@@ -158,7 +158,7 @@ def test_matrix(mm):
 def test_matrix_fail(mm):
     mat = sparse.random(10, 10, density=0.05, format="csr")
 
-    with pytest.raises(ValueError, match='":" is not permitted'):
+    with pytest.raises(ValueError, match="':' is not permitted"):
         mm.matrix(mat, "my:mat")
 
     with pytest.raises(TypeError):
@@ -510,13 +510,13 @@ def test_vec_const(mm):
 def test_set_vector(mm, vec, pname):
     ans_vec = mm.set_vec(vec, pname)
     assert np.allclose(ans_vec.asarray(), vec)
-    assert "APDLMath Vector Size" in repr(ans_vec)
+    assert "AnsMath Vector Size" in repr(ans_vec)
     assert "" in str(vec[0])[:4]  # output from *PRINT
 
 
 def test_set_vector_catch(mm):
 
-    with pytest.raises(ValueError, match='":" is not permitted'):
+    with pytest.raises(ValueError, match="':' is not permitted"):
         mm.set_vec(np.ones(10), "my:vec")
 
     with pytest.raises(TypeError):
@@ -561,7 +561,7 @@ def test_copy_complex(mm):
 
 def test_sparse_repr(mm):
     k = mm.stiff()
-    assert "Sparse APDLMath Matrix" in repr(k)
+    assert "Sparse AnsMath Matrix" in repr(k)
 
 
 def test_invalid_matrix_size(mm):
@@ -585,7 +585,7 @@ def test_transpose(mm):
 def test_dense(mm):
     # version check must be performed at runtime
     if mm._server_version[1] >= 4:
-        # test if a APDLMath object can treated as an array
+        # test if a AnsMath object can treated as an array
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
         assert isinstance(apdl_mat, amath.AnsMat)
@@ -594,7 +594,7 @@ def test_dense(mm):
         with pytest.raises(TypeError):
             apdl_mat = mm.matrix(array.astype(np.uint8))
 
-        assert "Dense APDLMath Matrix" in repr(apdl_mat)
+        assert "Dense AnsMath Matrix" in repr(apdl_mat)
 
         # check transpose
         assert np.allclose(apdl_mat.T, array.T)

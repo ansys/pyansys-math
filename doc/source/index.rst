@@ -72,7 +72,7 @@ Here is a brief example of how you use AnsysMath:
 
     import ansys.math.core.math as amath
 
-    mm = amath.Math()
+    mm = amath.AnsMath()
 
     u = mm.ones(5)
     v = mm.rand(5)

@@ -12,17 +12,17 @@ import matplotlib.pylab as plt
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ################################################################################
 # Load and solve verification manual example 153.  Then load the
-# stiffness matrix into APDLmath.
+# stiffness matrix into MAPDL.
 out = mm._mapdl.input(vmfiles["vm153"])
 k = mm.stiff(fname="PRSMEMB.full")
 k
 
 ################################################################################
-# Copy this APDLMath Sparse Matrix to a SciPy CSR matrix and plot the
+# Copy this AnsMath Sparse Matrix to a SciPy CSR matrix and plot the
 # graph of the sparse matrix
 pk = k.asarray()
 plt.spy(pk)
@@ -45,7 +45,7 @@ print(pk.indptr[:10])
 
 
 ################################################################################
-# ### Create a APDLMath Sparse Matrix from a SciPy Sparse CSR Matrix
+# ### Create a AnsMath Sparse Matrix from a SciPy Sparse CSR Matrix
 #
 # Here, we transfer the ``scipy`` CSR matrix back to AnsysMath.  While
 # this example uses a matrix that was originally within MAPDL, you can

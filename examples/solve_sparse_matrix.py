@@ -11,7 +11,7 @@ from ansys.mapdl.core.examples import vmfiles
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 ###############################################################################
 # Factorize and Solve Sparse Linear Systems
@@ -84,12 +84,12 @@ kx -= b
 print("Residual error:", kx.norm() / b.norm())
 
 ###############################################################################
-# Summary of all allocated APDLMath Objects
+# Summary of all allocated AnsMath Objects
 #
 mm.status()
 
 ######################################################################
-# Delete all APDLMath Objects
+# Delete all AnsMath Objects
 #
 mm.free()
 

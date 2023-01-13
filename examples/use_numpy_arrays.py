@@ -13,7 +13,7 @@ import numpy as np
 import ansys.math.core.math as amath
 
 # Start AnsysMath
-mm = amath.Math()
+mm = amath.AnsMath()
 
 
 ###############################################################################
@@ -57,7 +57,7 @@ print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 # Copy a NumPy Array to an AnsMath vector
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # You can push back any numpy vector or 2D array to AnsysMath. This
-# creates a new APDLMath, which in this case is named ``'NewVec'``.
+# creates a new AnsMath vector, which in this case is named ``'NewVec'``.
 mm.set_vec(pv, "NewVec")
 
 # verify this vector exists
@@ -75,7 +75,7 @@ print(v2)
 # ~~~~~~~~~~~~~~~~~~
 # The same features apply to dense APDL matrices and numpy arrays.
 #
-# Allow allocate an APDLMath Dense Matrix and convert it to a numpy
+# Allow allocate an AnsMath Dense Matrix and convert it to a numpy
 # array
 apdl_mat = mm.rand(3, 3)
 np_arr = apdl_mat.asarray()
