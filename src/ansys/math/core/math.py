@@ -98,8 +98,8 @@ class AnsMath:
     --------
     Create an instance.
 
-    >>> from ansys.math.core import launch_math
-    >>> mm = launch_math()
+    >>> import ansys.math.core.math as amath
+    >>> mm = amath.AnsMath()
 
     Vector addition
 
@@ -299,8 +299,8 @@ class AnsMath:
         --------
         Create a zero vector.
 
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> vec = mm.zeros(10)
 
         Create a zero matrix.
@@ -338,8 +338,8 @@ class AnsMath:
         --------
         Create a ones vector.
 
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> vec = mm.ones(10)
 
         Create a ones matrix.
@@ -378,8 +378,8 @@ class AnsMath:
         --------
         Create a random vector.
 
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> vec = mm.rand(10)
 
         Create a random matrix.
@@ -1440,8 +1440,8 @@ class AnsVec(AnsMathObj):
 
         Examples
         --------
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> v = mm.ones(10)
         >>> v.asarray()
         [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
@@ -1518,8 +1518,8 @@ class AnsMat(AnsMathObj):
 
         Examples
         --------
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> v = mm.ones(10)
         >>> v.asarray()
         [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
@@ -1591,8 +1591,8 @@ class AnsMat(AnsMathObj):
 
         Examples
         --------
-        >>> from ansys.math.core import launch_math
-        >>> mm = launch_math()
+        >>> import ansys.math.core.math as amath
+        >>> mm = amath.AnsMath()
         >>> mat = mm.rand(2, 3)
         >>> mat_t = mat.T
 

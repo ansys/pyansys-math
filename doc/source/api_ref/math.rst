@@ -6,7 +6,7 @@
    :toctree: _autosummary
 
    math.AnsMath
-   math.ApdlMathObj
+   math.AnsMathObj
    math.AnsVec
    math.AnsMat
    math.AnsSolver
