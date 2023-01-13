@@ -243,7 +243,7 @@ class Math:
         """
         if dtype not in MYCTYPE:
             raise ValueError(
-                "Invalid datatype.  Must be one of the following:\n"
+                "Invalid data type.  The data type must be one of the following:\n"
                 "np.int32, np.int64, or np.double"
             )
 
