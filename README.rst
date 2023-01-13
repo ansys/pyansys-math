@@ -69,7 +69,7 @@ For a local *development* version, install with:
    cd ansys-math
    pip install -e .
 
-This allows you to install the ``ansys-math-core`` module
+This allows you to install and edit the ``ansys-math-core`` module locally.
 The changes that you make are reflected in your setup
 after restarting the Python kernel.
 
