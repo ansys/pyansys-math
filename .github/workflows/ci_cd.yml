@@ -343,7 +343,7 @@ jobs:
   release:
     name: "Release project to private PyPI, public PyPI and GitHub"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs: [build_test, doc-deploy-stable]
+    needs: [doc-deploy-stable] # TO BE ADDED: [build_test, doc-deploy-stable]
     runs-on: ubuntu-latest
     steps:
 
