@@ -34,7 +34,7 @@ AnsysMath is a Python repository holding Ansys mathematical libraries.
 To use them, you must have a local installation of Ansys.
 
 For more information on getting a licensed copy of Ansys, visit
-`Ansys <ansys_>`_ .
+the `Ansys web site <ansys_>` .
 
 
 
@@ -70,7 +70,7 @@ For a local *development* version, install with:
    pip install -e .
 
 This allows you to install the ``ansys-math-core`` module
-and modify it locally and have the changes reflected in your setup
+The changes that you make are reflected in your setup
 after restarting the Python kernel.
 
 
@@ -99,6 +99,6 @@ You must have a copy of Ansys 2021 R1 or later installed locally.
 .. note::
 
     The latest versions of Ansys provide significantly better support
-    and features. AnsysMath is not supported on earlier Ansys versions.
+    and features. AnsysMath is not supported on Ansys versions earlier than 2021 R1.
 
 

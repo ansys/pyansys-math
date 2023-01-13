@@ -6,7 +6,7 @@ Introduction
 ------------
 
 AnsysMath aims to gather all the mathematical calculation tools present
-in the ANSYS software.
+in the Ansys software.
 
 This library provides the ability to access and manipulate large
 sparse matrices and solve a variety of eigenproblems. It is presented in a
@@ -16,17 +16,17 @@ similar manner to the popular  `NumPy <numpy_docs_>`_ and
 The AnsysMath command set is based on tools for manipulating large mathematical
 matrices and vectors that provide access to standard linear algebra
 operations, access to the powerful sparse linear solvers of the ANSYS
-software (ANSYS Mechanical APDL for now), and the ability to solve eigenproblems.
+software (Ansys Mechanical APDL for now), and the ability to solve eigenproblems.
 
 Python and MATLAB eigensolvers are based on the publicly available
-LAPACK libraries and provides reasonable solve time for relatively
+LAPACK libraries and provide reasonable solve time for relatively
 small degrees of freedom (dof) eigenproblems of perhaps 100,000.
 However, Ansys solvers are designed for the scale of 100 s of
 millions of dof, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning
 an entirely new language because APDL Math has been written in a similar manner
-as the ``numpy`` and ``scipy`` libraries. For example, here is a comparison between
+as the ``NumPy`` and ``SciPy`` libraries. For example, here is a comparison between
 the NumPy and SciPy linear algebra solvers and the AnsysMath solver:
 
 .. table:: ``numpy`` vs ``ansys.math.core`` Implementation
@@ -50,8 +50,8 @@ Background
 AnsysMath is a library using the ANSYS Mechanical APDL (MAPDL) solver in the
 background.
 
-It is based on the `launch_mapdl()` function from the `ansys-mapdl-core
-<pymapdl_github_>`_ library. The latter uses `gRPC <grpc_>`_ which allows
+It is based on the ``launch_mapdl()`` method from the `ansys-mapdl-core
+<pymapdl_github_>`_ library. The latter uses `gRPC <grpc_>`_, which allows
 the MAPDL solver to function as a server, ready to respond to connecting
 clients.
 
@@ -66,7 +66,7 @@ performance.
 Quick code
 ----------
 
-Here is a brief example of how AnsysMath works:
+Here is a brief example of how you use AnsysMath:
 
 .. code:: python
 

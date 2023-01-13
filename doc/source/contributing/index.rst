@@ -6,15 +6,14 @@ Contributing
 Overall guidance on contributing to a PyAnsys library appears in the
 `Contributing <dev_guide_contributing_>`_ topic
 in the *PyAnsys Developer's Guide*. Ensure that you are thoroughly familiar
-with it and all `Coding style <dev_guide_coding_style_>`_ before attempting to
-contribute to PyMAPDL.
+with it before attempting to contribute to PyMAPDL.
  
-The following contribution information is specific to PyMAPDL.
+The following contribution information is specific to AnsysMath.
 
-Cloning the AnsysMath repository
+Cloning the repository
 --------------------------------
 
-Run this code to clone and install the latest version of PyMAPDL in development mode::
+Run this code to clone and install the latest version of AnsysMath in development mode::
 
     git clone https://github.com/pyansys/ansys-math
     cd ansys-math
@@ -25,7 +24,7 @@ Posting issues
 --------------
 
 Use the `AnsysMath Issues <amath_issues_>`_ page to submit questions,
-report bugs, and request new features. When possible,use these issue
+report bugs, and request new features. When possible, use these issue
 templates:
 
 * Bug report template
@@ -33,7 +32,7 @@ templates:
 
 If your issue does not fit into one of these categories, create your own issue.
 
-To reach the project support team, email `pyansys.support@ansys.com <pyansys_support_>`_.
+To reach the PyAnsys support team, email `pyansys.support@ansys.com <pyansys_support_>`_.
 
 
 Building documentation
@@ -56,7 +55,7 @@ This version is automatically kept up to date via GitHub actions.
 Code style
 ----------
 
-AnsysMath follows PEP8 standard as outlined in the `PyAnsys Development Guide
+AnsysMath follows the PEP8 standard as outlined in the `PyAnsys Development Guide
 <dev_guide_pyansys_>`_ and implements style checking using
 `pre-commit <precommit_>`_.
 

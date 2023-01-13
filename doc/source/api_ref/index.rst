@@ -4,7 +4,7 @@
 API reference
 =============
 
-This page gives an overview of the API of the public AnsysMath classes,
+This section provides an overview of the public AnsysMath classes,
 functions, and attributes.
 
 
