@@ -10,7 +10,7 @@ This example shows:
 - How to use AnsysMath to compute the first eigenvalues.
 - How to get these matrices using SciPy to obtain the same
   solutions using Python resources.
-- How AnsysMath is faster than SciPy 
+- How AnsysMath is faster than SciPy.
 """
 
 import math
