@@ -207,14 +207,10 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Create Python venv
+      - name: "Install OS packages"
         run: |
-          python -m venv .venv
-          source ./.venv/Script/activate
-
-      # - name: "Install docs build requirements"
-      #   run: |
-      #     pip install .[doc]
+          sudo apt update 
+          sudo apt install zip pandoc libgl1-mesa-glx xvfb texlive-latex-extra latexmk graphviz
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -224,22 +220,28 @@ jobs:
           restore-keys: |
             Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Install packages for documentation build
-        run: |
-          .\.venv\Scripts\Activate.ps1
-          python -m pip install --upgrade pip
-          pip install --upgrade build wheel
-          pip install .[doc]
-
-      # - name: "Test virtual framebuffer"                             TO BE ADDED
-      #   run: |
-      #     pip install -r .ci/requirements_test_xvfb.txt
-      #     xvfb-run python .ci/display_test.py
-
       - name: "Install ansys-math-core"
         run: |
           pip install .
           xvfb-run python -c "from ansys.math import core as amath"
+      
+      
+      # - name: Install packages for documentation build
+      #   run: |
+      #     .\.venv\Scripts\Activate.ps1
+      #     python -m pip install --upgrade pip
+      #     pip install --upgrade build wheel
+      #     pip install .[doc]
+
+      # # - name: "Test virtual framebuffer"                             TO BE ADDED
+      # #   run: |
+      # #     pip install -r .ci/requirements_test_xvfb.txt
+      # #     xvfb-run python .ci/display_test.py
+
+      # - name: "Install ansys-math-core"
+      #   run: |
+      #     pip install .
+      #     xvfb-run python -c "from ansys.math import core as amath"
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v2.1.0
@@ -283,6 +285,10 @@ jobs:
           key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
+      
+      - name: "Install docs build requirements"
+        run: |
+          pip install .[doc]
 
       # If DPF server is needed, uncomment
       # - name: "DPF server activation"
