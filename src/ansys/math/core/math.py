@@ -1345,7 +1345,8 @@ class AnsVec(ApdlMathObj):
 
         if init not in ["ones", "zeros", "rand", None]:
             raise ValueError(
-                f"Invalid init option {init}.\n" 'The option should be "ones", "zeros", "rand", or None.'
+                f"Invalid init option {init}.\n"
+                'The option should be "ones", "zeros", "rand", or None.'
             )
 
         if init == "rand":
