@@ -214,7 +214,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update 
-          sudo apt install zip pandoc libgl1-mesa-glx xvfb texlive-latex-extra latexmk graphviz
+          sudo apt install pandoc xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -254,11 +254,11 @@ jobs:
           username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: "Pull, launch, and validate MAPDL service"
-      #   run: .ci/start_mapdl.sh
-      #   env:
-      #     LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-      #     MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
+      - name: "Pull, launch, and validate MAPDL service"
+        run: .ci/start_mapdl.sh
+        env:
+          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
+          MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
       - name: "Retrieve AnsysMath version"
         run: |
