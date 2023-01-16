@@ -66,7 +66,7 @@ mm.norm(msub)
 # CSR representation in AnsysMath
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# Printing the list of objects in the AnsysMath space, we find:
+# Printing the list of objects in the AnsysMath space finds:
 #
 # - 2 SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
 # - with encrypted names
