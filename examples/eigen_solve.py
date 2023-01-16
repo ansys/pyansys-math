@@ -1,7 +1,7 @@
 """
 .. _ref_amath_eigen_solve:
 
-Use AnsysMath to solve eigenproblems
+Use PyAnsys-Math to solve eigenproblems
 --------------------------------------
 
 This example uses a verification manual input file, but you can use
@@ -16,7 +16,7 @@ import numpy as np
 
 import ansys.math.core.math as amath
 
-# Start AnsysMath
+# Start PyAnsys-Math
 mm = amath.AnsMath()
 
 ###############################################################################
@@ -48,7 +48,7 @@ a
 # The algorithm is automatically chosen with respect to the properties
 # of the matrices (such as scalar, storage, or symmetry).
 #
-print("Calling AnsysMath to solve the eigenproblem...")
+print("Calling PyAnsys-Math to solve the eigenproblem...")
 
 t1 = time.time()
 ev = mm.eigs(nev, k, m, phi=a)
@@ -162,14 +162,14 @@ for i in range(nev):
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = np.linspace(1, nev, nev)
-plt.title("AnsysMath Residual Error (%)")
+plt.title("PyAnsys-Math Residual Error (%)")
 plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
 plt.ylabel("Errors (%)")
-ax.bar(x, amath_acc, label="AnsysMath Results")
+ax.bar(x, amath_acc, label="PyAnsys-Math Results")
 plt.show()
 
 ###############################################################################
-# Stop AnsysMath
+# Stop PyAnsys-Math
 mm._mapdl.exit()

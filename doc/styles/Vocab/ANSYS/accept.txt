@@ -2,7 +2,7 @@ ANSYS
 Ansys
 ansys
 AnsMath
-AnsysMath
+PyAnsys-Math
 dof
 eigenfrequencies
 eigenmodes

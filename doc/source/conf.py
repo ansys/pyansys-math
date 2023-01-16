@@ -45,7 +45,7 @@ release = version = "0.1.dev0"
 # Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = "AnsysMath"
+html_short_title = html_title = "PyAnsys-Math"
 
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 """The canonical name of the webpage hosting the documentation."""
@@ -206,7 +206,7 @@ copybutton_prompt_is_regexp = True
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "ansysmathdoc"
+htmlhelp_basename = "pyansysmathdoc"
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).

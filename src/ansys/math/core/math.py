@@ -1,5 +1,5 @@
 """Contains the Math classes, allowing for math operations within
-AnsysMath from Python."""
+PyAnsys-Math from Python."""
 from enum import Enum
 import os
 import random

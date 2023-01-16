@@ -1,7 +1,7 @@
 """
 Manipulate AnsMath vectors or dense matrices as NumPy Arrays
 ------------------------------------------------------------
-This example demonstrates how to exchange data between AnsysMath
+This example demonstrates how to exchange data between PyAnsys-Math
 and Python via numpy arrays.
 
 .. note::
@@ -12,7 +12,7 @@ import numpy as np
 
 import ansys.math.core.math as amath
 
-# Start AnsysMath
+# Start PyAnsys-Math
 mm = amath.AnsMath()
 
 
@@ -48,15 +48,15 @@ print(np.linalg.norm(apdl_vec))
 
 ###############################################################################
 # Note that some methods have APDL corollaries, and these methods are
-# more efficient if performed within AnsysMath.
+# more efficient if performed within PyAnsys-Math.
 #
-# For example, the norm method can be performed within AnsysMath.
+# For example, the norm method can be performed within PyAnsys-Math.
 print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 
 ###############################################################################
 # Copy a NumPy Array to an AnsMath vector
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# You can push back any numpy vector or 2D array to AnsysMath. This
+# You can push back any numpy vector or 2D array to PyAnsys-Math. This
 # creates a new AnsMath vector, which in this case is named ``'NewVec'``.
 mm.set_vec(pv, "NewVec")
 
@@ -101,6 +101,6 @@ print(np.allclose(from_ans, np_rand))
 
 
 ###############################################################################
-# Stop AnsysMath
+# Stop PyAnsys-Math
 
 mm._mapdl.exit()

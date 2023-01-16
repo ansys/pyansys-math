@@ -2,4 +2,4 @@
 
 Examples
 ========
-These examples demonstrate using the AnsysMath library.
+These examples demonstrate using the PyAnsys-Math library.

@@ -8,12 +8,12 @@ Overall guidance on contributing to a PyAnsys library appears in the
 in the *PyAnsys Developer's Guide*. Ensure that you are thoroughly familiar
 with it before attempting to contribute to PyMAPDL.
  
-The following contribution information is specific to AnsysMath.
+The following contribution information is specific to PyAnsys-Math.
 
 Cloning the repository
 --------------------------------
 
-Run this code to clone and install the latest version of AnsysMath in development mode::
+Run this code to clone and install the latest version of PyAnsys-Math in development mode::
 
     git clone https://github.com/pyansys/ansys-math
     cd ansys-math
@@ -23,7 +23,7 @@ Run this code to clone and install the latest version of AnsysMath in developmen
 Posting issues
 --------------
 
-Use the `AnsysMath Issues <amath_issues_>`_ page to submit questions,
+Use the `PyAnsys-Math Issues <amath_issues_>`_ page to submit questions,
 report bugs, and request new features. When possible, use these issue
 templates:
 
@@ -38,24 +38,24 @@ To reach the PyAnsys support team, email `pyansys.support@ansys.com <pyansys_sup
 Building documentation
 ----------------------
 
-To build the AnsysMath documentation locally, in the root directory of the repository, run::
+To build the PyAnsys-Math documentation locally, in the root directory of the repository, run::
     
     pip install .[doc]
     .\doc\make.bat html 
 
-Documentation for the latest stable release of AnsysMath is hosted at
-`AnsysMath Documentation <amath_docs_>`_.
+Documentation for the latest stable release of PyAnsys-Math is hosted at
+`PyAnsys-Math Documentation <amath_docs_>`_.
 
 Documentation for the latest development version, which tracks the
 ``main`` branch, is hosted at 
-`Development AnsysMath Documentation <amath_dev_docs_>`_.
+`Development PyAnsys-Math Documentation <amath_dev_docs_>`_.
 This version is automatically kept up to date via GitHub actions.
 
 
 Code style
 ----------
 
-AnsysMath follows the PEP8 standard as outlined in the `PyAnsys Development Guide
+PyAnsys-Math follows the PEP8 standard as outlined in the `PyAnsys Development Guide
 <dev_guide_pyansys_>`_ and implements style checking using
 `pre-commit <precommit_>`_.
 

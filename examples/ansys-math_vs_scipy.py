@@ -1,16 +1,16 @@
 """
 .. _ref_ansys_math_vs_scipy:
 
-Compute Eigenvalues using AnsysMath or SciPy
+Compute Eigenvalues using PyAnsys-Math or SciPy
 --------------------------------------------
 
 This example shows:
 
 - How to extract the stiffness and mass matrices from a MAPDL model.
-- How to use AnsysMath to compute the first eigenvalues.
+- How to use PyAnsys-Math to compute the first eigenvalues.
 - How to get these matrices using SciPy to obtain the same
   solutions using Python resources.
-- How AnsysMath is faster than SciPy.
+- How PyAnsys-Math is faster than SciPy.
 """
 
 import math
@@ -27,7 +27,7 @@ from scipy.sparse.linalg import eigsh
 
 import ansys.math.core.math as amath
 
-# Start AnsysMath
+# Start PyAnsys-Math
 mm = amath.AnsMath()
 
 ###############################################################################
@@ -57,7 +57,7 @@ output = mm._mapdl.solve()
 
 
 ###############################################################################
-# Read the sparse matrices using AnsysMath.
+# Read the sparse matrices using PyAnsys-Math.
 #
 mm._mapdl.finish()
 mm.free()
@@ -66,7 +66,7 @@ M = mm.mass(fname="file.full")
 
 
 ###############################################################################
-# Solve the eigenproblem using AnsysMath.
+# Solve the eigenproblem using PyAnsys-Math.
 #
 nev = 10
 A = mm.mat(k.nrow, nev)
@@ -188,7 +188,7 @@ for i in range(nev):
 
 
 ###############################################################################
-# AnsysMath is more accurate than SciPy.
+# PyAnsys-Math is more accurate than SciPy.
 #
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
@@ -198,16 +198,16 @@ plt.yscale("log")
 plt.xlabel("Mode")
 plt.ylabel("% Error")
 ax.bar(x, scipy_acc, label="SciPy Results")
-ax.bar(x, amath_acc, label="AnsysMath Results")
+ax.bar(x, amath_acc, label="PyAnsys-Math Results")
 plt.legend(loc="lower right")
 plt.show()
 
 ###############################################################################
-# AnsysMath is faster than SciPy.
+# PyAnsys-Math is faster than SciPy.
 #
 ratio = scipy_elapsed_time / amath_elapsed_time
-print(f"AnsysMath is {ratio:.3} times faster")
+print(f"PyAnsys-Math is {ratio:.3} times faster")
 
 ###############################################################################
-# Stop AnsysMath
+# Stop PyAnsys-Math
 mm._mapdl.exit()
