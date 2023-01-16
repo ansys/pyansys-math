@@ -1,5 +1,8 @@
 .. _ref_math:
 
+PyAnsys-Math
+============
+
 .. currentmodule:: ansys.math.core
 
 .. autosummary::
