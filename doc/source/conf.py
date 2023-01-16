@@ -8,8 +8,8 @@ import numpy as np
 import pyvista
 from sphinx_gallery.sorting import FileNameSortKey
 
-from ansys.math import core as pymath
 from ansys.math.core import __version__
+import ansys.math.core.math as pymath
 
 # Manage errors
 pyvista.set_error_output_file("errors.txt")
