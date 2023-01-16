@@ -2,7 +2,7 @@
 .. _ref_pymath_eigen_solve:
 
 Use PyAnsys-Math to solve eigenproblems
---------------------------------------
+---------------------------------------
 
 This example uses a verification manual input file, but you can use
 your own sparse or dense matrices.

@@ -2,7 +2,7 @@
 .. _ref_ansys-math_basic:
 
 PyAnsys-Math basic operations
---------------------------
+-----------------------------
 
 This tutorial shows how you can use PyAnsys-Math for basic
 operations on AnsMath vectors and matrices in the APDL memory

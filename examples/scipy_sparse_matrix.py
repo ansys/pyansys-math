@@ -64,7 +64,7 @@ mm.norm(msub)
 
 ################################################################################
 # CSR representation in PyAnsys-Math
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # Printing the list of objects in the PyAnsys-Math space finds:
 #
@@ -80,7 +80,7 @@ mm.status()
 
 ################################################################################
 # PyAnsys-Math Python matrix correspondence
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # To determine which PyAnsys-Math object corresponds to which Python object,
 # access the id property of the Python object.

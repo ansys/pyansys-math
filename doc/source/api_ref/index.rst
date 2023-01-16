@@ -12,4 +12,4 @@ functions, and attributes.
 .. toctree::
    :maxdepth: 1
 
-   math
+   math.rst

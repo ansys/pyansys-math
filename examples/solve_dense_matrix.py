@@ -1,6 +1,6 @@
 """
 Use PyAnsys-Math to solve a dense matrix linear system
----------------------------------------------------
+------------------------------------------------------
 This example shows how so use PyAnsys-Math to solve a dense matrix linear system.
 
 """
