@@ -3,7 +3,7 @@ Documentation:
 Maintenance:
 - .github/**/*
 - .flake8
-- ignore_words.txt
+- doc/styles/Vocab/ANSYS/accept.txt
 - pyproject.toml
 Dependencies:
 - pyproject.toml
