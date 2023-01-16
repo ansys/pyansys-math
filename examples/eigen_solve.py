@@ -162,7 +162,7 @@ for i in range(nev):
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = np.linspace(1, nev, nev)
-plt.title("APDL Math Residual Error (%)")
+plt.title("AnsysMath Residual Error (%)")
 plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
@@ -171,5 +171,5 @@ ax.bar(x, amath_acc, label="AnsysMath Results")
 plt.show()
 
 ###############################################################################
-# stop AnsysMath
+# Stop AnsysMath
 mm._mapdl.exit()

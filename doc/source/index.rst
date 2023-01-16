@@ -25,7 +25,7 @@ However, Ansys solvers are designed for the scale of 100 s of
 millions of dof, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning
-an entirely new language because APDL Math has been written in a similar manner
+an entirely new language because AnsysMath has been written in a similar manner
 as the ``NumPy`` and ``SciPy`` libraries. For example, here is a comparison between
 the NumPy and SciPy linear algebra solvers and the AnsysMath solver:
 

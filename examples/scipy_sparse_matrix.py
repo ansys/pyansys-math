@@ -68,12 +68,12 @@ mm.norm(msub)
 #
 # Printing the list of objects in the AnsysMath space finds:
 #
-# - 2 SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
-# - with encrypted names
-# - The ``my_mat`` SMAT object. Its size is zero, because the 3
-# - vectors are stored separately
-# - the 3 vectors of the CSR my_mat structure: ``MY_MAT_PTR``, ``MY_MAT_IND``
-# - and ``MY_MAT_DATA``
+# - Two SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
+#   with encrypted names.
+# - The ``my_mat`` SMAT object. Its size is zero, because the three
+#   vectors are stored separately.
+# - The three vectors of the CSR my_mat structure: ``MY_MAT_PTR``,
+#   ``MY_MAT_IND`` and ``MY_MAT_DATA``.
 
 mm.status()
 
@@ -91,6 +91,5 @@ print("name(msub)=" + msub.id)
 
 
 ###############################################################################
-# stop AnsysMath
-
+# Stop AnsysMath
 mm._mapdl.exit()

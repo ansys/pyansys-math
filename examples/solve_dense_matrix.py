@@ -62,6 +62,5 @@ print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 npl.norm(x_py)
 
 ###############################################################################
-# stop AnsysMath
-
+# Stop AnsysMath
 mm._mapdl.exit()
