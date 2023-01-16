@@ -227,12 +227,6 @@ jobs:
       - name: "Install ansys-math-core"
         run: |
           pip install .
-          xvfb-run python -c "from ansys.math import core as amath"
-
-      # # - name: "Test virtual framebuffer"
-      # #   run: |
-      # #     pip install -r .ci/requirements_test_xvfb.txt
-      # #     xvfb-run python .ci/display_test.py
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v2.1.0
