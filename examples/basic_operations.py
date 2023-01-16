@@ -12,10 +12,10 @@ workspace.
 
 import numpy as np
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math as a service.
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ###############################################################################
 # Create and Manipulate Vectors

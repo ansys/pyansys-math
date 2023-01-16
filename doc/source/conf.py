@@ -8,7 +8,7 @@ import numpy as np
 import pyvista
 from sphinx_gallery.sorting import FileNameSortKey
 
-from ansys.math import core as amath
+from ansys.math import core as pymath
 from ansys.math.core import __version__
 
 # Manage errors
@@ -27,7 +27,7 @@ if not os.path.exists(pyvista.FIGURE_PATH):
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
-amath.BUILDING_GALLERY = True
+pymath.BUILDING_GALLERY = True
 
 # suppress annoying matplotlib bug
 warnings.filterwarnings(

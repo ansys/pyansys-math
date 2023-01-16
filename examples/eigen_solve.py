@@ -1,5 +1,5 @@
 """
-.. _ref_amath_eigen_solve:
+.. _ref_pymath_eigen_solve:
 
 Use PyAnsys-Math to solve eigenproblems
 --------------------------------------
@@ -14,10 +14,10 @@ from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 import numpy as np
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ###############################################################################
 # First we get the `STIFF` and `MASS` matrices from the full file
@@ -149,12 +149,12 @@ def get_res(i):
     return kphi.norm() / kphinrm
 
 
-amath_acc = np.zeros(nev)
+pymath_acc = np.zeros(nev)
 
 for i in range(nev):
     f = ev[i]
-    amath_acc[i] = get_res(i)
-    print(f"[{i}] : Freq = {f}\t - Residual = {amath_acc[i]}")
+    pymath_acc[i] = get_res(i)
+    print(f"[{i}] : Freq = {f}\t - Residual = {pymath_acc[i]}")
 
 ###############################################################################
 # Plot Accuracy of Eigenresults
@@ -167,7 +167,7 @@ plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
 plt.ylabel("Errors (%)")
-ax.bar(x, amath_acc, label="PyAnsys-Math Results")
+ax.bar(x, pymath_acc, label="PyAnsys-Math Results")
 plt.show()
 
 ###############################################################################

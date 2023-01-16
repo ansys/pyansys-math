@@ -9,10 +9,10 @@ Sparse Matrices.
 from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ################################################################################
 # Load and solve verification manual example 153.  Then load the

@@ -51,7 +51,7 @@ Python 3.10 on Windows, Mac OS, and Linux.
    pip install ansys-math-core
 
 Alternatively, install the latest from 
-`PyAnsys-Math GitHub <amath_github_>`_ via:
+`PyAnsys-Math GitHub <pymath_github_>`_ via:
 
 .. code::
 
@@ -81,10 +81,10 @@ Check that you can start PyAnsys-Math from Python by running:
 
 .. code:: python
 
-    import ansys.math.core.math as amath
+    import ansys.math.core.math as pymath
 
     # Start PyAnsys-Math
-    mm = amath.AnsMath()
+    mm = pymath.AnsMath()
     print(mm)
 
 

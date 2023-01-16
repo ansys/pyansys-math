@@ -8,10 +8,10 @@ based on sparse or dense matrices.
 """
 from ansys.mapdl.core.examples import vmfiles
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ###############################################################################
 # Factorize and Solve Sparse Linear Systems

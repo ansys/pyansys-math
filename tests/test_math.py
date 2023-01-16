@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 from scipy import sparse
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
@@ -26,7 +26,7 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mm = amath.AnsMath(mapdl)
+    mm = pymath.AnsMath(mapdl)
     return mm
 
 
@@ -100,7 +100,7 @@ def test_invalid_dtype(mm):
 
 def test_vec(mm):
     vec = mm.vec(10, asarray=False)
-    assert isinstance(vec, amath.AnsVec)
+    assert isinstance(vec, pymath.AnsVec)
 
     arr = mm.vec(10, asarray=True)
     assert isinstance(arr, np.ndarray)
@@ -250,8 +250,8 @@ def test_load_stiff_mass_as_array(mm, cube_solve):
 
 
 def test_stiff_mass_name(mm, cube_solve):
-    kname = amath.id_generator()
-    mname = amath.id_generator()
+    kname = pymath.id_generator()
+    mname = pymath.id_generator()
 
     k = mm.stiff(name=kname)
     m = mm.mass(name=mname)
@@ -370,7 +370,7 @@ def test_solve(mm, cube_solve):
 def test_solve_alt(mm, cube_solve):
     k = mm.stiff()
     b = mm.rand(k.nrow)
-    eig_val = amath.solve(k, b)
+    eig_val = pymath.solve(k, b)
     assert eig_val.size == k.nrow
 
 
@@ -535,7 +535,7 @@ def test_get_dense(mm):
 
 
 def test_zeros_vec(mm):
-    assert isinstance(mm.zeros(10), amath.AnsVec)
+    assert isinstance(mm.zeros(10), pymath.AnsVec)
 
 
 def test_get_sparse(mm):
@@ -588,7 +588,7 @@ def test_dense(mm):
         # test if a AnsMath object can treated as an array
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
-        assert isinstance(apdl_mat, amath.AnsMat)
+        assert isinstance(apdl_mat, pymath.AnsMat)
         assert np.allclose(array, apdl_mat)
 
         with pytest.raises(TypeError):

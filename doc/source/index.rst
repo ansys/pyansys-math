@@ -1,6 +1,6 @@
 
 PyAnsys-Math documentation
-=======================
+==========================
 
 Introduction
 ------------
@@ -70,9 +70,9 @@ Here is a brief example of how you use PyAnsys-Math:
 
 .. code:: python
 
-    import ansys.math.core.math as amath
+    import ansys.math.core.math as pymath
 
-    mm = amath.AnsMath()
+    mm = pymath.AnsMath()
 
     u = mm.ones(5)
     v = mm.rand(5)
@@ -87,7 +87,7 @@ Here is a brief example of how you use PyAnsys-Math:
       1.417e+00   1.997e+00   1.720e+00   1.933e+00   1.000e+00      <       5
 
 
-For additional PyAnsys-Math examples, see :ref:`ref_amath_examples`.
+For additional PyAnsys-Math examples, see :ref:`ref_pymath_examples`.
 
 
 .. toctree::

@@ -25,10 +25,10 @@ import numpy as np
 import scipy
 from scipy.sparse.linalg import eigsh
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ###############################################################################
 # AnsMath EigenSolve
@@ -74,15 +74,15 @@ A = mm.mat(k.nrow, nev)
 t1 = time.time()
 ev = mm.eigs(nev, k, M, phi=A, fmin=1.0)
 t2 = time.time()
-amath_elapsed_time = t2 - t1
-print("\nElapsed time to solve this problem : ", amath_elapsed_time)
+pymath_elapsed_time = t2 - t1
+print("\nElapsed time to solve this problem : ", pymath_elapsed_time)
 
 ###############################################################################
 # Print eigenfrequencies and accuracy.
 #
 # Accuracy : :math:`\frac{||(K-\lambda.M).\phi||_2}{||K.\phi||_2}`
 #
-amath_acc = np.empty(nev)
+pymath_acc = np.empty(nev)
 
 for i in range(nev):
     f = ev[i]  # Eigenfrequency (Hz)
@@ -98,8 +98,8 @@ for i in range(nev):
     mphi *= lam  # (K-\lambda.M).Phi
     kphi -= mphi
 
-    amath_acc[i] = kphi.norm() / kphi_nrm  # compute the residual
-    print(f"[{i}] : Freq = {f:8.2f} Hz\t Residual = {amath_acc[i]:.5}")
+    pymath_acc[i] = kphi.norm() / kphi_nrm  # compute the residual
+    print(f"[{i}] : Freq = {f:8.2f} Hz\t Residual = {pymath_acc[i]:.5}")
 
 
 ###############################################################################
@@ -198,14 +198,14 @@ plt.yscale("log")
 plt.xlabel("Mode")
 plt.ylabel("% Error")
 ax.bar(x, scipy_acc, label="SciPy Results")
-ax.bar(x, amath_acc, label="PyAnsys-Math Results")
+ax.bar(x, pymath_acc, label="PyAnsys-Math Results")
 plt.legend(loc="lower right")
 plt.show()
 
 ###############################################################################
 # PyAnsys-Math is faster than SciPy.
 #
-ratio = scipy_elapsed_time / amath_elapsed_time
+ratio = scipy_elapsed_time / pymath_elapsed_time
 print(f"PyAnsys-Math is {ratio:.3} times faster")
 
 ###############################################################################

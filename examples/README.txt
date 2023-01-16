@@ -1,4 +1,4 @@
-.. _ref_amath_examples:
+.. _ref_pymath_examples:
 
 Examples
 ========

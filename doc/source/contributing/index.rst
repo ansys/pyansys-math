@@ -23,7 +23,7 @@ Run this code to clone and install the latest version of PyAnsys-Math in develop
 Posting issues
 --------------
 
-Use the `PyAnsys-Math Issues <amath_issues_>`_ page to submit questions,
+Use the `PyAnsys-Math Issues <pymath_issues_>`_ page to submit questions,
 report bugs, and request new features. When possible, use these issue
 templates:
 
@@ -44,11 +44,11 @@ To build the PyAnsys-Math documentation locally, in the root directory of the re
     .\doc\make.bat html 
 
 Documentation for the latest stable release of PyAnsys-Math is hosted at
-`PyAnsys-Math Documentation <amath_docs_>`_.
+`PyAnsys-Math Documentation <pymath_docs_>`_.
 
 Documentation for the latest development version, which tracks the
 ``main`` branch, is hosted at 
-`Development PyAnsys-Math Documentation <amath_dev_docs_>`_.
+`Development PyAnsys-Math Documentation <pymath_dev_docs_>`_.
 This version is automatically kept up to date via GitHub actions.
 
 

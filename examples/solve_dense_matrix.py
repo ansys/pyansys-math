@@ -9,10 +9,10 @@ import time
 
 import numpy.linalg as npl
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # Start PyAnsys-Math
-mm = amath.AnsMath()
+mm = pymath.AnsMath()
 
 ###############################################################################
 # Allocate a Dense Matrix in the MAPDL workspace
