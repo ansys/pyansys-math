@@ -1081,7 +1081,7 @@ class AnsMath:
         """
         if ":" in vname:
             raise ValueError(
-                "The character ':' is not permitted in an AnsMath vector parameter name"
+                "The character ':' is not permitted in an AnsMath vector parameter name."
             )
         if not isinstance(arr, np.ndarray):
             arr = np.asarray(arr)
@@ -1122,7 +1122,7 @@ class AnsMath:
 
         if ":" in mname:
             raise ValueError(
-                "The character ':' is not permitted in a AnsMath matrix parameter name"
+                "The character ':' is not permitted in a AnsMath matrix parameter name."
             )
         if not len(mname):
             raise ValueError("An empty AnsMath matrix name is not permitted.")
@@ -1616,7 +1616,7 @@ class AnsMat(AnsMathObj):
 
 
 class AnsDenseMat(AnsMat):
-    """Dense AnsMath Matrix"""
+    """AnsMath Dense Matrix"""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
@@ -1626,7 +1626,7 @@ class AnsDenseMat(AnsMat):
         return self.asarray()
 
     def __repr__(self):
-        return f"Dense AnsMath Matrix ({self.nrow}, {self.ncol})"
+        return f"AnsMath Dense Matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix"""
@@ -1634,13 +1634,13 @@ class AnsDenseMat(AnsMat):
 
 
 class AnsSparseMat(AnsMat):
-    """Sparse AnsMath Matrix"""
+    """AnsMath Sparse Matrix"""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
-        return f"Sparse AnsMath Matrix ({self.nrow}, {self.ncol})"
+        return f"AnsMath Sparse Matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix.
@@ -1650,11 +1650,11 @@ class AnsSparseMat(AnsMat):
         Examples
         --------
         >>> k
-        Sparse AnsMath Matrix (126, 126)
+        AnsMath Sparse Matrix (126, 126)
 
         >>> kcopy = k.copy()
         >>> kcopy
-        Sparse AnsMath Matrix (126, 126)
+        AnsMath Sparse Matrix (126, 126)
 
         """
         return AnsSparseMat(AnsMathObj.copy(self), self._mapdl)
@@ -1665,7 +1665,7 @@ class AnsSparseMat(AnsMat):
         Examples
         --------
         >>> k
-        Sparse AnsMath Matrix (126, 126)
+        AnsMath Sparse Matrix (126, 126)
 
         >>> mat = k.todense()
         >>> mat

@@ -561,7 +561,7 @@ def test_copy_complex(mm):
 
 def test_sparse_repr(mm):
     k = mm.stiff()
-    assert "Sparse AnsMath Matrix" in repr(k)
+    assert "AnsMath Sparse Matrix" in repr(k)
 
 
 def test_invalid_matrix_size(mm):
@@ -594,7 +594,7 @@ def test_dense(mm):
         with pytest.raises(TypeError):
             apdl_mat = mm.matrix(array.astype(np.uint8))
 
-        assert "Dense AnsMath Matrix" in repr(apdl_mat)
+        assert "AnsMath Dense Matrix" in repr(apdl_mat)
 
         # check transpose
         assert np.allclose(apdl_mat.T, array.T)
