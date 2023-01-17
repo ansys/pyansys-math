@@ -712,7 +712,7 @@ class AnsMath:
         --------
         >>> vec = mm.get_vec(fname='PRSMEMB.full', mat_id="RHS")
         >>> vec
-        AnsMath Vector Size 126
+        AnsMath Vector size 126
 
         """
         if name is None:
@@ -797,7 +797,7 @@ class AnsMath:
         Examples
         --------
         >>> rhs = mm.rhs(fname='PRSMEMB.full')
-        AnsMath Vector Size 126
+        AnsMath Vector size 126
 
         """
         fname = self._load_file(fname)
@@ -1371,7 +1371,7 @@ class AnsVec(AnsMathObj):
         return int(sz)
 
     def __repr__(self):
-        return f"AnsMath Vector Size {self.size}"
+        return f"AnsMath Vector size {self.size}"
 
     def __getitem__(self, num):
         if num < 0:
@@ -1630,7 +1630,7 @@ class AnsDenseMat(AnsMat):
         return self.asarray()
 
     def __repr__(self):
-        return f"AnsMath Dense Matrix ({self.nrow}, {self.ncol}."
+        return f"AnsMath Dense Matrix ({self.nrow}, {self.ncol}"
 
     def copy(self):
         """Return a copy of this matrix."""
@@ -1644,7 +1644,7 @@ class AnsSparseMat(AnsMat):
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
-        return f"AnsMath Sparse Matrix ({self.nrow}, {self.ncol})."
+        return f"AnsMath Sparse Matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix.
