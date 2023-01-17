@@ -217,7 +217,7 @@ class AnsMath:
 
         return vec
 
-    def mat(self, nrow=0, ncol=0, dtype=np.double, init=None, name=None, asarray=False):
+    def mat(self, nrow=0, ncol=0, dtype=np.double, init="zeros", name=None, asarray=False):
         """Create an AnsMath matrix.
 
         Parameters
@@ -230,8 +230,8 @@ class AnsMath:
             Datatype of the vector.  Must be either ``np.int32``,
             ``np.int64``, or ``np.double``.
         init : str, optional
-            Initialization options.  Can be ``"ones"``, ``"zeros"``,
-            or ``"rand"``.
+            Initialization options.  Can be ``"zeros"``, ``"ones"``,
+            or ``"rand"``. The default is ``"zeros"``.
         name : str, optional
             Name to assign the AnsMath matrix. The default is ``None``, in which case
             a name is automatically generated.
@@ -259,9 +259,7 @@ class AnsMath:
                 mat.rand()
             elif init == "ones":
                 mat.ones()
-            elif init == "zeros":
-                mat.zeros()
-            elif init is not None:
+            elif init != "zeros":
                 raise ValueError(f"Invalid init method '{init}'")
         else:
             info = self._mapdl._data_info(name)

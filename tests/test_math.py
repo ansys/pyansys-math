@@ -328,7 +328,8 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
 
 
 def test_mat_from_name(mm):
-    mat0 = mm.mat(10, 10)
+    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with another
+    # value than the default one
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
 
