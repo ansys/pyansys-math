@@ -585,7 +585,7 @@ def test_transpose(mm):
 def test_dense(mm):
     # version check must be performed at runtime
     if mm._server_version[1] >= 4:
-        # test if a AnsMath object can treated as an array
+        # test if an AnsMath object can treated as an array
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
         assert isinstance(apdl_mat, pymath.AnsMat)
