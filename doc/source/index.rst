@@ -31,7 +31,7 @@ the NumPy and SciPy linear algebra solvers and the PyAnsys-Math solver:
 .. table:: ``numpy`` vs ``ansys.math.core`` Implementation
 
    +--------------------------------------------+-----------------------------------+
-   | ``NumPy`` and ``SciPy``                    | ``PyAnsys-Math``               |
+   | ``NumPy`` and ``SciPy``                    | ``PyAnsys-Math``                  |
    +============================================+===================================+
    | .. code:: python                           | .. code:: python                  |
    |                                            |                                   |
