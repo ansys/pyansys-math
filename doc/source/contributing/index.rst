@@ -6,12 +6,12 @@ Contributing
 Overall guidance on contributing to a PyAnsys library appears in the
 `Contributing <dev_guide_contributing_>`_ topic
 in the *PyAnsys Developer's Guide*. Ensure that you are thoroughly familiar
-with it before attempting to contribute to PyMAPDL.
+with this guide before attempting to contribute to PyAnsys-Math.
  
 The following contribution information is specific to PyAnsys-Math.
 
 Cloning the repository
---------------------------------
+----------------------
 
 Run this code to clone and install the latest version of PyAnsys-Math in development mode::
 
@@ -59,12 +59,12 @@ PyAnsys-Math follows the PEP8 standard as outlined in the `PyAnsys Development G
 <dev_guide_pyansys_>`_ and implements style checking using
 `pre-commit <precommit_>`_.
 
-To ensure your code meets minimum code styling standards, run::
+To ensure your code meets minimum code styling standards, run this code::
 
   pip install pre-commit
   pre-commit run --all-files
 
-You can also install this as a pre-commit hook by running::
+You can also install this as a pre-commit hook by running this code::
 
   pre-commit install
 

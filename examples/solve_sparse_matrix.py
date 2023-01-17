@@ -84,12 +84,12 @@ kx -= b
 print("Residual error:", kx.norm() / b.norm())
 
 ###############################################################################
-# Summary of all allocated AnsMath Objects
+# Summary of all allocated AnsMath objects
 #
 mm.status()
 
 ######################################################################
-# Delete all AnsMath Objects
+# Delete all AnsMath objects
 #
 mm.free()
 

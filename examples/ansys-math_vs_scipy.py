@@ -6,11 +6,11 @@ Compute Eigenvalues using PyAnsys-Math or SciPy
 
 This example shows:
 
-- How to extract the stiffness and mass matrices from a MAPDL model.
-- How to use PyAnsys-Math to compute the first eigenvalues.
+- How to extract the stiffness and mass matrices from an MAPDL model.
+- How to use PyAnsys-Math to compute the first eigenvalues
 - How to get these matrices using SciPy to obtain the same
   solutions using Python resources.
-- How PyAnsys-Math is faster than SciPy.
+- How PyAnsys-Math is faster than SciPy
 """
 
 import math

@@ -77,7 +77,7 @@ after restarting the Python kernel.
 Verify your installation
 ------------------------
 
-Check that you can start PyAnsys-Math from Python by running:
+Check that you can start PyAnsys-Math from Python by running this code:
 
 .. code:: python
 
@@ -89,7 +89,7 @@ Check that you can start PyAnsys-Math from Python by running:
 
 
 If you see a response from the server, congratulations. You're ready
-to get started using PyAnsys-Math as a service.
+to start using PyAnsys-Math as a service.
 
 Ansys software requirements
 ---------------------------

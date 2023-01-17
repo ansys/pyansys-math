@@ -510,7 +510,7 @@ def test_vec_const(mm):
 def test_set_vector(mm, vec, pname):
     ans_vec = mm.set_vec(vec, pname)
     assert np.allclose(ans_vec.asarray(), vec)
-    assert "AnsMath Vector Size" in repr(ans_vec)
+    assert "AnsMath vector size" in repr(ans_vec)
     assert "" in str(vec[0])[:4]  # output from *PRINT
 
 
@@ -585,7 +585,7 @@ def test_transpose(mm):
 def test_dense(mm):
     # version check must be performed at runtime
     if mm._server_version[1] >= 4:
-        # test if a AnsMath object can treated as an array
+        # test if an AnsMath object can treated as an array
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
         assert isinstance(apdl_mat, pymath.AnsMat)

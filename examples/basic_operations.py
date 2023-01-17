@@ -20,8 +20,8 @@ mm = pymath.AnsMath()
 ###############################################################################
 # Create and Manipulate Vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Create 2 AnsMath vectors of size 5. :math:`\vec{v}` is initialized with
-# ones, $\vec{w}$ is filled with random values
+# Create two AnsMath vectors of size 5. The :math:`\vec{v}` method is initialized with
+# ones, and $\vec{w}$ is filled with random values.
 #
 
 v = mm.ones(5)
@@ -32,14 +32,14 @@ print(w)
 ###############################################################################
 # Use operators on vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# Just like `numpy` PyAnsys-Math vectors can use most of the
-# standard operators (e.g. ``+, -, +=, -=, *=``)
+# Like NumPy vectors, PyAnsys-Math vectors can use most of the
+# standard operators (``+, -, +=, -=, *=``).
 #
 # Here this form is used :math:`\vec{z}=\vec{v}+\vec{w}`
 #
-# Then we compute :math:`\|z\|_2` (the default `norm` is nrm2, but you
+# Then compute :math:`\|z\|_2` (the default `norm` is nrm2. Note that you
 # can use `.norm('nrm1')` or `.norm('nrminf')` for different normals.
-# See `help(z.norm)` for additional details.
+# For additional information, see `help(z.norm)`.
 #
 
 z = v + w
@@ -144,7 +144,7 @@ print(mw)
 
 
 ###############################################################################
-# AnsMath matrices can be identified by printing, viewing their types, or with
+# AnsMath matrices can be identified by printing, viewing their types, or
 # using the `__repr__` method by simply typing out the variable
 #
 # AnsMath Matrix
@@ -166,7 +166,7 @@ w
 # Numpy methods on AnsMath objects
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Regardless of the underlying AnsMath object type, you are generally
-# able to perform most numpy or scipy operations on these arrays.  You
+# able to perform most NumPy or SciPy operations on these arrays.  You
 # can do this one of two ways.  First, you can convert a matrix to a numpy array:
 
 apdl_mat = mm.rand(5, 5)
