@@ -3,7 +3,7 @@ Documentation:
 Maintenance:
 - .github/**/*
 - .flake8
-- ignore_words.txt
+- doc/styles/**/*
 - pyproject.toml
 Dependencies:
 - pyproject.toml
