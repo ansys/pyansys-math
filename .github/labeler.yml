@@ -3,7 +3,7 @@ Documentation:
 Maintenance:
 - .github/**/*
 - .flake8
-- doc/styles/Vocab/ANSYS/accept.txt
+- doc/styles/**/*
 - pyproject.toml
 Dependencies:
 - pyproject.toml
