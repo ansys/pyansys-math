@@ -1,7 +1,0 @@
-nax
-nce
-nin
-pres
-parm
-struc
-tickness
