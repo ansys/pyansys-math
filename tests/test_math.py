@@ -510,7 +510,7 @@ def test_vec_const(mm):
 def test_set_vector(mm, vec, pname):
     ans_vec = mm.set_vec(vec, pname)
     assert np.allclose(ans_vec.asarray(), vec)
-    assert "AnsMath Vector Size" in repr(ans_vec)
+    assert "AnsMath vector size" in repr(ans_vec)
     assert "" in str(vec[0])[:4]  # output from *PRINT
 
 

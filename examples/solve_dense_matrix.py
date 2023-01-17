@@ -1,7 +1,7 @@
 """
 Use PyAnsys-Math to solve a dense matrix linear system
 ------------------------------------------------------
-This example shows how so use PyAnsys-Math to solve a dense matrix linear system.
+This example shows how to use PyAnsys-Math to solve a dense matrix linear system.
 
 """
 
@@ -15,7 +15,7 @@ import ansys.math.core.math as pymath
 mm = pymath.AnsMath()
 
 ###############################################################################
-# Allocate a Dense Matrix in the MAPDL workspace
+# Allocate a dense matrix in the MAPDL workspace
 #
 mm._mapdl.clear()
 dim = 1000

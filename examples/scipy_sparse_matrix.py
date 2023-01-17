@@ -22,7 +22,7 @@ k = mm.stiff(fname="PRSMEMB.full")
 k
 
 ################################################################################
-# Copy this AnsMath Sparse Matrix to a SciPy CSR matrix and plot the
+# Copy this AnsMath sparse matrix to a SciPy CSR matrix and plot the
 # graph of the sparse matrix
 pk = k.asarray()
 plt.spy(pk)
@@ -45,9 +45,9 @@ print(pk.indptr[:10])
 
 
 ################################################################################
-# ### Create a AnsMath Sparse Matrix from a SciPy Sparse CSR Matrix
+# ### Create an AnsMath sparse matrix from a SciPy sparse CSR matrix
 #
-# Here, we transfer the ``scipy`` CSR matrix back to PyAnsys-Math.  While
+# Now transfer the SciPy CSR matrix back to PyAnsys-Math.  While
 # this example uses a matrix that was originally within MAPDL, you can
 # load any CSR matrix to PyAnsys-Math.
 
@@ -73,7 +73,7 @@ mm.norm(msub)
 # - The ``my_mat`` SMAT object. Its size is zero, because the three
 #   vectors are stored separately.
 # - The three vectors of the CSR my_mat structure: ``MY_MAT_PTR``,
-#   ``MY_MAT_IND`` and ``MY_MAT_DATA``.
+#   ``MY_MAT_IND``, and ``MY_MAT_DATA``.
 
 mm.status()
 
