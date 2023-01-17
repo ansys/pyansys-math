@@ -4,7 +4,7 @@
 API reference
 =============
 
-This section provides an overview of the public PyAnsys-Math classes,
+This section provides an overview of the public PyAnsys Math classes,
 functions, and attributes.
 
 .. include:: math.rst

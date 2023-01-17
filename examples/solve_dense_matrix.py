@@ -1,7 +1,7 @@
 """
-Use PyAnsys-Math to solve a dense matrix linear system
+Use PyAnsys Math to solve a dense matrix linear system
 ------------------------------------------------------
-This example shows how to use PyAnsys-Math to solve a dense matrix linear system.
+This example shows how to use PyAnsys Math to solve a dense matrix linear system.
 
 """
 
@@ -11,7 +11,7 @@ import numpy.linalg as npl
 
 import ansys.math.core.math as pymath
 
-# Start PyAnsys-Math
+# Start PyAnsys Math.
 mm = pymath.AnsMath()
 
 ###############################################################################
@@ -31,18 +31,18 @@ a_py = a.asarray()
 b_py = b.asarray()
 
 ###############################################################################
-# Solve using PyAnsys-Math
+# Solve using PyAnsys Math
 #
-print(f"Solving a ({dim} x {dim}) dense linear system using PyAnsys-Math...")
+print(f"Solving a ({dim} x {dim}) dense linear system using PyAnsys Math...")
 
 t1 = time.time()
 s = mm.factorize(a)
 x = s.solve(b, x)
 t2 = time.time()
-print(f"Elapsed time to solve the linear system using PyAnsys-Math: {t2 - t1} seconds")
+print(f"Elapsed time to solve the linear system using PyAnsys Math: {t2 - t1} seconds")
 
 ###############################################################################
-# Norm of the PyAnsys-Math solution
+# Norm of the PyAnsys Math solution
 mm.norm(x)
 
 
@@ -62,5 +62,5 @@ print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 npl.norm(x_py)
 
 ###############################################################################
-# Stop PyAnsys-Math
+# Stop PyAnsys Math
 mm._mapdl.exit()

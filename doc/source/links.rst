@@ -1,7 +1,7 @@
 .. # Ansys related
 .. _ansys: https://www.ansys.com/
 
-.. #PyAnsys-Math related
+.. #PyAnsys Math related
 .. _pymath_docs: https://math.docs.pyansys.com/
 .. _pymath_dev_docs: https://math.docs.pyansys.com/dev/
 .. _pymath_issues: https://github.com/pyansys/ansys-math/issues

@@ -1,5 +1,5 @@
 """Contains the Math classes, allowing for math operations within
-PyAnsys-Math from Python."""
+PyAnsys Math from Python."""
 from enum import Enum
 import os
 import random
@@ -43,7 +43,7 @@ def id_generator(size=6, chars=string.ascii_uppercase):
 
 
 class ObjType(Enum):
-    """Generic AnsMath object (shared features between Vec Mat and
+    """Provides the generic AnsMath object (shared features between Vec Mat and
     Solver components)."""
 
     GEN = 1
@@ -92,7 +92,7 @@ def list_allowed_dtypes():
 
 
 class AnsMath:
-    """Abstract math class.
+    """Provides the common class for abstract math objects.
 
     Examples
     --------
@@ -1344,7 +1344,7 @@ class AnsMathObj:
 
 
 class AnsVec(AnsMathObj):
-    """Proves the AnsMath vector object."""
+    """Provides the AnsMath vector objects."""
 
     def __init__(self, id_, mapdl, dtype=np.double, init=None):
         AnsMathObj.__init__(self, id_, mapdl, ObjType.VEC)
@@ -1460,7 +1460,7 @@ class AnsVec(AnsMathObj):
 
 
 class AnsMat(AnsMathObj):
-    """Provides the AnsMath matrix object."""
+    """Provides the AnsMath matrix objects."""
 
     def __init__(self, id_, mapdl, type_=ObjType.DMAT):
         AnsMathObj.__init__(self, id_, mapdl, type_)
@@ -1591,7 +1591,7 @@ class AnsMat(AnsMathObj):
 
     @property
     def T(self):
-        """Returns the transpose of a AnsMath matrix.
+        """Transposition of an AnsMath matrix.
 
         Examples
         --------
@@ -1620,7 +1620,7 @@ class AnsMat(AnsMathObj):
 
 
 class AnsDenseMat(AnsMat):
-    """AnsMath Dense Matrix."""
+    """Provides the AnsMath Dense Matrix objects."""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
@@ -1638,7 +1638,7 @@ class AnsDenseMat(AnsMat):
 
 
 class AnsSparseMat(AnsMat):
-    """AnsMath Sparse Matrix."""
+    """Provides the AnsMath Sparse Matrix objects."""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)

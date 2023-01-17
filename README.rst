@@ -1,5 +1,5 @@
-PyAnsys-Math
-=========
+PyAnsys Math
+============
 
 |pyansys| |pypi| |PyPIact| |GH-CI| |codecov| |zenodo| |MIT| |black|
 
@@ -30,7 +30,7 @@ PyAnsys-Math
   :alt: black
 
 
-PyAnsys-Math is a Python repository holding Ansys mathematical libraries.
+PyAnsys Math is a Python repository holding Ansys mathematical libraries.
 To use them, you must have a local installation of Ansys.
 
 For more information on getting a licensed copy of Ansys, visit
@@ -51,7 +51,7 @@ Python 3.10 on Windows, Mac OS, and Linux.
    pip install ansys-math-core
 
 Alternatively, install the latest from 
-`PyAnsys-Math GitHub <pymath_github_>`_ via:
+`PyAnsys Math GitHub <pymath_github_>`_ via:
 
 .. code::
 
@@ -77,19 +77,19 @@ after restarting the Python kernel.
 Verify your installation
 ------------------------
 
-Check that you can start PyAnsys-Math from Python by running this code:
+Check that you can start PyAnsys Math from Python by running this code:
 
 .. code:: python
 
     import ansys.math.core.math as pymath
 
-    # Start PyAnsys-Math
+    # Start PyAnsys Math.
     mm = pymath.AnsMath()
     print(mm)
 
 
 If you see a response from the server, congratulations. You're ready
-to start using PyAnsys-Math as a service.
+to start using PyAnsys Math as a service.
 
 Ansys software requirements
 ---------------------------
@@ -99,4 +99,4 @@ You must have a copy of Ansys 2021 R1 or later installed locally.
 .. note::
 
     The latest versions of Ansys provide significantly better support
-    and features. PyAnsys-Math is not supported on Ansys versions earlier than 2021 R1.
+    and features. PyAnsys Math is not supported on Ansys versions earlier than 2021 R1.

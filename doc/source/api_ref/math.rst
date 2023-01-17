@@ -1,6 +1,6 @@
 .. _ref_math:
 
-PyAnsys-Math
+PyAnsys Math
 ============
 
 .. currentmodule:: ansys.math.core

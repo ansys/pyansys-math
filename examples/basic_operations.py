@@ -1,10 +1,10 @@
 """
 .. _ref_ansys-math_basic:
 
-PyAnsys-Math basic operations
+PyAnsys Math basic operations
 -----------------------------
 
-This tutorial shows how you can use PyAnsys-Math for basic
+This tutorial shows how you can use PyAnsys Math for basic
 operations on AnsMath vectors and matrices in the APDL memory
 workspace.
 
@@ -14,7 +14,7 @@ import numpy as np
 
 import ansys.math.core.math as pymath
 
-# Start PyAnsys-Math as a service.
+# Start PyAnsys Math as a service.
 mm = pymath.AnsMath()
 
 ###############################################################################
@@ -32,7 +32,7 @@ print(w)
 ###############################################################################
 # Use operators on vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# Like NumPy vectors, PyAnsys-Math vectors can use most of the
+# Like NumPy vectors, PyAnsys Math vectors can use most of the
 # standard operators (``+, -, +=, -=, *=``).
 #
 # Here this form is used :math:`\vec{z}=\vec{v}+\vec{w}`
@@ -177,7 +177,7 @@ print(np_mat)
 ###############################################################################
 # Alternatively, you can use NumPy to compute the maximum of the array.
 #
-# This works because PyAnsys-Math copies over the matrix to the local
+# This works because PyAnsys Math copies over the matrix to the local
 # Python memory and then computes the maximum using NumPy.
 
 print(np.max(apdl_mat))
@@ -185,7 +185,7 @@ print(np.max(apdl_mat))
 
 ###############################################################################
 # This works for most numpy operations, but keep in mind that
-# operations that are supported within PyAnsys-Math (such as adding or
+# operations that are supported within PyAnsys Math (such as adding or
 # multiplying arrays) compute much faster because the data is not copied.
 
 apdl_arr = mm.rand(5, 5)
@@ -193,6 +193,6 @@ np_array = apdl_mat.asarray()
 print(np.allclose(apdl_mat, np_array))
 
 ###############################################################################
-# Stop PyAnsys-Math
+# Stop PyAnsys Math.
 
 mm._mapdl.exit()

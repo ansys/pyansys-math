@@ -1,11 +1,11 @@
 
-PyAnsys-Math documentation
+PyAnsys Math documentation
 ==========================
 
 Introduction
 ------------
 
-PyAnsys-Math aims to gather all the mathematical calculation tools present
+PyAnsys Math aims to gather all the mathematical calculation tools present
 in the Ansys software.
 
 This library provides the ability to access and manipulate large
@@ -13,9 +13,10 @@ sparse matrices and solve a variety of eigenproblems. It is presented in a
 similar manner to the popular `NumPy <numpy_docs_>`_ and
 `SciPy <scipy_docs_>`_ libraries.
 
-The PyAnsys-Math command set is based on tools for manipulating large mathematical
+The PyAnsys Math command set is based on tools for manipulating large mathematical
 matrices and vectors that provide access to standard linear algebra operations and the
-powerful sparse linear solvers of Ansys Mechanical APDL, providing the ability to solve eigenproblems.
+powerful sparse linear solvers of Ansys Mechanical APDL, providing the ability to solve
+eigenproblems.
 
 Python and MATLAB eigensolvers are based on the publicly available
 LAPACK libraries and provide reasonable solve time for eigenproblems
@@ -24,14 +25,14 @@ However, Ansys solvers are designed for the scale of hundreds of
 millions of dof, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning
-an entirely new language because PyAnsys-Math is written in a similar manner
+an entirely new language because PyAnsys Math is written in a similar manner
 as the ``NumPy`` and ``SciPy`` libraries. For example, here is a comparison between
-the NumPy and SciPy linear algebra solvers and the PyAnsys-Math solver:
+the NumPy and SciPy linear algebra solvers and the PyAnsys Math solver:
 
 .. table:: ``numpy`` vs ``ansys.math.core`` Implementation
 
    +--------------------------------------------+-----------------------------------+
-   | ``NumPy`` and ``SciPy``                    | ``PyAnsys-Math``                  |
+   | ``NumPy`` and ``SciPy``                    | ``PyAnsys Math``                  |
    +============================================+===================================+
    | .. code:: python                           | .. code:: python                  |
    |                                            |                                   |
@@ -46,7 +47,7 @@ the NumPy and SciPy linear algebra solvers and the PyAnsys-Math solver:
 Background
 ----------
 
-PyAnsys-Math is a library using the Ansys Mechanical APDL (MAPDL) solver in the
+PyAnsys Math is a library using the Ansys Mechanical APDL (MAPDL) solver in the
 background.
 
 It is based on the ``launch_mapdl()`` method from the `ansys-mapdl-core
@@ -65,7 +66,7 @@ performance.
 Quick code
 ----------
 
-Here is a brief example of how you use PyAnsys-Math:
+Here is a brief example of how you use PyAnsys Math:
 
 .. code:: python
 
@@ -86,7 +87,7 @@ Here is a brief example of how you use PyAnsys-Math:
       1.417e+00   1.997e+00   1.720e+00   1.933e+00   1.000e+00      <       5
 
 
-For additional PyAnsys-Math examples, see :ref:`ref_pymath_examples`.
+For additional PyAnsys Math examples, see :ref:`ref_pymath_examples`.
 
 
 .. toctree::
