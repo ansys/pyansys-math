@@ -20,7 +20,7 @@ powerful sparse linear solvers of Ansys Mechanical APDL, providing the ability t
 Python and MATLAB eigensolvers are based on the publicly available
 LAPACK libraries and provide reasonable solve time for eigenproblems
 with relatively small degrees of freedom (dof), perhaps 100,000.
-However, Ansys solvers are designed for the scale of 100s of
+However, Ansys solvers are designed for the scale of hundreds of
 millions of dof, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning

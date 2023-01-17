@@ -43,8 +43,8 @@ def id_generator(size=6, chars=string.ascii_uppercase):
 
 
 class ObjType(Enum):
-    """Generic AnsMath Object ( Shared features between Vec Mat and
-    Solver components"""
+    """Generic AnsMath object (shared features between Vec Mat and
+    Solver components."""
 
     GEN = 1
     VEC = 2
@@ -84,7 +84,7 @@ def get_nparray_chunks_mat(name, array, chunk_size=DEFAULT_FILE_CHUNK_SIZE):
 
 
 def list_allowed_dtypes():
-    """Return a list of human readable AnsMath supported datatypes"""
+    """Return a list of human-readable AnsMath supported data types."""
     dtypes = list(NP_VALUE_TYPE.keys())
     if None in dtypes:
         dtypes.remove(None)
@@ -191,12 +191,12 @@ class AnsMath:
             generated.
 
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Return a SciPy array rather than an AnsMath matrix.
 
         Returns
         -------
         ansys.mapdl.math.AnsVec or numpy.ndarray
-            AnsMath Vector or :class:`numpy.ndarray`.
+            AnsMath vector or :class:`numpy.ndarray`.
         """
         if dtype not in MYCTYPE:
             raise ANSYSDataTypeError
@@ -230,11 +230,11 @@ class AnsMath:
             Initialization options.  Can be ``"ones"``, ``"zeros"``,
             or ``"rand"``.
         name : str, optional
-            Matrix name.  If given, assigns a AnsMath matrix based on
-            the existing named matrix.  Otherwise one will be
-            automatically generated.
+            Name to assign the AnsMath matrix. The default is ``None``, in which case
+            a name is automatically generated.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
@@ -324,7 +324,8 @@ class AnsMath:
             Datatype of the vector.  Must be either ``np.int32``,
             ``np.int64``, or ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         asarray : bool, optional
             Return a `scipy` array rather than an AnsMath matrix.
 
@@ -611,14 +612,14 @@ class AnsMath:
         Returns
         -------
         scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or AnsMath matrix depending on
+            SciPy sparse matrix or AnsMath matrix depending on
             ``asarray``.
 
         Examples
         --------
         >>> mass = mapdl.math.mass()
         >>> mass
-        AnsMath Matrix 60 x 60
+        AnsMath matrix 60 x 60
 
         Convert to a scipy array
 
@@ -642,7 +643,8 @@ class AnsMath:
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a name
+            is automatically generated.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
@@ -1125,7 +1127,7 @@ class AnsMath:
                 "The character ':' is not permitted in a AnsMath matrix parameter name."
             )
         if not len(mname):
-            raise ValueError("An empty AnsMath matrix name is not permitted.")
+            raise ValueError("A name must be supplied for the AnsMath matrix.")
 
         if isinstance(arr, np.ndarray):
             if arr.ndim == 1:
@@ -1164,7 +1166,7 @@ class AnsMath:
         arr = sparse.csr_matrix(arr)
 
         if arr.shape[0] != arr.shape[1]:
-            raise ValueError("AnsMath only supports square matrices")
+            raise ValueError("AnsMath only supports square matrices.")
 
         if dtype is not None:
             if arr.data.dtype != dtype:
@@ -1202,7 +1204,7 @@ class AnsMath:
 
 
 class AnsMathObj:
-    """Common class for AnsMath objects"""
+    """Provides the common class for AnsMath objects."""
 
     def __init__(self, id_, mapdl=None, dtype=ObjType.GEN):
         if mapdl is None:
@@ -1338,7 +1340,7 @@ class AnsMathObj:
 
 
 class AnsVec(AnsMathObj):
-    """AnsMath Vector Object"""
+    """Proves the AnsMath vector object."""
 
     def __init__(self, id_, mapdl, dtype=np.double, init=None):
         AnsMathObj.__init__(self, id_, mapdl, ObjType.VEC)
@@ -1454,7 +1456,7 @@ class AnsVec(AnsMathObj):
 
 
 class AnsMat(AnsMathObj):
-    """AnsMath Matrix Object"""
+    """Provides the AnsMath matrix object."""
 
     def __init__(self, id_, mapdl, type_=ObjType.DMAT):
         AnsMathObj.__init__(self, id_, mapdl, type_)
@@ -1534,11 +1536,11 @@ class AnsMat(AnsMathObj):
 
     def __mul__(self, vec):
         raise AttributeError(
-            "Array multiplication is not yet available.  For dot product, use `dot()`."
+            "Array multiplication is not available.  For dot product, use `dot()`."
         )
 
     def dot(self, obj):
-        """Perform the matrix multiplication by another vector or matrix.
+        """Multiply the matrix by another vector or matrix.
 
         Parameters
         ----------
@@ -1692,13 +1694,13 @@ class AnsSparseMat(AnsMat):
 
 
 class AnsSolver(AnsMathObj):
-    """AnsMath Solver Class"""
+    """Provides the AnsMath solver class."""
 
     def __repr__(self):
         return "AnsMath Linear Solver"
 
     def factorize(self, mat, algo=None, inplace=True):
-        """Factorize a matrix
+        """Factorize a matrix.
 
         Perform the numerical factorization of a linear solver system (:math:`A*x=b`).
 
@@ -1768,7 +1770,7 @@ class AnsSolver(AnsMathObj):
         >>> b = mm.get_vec(fname='PRSMEMB.full', mat_id="RHS")
         >>> x = s.solve(b)
         >>> x
-        AnsMath Vector Size 20000
+        AnsMath vector size 20000
 
         """
         if not x:
@@ -1779,12 +1781,12 @@ class AnsSolver(AnsMathObj):
 
 
 def rand(obj):
-    """Set all values of a AnsMath object to random values.
+    """Set all values of an AnsMath object to random values.
 
     Parameters
     ----------
     obj : ansys.math.core.math.AnsMath object
-        Math object
+        Math object.
 
     Examples
     --------
@@ -1811,10 +1813,10 @@ def dot(vec1, vec2) -> float:
     Parameters
     ----------
     vec1 : ansys.mapdl.math.AnsVec
-        AnsMath vector.
+        First AnsMath vector.
 
     vec1 : ansys.mapdl.math.AnsVec
-        AnsMath vector.
+        Second AnsMath vector.
 
     Returns
     -------
