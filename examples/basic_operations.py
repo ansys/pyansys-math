@@ -142,21 +142,19 @@ print(m3)
 mw = m3.dot(m4)
 print(mw)
 
-
 ###############################################################################
 # AnsMath matrices can be identified by printing, viewing their types, or
 # using the `__repr__` method by simply typing out the variable.
 #
-# AnsMath Matrix
-# ~~~~~~~~~~~~~~~
+# Here is an example with an AnsMath matrix.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 type(m1)
 print(m1)
 m1
 
-
-###############################################################################
-# AnsMath Vector
+# Here is an example with an AnsMath vector.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 type(w)
 print(w)

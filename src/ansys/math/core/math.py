@@ -43,8 +43,8 @@ def id_generator(size=6, chars=string.ascii_uppercase):
 
 
 class ObjType(Enum):
-    """Provides the generic AnsMath object (shared features between Vec Mat and
-    Solver components)."""
+    """Provides the generic AnsMath object (a shared features between AnsMath
+    objects and AnsSolver components)."""
 
     GEN = 1
     VEC = 2
@@ -53,7 +53,7 @@ class ObjType(Enum):
 
 
 def get_nparray_chunks(name, array, chunk_size=DEFAULT_FILE_CHUNK_SIZE):
-    """Serializes a numpy array into chunks."""
+    """Serializes a NumPy array into chunks."""
     stype = NP_VALUE_TYPE[array.dtype.type]
     arr_sz = array.size
     i = 0  # position counter
@@ -66,9 +66,9 @@ def get_nparray_chunks(name, array, chunk_size=DEFAULT_FILE_CHUNK_SIZE):
 
 
 def get_nparray_chunks_mat(name, array, chunk_size=DEFAULT_FILE_CHUNK_SIZE):
-    """Serializes a 2D numpy array into chunks.
+    """Serializes a 2D NumPy array into chunks.
 
-    It uses the ``SetMatDataRequest.``
+    It uses the ``SetMatDataRequest`` method.
 
     """
     stype = NP_VALUE_TYPE[array.dtype.type]
@@ -125,17 +125,17 @@ class AnsMath:
 
     # @property
     # def _mapdl(self):
-    #     """Return the weakly referenced instance of mapdl."""
+    #     """Weakly referenced instance of mapdl."""
     #     return self._mapdl_weakref()
 
     @property
     def _server_version(self):
-        """Return the version of MAPDL which is running in the background."""
+        """Version of MAPDL which is running in the background."""
         return self._mapdl._server_version
 
     @property
     def _status(self):
-        """Print out the status of all AnsMath Objects."""
+        """Status of all AnsMath objects."""
         return self._mapdl.run("*STATUS,MATH", mute=False)
 
     @property
@@ -155,7 +155,7 @@ class AnsMath:
         return self._status
 
     def status(self):
-        """Print out the status of all AnsMath Objects.
+        """Print out the status of all AnsMath objects.
 
         Examples
         --------
@@ -170,7 +170,7 @@ class AnsMath:
         """
         print(self._status)
 
-    def vec(self, size=0, dtype=np.double, init=None, name=None, asarray=False):
+    def vec(self, size=0, dtype=np.double, init="zeros", name=None, asarray=False):
         """Create a vector.
 
         Parameters
@@ -179,25 +179,25 @@ class AnsMath:
             Size of the vector
 
         dtype : np.dtype, optional
-            Datatype of the vector.  Must be either ``np.int32``,
-            ``np.int64``, or ``np.double``.
+            Data type of the vector. Options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
 
         init : str, optional
-            Initialization options.  Can be ``"ones"``, ``"zeros"``,
-            or ``"rand"``.
+            Initialization options.  Options are ``"ones"``, ``"zeros"``,
+            or ``"rand"``. The default is ``zeros``.
 
         name : str, optional
             Give the vector a name.  Otherwise one will be automatically
             generated.
 
         asarray : bool, optional
-            If ``True``, the output will be a NumPy array vector and not an
-            AnsMath vector. Default is ``False``.
+            Whether the output is to be a NumPy array vector rather than an
+            AnsMath vector. The default is ``False``.
 
         Returns
         -------
-        ansys.mapdl.math.AnsVec or `numpy.ndarray`
-            Return an AnsMath vector or a `numpy.ndarray` vector.
+        AnsVec or `numpy.ndarray`
+            AnsMath vector or NumPy array vector, depending on ``asarray``.
         """
         if dtype not in MYCTYPE:
             raise ANSYSDataTypeError
@@ -218,7 +218,7 @@ class AnsMath:
         return vec
 
     def mat(self, nrow=0, ncol=0, dtype=np.double, init="zeros", name=None, asarray=False):
-        """Create an AnsMath matrix.
+        """Create a matrix.
 
         Parameters
         ----------
@@ -227,27 +227,27 @@ class AnsMath:
         ncol : int
             Number of columns.
         dtype : np.dtype, optional
-            Datatype of the vector.  Must be either ``np.int32``,
-            ``np.int64``, or ``np.double``.
+            Data type of the matrix. Options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         init : str, optional
-            Initialization options.  Can be ``"zeros"``, ``"ones"``,
+            Initialization options.  Options are ``"zeros"``, ``"ones"``,
             or ``"rand"``. The default is ``"zeros"``.
         name : str, optional
-            Name to assign the AnsMath matrix. The default is ``None``, in which case
-            a name is automatically generated.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath matrix.
             The default is ``False``.
 
         Returns
         -------
-        AnsMat
-            AnsMath matrix.
+        AnsMat or `numpy.ndarray`
+            AnsMath matrix or NumPy array matrix, depending on ``asarray``.
         """
         if dtype not in MYCTYPE:
             raise ValueError(
-                "Invalid data type.  The data type must be one of the following:\n"
-                "np.int32, np.int64, or np.double"
+                "Invalid data type. The data type must be one of the following:\n"
+                "np.int32, np.int64, or np.double."
             )
 
         if not name:
@@ -260,7 +260,7 @@ class AnsMath:
             elif init == "ones":
                 mat.ones()
             elif init != "zeros":
-                raise ValueError(f"Invalid init method '{init}'")
+                raise ValueError(f"Invalid init method '{init}'.")
         else:
             info = self._mapdl._data_info(name)
             if info.objtype == pb_types.DataType.DMAT:
@@ -268,14 +268,14 @@ class AnsMath:
             elif info.objtype == pb_types.DataType.SMAT:
                 mat = AnsSparseMat(name, self._mapdl)
             else:  # pragma: no cover
-                raise ValueError(f"Unhandled AnsMath matrix object type {info.objtype}")
+                raise ValueError(f"Unhandled AnsMath matrix object type {info.objtype}.")
 
         if asarray:
             mat = mat.asarray()
         return mat
 
     def zeros(self, nrow, ncol=None, dtype=np.double, name=None, asarray=False):
-        """Create a vector or matrix containing all zeros.
+        """Create a vector or a matrix where all values are zeros.
 
         Parameters
         ----------
@@ -284,17 +284,20 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Datatype of the vector.  Must be either ``np.int32``,
-            ``np.int64``, or ``np.double``.
+            Data type of the object. Options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        AnsVec or AnsMat
-            AnsMath vector or matrix depending on if ``ncol`` is specified.
+        AnsVec, AnsMat, or `numpy.ndarray`
+            AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
+            depending on ``asarray`` and on if ``ncol`` is specified.
 
         Examples
         --------
@@ -313,7 +316,7 @@ class AnsMath:
         return self.mat(nrow, ncol, dtype, init="zeros", name=name, asarray=asarray)
 
     def ones(self, nrow, ncol=None, dtype=np.double, name=None, asarray=False):
-        """Create a vector or matrix containing all ones.
+        """Create a vector or a matrix where all values are ones.
 
         Parameters
         ----------
@@ -322,19 +325,20 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Datatype of the vector.  Must be either ``np.int32``,
-            ``np.int64``, or ``np.double``.
+            Data type of the object. Options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        AnsVec or AnsMat
-            AnsMath vector or matrix depending on if "ncol" is
-            specified.
+        AnsVec, AnsMat, or `numpy.ndarray`
+            AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
+            depending on ``asarray`` and on if ``ncol`` is specified.
 
         Examples
         --------
@@ -354,7 +358,7 @@ class AnsMath:
             return self.mat(nrow, ncol, dtype, init="ones", name=name, asarray=asarray)
 
     def rand(self, nrow, ncol=None, dtype=np.double, name=None, asarray=False):
-        """Create a vector or matrix containing all random values.
+        """Create a vector or a matrix where all values are random.
 
         Parameters
         ----------
@@ -363,18 +367,20 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Datatype of the vector.  Must be either ``np.int32``,
-            ``np.int64``, or ``np.double``.
+            Data type of the object. Options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        AnsVec or AnsMat
-            AnsMath vector or matrix depending on if "ncol" is
-            specified.
+        AnsVec, AnsMat, or `numpy.ndarray`
+            AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
+            depending on ``asarray`` and on if ``ncol`` is specified.
 
         Examples
         --------
@@ -393,14 +399,15 @@ class AnsMath:
         return self.mat(nrow, ncol, dtype, init="rand", name=name, asarray=asarray)
 
     def matrix(self, matrix, name=None, triu=False):
-        """Send a scipy matrix or numpy array to MAPDL.
+        """Send a scipy matrix or NumPy array to MAPDL.
 
         Parameters
         ----------
         matrix : np.ndarray
-            Numpy array to send as a matrix to MAPDL.
+            NumPy array to send as a matrix to MAPDL.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         triu : bool, optional
             ``True`` when the matrix is upper triangular, ``False``
             when unsymmetric.
@@ -453,13 +460,14 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type to store the vector as. You can use double ("DOUBLE" or "D"),
+            NumPy data type to store the vector as. You can use double ("DOUBLE" or "D"),
             or complex numbers ("COMPLEX" or "Z"). Alternatively you can also supply a
-            numpy data type. Defaults to ``np.double``.
+            NumPy data type. Defaults to ``np.double``.
         fname : str, optional
             Filename to read the matrix from.  Defaults to ``"file.full"``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         mat_id : str, optional
             Matrix type.  Defaults to ``"STIFF"``.
 
@@ -470,13 +478,13 @@ class AnsMath:
             * ``"K_RE"`` - Real part of the stiffness matrix
             * ``"K_IM"`` - Imaginary part of the stiffness matrix
         asarray : bool, optional
-            Return a ``scipy`` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or AnsMath matrix depending on
-            ``asarray``.
+        AnsMat or `scipy.sparse.csr.csr_matrix`
+            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
 
         """
         if name is None:
@@ -500,14 +508,14 @@ class AnsMath:
             raise ValueError(
                 f"The 'mat_id' parameter supplied ('{mat_id}') is not allowed. "
                 f"Only the following are allowed: \n"
-                f"{', '.join([quotes + each + quotes for each in allowed_mat_id])}"
+                f"{', '.join([quotes + each + quotes for each in allowed_mat_id])}."
             )
 
         if isinstance(dtype, str):
             if dtype.lower() not in ("complex", "double", "d", "z"):
                 raise ValueError(
                     f"Data type ({dtype}) not allowed as a string."
-                    "Use either: 'double' or 'complex', or a valid numpy data type."
+                    "Use either: 'double' or 'complex', or a valid NumPy data type."
                 )
             if dtype.lower() in ("complex", "z"):
                 dtype_ = "'Z'"
@@ -520,7 +528,7 @@ class AnsMath:
                 allowables_np_dtypes = ", ".join(
                     [str(each).split("'")[1] for each in ANSYS_VALUE_TYPE.values() if each]
                 )
-                raise ValueError(f"Numpy data type not allowed. Only: {allowables_np_dtypes}")
+                raise ValueError(f"NumPy data type not allowed. Only: {allowables_np_dtypes}.")
             if "complex" in str(dtype):
                 dtype_ = "'Z'"
             else:
@@ -561,21 +569,22 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type to store the vector as. Only applicable if
+            NumPy data type to store the vector as. Only applicable if
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or AnsMath matrix depending on
-            ``asarray``.
+        AnsMat or `scipy.sparse.csr.csr_matrix`
+            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
 
         Examples
         --------
@@ -600,21 +609,22 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type to store the vector as. Only applicable if
+            NumPy data type to store the vector as. Only applicable if
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        scipy.sparse.csr.csr_matrix or AnsMat
-            SciPy sparse matrix or AnsMath matrix depending on
-            ``asarray``.
+        AnsMat or `scipy.sparse.csr.csr_matrix`
+            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
 
         Examples
         --------
@@ -640,22 +650,22 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type to store the vector as. Only applicable if
+            NumPy data type to store the vector as. Only applicable if
             ``asarray=True``, otherwise the returned matrix contains
             double float numbers. Defaults to ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a name
-            is automatically generated.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         fname : str, optional
             Filename to read the matrix from.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        scipy.sparse.csr.csr_matrix or AnsMat
-            Scipy sparse matrix or AnsMath matrix depending on
-            ``asarray``.
+        AnsMat or `scipy.sparse.csr.csr_matrix`
+            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
 
         Examples
         --------
@@ -682,10 +692,11 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type to store the vector as.  Defaults to
+            NumPy data type to store the vector as.  Defaults to
             ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         fname : str, optional
             Filename to read the vector from.
         mat_id : str, optional
@@ -699,12 +710,13 @@ class AnsMath:
             * ``"FORWARD"`` - nodal mapping vector (user to internal)
               If this is used, the default ``dtype`` is ``np.int32``.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        numpy.ndarray or AnsVec
-            Numpy array or AnsMath vector depending on ``asarray``.
+        AnsVec or `numpy.ndarray`
+            AnsMath vector or NumPy array vector, depending on ``asarray``.
 
         Examples
         --------
@@ -741,12 +753,12 @@ class AnsMath:
         return ans_vec
 
     def set_vec(self, data, name=None):
-        """Push a numpy array or Python list to the MAPDL memory workspace.
+        """Push a NumPy array or Python list to the MAPDL memory workspace.
 
         Parameters
         ----------
         data : np.ndarray, list
-            Numpy array or Python list to push to MAPDL.  Must be 1
+            NumPy array or Python list to push to MAPDL.  Must be 1
             dimensional.
         name : str, optional
             AnsMath vector name.  If unset, one will be automatically
@@ -759,7 +771,7 @@ class AnsMath:
 
         Examples
         --------
-        Push a random vector from numpy to MAPDL.
+        Push a random vector from NumPy to MAPDL.
 
         >>> data = np.random.random(10)
         >>> vec = mm.set_vec(data)
@@ -781,16 +793,19 @@ class AnsMath:
         dtype : numpy.dtype, optional
             Data type to store the vector as.  Defaults to ``np.double``.
         name : str, optional
-            AnsMath matrix name.  Optional and defaults to a random name.
+            AnsMath matrix name. The default is ``None``, in which case a
+            name is automatically generated.
         fname : str, optional
             Filename to read the vector from.  Defaults to ``"file.full"``.
         asarray : bool, optional
-            Return a `scipy` array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath matrix.
+            The default is ``False``.
 
         Returns
         -------
-        numpy.ndarray or ansys.mapdl.math.AnsVec
-            Numpy or AnsMath vector instance generated from the file.
+        AnsVec or `numpy.ndarray`
+            AnsMath vector or NumPy array vector, depending on ``asarray``,
+            generated from the file.
 
         Examples
         --------
@@ -933,15 +948,15 @@ class AnsMath:
         return ev
 
     def dot(self, vec_a, vec_b):
-        """Dot product between two ANSYS vector objects.
+        """Dot product between two AnsMath vectors.
 
         Parameters
         ----------
         vec_a : ansys.mapdl.math.AnsVec
-            Ansys vector object.
+            AnsMath vector.
 
         vec_b : ansys.mapdl.math.AnsVec
-            Ansys vector object.
+            AnsMath vector.
 
         Returns
         -------
@@ -962,9 +977,9 @@ class AnsMath:
         Parameters
         ----------
         obj1 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
-            Ansys object.
+            AnsMath object.
         obj2 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
-            Ansys object.
+            AnsMath object.
 
         Returns
         -------
@@ -988,9 +1003,9 @@ class AnsMath:
         Parameters
         ----------
         obj1 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
-            Ansys object.
+            AnsMath object.
         obj2 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
-            Ansys object.
+            AnsMath object.
 
         Returns
         -------
@@ -1069,14 +1084,14 @@ class AnsMath:
 
     @protect_grpc
     def _set_vec(self, vname, arr, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
-        """Transfer a numpy array to MAPDL as a AnsMath vector.
+        """Transfer a NumPy array to MAPDL as a AnsMath vector.
 
         Parameters
         ----------
         vname : str
             Vector parameter name.  Character ":" is not allowed.
         arr : np.ndarray
-            Numpy array to upload.
+            NumPy array to upload.
         dtype : np.dtype, optional
             Type to upload array as. Defaults to the current array type.
         chunk_size : int, optional
@@ -1125,9 +1140,7 @@ class AnsMath:
         from scipy import sparse
 
         if ":" in mname:
-            raise ValueError(
-                "The character ':' is not permitted in a AnsMath matrix parameter name."
-            )
+            raise ValueError("The character ':' is not permitted in the name of an AnsMath matrix.")
         if not len(mname):
             raise ValueError("A name must be supplied for the AnsMath matrix.")
 
@@ -1144,7 +1157,7 @@ class AnsMath:
 
     @version_requires((0, 4, 0))
     def _send_dense(self, mname, arr, dtype, chunk_size):
-        """Send a dense numpy array/matrix to MAPDL."""
+        """Send a dense NumPy array/matrix to MAPDL."""
         if dtype is not None:
             if arr.dtype != dtype:
                 arr = arr.astype(dtype)
@@ -1216,13 +1229,13 @@ class AnsMathObj:
         self.type = dtype
 
     def __repr__(self):
-        return f"AnsMath Object {self.id}"
+        return f"AnsMath object {self.id}"
 
     def __str__(self):
         return self._mapdl.run(f"*PRINT,{self.id}", mute=False)
 
     def copy(self):
-        """Returns the name of the copy of this object."""
+        """Return the name of the copy of this object."""
         name = id_generator()  # internal name of the new vector
         info = self._mapdl._data_info(self.id)
         dtype = ANSYS_VALUE_TYPE[info.stype]
@@ -1236,7 +1249,7 @@ class AnsMathObj:
         else:
             raise TypeError(f"Copy aborted: Unknown obj type {self.type}.")
 
-        # AnsMath cmd to COPY vin to vout
+        # AnsMath cmd to copy vin to vout
         self._mapdl.run(f"{acmd},{name},{MYCTYPE[dtype]},COPY,{self.id}", mute=True)
         return name
 
@@ -1287,28 +1300,28 @@ class AnsMathObj:
         return self._mapdl.scalar_param(val_name)
 
     def axpy(self, op, val1, val2):
-        """Perform the matrix operation: ``M2= v*M1 + w*M2``"""
+        """Perform the matrix operation: ``M2= v*M1 + w*M2``."""
         if not hasattr(op, "id"):
-            raise TypeError("Must be an AnsMathObj")
-        self._mapdl._log.info("Call MAPDL to perform AXPY operation.")
+            raise TypeError("The object to be added must be an AnsMath object.")
+        self._mapdl._log.info("Call MAPDL to perform an AXPY operation.")
         self._mapdl.run(f"*AXPY,{val1},0,{op.id},{val2},0,{self.id}", mute=True)
         return self
 
     def __add__(self, op2):
         if not hasattr(op2, "id"):
-            raise TypeError("Must be an AnsMathObj.")
+            raise TypeError("The object to be added must be an AnsMath object.")
 
         opout = self.copy()
-        self._mapdl._log.info("Call MAPDL to perform AXPY operation.")
+        self._mapdl._log.info("Call MAPDL to perform an AXPY operation.")
         self._mapdl.run(f"*AXPY,1,0,{op2.id},1,0,{opout.id}", mute=True)
         return opout
 
     def __sub__(self, op2):
         if not hasattr(op2, "id"):
-            raise TypeError("Must be an AnsMathObj.")
+            raise TypeError("The object to be subtracted must be an AnsMath object.")
 
         opout = self.copy()
-        self._mapdl._log.info("Call MAPDL to perform AXPY operation.")
+        self._mapdl._log.info("Call MAPDL to perform an AXPY operation.")
         self._mapdl.run(f"*AXPY,-1,0,{op2.id},1,0,{opout.id}", mute=True)
         return opout
 
@@ -1336,7 +1349,7 @@ class AnsMathObj:
     @property
     @protect_grpc
     def _data_info(self):
-        """Return the data type of a parameter."""
+        """Data type of a parameter."""
         request = pb_types.ParameterRequest(name=self.id)
         return self._stub.GetDataInfo(request)
 
@@ -1349,7 +1362,7 @@ class AnsVec(AnsMathObj):
 
         if init not in ["ones", "zeros", "rand", None]:
             raise ValueError(
-                f"Invalid init option {init}.\n"
+                f"Invalid initialization option {init}.\n"
                 'The option should be "ones", "zeros", "rand", or None.'
             )
 
@@ -1378,7 +1391,7 @@ class AnsVec(AnsMathObj):
         return self._mapdl.scalar_param("pyval")
 
     def __mul__(self, vec):
-        """Element-Wise product with another Ansys vector object.
+        """Return the element-wise product with another AnsMath vector.
 
         Also known as Hadamard product.
 
@@ -1388,7 +1401,7 @@ class AnsVec(AnsMathObj):
         Parameters
         ----------
         vec : ansys.mapdl.math.AnsVec
-            Ansys vector object.
+            AnsMath vector.
 
         Returns
         -------
@@ -1399,7 +1412,7 @@ class AnsVec(AnsMathObj):
             raise VersionError("``AnsVec`` requires MAPDL version 2021R2.")
 
         if not isinstance(vec, AnsVec):
-            raise TypeError("Must be an Ansys vector object.")
+            raise TypeError("The object to be multiplied must be an AnsMath vector.")
 
         name = id_generator()  # internal name of the new vector/matrix
         info = self._mapdl._data_info(self.id)
@@ -1421,12 +1434,12 @@ class AnsVec(AnsMathObj):
         return AnsVec(AnsMathObj.copy(self), self._mapdl)
 
     def dot(self, vec) -> float:
-        """Dot product with another AnsMath vector.
+        """Return the dot product with another AnsMath vector.
 
         Parameters
         ----------
         vec : ansys.mapdl.math.AnsVec
-            Ansys vector object.
+            AnsMath vector.
 
         Returns
         -------
@@ -1434,13 +1447,13 @@ class AnsVec(AnsMathObj):
             Dot product between this vector and the other vector.
         """
         if not isinstance(vec, AnsVec):
-            raise TypeError("Must be an Ansys vector object.")
+            raise TypeError("The object to be multiplied must be an AnsMath vector.")
 
         self._mapdl.run(f"*DOT,{self.id},{vec.id},py_val")
         return self._mapdl.scalar_param("py_val")
 
     def asarray(self) -> np.ndarray:
-        """Returns vector as a numpy array.
+        """Return vector as a NumPy array.
 
         Examples
         --------
@@ -1453,7 +1466,7 @@ class AnsVec(AnsMathObj):
         return self._mapdl._vec_data(self.id)
 
     def __array__(self):
-        """Allow numpy to access this object as if it was an array."""
+        """Allow NumPy to access this object as if it was an array."""
         return self.asarray()
 
 
@@ -1480,7 +1493,7 @@ class AnsMat(AnsMathObj):
 
     @property
     def shape(self) -> tuple:
-        """Returns a numpy-like shape.
+        """NumPy-like shape.
 
         Tuple of (rows and columns).
         """
@@ -1508,17 +1521,17 @@ class AnsMat(AnsMathObj):
         return True
 
     def asarray(self, dtype=None) -> np.ndarray:
-        """Returns vector as a numpy array.
+        """Return vector as a NumPy array.
 
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Numpy data type.
+            NumPy data type.
 
         Returns
         -------
         np.ndarray
-            Numpy array with the defined data type.
+            NumPy array with the defined data type.
 
         Examples
         --------
@@ -1545,7 +1558,7 @@ class AnsMat(AnsMathObj):
         Parameters
         ----------
         obj : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
-            Ansys object.
+            AnsMath object.
 
         Returns
         -------
@@ -1624,7 +1637,7 @@ class AnsDenseMat(AnsMat):
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
 
     def __array__(self):
-        """Allow numpy to access this object as if it was an array."""
+        """Allow NumPy to access this object as if it was an array."""
         return self.asarray()
 
     def __repr__(self):
@@ -1689,7 +1702,7 @@ class AnsSparseMat(AnsMat):
         return self.asarray().todense()
 
     def __array__(self):
-        """Allow numpy to access this object as if it was an array."""
+        """Allow NumPy to access this object as if it was an array."""
         return self.todense()
 
 
@@ -1761,7 +1774,7 @@ class AnsSolver(AnsMathObj):
         Returns
         -------
         AnsVec
-            Solution vector.  Identical to ``x`` if supplied.
+            Solution vector. Identical to ``x`` if supplied.
 
         Examples
         --------
