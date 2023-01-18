@@ -209,5 +209,5 @@ ratio = scipy_elapsed_time / pymath_elapsed_time
 print(f"PyAnsys Math is {ratio:.3} times faster.")
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 mm._mapdl.exit()

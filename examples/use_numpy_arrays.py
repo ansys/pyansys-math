@@ -1,8 +1,8 @@
 """
 Manipulate AnsMath vectors or dense matrices as NumPy Arrays
 ------------------------------------------------------------
-This example demonstrates how to exchange data between PyAnsys Math
-and Python via numpy arrays.
+This example demonstrates how to use NumPy arrays to exchange data between PyAnsys Math
+and Python.
 
 .. note::
     This example requires Ansys 2021R2.
@@ -56,11 +56,11 @@ print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 ###############################################################################
 # Copy a NumPy Array to an AnsMath vector
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# You can push back any numpy vector or 2D array to PyAnsys Math. This
+# You can push back any NumPy vector or 2D array to PyAnsys Math. This
 # creates a new AnsMath vector, which in this case is named ``'NewVec'``.
 mm.set_vec(pv, "NewVec")
 
-# verify this vector exists
+# Verify this vector exists.
 print(mm)
 
 
@@ -73,10 +73,10 @@ print(v2)
 ###############################################################################
 # Dense Numpy Arrays
 # ~~~~~~~~~~~~~~~~~~
-# The same features apply to dense APDL matrices and numpy arrays.
+# The same features apply to dense APDL matrices and NumPy arrays.
 #
-# Allow allocate an AnsMath Dense Matrix and convert it to a numpy
-# array
+# Allocate an AnsMath dense matrix and convert it to a NumPy
+# array.
 apdl_mat = mm.rand(3, 3)
 np_arr = apdl_mat.asarray()
 
@@ -101,6 +101,6 @@ print(np.allclose(from_ans, np_rand))
 
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 
 mm._mapdl.exit()

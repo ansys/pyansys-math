@@ -157,7 +157,7 @@ for i in range(nev):
     print(f"[{i}] : Freq = {f}\t - Residual = {pymath_acc[i]}")
 
 ###############################################################################
-# Plot Accuracy of Eigenresults
+# Plot accuracy of eigenresults.
 
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
@@ -171,5 +171,5 @@ ax.bar(x, pymath_acc, label="PyAnsys Math Results")
 plt.show()
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 mm._mapdl.exit()

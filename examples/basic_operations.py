@@ -18,7 +18,7 @@ import ansys.math.core.math as pymath
 mm = pymath.AnsMath()
 
 ###############################################################################
-# Create and Manipulate Vectors
+# Create and manipulate vectors.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Create two AnsMath vectors of size 5. The :math:`\vec{v}` method is initialized with
 # ones, and $\vec{w}$ is filled with random values.
@@ -30,9 +30,9 @@ print(w)
 
 
 ###############################################################################
-# Use operators on vectors
+# Use operators on vectors.
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-# Like NumPy vectors, PyAnsys Math vectors can use most of the
+# Like NumPy vectors, AnsMath vectors can use most of the
 # standard operators (``+, -, +=, -=, *=``).
 #
 # Here this form is used :math:`\vec{z}=\vec{v}+\vec{w}`
@@ -85,14 +85,14 @@ print("Dot product :", str(vw))
 # Perform an in-place operations (without copying vectors)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# In-place addition
+# Perform in-place addition.
 
 v += v
 print(v)
 
 
 ###############################################################################
-# In-place multiplication
+# Perform in-place multiplication.
 
 v *= 2
 print(v)
@@ -105,7 +105,7 @@ print(v)
 
 
 ###############################################################################
-# Working with dense matrices
+# Working with dense matrices.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Allocate two dense matrices with random values.
 
@@ -145,7 +145,7 @@ print(mw)
 
 ###############################################################################
 # AnsMath matrices can be identified by printing, viewing their types, or
-# using the `__repr__` method by simply typing out the variable
+# using the `__repr__` method by simply typing out the variable.
 #
 # AnsMath Matrix
 # ~~~~~~~~~~~~~~~
@@ -163,11 +163,11 @@ print(w)
 w
 
 ###############################################################################
-# Numpy methods on AnsMath objects
+# Use NumPy methods on AnsMath objects.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Regardless of the underlying AnsMath object type, you are generally
-# able to perform most NumPy or SciPy operations on these arrays.  You
-# can do this one of two ways.  First, you can convert a matrix to a numpy array:
+# able to perform most NumPy or SciPy operations on these arrays. You
+# can do this in one of two ways. First, you can convert a matrix to a NumPy array:
 
 apdl_mat = mm.rand(5, 5)
 np_mat = apdl_mat.asarray()

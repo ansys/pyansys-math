@@ -15,15 +15,15 @@ import ansys.math.core.math as pymath
 mm = pymath.AnsMath()
 
 ################################################################################
-# Load and solve verification manual example 153.  Then load the
+# Load and solve verification manual example 153. Then, load the
 # stiffness matrix into MAPDL.
 out = mm._mapdl.input(vmfiles["vm153"])
 k = mm.stiff(fname="PRSMEMB.full")
 k
 
 ################################################################################
-# Copy this AnsMath sparse matrix to a SciPy CSR matrix and plot the
-# graph of the sparse matrix
+# Copy this AnsMath sparse matrix to a SciPy CSR matrix. Then, plot the
+# graph of the sparse matrix.
 pk = k.asarray()
 plt.spy(pk)
 
@@ -45,11 +45,11 @@ print(pk.indptr[:10])
 
 
 ################################################################################
-# ### Create an AnsMath sparse matrix from a SciPy sparse CSR matrix
+# ### Create an AnsMath sparse matrix from a SciPy sparse CSR matrix.
 #
-# Now transfer the SciPy CSR matrix back to PyAnsys Math.  While
+# Then, transfer the SciPy CSR matrix back to PyAnsys Math.  While
 # this example uses a matrix that was originally within MAPDL, you can
-# load any CSR matrix to PyAnsys Math.
+# load any CSR matrix into PyAnsys Math.
 
 my_mat = mm.matrix(pk, "my_mat", triu=True)
 my_mat
@@ -91,5 +91,5 @@ print("name(msub)=" + msub.id)
 
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 mm._mapdl.exit()

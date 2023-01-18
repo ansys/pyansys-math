@@ -15,7 +15,7 @@ import ansys.math.core.math as pymath
 mm = pymath.AnsMath()
 
 ###############################################################################
-# Allocate a dense matrix in the MAPDL workspace
+# Allocate a dense matrix in the MAPDL workspace.
 #
 mm._mapdl.clear()
 dim = 1000
@@ -31,7 +31,7 @@ a_py = a.asarray()
 b_py = b.asarray()
 
 ###############################################################################
-# Solve using PyAnsys Math
+# Solve using PyAnsys Math.
 #
 print(f"Solving a ({dim} x {dim}) dense linear system using PyAnsys Math...")
 
@@ -42,7 +42,7 @@ t2 = time.time()
 print(f"Elapsed time to solve the linear system using PyAnsys Math: {t2 - t1} seconds")
 
 ###############################################################################
-# Norm of the PyAnsys Math solution
+# Get the norm of the PyAnsys Math solution.
 mm.norm(x)
 
 
@@ -62,5 +62,5 @@ print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 npl.norm(x_py)
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 mm._mapdl.exit()
