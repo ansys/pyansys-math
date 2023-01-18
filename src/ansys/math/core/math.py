@@ -179,7 +179,7 @@ class AnsMath:
             Size of the vector
 
         dtype : np.dtype, optional
-            Data type of the vector. Options are ``np.double``,
+            NumPy data type of the vector. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
 
         init : str, optional
@@ -197,7 +197,8 @@ class AnsMath:
         Returns
         -------
         AnsVec or `numpy.ndarray`
-            AnsMath vector or NumPy array vector, depending on ``asarray``.
+            AnsMath vector or NumPy array vector, depending on the value for
+            the ``asarray`` parameter.
         """
         if dtype not in MYCTYPE:
             raise ANSYSDataTypeError
@@ -217,17 +218,17 @@ class AnsMath:
 
         return vec
 
-    def mat(self, nrow=0, ncol=0, dtype=np.double, init="zeros", name=None, asarray=False):
+    def mat(self, nrow=1, ncol=1, dtype=np.double, init="zeros", name=None, asarray=False):
         """Create a matrix.
 
         Parameters
         ----------
-        nrow : int
-            Number of rows.
-        ncol : int
-            Number of columns.
+        nrow : int, optional
+            Number of rows. The default is ``1``.
+        ncol : int, optional
+            Number of columns. The default is ``1``.
         dtype : np.dtype, optional
-            Data type of the matrix. Options are ``np.double``,
+            NumPy data type of the matrix. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         init : str, optional
             Initialization options.  Options are ``"zeros"``, ``"ones"``,
@@ -242,7 +243,8 @@ class AnsMath:
         Returns
         -------
         AnsMat or `numpy.ndarray`
-            AnsMath matrix or NumPy array matrix, depending on ``asarray``.
+            AnsMath matrix or NumPy array matrix, depending on the value for
+            the ``asarray`` parameter.
         """
         if dtype not in MYCTYPE:
             raise ValueError(
@@ -260,7 +262,7 @@ class AnsMath:
             elif init == "ones":
                 mat.ones()
             elif init != "zeros":
-                raise ValueError(f"Invalid init method '{init}'.")
+                raise ValueError(f"Invalid initialization method '{init}'.")
         else:
             info = self._mapdl._data_info(name)
             if info.objtype == pb_types.DataType.DMAT:
@@ -284,30 +286,31 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Data type of the object. Options are ``np.double``,
+            NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a
+            AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
         -------
         AnsVec, AnsMat, or `numpy.ndarray`
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on ``asarray`` and on if ``ncol`` is specified.
+            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
+            specified.
 
         Examples
         --------
-        Create a zero vector.
+        Create a vector where all values are zeros.
 
         >>> import ansys.math.core.math as pymath
         >>> mm = pymath.AnsMath()
         >>> vec = mm.zeros(10)
 
-        Create a zero matrix.
+        Create a matrix where all values are zeros.
 
         >>> mat = mm.zeros(10, 10)
         """
@@ -325,30 +328,31 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Data type of the object. Options are ``np.double``,
+            NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a
+            AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
         -------
         AnsVec, AnsMat, or `numpy.ndarray`
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on ``asarray`` and on if ``ncol`` is specified.
+            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
+            specified.
 
         Examples
         --------
-        Create a ones vector.
+        Create a vector where all values are ones..
 
         >>> import ansys.math.core.math as pymath
         >>> mm = pymath.AnsMath()
         >>> vec = mm.ones(10)
 
-        Create a ones matrix.
+        Create a matrix where all values are ones.
 
         >>> mat = mm.ones(10, 10)
         """
@@ -367,30 +371,31 @@ class AnsMath:
         ncol : int, optional
             Number of columns.  If specified, returns a matrix.
         dtype : np.dtype, optional
-            Data type of the object. Options are ``np.double``,
+            NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a
+            AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
         -------
         AnsVec, AnsMat, or `numpy.ndarray`
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on ``asarray`` and on if ``ncol`` is specified.
+            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
+            specified.
 
         Examples
         --------
-        Create a random vector.
+        Create a vector where all values are random.
 
         >>> import ansys.math.core.math as pymath
         >>> mm = pymath.AnsMath()
         >>> vec = mm.rand(10)
 
-        Create a random matrix.
+        Create a matrix where all values are random.
 
         >>> mat = mm.rand(10, 10)
         """
@@ -399,7 +404,7 @@ class AnsMath:
         return self.mat(nrow, ncol, dtype, init="rand", name=name, asarray=asarray)
 
     def matrix(self, matrix, name=None, triu=False):
-        """Send a scipy matrix or NumPy array to MAPDL.
+        """Send a SciPy matrix or NumPy array to MAPDL.
 
         Parameters
         ----------
@@ -409,8 +414,8 @@ class AnsMath:
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         triu : bool, optional
-            ``True`` when the matrix is upper triangular, ``False``
-            when unsymmetric.
+            Whether the matrix is the upper triangular. The default is ``False``,
+            which means that the matrix is unsymmetric.
 
         Returns
         -------
@@ -432,7 +437,7 @@ class AnsMath:
 
         >>> ans_mat.asarray()
         <500x5000 sparse matrix of type '<class 'numpy.float64'>'
-                with 1250000 stored elements in Compressed Sparse Row format>
+                with 1250000 stored elements in Compressed Sparse Row (CSR) format>
 
         """
         if name is None:
@@ -460,16 +465,17 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to store the vector as. You can use double ("DOUBLE" or "D"),
-            or complex numbers ("COMPLEX" or "Z"). Alternatively you can also supply a
-            NumPy data type. Defaults to ``np.double``.
+            Data type to store the matrix as. The options are double
+            ("DOUBLE" or "D"), complex numbers ("COMPLEX" or "Z"),
+            or NumPy data type (``np.double``, ``np.int32``, and ``np.int64``).
+            The default is ``np.double``.
         fname : str, optional
-            Filename to read the matrix from.  Defaults to ``"file.full"``.
+            Name of the file to read the matrix from. The default is ``"file.full"``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         mat_id : str, optional
-            Matrix type.  Defaults to ``"STIFF"``.
+            Matrix type. The default is ``"STIFF"``.
 
             * ``"STIFF"`` - Stiffness matrix
             * ``"MASS"`` - Mass matrix
@@ -484,7 +490,8 @@ class AnsMath:
         Returns
         -------
         AnsMat or `scipy.sparse.csr.csr_matrix`
-            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
+            AnsMath matrix or SciPy sparse matrix, depending on the value for
+            the ``asarray`` parameter.
 
         """
         if name is None:
@@ -551,7 +558,7 @@ class AnsMath:
         Provide file to MAPDL instance.
 
         If in local:
-            Checks if the file exists, if not, it raises a FileNotFound exception.
+            Checks if the file exists. If not, raise a FileNotFound exception.
 
         If in not-local:
             Check if the file exists locally or in the working directory, if not,
@@ -564,19 +571,19 @@ class AnsMath:
     def stiff(
         self, dtype=np.double, name=None, fname="file.full", asarray=False
     ):  # to be moved to .io
-        """Load the stiffness matrix from a full file.
+        """Load the stiffness matrix from a FULL file.
 
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to store the vector as. Only applicable if
-            ``asarray=True``, otherwise the returned matrix contains
-            double float numbers. Defaults to ``np.double``.
+            NumPy data type to store the matrix as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
+            This parameter is only applicable if ``asarray=True``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         fname : str, optional
-            Filename to read the matrix from.
+            Name of the file to read the matrix from. The default is ``"file.full"``.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath matrix.
             The default is ``False``.
@@ -584,19 +591,20 @@ class AnsMath:
         Returns
         -------
         AnsMat or `scipy.sparse.csr.csr_matrix`
-            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
+            AnsMath matrix or SciPy sparse matrix, depending on the value for
+            the ``asarray`` parameter.
 
         Examples
         --------
         >>> k = mm.stiff()
         AnsMath Matrix 60 x 60
 
-        Convert to a scipy array.
+        Convert to a SciPy array.
 
         >>> mat = k.asarray()
         >>> mat
         <60x60 sparse matrix of type '<class 'numpy.float64'>'
-            with 1734 stored elements in Compressed Sparse Row format>
+            with 1734 stored elements in Compressed Sparse Row (CSR) format>
         """
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "STIFF", asarray)
@@ -604,19 +612,19 @@ class AnsMath:
     def mass(
         self, dtype=np.double, name=None, fname="file.full", asarray=False
     ):  # to be moved to .io
-        """Load the mass matrix from a full file.
+        """Load the mass matrix from a FULL file.
 
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to store the vector as. Only applicable if
-            ``asarray=True``, otherwise the returned matrix contains
-            double float numbers. Defaults to ``np.double``.
+            NumPy data type to store the matrix as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
+            This parameter is only applicable if ``asarray=True``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         fname : str, optional
-            Filename to read the matrix from.
+            Name of the file to read the matrix from. The default is ``"file.full"``.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath matrix.
             The default is ``False``.
@@ -624,7 +632,8 @@ class AnsMath:
         Returns
         -------
         AnsMat or `scipy.sparse.csr.csr_matrix`
-            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
+            AnsMath matrix or SciPy sparse matrix, depending on the value for
+            the ``asarray`` parameter.
 
         Examples
         --------
@@ -632,12 +641,12 @@ class AnsMath:
         >>> mass
         AnsMath matrix 60 x 60
 
-        Convert to a scipy array.
+        Convert to a SciPy array.
 
         >>> mat = mass.asarray()
         >>> mat
         <60x60 sparse matrix of type '<class 'numpy.float64'>'
-            with 1734 stored elements in Compressed Sparse Row format>.
+            with 1734 stored elements in Compressed Sparse Row (CSR) format>.
         """
         fname = self._load_file(fname)
         return self.load_matrix_from_file(dtype, name, fname, "MASS", asarray)
@@ -645,19 +654,19 @@ class AnsMath:
     def damp(
         self, dtype=np.double, name=None, fname="file.full", asarray=False
     ):  # to be moved to .io
-        """Load the damping matrix from the full file.
+        """Load the damping matrix from a FULL file.
 
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to store the vector as. Only applicable if
-            ``asarray=True``, otherwise the returned matrix contains
-            double float numbers. Defaults to ``np.double``.
+            NumPy data type to store the matrix as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
+            This parameter is only applicable if ``asarray=True``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         fname : str, optional
-            Filename to read the matrix from.
+            Name of the file to read the matrix from. The default is ``"file.full"``.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath matrix.
             The default is ``False``.
@@ -665,7 +674,8 @@ class AnsMath:
         Returns
         -------
         AnsMat or `scipy.sparse.csr.csr_matrix`
-            AnsMath matrix or Scipy sparse matrix, depending on ``asarray``.
+            AnsMath matrix or SciPy sparse matrix, depending on the value for
+            the ``asarray`` parameter.
 
         Examples
         --------
@@ -673,12 +683,12 @@ class AnsMath:
         >>> ans_mat
         AnsMath Matrix 60 x 60
 
-        Convert to a scipy array.
+        Convert to a SciPy array.
 
         >>> mat = ans_mat.asarray()
         >>> mat
         <60x60 sparse matrix of type '<class 'numpy.float64'>'
-            with 1734 stored elements in Compressed Sparse Row format>.
+            with 1734 stored elements in Compressed Sparse Row (CSR) format>.
 
         """
         fname = self._load_file(fname)
@@ -692,31 +702,32 @@ class AnsMath:
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to store the vector as.  Defaults to
-            ``np.double``.
+            NumPy data type to store the vector as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a
+            AnsMath vector name. The default is ``None``, in which case a
             name is automatically generated.
         fname : str, optional
-            Filename to read the vector from.
+            Name of the file to read the vector from. The default is ``"file.full"``.
         mat_id : str, optional
             Vector ID to load.  If loading from a ``"*.full"`` file,
             can be one of the following:
 
             * ``"RHS"`` - Load vector
             * ``"GVEC"`` - Constraint equation constant terms
-            * ``"BACK"`` - nodal mapping vector (internal to user)
+            * ``"BACK"`` - Nodal mapping vector (internal to user)
               If this is used, the default ``dtype`` is ``np.int32``.
-            * ``"FORWARD"`` - nodal mapping vector (user to internal)
+            * ``"FORWARD"`` - Nodal mapping vector (user to internal)
               If this is used, the default ``dtype`` is ``np.int32``.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath vector.
             The default is ``False``.
 
         Returns
         -------
         AnsVec or `numpy.ndarray`
-            AnsMath vector or NumPy array vector, depending on ``asarray``.
+            AnsMath vector or NumPy array vector, depending on the value for
+            the ``asarray`` parameter.
 
         Examples
         --------
@@ -753,13 +764,13 @@ class AnsMath:
         return ans_vec
 
     def set_vec(self, data, name=None):
-        """Push a NumPy array or Python list to the MAPDL memory workspace.
+        """Push a NumPy array or a Python list to the MAPDL memory workspace.
 
         Parameters
         ----------
         data : np.ndarray, list
-            NumPy array or Python list to push to MAPDL.  Must be 1
-            dimensional.
+            NumPy array or Python list to push to MAPDL. It must be
+            1-dimensional.
         name : str, optional
             AnsMath vector name.  If unset, one will be automatically
             generated.
@@ -786,26 +797,27 @@ class AnsMath:
     def rhs(
         self, dtype=np.double, name=None, fname="file.full", asarray=False
     ):  # to be moved to .io
-        """Return the load vector from a full file.
+        """Return the load vector from a FULL file.
 
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            Data type to store the vector as.  Defaults to ``np.double``.
+            NumPy data type to store the vector as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is ``np.double``.
         name : str, optional
-            AnsMath matrix name. The default is ``None``, in which case a
+            AnsMath vector name. The default is ``None``, in which case a
             name is automatically generated.
         fname : str, optional
-            Filename to read the vector from.  Defaults to ``"file.full"``.
+            Name of the file to read the vector from. The default is ``"file.full"``.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a SciPy array rather than an AnsMath vector.
             The default is ``False``.
 
         Returns
         -------
         AnsVec or `numpy.ndarray`
-            AnsMath vector or NumPy array vector, depending on ``asarray``,
-            generated from the file.
+            AnsMath vector or NumPy array vector, depending on the value for
+            the ``asarray`` parameter, generated from the FULL file.
 
         Examples
         --------
@@ -838,7 +850,7 @@ class AnsMath:
             The array to compress.
         thresh : float, optional
             Numerical threshold value used to manage the compression.
-            Default is 1E-7.
+            The default is is 1E-7.
         sig : str, optional
             Name of the vector used to store the ``SIGMA`` values.
         v : str, optional
@@ -856,7 +868,7 @@ class AnsMath:
         self._mapdl.run(f"*COMP,{mat.id},SVD,{thresh},{sig},{v}", **kwargs)
 
     def mgs(self, mat, thresh="", **kwargs):
-        """Apply Modified Gram-Schmidt algorithm to a matrix.
+        """Apply the Modified Gram-Schmidt (MGS) algorithm to a matrix.
 
         The MGS algorithm is only applicable to dense matrices.
         Columns that are linearly dependent on others are removed,
@@ -873,8 +885,8 @@ class AnsMath:
 
         Examples
         --------
-        Apply MGS on an existing Dense Rectangular Matrix, using
-        default threshold. The mat matrix is modified in-situ.
+        Apply MGS on an existing dense rectangular matrix, using
+        default threshold. The AnsMath matrix is modified in-situ.
 
         >>> mm.mgs(mat)
         """
@@ -984,8 +996,8 @@ class AnsMath:
         Returns
         -------
         AnsVec or AnsMat
-            Sum of the two input objects. Type of the output matches
-            type of the input. Sum of the two vectors/matrices.
+            Sum of the two input objects. The type of the output matches
+            the type of the input.
 
         Examples
         --------
@@ -1010,7 +1022,7 @@ class AnsMath:
         Returns
         -------
         AnsVec or AnsMat
-            Difference of the two input vectors or matrices. Type of
+            Difference of the two input vectors or matrices. The type of
             the output matches the type of the input.
 
         Examples
@@ -1029,19 +1041,20 @@ class AnsMath:
         Parameters
         ----------
         mat : ansys.mapdl.math.AnsMat
-            An AnsMath matrix.
+            AnsMath matrix.
         algo : str, optional
-            Factorization algorithm.  Either ``"LAPACK"`` (default for
-            dense matrices) or ``"DSP"`` (default for sparse matrices).
+            Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
+            The default is ``"LAPACK" for dense matrices and ``"DSP"`` for
+            sparse matrices.
         inplace : bool, optional
-            If ``False``, the factorization is performed on a copy
-            of the input matrix (``mat`` argument), hence this input
-            matrix (``mat``) is not changed. Default is ``True``.
+            Whether the factorization is performed on the input matrix
+            rather than on a copy of it, hence the input matrix
+            is not changed. The default is ``True``.
 
         Returns
         -------
         ansys.mapdl.core.math.AnsSolver
-            An Ansys Solver object.
+            Ansys Solver object.
 
 
         Examples
@@ -1076,7 +1089,7 @@ class AnsMath:
 
         Examples
         --------
-        Compute the norm of a AnsMath vector.
+        Compute the norm of an AnsMath vector.
         v = mm.ones(10)
         3.1622776601683795
         """
@@ -1084,18 +1097,20 @@ class AnsMath:
 
     @protect_grpc
     def _set_vec(self, vname, arr, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
-        """Transfer a NumPy array to MAPDL as a AnsMath vector.
+        """Transfer a NumPy array to MAPDL as an AnsMath vector.
 
         Parameters
         ----------
         vname : str
-            Vector parameter name.  Character ":" is not allowed.
+            Vector parameter name.  The character ":" is not allowed.
         arr : np.ndarray
             NumPy array to upload.
         dtype : np.dtype, optional
-            Type to upload array as. Defaults to the current array type.
+            NumPy data type to upload the array as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is the current array
+            type.
         chunk_size : int, optional
-            Chunk size in bytes. Must be less than 4MB.
+            Chunk size in bytes. The value must be less than 4MB.
 
         """
         if ":" in vname:
@@ -1120,21 +1135,24 @@ class AnsMath:
         self._mapdl._stub.SetVecData(chunks_generator)
 
     @protect_grpc
-    def _set_mat(self, mname, arr, sym=None, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
-        """Transfer a 2D dense or sparse scipy array to MAPDL as a AnsMath matrix.
+    def _set_mat(self, mname, arr, sym=False, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
+        """Transfer a 2D dense or sparse SciPy array to MAPDL as an AnsMath matrix.
 
         Parameters
         ----------
         mname : str
-            Matrix parameter name.  Character ":" is not allowed.
+            Matrix parameter name.  The character ":" is not allowed.
         arr : np.ndarray or scipy.sparse matrix
             Matrix to upload.
         sym : bool
-            ``True`` when matrix is symmetric. Unused if Matrix is dense.
+            Whether the matrix is symmetric rather than dense.
+            The default is ``False`` which means that the matrix is dense.
         dtype : np.dtype, optional
-            Type to upload array as.  Defaults to the current array type.
+            NumPy data type to upload the array as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is the current array
+            type.
         chunk_size : int, optional
-            Chunk size in bytes.  Must be less than 4MB.
+            Chunk size in bytes.  The value must be less than 4MB.
 
         """
         from scipy import sparse
@@ -1173,7 +1191,7 @@ class AnsMath:
         self._mapdl._stub.SetMatData(chunks_generator)
 
     def _send_sparse(self, mname, arr, sym, dtype, chunk_size):
-        """Send a scipy sparse sparse matrix to MAPDL."""
+        """Send a SciPy sparse sparse matrix to MAPDL."""
         if sym is None:
             raise ValueError("The symmetric flag ``sym`` must be set for a sparse matrix.")
         from scipy import sparse
@@ -1409,7 +1427,7 @@ class AnsVec(AnsMathObj):
             Hadamard product between this vector and the other vector.
         """
         if not meets_version(self._mapdl._server_version, (0, 4, 0)):  # pragma: no cover
-            raise VersionError("``AnsVec`` requires MAPDL version 2021R2.")
+            raise VersionError("``AnsVec`` requires MAPDL version 2021 R2.")
 
         if not isinstance(vec, AnsVec):
             raise TypeError("The object to be multiplied must be an AnsMath vector.")
@@ -1526,7 +1544,9 @@ class AnsMat(AnsMathObj):
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type.
+            NumPy data type to upload the array as. The options are ``np.double``,
+            ``np.int32``, and ``np.int64``. The default is the current array
+            type.
 
         Returns
         -------
@@ -1725,12 +1745,13 @@ class AnsSolver(AnsMathObj):
         mat : ansys.math.core.math.AnsMat
             An ansys.mapdl.math matrix.
         algo : str, optional
-            Factorization algorithm.  Either ``"LAPACK"`` (default for
-            dense matrices) or ``"DSP"`` (default for sparse matrices).
+            Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
+            The default is ``"LAPACK" for dense matrices and ``"DSP"`` for
+            sparse matrices.
         inplace : bool, optional
-            If ``False``, the factorization is performed on a copy
-            of the input matrix (``mat`` argument), hence this input
-            matrix (``mat``) is not changed. Default is ``True``.
+            Whether the factorization is performed on the input matrix
+            rather than on a copy of it, hence the input matrix
+            is not changed. The default is ``True``.
 
         Examples
         --------
