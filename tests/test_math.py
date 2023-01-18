@@ -353,7 +353,7 @@ def test_mat_invalid_dtype(mm):
 
 
 def test_mat_invalid_init(mm):
-    with pytest.raises(ValueError, match="Invalid init method"):
+    with pytest.raises(ValueError, match="Invalid initialization method"):
         mm.mat(10, 10, init="foo")
 
 
@@ -511,7 +511,7 @@ def test_vec_const(mm):
 def test_set_vector(mm, vec, pname):
     ans_vec = mm.set_vec(vec, pname)
     assert np.allclose(ans_vec.asarray(), vec)
-    assert "AnsMath Vector size" in repr(ans_vec)
+    assert "AnsMath vector size" in repr(ans_vec)
     assert "" in str(vec[0])[:4]  # output from *PRINT
 
 
@@ -562,7 +562,7 @@ def test_copy_complex(mm):
 
 def test_sparse_repr(mm):
     k = mm.stiff()
-    assert "AnsMath Sparse Matrix" in repr(k)
+    assert "AnsMath sparse matrix" in repr(k)
 
 
 def test_invalid_matrix_size(mm):
@@ -595,7 +595,7 @@ def test_dense(mm):
         with pytest.raises(TypeError):
             apdl_mat = mm.matrix(array.astype(np.uint8))
 
-        assert "AnsMath Dense Matrix" in repr(apdl_mat)
+        assert "AnsMath dense matrix" in repr(apdl_mat)
 
         # check transpose
         assert np.allclose(apdl_mat.T, array.T)

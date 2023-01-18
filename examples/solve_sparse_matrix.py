@@ -15,7 +15,7 @@ mm = pymath.AnsMath()
 
 ###############################################################################
 # Factorize and solve sparse linear systems.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # First, run a MAPDL solve to create a .full file
 # We use a model from the official verification manual.
 #

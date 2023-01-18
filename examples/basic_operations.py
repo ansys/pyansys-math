@@ -19,7 +19,7 @@ mm = pymath.AnsMath()
 
 ###############################################################################
 # Create and manipulate vectors.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Create two AnsMath vectors of size 5. The :math:`\vec{v}` method is initialized with
 # ones, and $\vec{w}$ is filled with random values.
 #
@@ -31,7 +31,7 @@ print(w)
 
 ###############################################################################
 # Use operators on vectors.
-# ~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
 # Like NumPy vectors, AnsMath vectors can use most of the
 # standard operators (``+, -, +=, -=, *=``).
 #
@@ -106,7 +106,7 @@ print(v)
 
 ###############################################################################
 # Working with dense matrices.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Allocate two dense matrices with random values.
 
 m1 = mm.rand(4, 5)
@@ -162,7 +162,7 @@ w
 
 ###############################################################################
 # Use NumPy methods on AnsMath objects.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Regardless of the underlying AnsMath object type, you are generally
 # able to perform most NumPy or SciPy operations on these arrays. You
 # can do this in one of two ways. First, you can convert a matrix to a NumPy array:

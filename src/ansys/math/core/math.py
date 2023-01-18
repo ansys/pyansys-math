@@ -143,7 +143,7 @@ class AnsMath:
         return interp_star_status(self._status)
 
     def free(self):
-        """Delete all vectors.
+        """Delete all AnsMath objects.
 
         Examples
         --------
@@ -431,7 +431,7 @@ class AnsMath:
         >>> mat = sparse.random(sz, sz, density=0.05, format='csr')
         >>> ans_mat = mm.matrix(mat, name)
         >>> ans_mat
-        AnsMath Matrix 5000 x 5000
+        AnsMath matrix 5000 x 5000
 
         Transfer the matrix back to Python.
 
@@ -597,7 +597,7 @@ class AnsMath:
         Examples
         --------
         >>> k = mm.stiff()
-        AnsMath Matrix 60 x 60
+        AnsMath matrix 60 x 60
 
         Convert to a SciPy array.
 
@@ -697,7 +697,7 @@ class AnsMath:
     def get_vec(
         self, dtype=None, name=None, fname="file.full", mat_id="RHS", asarray=False
     ):  # to be moved to .io
-        """Load a vector from a file.
+        """Load a vector from a FULL file.
 
         Parameters
         ----------
@@ -733,7 +733,7 @@ class AnsMath:
         --------
         >>> vec = mm.get_vec(fname='PRSMEMB.full', mat_id="RHS")
         >>> vec
-        AnsMath Vector size 126
+        AnsMath vector size 126
 
         """
         if name is None:
@@ -772,8 +772,8 @@ class AnsMath:
             NumPy array or Python list to push to MAPDL. It must be
             1-dimensional.
         name : str, optional
-            AnsMath vector name.  If unset, one will be automatically
-            generated.
+            AnsMath vector name. The default is ``None``, in which case
+            a name is automatically generated.
 
         Returns
         -------
@@ -822,7 +822,7 @@ class AnsMath:
         Examples
         --------
         >>> rhs = mm.rhs(fname='PRSMEMB.full')
-        AnsMath Vector size 126
+        AnsMath vector size 126
 
         """
         fname = self._load_file(fname)
@@ -859,7 +859,7 @@ class AnsMath:
 
         Examples
         --------
-        Apply SVD on an existing Dense Rectangular Matrix, using
+        Apply SVD on an existing dense rectangular matrix, using
         default threshold.  The matrix is modified in-place.
 
         >>> mm.svd(mat)
@@ -960,7 +960,7 @@ class AnsMath:
         return ev
 
     def dot(self, vec_a, vec_b):
-        """Dot product between two AnsMath vectors.
+        """Multiply two AnsMath vectors.
 
         Parameters
         ----------
@@ -973,7 +973,7 @@ class AnsMath:
         Returns
         -------
         float
-            Dot product between the two vectors.
+            Product of multiplying the two vectors.
 
         Examples
         --------
@@ -1010,7 +1010,7 @@ class AnsMath:
         return obj1 + obj2
 
     def subtract(self, obj1, obj2):
-        """Subtract two ANSYS vectors or matrices.
+        """Subtract two AnsMath vectors or matrices.
 
         Parameters
         ----------
@@ -1072,7 +1072,7 @@ class AnsMath:
         return solver
 
     def norm(self, obj, order="nrm2"):
-        """Matrix or vector norm.
+        """Return the norm of an AnsMath object.
 
         Parameters
         ----------
@@ -1091,6 +1091,7 @@ class AnsMath:
         --------
         Compute the norm of an AnsMath vector.
         v = mm.ones(10)
+        print (mm.norm(v))
         3.1622776601683795
         """
         return obj.norm(nrmtype=order)
@@ -1166,7 +1167,7 @@ class AnsMath:
             if arr.ndim == 1:
                 raise ValueError("Input appears to be an array. " "Use ``set_vec`` instead.)")
             if arr.ndim > 2:
-                raise ValueError("Arrays must be 2 dimensional.")
+                raise ValueError("Arrays must be 2-dimensional.")
 
         if sparse.issparse(arr):
             self._send_sparse(mname, arr, sym, dtype, chunk_size)
@@ -1253,8 +1254,8 @@ class AnsMathObj:
         return self._mapdl.run(f"*PRINT,{self.id}", mute=False)
 
     def copy(self):
-        """Return the name of the copy of this object."""
-        name = id_generator()  # internal name of the new vector
+        """Get the name of the copy of this object."""
+        name = id_generator()  # internal name of the new object
         info = self._mapdl._data_info(self.id)
         dtype = ANSYS_VALUE_TYPE[info.stype]
 
@@ -1265,9 +1266,9 @@ class AnsMathObj:
         elif self.type == ObjType.SMAT:
             acmd = "*SMAT"
         else:
-            raise TypeError(f"Copy aborted: Unknown obj type {self.type}.")
+            raise TypeError(f"Copy stopped: Unknown obj type {self.type}.")
 
-        # AnsMath cmd to copy vin to vout
+        # AnsMath cmd to copy vin to vout.
         self._mapdl.run(f"{acmd},{name},{MYCTYPE[dtype]},COPY,{self.id}", mute=True)
         return name
 
@@ -1275,23 +1276,23 @@ class AnsMathObj:
         self._mapdl.run(f"*INIT,{self.id},{method}", mute=True)
 
     def zeros(self):
-        """Set all values of the vector to zero."""
+        """Set all values of the object to zero."""
         return self._init("ZERO")
 
     def ones(self):
-        """Set all values of the vector to one."""
+        """Set all values of the object to one."""
         return self._init("CONST,1")
 
     def rand(self):
-        """Set all values of the vector to a random number."""
+        """Set all values of the object to a random number."""
         return self._init("RAND")
 
     def const(self, value):
-        """Set all values of the vector to a constant."""
+        """Set all values of the object to a constant."""
         return self._init(f"CONST,{value}")
 
     def norm(self, nrmtype="nrm2"):
-        """Matrix or vector norm.
+        """Return the norm of the AnsMath object.
 
         Parameters
         ----------
@@ -1311,7 +1312,7 @@ class AnsMathObj:
         --------
         >>> dim = 1000
         >>> m2 = mm.rand(dim, dim)
-        >>> nrm = mm.norm( m2)
+        >>> nrm = m2.norm()
         """
         val_name = "py_val"
         self._mapdl.run(f"*NRM,{self.id},{nrmtype},{val_name}", mute=True)
@@ -1400,7 +1401,7 @@ class AnsVec(AnsMathObj):
         return int(sz)
 
     def __repr__(self):
-        return f"AnsMath Vector size {self.size}"
+        return f"AnsMath vector size {self.size}"
 
     def __getitem__(self, num):
         if num < 0:
@@ -1448,11 +1449,11 @@ class AnsVec(AnsMathObj):
         return objout
 
     def copy(self):
-        """Return a copy of this vector."""
+        """Get a copy of this vector."""
         return AnsVec(AnsMathObj.copy(self), self._mapdl)
 
     def dot(self, vec) -> float:
-        """Return the dot product with another AnsMath vector.
+        """Multiply the AnsMath vector by another AnsMath vector.
 
         Parameters
         ----------
@@ -1462,7 +1463,7 @@ class AnsVec(AnsMathObj):
         Returns
         -------
         float
-            Dot product between this vector and the other vector.
+            Product of multiplying this vector with another vector.
         """
         if not isinstance(vec, AnsVec):
             raise TypeError("The object to be multiplied must be an AnsMath vector.")
@@ -1471,7 +1472,7 @@ class AnsVec(AnsMathObj):
         return self._mapdl.scalar_param("py_val")
 
     def asarray(self) -> np.ndarray:
-        """Return vector as a NumPy array.
+        """Return this vector as a NumPy array.
 
         Examples
         --------
@@ -1533,13 +1534,13 @@ class AnsMat(AnsMathObj):
             return info.mattype in [0, 1, 2]  # [UPPER, LOWER, DIAG] respectively
 
         warn(
-            "Call to ``sym`` cannot evaluate if this matrix is symmetric with this "
-            "version of MAPDL."
+            "Call to ``sym`` method cannot evaluate if this matrix is symmetric "
+            "with this version of MAPDL."
         )
         return True
 
     def asarray(self, dtype=None) -> np.ndarray:
-        """Return vector as a NumPy array.
+        """Return this vector as a NumPy array.
 
         Parameters
         ----------
@@ -1570,10 +1571,12 @@ class AnsMat(AnsMathObj):
             return self._mapdl._mat_data(self.id)
 
     def __mul__(self, vec):
-        raise AttributeError("Array multiplication is not available. For dot product, use `dot()`.")
+        raise AttributeError(
+            "Array multiplication is not available. For scalar product, use `dot()`."
+        )
 
     def dot(self, obj):
-        """Multiply the matrix by another vector or matrix.
+        """Multiply the AnsMath object by another AnsMath object.
 
         Parameters
         ----------
@@ -1608,7 +1611,7 @@ class AnsMat(AnsMathObj):
             )
             objout = AnsDenseMat(name, self._mapdl)
 
-        self._mapdl._log.info("Call MAPDL to perform MV Product.")
+        self._mapdl._log.info("Call MAPDL to perform the multiplication.")
         self._mapdl.run(f"*MULT,{self.id},,{obj.id},,{name}", mute=True)
         return objout
 
@@ -1651,7 +1654,7 @@ class AnsMat(AnsMathObj):
 
 
 class AnsDenseMat(AnsMat):
-    """Provides the AnsMath Dense Matrix objects."""
+    """Provides the AnsMath dense matrix objects."""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
@@ -1661,7 +1664,7 @@ class AnsDenseMat(AnsMat):
         return self.asarray()
 
     def __repr__(self):
-        return f"AnsMath Dense Matrix ({self.nrow}, {self.ncol}"
+        return f"AnsMath dense matrix ({self.nrow}, {self.ncol}"
 
     def copy(self):
         """Return a copy of this matrix."""
@@ -1669,13 +1672,13 @@ class AnsDenseMat(AnsMat):
 
 
 class AnsSparseMat(AnsMat):
-    """Provides the AnsMath Sparse Matrix objects."""
+    """Provides the AnsMath sparse matrix objects."""
 
     def __init__(self, uid, mapdl):
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
-        return f"AnsMath Sparse Matrix ({self.nrow}, {self.ncol})"
+        return f"AnsMath sparse matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
         """Return a copy of this matrix.
@@ -1685,22 +1688,22 @@ class AnsSparseMat(AnsMat):
         Examples
         --------
         >>> k
-        AnsMath Sparse Matrix (126, 126)
+        AnsMath sparse matrix (126, 126)
 
         >>> kcopy = k.copy()
         >>> kcopy
-        AnsMath Sparse Matrix (126, 126)
+        AnsMath sparse matrix (126, 126)
 
         """
         return AnsSparseMat(AnsMathObj.copy(self), self._mapdl)
 
     def todense(self) -> np.ndarray:
-        """Return this array as a dense np.ndarray.
+        """Return this array as a NumPy dense array.
 
         Examples
         --------
         >>> k
-        AnsMath Sparse Matrix (126, 126)
+        AnsMath sparse matrix (126, 126)
 
         >>> mat = k.todense()
         >>> mat
@@ -1842,7 +1845,7 @@ def solve(mat, b, x=None, algo=None):
 
 
 def dot(vec1, vec2) -> float:
-    """Dot product between two AnsMath vectors.
+    """Multiply two AnsMath vectors.
 
     Parameters
     ----------
@@ -1855,11 +1858,11 @@ def dot(vec1, vec2) -> float:
     Returns
     -------
     float
-        Dot product between the two vectors.
+        Product of multiplying the two vectors.
 
     """
     if vec1.type != ObjType.VEC or vec2.type != ObjType.VEC:
-        raise TypeError("Both objects must be ANSYS vectors.")
+        raise TypeError("Both objects must be AnsMath vectors.")
 
     mapdl = vec1._mapdl
     mapdl.run(f"*DOT,{vec1.id},{vec2.id},py_val", mute=True)

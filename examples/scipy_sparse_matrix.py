@@ -63,8 +63,8 @@ mm.norm(msub)
 
 
 ################################################################################
-# CSR representation in PyAnsys Math
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Compressed Sparse Row (CSR) representation in PyAnsys Math
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 # Printing the list of objects in the PyAnsys Math space finds:
 #
