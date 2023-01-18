@@ -14,7 +14,7 @@ import ansys.math.core.math as pymath
 mm = pymath.AnsMath()
 
 ###############################################################################
-# Factorize and Solve Sparse Linear Systems
+# Factorize and solve sparse linear systems.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # First, run a MAPDL solve to create a .full file
 # We use a model from the official verification manual.
@@ -60,7 +60,7 @@ b.norm()
 by = b.asarray()
 
 ###############################################################################
-# Factorize the stifness matrix using PyAnsys Math
+# Factorize the stiffness matrix using PyAnsys Math.
 #
 s = mm.factorize(k)
 
@@ -84,16 +84,16 @@ kx -= b
 print("Residual error:", kx.norm() / b.norm())
 
 ###############################################################################
-# Summary of all allocated AnsMath objects
+# Get a summary of all allocated AnsMath objects.
 #
 mm.status()
 
 ######################################################################
-# Delete all AnsMath objects
+# Delete all AnsMath objects.
 #
 mm.free()
 
 
 ###############################################################################
-# Stop PyAnsys Math
+# Stop PyAnsys Math.
 mm._mapdl.exit()

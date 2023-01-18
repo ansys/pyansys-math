@@ -1,4 +1,4 @@
-"""Test AnsMath functionality"""
+"""Test AnsMath functionality."""
 import os
 import re
 
@@ -328,8 +328,8 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
 
 
 def test_mat_from_name(mm):
-    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with another
-    # value than the default one
+    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
+    # value other than the default one.
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
 
@@ -586,7 +586,7 @@ def test_transpose(mm):
 def test_dense(mm):
     # version check must be performed at runtime
     if mm._server_version[1] >= 4:
-        # test if an AnsMath object can treated as an array
+        # Test if an AnsMath object can treated as an array.
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
         assert isinstance(apdl_mat, pymath.AnsMat)
