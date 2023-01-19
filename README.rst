@@ -1,5 +1,5 @@
-Ansys Math
-==========
+PyAnsys Math
+============
 
 |pyansys| |pypi| |PyPIact| |GH-CI| |codecov| |zenodo| |MIT| |black|
 
@@ -30,36 +30,73 @@ Ansys Math
   :alt: black
 
 
-Overview
---------
+PyAnsys Math is a Python repository holding Ansys mathematical libraries.
+To use them, you must have a local installation of Ansys Mechanical APDL.
 
-Ansys Math is a Python repository holding Ansys mathematical libraries.
-
-
-Code Style
-----------
-Code style can be checked by running:
-
-.. code-block:: text
-
-    tox -e style
-
-Previous command will run `pre-commit <https://pre-commit.com/>`_ for checking code quality.
+For more information on getting a licensed copy of Ansys Mechanical APDL, visit
+the `Ansys web site <ansys_>` .
 
 
-Documentation
--------------
-Documentation can be rendered by running:
 
-.. code-block:: text
+Installation
+------------
 
-  tox -e doc
+For users
+~~~~~~~~~
+The ``ansys.math.core`` package currently supports Python 3.7 through
+Python 3.10 on Windows, Mac OS, and Linux.
 
-The resultant HTML files can be inspected using your favorite web browser:
+.. code::
 
-.. code-block:: text
+   pip install ansys-math-core
 
-  <browser> .tox/doc_out_html/index.html
+Alternatively, install the latest from 
+`PyAnsys Math GitHub <pymath_github_>`_ via:
 
-Previous will open the rendered documentation in the desired browser.
+.. code::
 
+   pip install git+https://github.com/pyansys/ansys-math.git
+
+
+
+For developers
+~~~~~~~~~~~~~~
+For a local *development* version, install with:
+
+.. code::
+
+   git clone https://github.com/pyansys/ansys-math.git
+   cd ansys-math
+   pip install -e .
+
+This allows you to install and edit the ``ansys-math-core`` module locally.
+The changes that you make are reflected in your setup
+after restarting the Python kernel.
+
+
+Verify your installation
+------------------------
+
+Check that you can start PyAnsys Math from Python by running this code:
+
+.. code:: python
+
+    import ansys.math.core.math as pymath
+
+    # Start PyAnsys Math.
+    mm = pymath.AnsMath()
+    print(mm)
+
+
+If you see a response from the server, congratulations. You're ready
+to start using PyAnsys Math as a service.
+
+Ansys software requirements
+---------------------------
+
+You must have a copy of Ansys 2021 R1 or later installed locally.
+
+.. note::
+
+    The latest versions of Ansys provide significantly better support
+    and features. PyAnsys Math is not supported on Ansys versions earlier than 2021 R1.

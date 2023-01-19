@@ -9,21 +9,21 @@ Sparse Matrices.
 from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
-# Start Ansys Math
-mm = amath.Math()
+# Start PyAnsys Math.
+mm = pymath.AnsMath()
 
 ################################################################################
-# Load and solve verification manual example 153.  Then load the
-# stiffness matrix into APDLmath.
+# Load and solve verification manual example 153. Then, load the
+# stiffness matrix into MAPDL.
 out = mm._mapdl.input(vmfiles["vm153"])
 k = mm.stiff(fname="PRSMEMB.full")
 k
 
 ################################################################################
-# Copy this APDLMath Sparse Matrix to a SciPy CSR matrix and plot the
-# graph of the sparse matrix
+# Copy this AnsMath sparse matrix to a SciPy CSR matrix. Then, plot the
+# graph of the sparse matrix.
 pk = k.asarray()
 plt.spy(pk)
 
@@ -45,11 +45,11 @@ print(pk.indptr[:10])
 
 
 ################################################################################
-# ### Create a APDLMath Sparse Matrix from a SciPy Sparse CSR Matrix
+# ### Create an AnsMath sparse matrix from a SciPy sparse CSR matrix.
 #
-# Here, we transfer the ``scipy`` CSR matrix back to MAPDL.  While
+# Then, transfer the SciPy CSR matrix back to PyAnsys Math.  While
 # this example uses a matrix that was originally within MAPDL, you can
-# load any CSR matrix to MAPDL.
+# load any CSR matrix into PyAnsys Math.
 
 my_mat = mm.matrix(pk, "my_mat", triu=True)
 my_mat
@@ -63,26 +63,26 @@ mm.norm(msub)
 
 
 ################################################################################
-# CSR Representation in MAPDL
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Compressed Sparse Row (CSR) representation in PyAnsys Math
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# Printing the list of objects in the MAPDL space, we find:
+# Printing the list of objects in the PyAnsys Math space finds:
 #
-# - 2 SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
-# - with encrypted names
-# - The ``my_mat`` SMAT object. Its size is zero, because the 3
-# - vectors are stored separately
-# - the 3 vectors of the CSR my_mat structure: ``MY_MAT_PTR``, ``MY_MAT_IND``
-# - and ``MY_MAT_DATA``
+# - Two SMAT objects, corresponding to the ``k``, ``MSub`` matrices,
+#   with encrypted names.
+# - The ``my_mat`` SMAT object. Its size is zero, because the three
+#   vectors are stored separately.
+# - The three vectors of the CSR my_mat structure: ``MY_MAT_PTR``,
+#   ``MY_MAT_IND``, and ``MY_MAT_DATA``.
 
 mm.status()
 
 
 ################################################################################
-# MAPDL Python Matrix Correspondence
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# PyAnsys Math Python matrix correspondence
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# To determine which MAPDL object corresponds to which Python object,
+# To determine which PyAnsys Math object corresponds to which Python object,
 # access the id property of the Python object.
 
 print("name(k)=" + k.id)
@@ -91,5 +91,5 @@ print("name(msub)=" + msub.id)
 
 
 ###############################################################################
-# stop mapdl
+# Stop PyAnsys Math.
 mm._mapdl.exit()

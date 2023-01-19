@@ -1,12 +1,11 @@
 """
-.. _ref_mapdl_math_eigen_solve:
+.. _ref_pymath_eigen_solve:
 
-Using Ansys Math to solve Eigenproblems
+Use PyAnsys Math to solve eigenproblems
 ---------------------------------------
-Use Ansys Math to solve eigenproblems.
 
 This example uses a verification manual input file, but you can use
-your own sparse or dense matrices and solve those.
+your own sparse or dense matrices.
 
 """
 import time
@@ -15,10 +14,10 @@ from ansys.mapdl.core.examples import vmfiles
 import matplotlib.pylab as plt
 import numpy as np
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
-# Start Ansys Math
-mm = amath.Math()
+# Start PyAnsys Math.
+mm = pymath.AnsMath()
 
 ###############################################################################
 # First we get the `STIFF` and `MASS` matrices from the full file
@@ -46,10 +45,10 @@ a
 ###############################################################################
 # Perform the the modal analysis.
 #
-# The algorithm is automatically chosen with respect to the matrices
-# properties (e.g. scalar, storage, symmetry...)
+# The algorithm is automatically chosen with respect to the properties
+# of the matrices (such as scalar, storage, or symmetry).
 #
-print("Calling MAPDL to solve the eigenproblem...")
+print("Calling PyAnsys Math to solve the eigenproblem...")
 
 t1 = time.time()
 ev = mm.eigs(nev, k, m, phi=a)
@@ -150,27 +149,27 @@ def get_res(i):
     return kphi.norm() / kphinrm
 
 
-mapdl_acc = np.zeros(nev)
+pymath_acc = np.zeros(nev)
 
 for i in range(nev):
     f = ev[i]
-    mapdl_acc[i] = get_res(i)
-    print(f"[{i}] : Freq = {f}\t - Residual = {mapdl_acc[i]}")
+    pymath_acc[i] = get_res(i)
+    print(f"[{i}] : Freq = {f}\t - Residual = {pymath_acc[i]}")
 
 ###############################################################################
-# Plot Accuracy of Eigenresults
+# Plot accuracy of eigenresults.
 
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = np.linspace(1, nev, nev)
-plt.title("APDL Math Residual Error (%)")
+plt.title("PyAnsys Math Residual Error (%)")
 plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
 plt.ylabel("Errors (%)")
-ax.bar(x, mapdl_acc, label="MAPDL Results")
+ax.bar(x, pymath_acc, label="PyAnsys Math Results")
 plt.show()
 
 ###############################################################################
-# stop mapdl
+# Stop PyAnsys Math.
 mm._mapdl.exit()

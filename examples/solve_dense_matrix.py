@@ -1,7 +1,7 @@
 """
-Use Ansys Math to Solve a Dense Matrix Linear System
-----------------------------------------------------
-Use Ansys Math to solve a Dense Matrix Linear System.
+Use PyAnsys Math to solve a dense matrix linear system
+------------------------------------------------------
+This example shows how to use PyAnsys Math to solve a dense matrix linear system.
 
 """
 
@@ -9,13 +9,13 @@ import time
 
 import numpy.linalg as npl
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
-# Start Ansys Math
-mm = amath.Math()
+# Start PyAnsys Math.
+mm = pymath.AnsMath()
 
 ###############################################################################
-# Allocate a Dense Matrix in the APDLMath workspace
+# Allocate a dense matrix in the MAPDL workspace.
 #
 mm._mapdl.clear()
 dim = 1000
@@ -31,18 +31,18 @@ a_py = a.asarray()
 b_py = b.asarray()
 
 ###############################################################################
-# Solve using APDLMath
+# Solve using PyAnsys Math.
 #
-print(f"Solving a ({dim} x {dim}) dense linear system using MAPDL...")
+print(f"Solving a ({dim} x {dim}) dense linear system using PyAnsys Math...")
 
 t1 = time.time()
 s = mm.factorize(a)
 x = s.solve(b, x)
 t2 = time.time()
-print(f"Elapsed time to solve the linear system using Mapdl: {t2 - t1} seconds")
+print(f"Elapsed time to solve the linear system using PyAnsys Math: {t2 - t1} seconds")
 
 ###############################################################################
-# Norm of the MAPDL Solution
+# Get the norm of the PyAnsys Math solution.
 mm.norm(x)
 
 
@@ -62,5 +62,5 @@ print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
 npl.norm(x_py)
 
 ###############################################################################
-# stop mapdl
+# Stop PyAnsys Math.
 mm._mapdl.exit()

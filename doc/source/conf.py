@@ -1,14 +1,15 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
 import os
+import warnings
 
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 import numpy as np
 import pyvista
 from sphinx_gallery.sorting import FileNameSortKey
 
-from ansys.math import core as amath
 from ansys.math.core import __version__
+import ansys.math.core.math as pymath
 
 # Manage errors
 pyvista.set_error_output_file("errors.txt")
@@ -26,9 +27,16 @@ if not os.path.exists(pyvista.FIGURE_PATH):
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
-amath.BUILDING_GALLERY = True
+pymath.BUILDING_GALLERY = True
 
-# Project information
+# suppress annoying matplotlib bug
+warnings.filterwarnings(
+    "ignore",
+    category=UserWarning,
+    message="Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.",
+)
+
+# -- Project information -----------------------------------------------------
 project = "ansys-math-core"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS, Inc."
@@ -37,7 +45,7 @@ release = version = "0.1.dev0"
 # Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
-html_short_title = html_title = "Ansys Math"
+html_short_title = html_title = "PyAnsys Math"
 
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 """The canonical name of the webpage hosting the documentation."""
@@ -48,6 +56,8 @@ html_theme_options = {
     "github_url": "https://github.com/pyansys/ansys-math",
     "show_prev_next": False,
     "show_breadcrumbs": True,
+    "collapse_navigation": True,
+    "use_edit_page_button": True,
     "additional_breadcrumbs": [
         ("PyAnsys", "https://docs.pyansys.com/"),
     ],
@@ -63,6 +73,14 @@ html_theme_options = {
         "version_match": get_version_match(__version__),
     },
     "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
+}
+
+html_context = {
+    "display_github": True,  # Integrate GitHub
+    "github_user": "pyansys",
+    "github_repo": "ansys-math",
+    "github_version": "main",
+    "doc_path": "doc/source",
 }
 
 # Sphinx extensions
@@ -105,17 +123,20 @@ sphinx_gallery_conf = {
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/dev", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
+    "numpy": ("https://numpy.org/devdocs", None),
     # kept here as an example
-    # "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
-    # "numpy": ("https://numpy.org/devdocs", None),
     # "matplotlib": ("https://matplotlib.org/stable", None),
     # "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     # "pyvista": ("https://docs.pyvista.org/", None),
     # "grpc": ("https://grpc.github.io/grpc/python/", None),
 }
 
+suppress_warnings = ["label.*"]
 # numpydoc configuration
+numpydoc_use_plots = True
 numpydoc_show_class_members = False
+numpydoc_class_members_toctree = False
 numpydoc_xref_param_type = True
 
 # Consider enabling numpydoc validation. See:
@@ -184,18 +205,10 @@ pygments_style = "sphinx"
 copybutton_prompt_text = r">>> ?|\.\.\. "
 copybutton_prompt_is_regexp = True
 
-
-html_context = {
-    "display_github": True,  # Integrate GitHub
-    "github_user": "pyansys",
-    "github_repo": "ansys-math",
-    "github_version": "main",
-    "doc_path": "doc/source",
-}
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "ansysmathdoc"
+htmlhelp_basename = "pyansysmathdoc"
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).

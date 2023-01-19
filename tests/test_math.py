@@ -1,4 +1,4 @@
-"""Test APDL Math functionality"""
+"""Test AnsMath functionality."""
 import os
 import re
 
@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 from scipy import sparse
 
-import ansys.math.core.math as amath
+import ansys.math.core.math as pymath
 
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
@@ -26,7 +26,7 @@ directory creation.
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
-    mm = amath.Math(mapdl)
+    mm = pymath.AnsMath(mapdl)
     return mm
 
 
@@ -100,7 +100,7 @@ def test_invalid_dtype(mm):
 
 def test_vec(mm):
     vec = mm.vec(10, asarray=False)
-    assert isinstance(vec, amath.AnsVec)
+    assert isinstance(vec, pymath.AnsVec)
 
     arr = mm.vec(10, asarray=True)
     assert isinstance(arr, np.ndarray)
@@ -158,7 +158,7 @@ def test_matrix(mm):
 def test_matrix_fail(mm):
     mat = sparse.random(10, 10, density=0.05, format="csr")
 
-    with pytest.raises(ValueError, match='":" is not permitted'):
+    with pytest.raises(ValueError, match="':' is not permitted"):
         mm.matrix(mat, "my:mat")
 
     with pytest.raises(TypeError):
@@ -250,8 +250,8 @@ def test_load_stiff_mass_as_array(mm, cube_solve):
 
 
 def test_stiff_mass_name(mm, cube_solve):
-    kname = amath.id_generator()
-    mname = amath.id_generator()
+    kname = pymath.id_generator()
+    mname = pymath.id_generator()
 
     k = mm.stiff(name=kname)
     m = mm.mass(name=mname)
@@ -328,7 +328,8 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
 
 
 def test_mat_from_name(mm):
-    mat0 = mm.mat(10, 10)
+    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
+    # value other than the default one.
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
 
@@ -352,7 +353,7 @@ def test_mat_invalid_dtype(mm):
 
 
 def test_mat_invalid_init(mm):
-    with pytest.raises(ValueError, match="Invalid init method"):
+    with pytest.raises(ValueError, match="Invalid initialization method"):
         mm.mat(10, 10, init="foo")
 
 
@@ -370,7 +371,7 @@ def test_solve(mm, cube_solve):
 def test_solve_alt(mm, cube_solve):
     k = mm.stiff()
     b = mm.rand(k.nrow)
-    eig_val = amath.solve(k, b)
+    eig_val = pymath.solve(k, b)
     assert eig_val.size == k.nrow
 
 
@@ -451,7 +452,9 @@ def test_solve_py(mapdl, mm, cube_solve):
     assert np.allclose(rhs0, rhs1)
 
 
-@pytest.mark.parametrize("vec_type", ["RHS", "BACK", pytest.param("dummy", marks=pytest.mark.xfail)])
+@pytest.mark.parametrize(
+    "vec_type", ["RHS", "BACK", pytest.param("dummy", marks=pytest.mark.xfail)]
+)
 def test_get_vec(mapdl, mm, cube_solve, vec_type):
     if vec_type.upper() == "BACK":
         vec = mm.get_vec(mat_id=vec_type, asarray=True)  # To test asarray arg.
@@ -508,13 +511,13 @@ def test_vec_const(mm):
 def test_set_vector(mm, vec, pname):
     ans_vec = mm.set_vec(vec, pname)
     assert np.allclose(ans_vec.asarray(), vec)
-    assert "APDLMath Vector Size" in repr(ans_vec)
+    assert "AnsMath vector size" in repr(ans_vec)
     assert "" in str(vec[0])[:4]  # output from *PRINT
 
 
 def test_set_vector_catch(mm):
 
-    with pytest.raises(ValueError, match='":" is not permitted'):
+    with pytest.raises(ValueError, match="':' is not permitted"):
         mm.set_vec(np.ones(10), "my:vec")
 
     with pytest.raises(TypeError):
@@ -533,7 +536,7 @@ def test_get_dense(mm):
 
 
 def test_zeros_vec(mm):
-    assert isinstance(mm.zeros(10), amath.AnsVec)
+    assert isinstance(mm.zeros(10), pymath.AnsVec)
 
 
 def test_get_sparse(mm):
@@ -559,7 +562,7 @@ def test_copy_complex(mm):
 
 def test_sparse_repr(mm):
     k = mm.stiff()
-    assert "Sparse APDLMath Matrix" in repr(k)
+    assert "AnsMath sparse matrix" in repr(k)
 
 
 def test_invalid_matrix_size(mm):
@@ -583,16 +586,16 @@ def test_transpose(mm):
 def test_dense(mm):
     # version check must be performed at runtime
     if mm._server_version[1] >= 4:
-        # test if a APDLMath object can treated as an array
+        # Test if an AnsMath object can treated as an array.
         array = np.random.random((5, 5))
         apdl_mat = mm.matrix(array)
-        assert isinstance(apdl_mat, amath.AnsMat)
+        assert isinstance(apdl_mat, pymath.AnsMat)
         assert np.allclose(array, apdl_mat)
 
         with pytest.raises(TypeError):
             apdl_mat = mm.matrix(array.astype(np.uint8))
 
-        assert "Dense APDLMath Matrix" in repr(apdl_mat)
+        assert "AnsMath dense matrix" in repr(apdl_mat)
 
         # check transpose
         assert np.allclose(apdl_mat.T, array.T)
