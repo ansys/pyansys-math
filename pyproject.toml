@@ -44,7 +44,7 @@ tests = [
 doc = [
     "Sphinx==5.3.0",
     "ansys-mapdl-core==0.63.4",
-    "ansys-mapdl-reader==0.52.6",
+    "ansys-mapdl-reader==0.52.7",
     "ansys-sphinx-theme==0.8.0",
     "jupyter_sphinx==0.4.0",
     "jupyterlab==3.5.2",
