@@ -234,7 +234,7 @@ jobs:
           if compgen -G './logs-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
 
-  doc-build:
+  doc_build:
     name: Doc building
     runs-on: ubuntu-latest
     needs: [doc-style]
