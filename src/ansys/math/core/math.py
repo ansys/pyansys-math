@@ -777,7 +777,7 @@ class AnsMath:
 
         Returns
         -------
-        ansys.mapdl.math.AnsVec
+        AnsVec
             AnsMath vector instance generated from the pushed vector.
 
         Examples
@@ -846,7 +846,7 @@ class AnsMath:
 
         Parameters
         ----------
-        mat : ansys.AnsMat
+        mat : AnsMat
             The array to compress.
         thresh : float, optional
             Numerical threshold value used to manage the compression.
@@ -877,7 +877,7 @@ class AnsMath:
 
         Parameters
         ----------
-        mat : ansys.mapdl.core.math.AnsMat
+        mat : AnsMat
             The array to apply Modified Gram-Schmidt algorithm to.
         thresh : float, optional
             Numerical threshold value used to manage the compression.
@@ -898,7 +898,7 @@ class AnsMath:
 
         Parameters
         ----------
-        mat : ansys.mapdl.core.math.AnsMat
+        mat : AnsMat
             The dense matrix to convert to a sparse matrix.
         thresh : float, optional
             Numerical threshold value used to sparsify. The default
@@ -914,11 +914,11 @@ class AnsMath:
         ----------
         nev : int
             Number of eigenvalues to compute.
-        k : ansys.AnsMat
-            An array representing the operation ``A * x`` where A is a
+        k : AnsMat
+            AnsMath matrix representing the operation ``A * x`` where A is a
             square matrix.
-        m : ansys.AnsMat, optional
-            An array representing the operation ``M * x`` for the
+        m : AnsMat, optional
+            AnsMath matrix representing the operation ``M * x`` for the
             generalized eigenvalue problem:
 
             ``K * x = M * x``
@@ -964,10 +964,10 @@ class AnsMath:
 
         Parameters
         ----------
-        vec_a : ansys.mapdl.math.AnsVec
+        vec_a : AnsVec
             AnsMath vector.
 
-        vec_b : ansys.mapdl.math.AnsVec
+        vec_b : AnsVec
             AnsMath vector.
 
         Returns
@@ -988,9 +988,9 @@ class AnsMath:
 
         Parameters
         ----------
-        obj1 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
+        obj1 : AnsVec or AnsMat
             AnsMath object.
-        obj2 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
+        obj2 : AnsVec or AnsMat
             AnsMath object.
 
         Returns
@@ -1014,9 +1014,9 @@ class AnsMath:
 
         Parameters
         ----------
-        obj1 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
+        obj1 : AnsVec or AnsMat
             AnsMath object.
-        obj2 : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
+        obj2 : AnsVec or AnsMat
             AnsMath object.
 
         Returns
@@ -1040,7 +1040,7 @@ class AnsMath:
 
         Parameters
         ----------
-        mat : ansys.mapdl.math.AnsMat
+        mat : AnsMat
             AnsMath matrix.
         algo : str, optional
             Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
@@ -1053,7 +1053,7 @@ class AnsMath:
 
         Returns
         -------
-        ansys.mapdl.core.math.AnsSolver
+        AnsSolver
             Ansys Solver object.
 
 
@@ -1076,7 +1076,7 @@ class AnsMath:
 
         Parameters
         ----------
-        obj : ansys.mapdl.math.AnsMat or ansys.mapdl.math.AnsVec
+        obj : AnsMat or AnsVec
             AnsMath object to compute the norm from.
         order : str
             Mathematical norm to use.  One of:
@@ -1419,7 +1419,7 @@ class AnsVec(AnsMathObj):
 
         Parameters
         ----------
-        vec : ansys.mapdl.math.AnsVec
+        vec : AnsVec
             AnsMath vector.
 
         Returns
@@ -1457,7 +1457,7 @@ class AnsVec(AnsMathObj):
 
         Parameters
         ----------
-        vec : ansys.mapdl.math.AnsVec
+        vec : AnsVec
             AnsMath vector.
 
         Returns
@@ -1580,7 +1580,7 @@ class AnsMat(AnsMathObj):
 
         Parameters
         ----------
-        obj : ansys.mapdl.math.AnsVec or ansys.mapdl.math.AnsMat
+        obj : AnsVec or AnsMat
             AnsMath object.
 
         Returns
@@ -1745,8 +1745,8 @@ class AnsSolver(AnsMathObj):
 
         Parameters
         ----------
-        mat : ansys.math.core.math.AnsMat
-            An ansys.mapdl.math matrix.
+        mat : AnsMat
+            AnsMath matrix.
         algo : str, optional
             Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
             The default is ``"LAPACK" for dense matrices and ``"DSP"`` for
@@ -1790,9 +1790,9 @@ class AnsSolver(AnsMathObj):
 
         Parameters
         ----------
-        b : ansys.mapdl.math.AnsVec
+        b : AnsVec
             AnsMath vector.
-        x : ansys.mapdl.math.AnsVec, optional
+        x : AnsVec, optional
             AnsMath vector to place the solution.
 
         Returns
@@ -1822,7 +1822,7 @@ def rand(obj):
 
     Parameters
     ----------
-    obj : ansys.math.core.math.AnsMath object
+    obj : AnsMath object
         Math object.
 
     Examples
@@ -1849,10 +1849,10 @@ def dot(vec1, vec2) -> float:
 
     Parameters
     ----------
-    vec1 : ansys.mapdl.math.AnsVec
+    vec1 : AnsVec
         First AnsMath vector.
 
-    vec1 : ansys.mapdl.math.AnsVec
+    vec1 : AnsVec
         Second AnsMath vector.
 
     Returns
