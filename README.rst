@@ -31,9 +31,9 @@ PyAnsys Math
 
 
 PyAnsys Math is a Python repository holding Ansys mathematical libraries.
-To use them, you must have a local installation of Ansys.
+To use them, you must have a local installation of Ansys Mechanical APDL.
 
-For more information on getting a licensed copy of Ansys, visit
+For more information on getting a licensed copy of Ansys Mechanical APDL, visit
 the `Ansys web site <ansys_>` .
 
 
