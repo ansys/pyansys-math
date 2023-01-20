@@ -1,5 +1,5 @@
 """
-.. _ref_ansys-math_basic:
+.. _ref_pyansys-math_basic:
 
 PyAnsys Math basic operations
 -----------------------------
