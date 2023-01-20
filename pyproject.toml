@@ -65,7 +65,7 @@ doc = [
 name = "ansys.math.core"
 
 [project.urls]
-Source = "https://github.com/pyansys/pyansys-math"
+Source = "https://github.com/pyansys/ansys-math"
 
 [tool.black]
 line-length = 100
