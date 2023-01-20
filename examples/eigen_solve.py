@@ -167,7 +167,7 @@ plt.yscale("log")
 plt.ylim([10e-13, 10e-7])
 plt.xlabel("Frequency #")
 plt.ylabel("Errors (%)")
-ax.bar(x, pymath_acc, label="PyAnsys Math Results")
+ax.bar(x, pymath_acc, label="PyAnsys Math Results", color="orange")
 plt.show()
 
 ###############################################################################

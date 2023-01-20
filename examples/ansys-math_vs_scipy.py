@@ -136,7 +136,7 @@ pm = pm + pm.transpose() - pmd
 
 
 ###############################################################################
-# Plot Matrices
+# Plot matrices
 #
 fig, (ax1, ax2) = plt.subplots(1, 2)
 fig.suptitle("K and M Matrix profiles")

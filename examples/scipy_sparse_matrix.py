@@ -1,9 +1,9 @@
 """
-AnsMath Sparse Matrices and SciPy Sparse Matrices
+AnsMath Sparse matrices and SciPy Sparse matrices
 -------------------------------------------------
 
 This tutorial will show how to get AnsMath sparse matrices into SciPy
-Sparse Matrices.
+Sparse matrices.
 
 """
 from ansys.mapdl.core.examples import vmfiles
@@ -25,7 +25,9 @@ k
 # Copy this AnsMath sparse matrix to a SciPy CSR matrix. Then, plot the
 # graph of the sparse matrix.
 pk = k.asarray()
-plt.spy(pk)
+plt.spy(pk, color="orange")
+plt.title("AnsMath sparse matrix")
+plt.show()
 
 
 ################################################################################

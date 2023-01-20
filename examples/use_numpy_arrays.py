@@ -1,5 +1,5 @@
 """
-Manipulate AnsMath vectors or dense matrices as NumPy Arrays
+Manipulate AnsMath vectors or dense matrices as NumPy arrays
 ------------------------------------------------------------
 This example demonstrates how to use NumPy arrays to exchange data between PyAnsys Math
 and Python.
@@ -8,6 +8,7 @@ and Python.
     This example requires Ansys 2021R2.
 
 """
+import matplotlib.pyplot as plt
 import numpy as np
 
 import ansys.math.core.math as pymath
@@ -17,7 +18,7 @@ mm = pymath.AnsMath()
 
 
 ###############################################################################
-# Convert an AnsMath Vector into an NumPy Array
+# Convert an AnsMath vector into an NumPy array.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # First, allocate an AnsMath vector with 10 doubles
 
@@ -25,7 +26,7 @@ apdl_vec = mm.ones(10)
 print(apdl_vec)
 
 ###############################################################################
-# Then create an numpy array from this AnsMath vector.
+# Then create an NumPy array from this AnsMath vector.
 #
 # Note that these are two separate objects: memory is
 # duplicated. Modifying one object does not modify its clone.
@@ -34,15 +35,15 @@ print(pv)
 
 
 ###############################################################################
-# You can then manipulate this numpy array with all existing numpy
-# features
+# You can then manipulate this NumPy array with all existing NumPy
+# features.
 pv = (pv + 1) ** 2
 print(pv)
 
 
 ###############################################################################
 # Alternatively, the AnsMath object can be operated on directly with
-# numpy with the numpy methods.
+# NumPy with the Numpy methods.
 print(np.max(apdl_vec))
 print(np.linalg.norm(apdl_vec))
 
@@ -54,39 +55,43 @@ print(np.linalg.norm(apdl_vec))
 print(apdl_vec.norm(), np.linalg.norm(apdl_vec))
 
 ###############################################################################
-# Copy a NumPy Array to an AnsMath vector
+# Copy a NumPy array to an AnsMath vector.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # You can push back any NumPy vector or 2D array to PyAnsys Math. This
 # creates a new AnsMath vector, which in this case is named ``'NewVec'``.
 mm.set_vec(pv, "NewVec")
-
-# Verify this vector exists.
-print(mm)
+print(mm.status())
 
 
 ###############################################################################
-# Create a Python handle to this vector by specifying its name
+# Create a Python handle to this vector by specifying its name.
 v2 = mm.vec(name="NewVec")
 print(v2)
 
 
 ###############################################################################
-# Dense Numpy Arrays
-# ~~~~~~~~~~~~~~~~~~
+# Dense Numpy arrays.
+# ~~~~~~~~~~~~~~~~~~~
 # The same features apply to dense APDL matrices and NumPy arrays.
 #
-# Allocate an AnsMath dense matrix and convert it to a NumPy
-# array.
+# Allocate an AnsMath dense matrix
 apdl_mat = mm.rand(3, 3)
+plt.imshow(apdl_mat, cmap="YlOrBr")
+plt.colorbar()
+plt.title("AnsMath dense matrix")
+plt.show()
+
+###############################################################################
+# Convert it to a NumPy array.
+
 np_arr = apdl_mat.asarray()
 
 assert np.allclose(apdl_mat, np_arr)
 print(apdl_mat)
 print(np_arr)
 
-
 ###############################################################################
-# You can load numpy array to APDL with the matrix method
+# You can load NumPy array to APDL with the matrix method.
 np_rand = np.random.random((4, 4))
 ans_mat = mm.matrix(np_rand)
 
@@ -95,7 +100,7 @@ print(ans_mat.id)
 
 
 ###############################################################################
-# Load this matrix from APDL and verify it is identical
+# Load this matrix from APDL and verify it is identical.
 from_ans = ans_mat.asarray()
 print(np.allclose(from_ans, np_rand))
 
