@@ -4,8 +4,8 @@
 .. #PyAnsys Math related
 .. _pymath_docs: https://math.docs.pyansys.com/
 .. _pymath_dev_docs: https://math.docs.pyansys.com/dev/
-.. _pymath_issues: https://github.com/pyansys/ansys-math/issues
-.. _pymath_github: https://github.com/pyansys/ansys-math.git
+.. _pymath_issues: https://github.com/pyansys/pyansys-math/issues
+.. _pymath_github: https://github.com/pyansys/pyansys-math.git
 
 .. #MAPDL related
 .. _mapdl_tech_show: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v222/en/wb_wbtec/wb_wbtec.html

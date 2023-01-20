@@ -15,8 +15,8 @@ Cloning the repository
 
 Run this code to clone and install the latest version of PyAnsys Math in development mode::
 
-    git clone https://github.com/pyansys/ansys-math
-    cd ansys-math
+    git clone https://github.com/pyansys/pyansys-math
+    cd pyansys-math
     python -m pip install --upgrade pip
     pip install -e .
 
