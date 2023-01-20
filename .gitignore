@@ -40,6 +40,7 @@ var/
 test-output.xml
 .pytest_cache/
 tests/__pycache__
+coverage.xml
 
 \#*
 .\#*
