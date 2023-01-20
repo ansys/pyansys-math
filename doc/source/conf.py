@@ -88,6 +88,7 @@ extensions = [
     "jupyter_sphinx",
     "notfound.extension",  # for the not found page.
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
     "numpydoc",
     "sphinx.ext.coverage",
