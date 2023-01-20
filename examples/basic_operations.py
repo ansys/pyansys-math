@@ -63,7 +63,7 @@ z.norm()
 ###############################################################################
 # Methods
 # ~~~~~~~
-# Alternatively you can use methods, following the numpy
+# Alternatively you can use methods, following the NumPy
 # standards. Available methods are:
 #
 # - ``mm.add()``
@@ -197,7 +197,7 @@ print(np.max(apdl_mat))
 
 
 ###############################################################################
-# This works for most numpy operations, but keep in mind that
+# This works for most NumPy operations, but keep in mind that
 # operations that are supported within PyAnsys Math (such as adding or
 # multiplying arrays) compute much faster because the data is not copied.
 

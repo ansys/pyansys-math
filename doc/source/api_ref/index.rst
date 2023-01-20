@@ -7,5 +7,8 @@ API reference
 This section provides an overview of the public PyAnsys Math classes,
 functions, and attributes.
 
-.. include:: math.rst
-   :start-line: 5
+
+.. toctree::
+   :maxdepth: 2
+   
+   math.rst

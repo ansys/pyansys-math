@@ -25,7 +25,7 @@ b = mm.rand(dim)
 x = mm.zeros(dim)
 
 ###############################################################################
-# Copy the matrices as numpy arrays before they are modified by
+# Copy the matrices as NumPy arrays before they are modified by
 # factorization call
 #
 a_py = a.asarray()
@@ -49,9 +49,9 @@ mm.norm(x)
 
 
 ###############################################################################
-# Solve the solution using numpy
+# Solve the solution using NumPy
 #
-print(f"Solving a ({dim} x {dim}) dense linear system using numpy...")
+print(f"Solving a ({dim} x {dim}) dense linear system using NumPy...")
 
 t1 = time.time()
 x_py = npl.solve(a_py, b_py)
@@ -73,7 +73,7 @@ ax.bar(x, y, color="orange")
 plt.show()
 
 ###############################################################################
-# Norm of the numpy Solution
+# Norm of the NumPy Solution
 #
 npl.norm(x_py)
 

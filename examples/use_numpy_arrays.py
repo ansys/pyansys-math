@@ -18,7 +18,7 @@ mm = pymath.AnsMath()
 
 
 ###############################################################################
-# Convert an AnsMath Vector into an NumPy array.
+# Convert an AnsMath vector into an NumPy array.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # First, allocate an AnsMath vector with 10 doubles
 

@@ -50,7 +50,7 @@ plt.title("AnsMath sparse matrix")
 plt.show()
 
 ###############################################################################
-# Get a copy of the K Sparse Matrix as a Numpy Array
+# Get a copy of the K Sparse Matrix as a Numpy array
 #
 ky = k.asarray()
 ky
@@ -64,7 +64,7 @@ b = mm.rhs(fname="PRSMEMB.full", name="B")
 b.norm()
 
 ###############################################################################
-# Get a copy of the load vector as a numpy array
+# Get a copy of the load vector as a NumPy array
 #
 by = b.asarray()
 
