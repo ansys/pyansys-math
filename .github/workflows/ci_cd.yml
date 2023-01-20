@@ -172,13 +172,6 @@ jobs:
           name: centos-${{ matrix.mapdl-version }}-remote.xml
           path: ./centos-${{ matrix.mapdl-version }}-remote.xml
 
-      - name: "Upload wheel and binaries"
-        uses: actions/upload-artifact@v3
-        with:
-          name: Ansys-Math-packages
-          path: dist/
-          retention-days: 7
-
       - name: "Display files structure"
         if: always()
         run: |
