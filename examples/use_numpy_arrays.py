@@ -8,8 +8,8 @@ and Python.
     This example requires Ansys 2021R2.
 
 """
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 import ansys.math.core.math as pymath
 
@@ -74,11 +74,11 @@ print(v2)
 # ~~~~~~~~~~~~~~~~~~~
 # The same features apply to dense APDL matrices and NumPy arrays.
 #
-# Allocate an AnsMath dense matrix 
+# Allocate an AnsMath dense matrix
 apdl_mat = mm.rand(3, 3)
-plt.imshow(apdl_mat, cmap='YlOrBr')
+plt.imshow(apdl_mat, cmap="YlOrBr")
 plt.colorbar()
-plt.title('AnsMath dense matrix')
+plt.title("AnsMath dense matrix")
 plt.show()
 
 ###############################################################################

@@ -7,9 +7,9 @@ based on sparse or dense matrices.
 
 """
 from ansys.mapdl.core.examples import vmfiles
+import matplotlib.pyplot as plt
 
 import ansys.math.core.math as pymath
-import matplotlib.pyplot as plt
 
 # Start PyAnsys Math.
 mm = pymath.AnsMath()
@@ -38,15 +38,15 @@ mm._mapdl.list_files()
 #
 # Printout the dimensions of this Sparse Matrix
 #
-k = mm.stiff(fname="PRSMEMB.full", name='K')
+k = mm.stiff(fname="PRSMEMB.full", name="K")
 k
 
 ################################################################################
 # Copy this AnsMath sparse matrix to a SciPy CSR matrix. Then, plot the
 # graph of the sparse matrix.
 pk = k.asarray()
-plt.spy(pk, color='orange')
-plt.title('AnsMath sparse matrix')
+plt.spy(pk, color="orange")
+plt.title("AnsMath sparse matrix")
 plt.show()
 
 ###############################################################################
@@ -60,7 +60,7 @@ ky
 #
 # Printout the norm of this vector.
 #
-b = mm.rhs(fname="PRSMEMB.full", name='B')
+b = mm.rhs(fname="PRSMEMB.full", name="B")
 b.norm()
 
 ###############################################################################

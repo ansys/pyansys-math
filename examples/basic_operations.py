@@ -10,13 +10,10 @@ workspace.
 
 """
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 import ansys.math.core.math as pymath
-
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d  # Fonction pour la 3D
-import numpy as np
 
 # Start PyAnsys Math as a service.
 mm = pymath.AnsMath()
@@ -38,9 +35,9 @@ print(w)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-origin = np.array([[0, 0],[0, 0]])
+origin = np.array([[0, 0], [0, 0]])
 plt.title("Vectors V and W")
-plt.quiver(*origin, v, w, angles='xy', scale_units='xy', scale=1,  color=['orange','gray'])
+plt.quiver(*origin, v, w, angles="xy", scale_units="xy", scale=1, color=["orange", "gray"])
 plt.xlim(-1.5, 1.5)
 plt.ylim(-1.5, 1.5)
 plt.show()

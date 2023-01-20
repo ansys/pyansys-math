@@ -7,13 +7,10 @@ This example shows how to use PyAnsys Math to solve a dense matrix linear system
 
 import time
 
+import matplotlib.pyplot as plt
 import numpy.linalg as npl
 
 import ansys.math.core.math as pymath
-
-import matplotlib.pyplot as plt
-
-import numpy as np
 
 # Start PyAnsys Math.
 mm = pymath.AnsMath()
@@ -63,16 +60,16 @@ numpy_time = t2 - t1
 print(f"Elapsed time to solve the linear system using NumPy: {numpy_time} seconds")
 
 ###############################################################################
-# Plot the comparision of the elapsed time to solve the linear system.
+# Plot the comparison of the elapsed time to solve the linear system.
 #
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
-x = ['PyAnsys Math', 'NumPy']
+x = ["PyAnsys Math", "NumPy"]
 y = [pymath_time, numpy_time]
 plt.title("Elapsed time to solve the linear system")
-plt.ylim([0,numpy_time+1])
+plt.ylim([0, numpy_time + 1])
 plt.ylabel("Elapsed time (s)")
-ax.bar(x, y, color='orange')
+ax.bar(x, y, color="orange")
 plt.show()
 
 ###############################################################################
