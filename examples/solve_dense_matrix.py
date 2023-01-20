@@ -11,6 +11,10 @@ import numpy.linalg as npl
 
 import ansys.math.core.math as pymath
 
+import matplotlib.pyplot as plt
+
+import numpy as np
+
 # Start PyAnsys Math.
 mm = pymath.AnsMath()
 
@@ -39,7 +43,8 @@ t1 = time.time()
 s = mm.factorize(a)
 x = s.solve(b, x)
 t2 = time.time()
-print(f"Elapsed time to solve the linear system using PyAnsys Math: {t2 - t1} seconds")
+pymath_time = t2 - t1
+print(f"Elapsed time to solve the linear system using PyAnsys Math: {pymath_time} seconds")
 
 ###############################################################################
 # Get the norm of the PyAnsys Math solution.
@@ -54,7 +59,21 @@ print(f"Solving a ({dim} x {dim}) dense linear system using numpy...")
 t1 = time.time()
 x_py = npl.solve(a_py, b_py)
 t2 = time.time()
-print(f"Elapsed time to solve the linear system using numpy: {t2 - t1} seconds")
+numpy_time = t2 - t1
+print(f"Elapsed time to solve the linear system using NumPy: {numpy_time} seconds")
+
+###############################################################################
+# Plot the comparision of the elapsed time to solve the linear system.
+#
+fig = plt.figure(figsize=(12, 10))
+ax = plt.axes()
+x = ['PyAnsys Math', 'NumPy']
+y = [pymath_time, numpy_time]
+plt.title("Elapsed time to solve the linear system")
+plt.ylim([0,numpy_time+1])
+plt.ylabel("Elapsed time (s)")
+ax.bar(x, y, color='orange')
+plt.show()
 
 ###############################################################################
 # Norm of the numpy Solution

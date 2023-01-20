@@ -9,6 +9,7 @@ based on sparse or dense matrices.
 from ansys.mapdl.core.examples import vmfiles
 
 import ansys.math.core.math as pymath
+import matplotlib.pyplot as plt
 
 # Start PyAnsys Math.
 mm = pymath.AnsMath()
@@ -19,7 +20,7 @@ mm = pymath.AnsMath()
 # First, run a MAPDL solve to create a .full file
 # We use a model from the official verification manual.
 #
-# After a solve command, the full contains the assemblied stiffness
+# After a solve command, the ``FULL`` file contains the assemblied stiffness
 # matrix, mass matrix, and the load vector.
 #
 out = mm._mapdl.input(vmfiles["vm153"])
@@ -37,8 +38,16 @@ mm._mapdl.list_files()
 #
 # Printout the dimensions of this Sparse Matrix
 #
-k = mm.stiff(fname="PRSMEMB.full")
+k = mm.stiff(fname="PRSMEMB.full", name='K')
 k
+
+################################################################################
+# Copy this AnsMath sparse matrix to a SciPy CSR matrix. Then, plot the
+# graph of the sparse matrix.
+pk = k.asarray()
+plt.spy(pk, color='orange')
+plt.title('AnsMath sparse matrix')
+plt.show()
 
 ###############################################################################
 # Get a copy of the K Sparse Matrix as a Numpy Array
@@ -51,7 +60,7 @@ ky
 #
 # Printout the norm of this vector.
 #
-b = mm.rhs(fname="PRSMEMB.full")
+b = mm.rhs(fname="PRSMEMB.full", name='B')
 b.norm()
 
 ###############################################################################

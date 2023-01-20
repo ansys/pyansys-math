@@ -14,6 +14,10 @@ import numpy as np
 
 import ansys.math.core.math as pymath
 
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d  # Fonction pour la 3D
+import numpy as np
+
 # Start PyAnsys Math as a service.
 mm = pymath.AnsMath()
 
@@ -24,9 +28,22 @@ mm = pymath.AnsMath()
 # ones, and $\vec{w}$ is filled with random values.
 #
 
-v = mm.ones(5)
-w = mm.rand(5)
+v = mm.ones(2)
+w = mm.rand(2)
+print(v)
 print(w)
+
+###############################################################################
+# Plot the created vectors.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+origin = np.array([[0, 0],[0, 0]])
+plt.title("Vectors V and W")
+plt.quiver(*origin, v, w, angles='xy', scale_units='xy', scale=1,  color=['orange','gray'])
+plt.xlim(-1.5, 1.5)
+plt.ylim(-1.5, 1.5)
+plt.show()
 
 
 ###############################################################################
@@ -52,12 +69,12 @@ z.norm()
 # Alternatively you can use methods, following the numpy
 # standards. Available methods are:
 #
-# - `mm.add()`
-# - `mm.subtract()`
-# - `mm.dot()`
+# - ``mm.add()``
+# - ``mm.subtract()``
+# - ``mm.dot()``
 #
 # Equivalent operator:
-# `z = v + w`
+# ``z = v + w``
 #
 
 z = mm.add(v, w)
@@ -67,7 +84,7 @@ z.norm()
 # Subtraction
 #
 # Equivalent operator:
-# z = v - w
+# ``z = v - w``
 #
 
 z = mm.subtract(v, w)
@@ -123,7 +140,7 @@ m3 *= 2
 print(m3)
 
 ###############################################################################
-# ***Transpose*** a Matrix
+# **Transpose** a Matrix
 
 m4 = m3.T
 print(m4)
@@ -147,14 +164,15 @@ print(mw)
 # using the `__repr__` method by simply typing out the variable.
 #
 # Here is an example with an AnsMath matrix.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 
 type(m1)
 print(m1)
 m1
 
+###############################################################################
 # Here is an example with an AnsMath vector.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 
 type(w)
 print(w)

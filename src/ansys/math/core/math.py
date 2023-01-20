@@ -1044,7 +1044,7 @@ class AnsMath:
             AnsMath matrix.
         algo : str, optional
             Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
-            The default is ``"LAPACK" for dense matrices and ``"DSP"`` for
+            The default is ``"LAPACK"`` for dense matrices and ``"DSP"`` for
             sparse matrices.
         inplace : bool, optional
             Whether the factorization is performed on the input matrix
@@ -1749,7 +1749,7 @@ class AnsSolver(AnsMathObj):
             AnsMath matrix.
         algo : str, optional
             Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
-            The default is ``"LAPACK" for dense matrices and ``"DSP"`` for
+            The default is ``"LAPACK"`` for dense matrices and ``"DSP"`` for
             sparse matrices.
         inplace : bool, optional
             Whether the factorization is performed on the input matrix
