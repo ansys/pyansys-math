@@ -8,10 +8,10 @@ PyAnsys Math
    :alt: PyAnsys
 
 .. |pypi| image:: https://img.shields.io/pypi/v/pyansys-math-core.svg?logo=python&logoColor=white
-   :target: https://pypi.org/project/pyansys-math-core/
+   :target: https://pypi.org/project/ansys-math-core/
 
 .. |PyPIact| image:: https://img.shields.io/pypi/dm/pyansys-math-core.svg?label=PyPI%20downloads
-   :target: https://pypi.org/project/pyansys-math-core/
+   :target: https://pypi.org/project/ansys-math-core/
 
 .. |codecov| image:: https://codecov.io/gh/pyansys/pyansys-math/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/pyansys/pyansys-math
