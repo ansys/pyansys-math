@@ -53,7 +53,7 @@ cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 
 # specify the location of your github repo
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/ansys-math",
+    "github_url": "https://github.com/pyansys/pyansys-math",
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "collapse_navigation": True,
@@ -64,7 +64,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "Support",
-            "url": "https://github.com/pyansys/ansys-math/discussions",
+            "url": "https://github.com/pyansys/pyansys-math/discussions",
             "icon": "fa fa-comment fa-fw",
         },
     ],
@@ -78,7 +78,7 @@ html_theme_options = {
 html_context = {
     "display_github": True,  # Integrate GitHub
     "github_user": "pyansys",
-    "github_repo": "ansys-math",
+    "github_repo": "pyansys-math",
     "github_version": "main",
     "doc_path": "doc/source",
 }
