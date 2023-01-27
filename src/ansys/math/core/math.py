@@ -8,7 +8,6 @@ from warnings import warn
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
-from ansys.mapdl.core.check_version import VersionError, meets_version, version_requires
 from ansys.mapdl.core.common_grpc import (
     ANSYS_VALUE_TYPE,
     DEFAULT_CHUNKSIZE,
@@ -18,6 +17,9 @@ from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
 from ansys.mapdl.core.launcher import launch_mapdl
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
+from ansys.tools.versioning import requires_version
+from ansys.tools.versioning.exceptions import VersionError
+from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
 
 MYCTYPE = {
@@ -1174,7 +1176,7 @@ class AnsMath:
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
 
-    @version_requires((0, 4, 0))
+    @requires_version((0, 4, 0))
     def _send_dense(self, mname, arr, dtype, chunk_size):
         """Send a dense NumPy array/matrix to MAPDL."""
         if dtype is not None:
@@ -1427,7 +1429,7 @@ class AnsVec(AnsMathObj):
         AnsVec
             Hadamard product between this vector and the other vector.
         """
-        if not meets_version(self._mapdl._server_version, (0, 4, 0)):  # pragma: no cover
+        if not server_meets_version(self._mapdl._server_version, (0, 4, 0)):  # pragma: no cover
             raise VersionError("``AnsVec`` requires MAPDL version 2021 R2.")
 
         if not isinstance(vec, AnsVec):
@@ -1530,8 +1532,12 @@ class AnsMat(AnsMathObj):
 
         info = self._mapdl._data_info(self.id)
 
-        if meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
-            return info.mattype in [0, 1, 2]  # [UPPER, LOWER, DIAG] respectively
+        if server_meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
+            return info.mattype in [
+                0,
+                1,
+                2,
+            ]  # [UPPER, LOWER, DIAG] respectively
 
         warn(
             "Call to ``sym`` method cannot evaluate if this matrix is symmetric "

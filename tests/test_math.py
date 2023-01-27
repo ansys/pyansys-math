@@ -2,10 +2,11 @@
 import os
 import re
 
-from ansys.mapdl.core.check_version import VersionError, meets_version
 from ansys.mapdl.core.errors import ANSYSDataTypeError
 from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
+from ansys.tools.versioning.exceptions import VersionError
+from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
 import pytest
 from scipy import sparse
@@ -688,7 +689,7 @@ def test_mult(mapdl, mm):
 
     rand_ = np.random.rand(100, 100)
 
-    if not meets_version(mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mapdl._server_version, (0, 4, 0)):
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -709,7 +710,7 @@ def test__parm(mm):
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not meets_version(mm._mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mm._mapdl._server_version, (0, 4, 0)):
 
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
