@@ -33,8 +33,9 @@ dependencies = [
 
 [project.optional-dependencies]
 tests = [
-    "ansys-mapdl-core==0.63.4",
+    "ansys-mapdl-core==0.64.0",
     "scipy==1.10.0",
+    "pyansys-tools-report==0.5.0",
     "pytest==7.2.1",
     "pytest-cov==4.0.0",
     "pytest-rerunfailures==11.0",
@@ -43,7 +44,7 @@ tests = [
 ]
 doc = [
     "Sphinx==5.3.0",
-    "ansys-mapdl-core==0.63.4",
+    "ansys-mapdl-core==0.64.0",
     "ansys-mapdl-reader==0.52.7",
     "ansys-sphinx-theme==0.8.1",
     "jupyter_sphinx==0.4.0",
