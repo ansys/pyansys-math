@@ -251,7 +251,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update 
-          sudo apt install pandoc xvfb
+          sudo apt install pandoc
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -320,7 +320,6 @@ jobs:
       - name: "Run Ansys documentation building action"
         uses: pyansys/actions/doc-build@v3
         with:
-          requires-xvfb: true
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           checkout: false
           skip-install: true
