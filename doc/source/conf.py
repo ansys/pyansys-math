@@ -41,19 +41,20 @@ project = "ansys-math-core"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS, Inc."
 release = version = "0.1.dev0"
+switcher_version = get_version_match(__version__)
+
+cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
+"""The canonical name of the webpage hosting the documentation."""
 
 # Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyAnsys Math"
 
-cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
-"""The canonical name of the webpage hosting the documentation."""
-
-
 # specify the location of your github repo
 html_theme_options = {
     "github_url": "https://github.com/pyansys/pyansys-math",
+    "check_switcher": False,
     "show_prev_next": False,
     "show_breadcrumbs": True,
     "collapse_navigation": True,
@@ -70,7 +71,7 @@ html_theme_options = {
     ],
     "switcher": {
         "json_url": f"https://{cname}/versions.json",
-        "version_match": get_version_match(__version__),
+        "version_match": switcher_version,
     },
 }
 
