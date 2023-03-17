@@ -30,6 +30,7 @@ dependencies = [
     "ansys-mapdl-core>=0.64.0",
     "pyansys-tools-versioning>=0.3.3",
     "numpy>=1.14.0",
+    "importlib-metadata>=4.0,<5; python_version<='3.8'",
 ]
 
 [project.optional-dependencies]
