@@ -52,7 +52,7 @@ jobs:
 
 
   smoke-tests:
-    name: Build and Smoke tests (Linux)
+    name: Build and Smoke tests
     runs-on: ${{ matrix.os }}
     needs: [code-style]
     strategy:
