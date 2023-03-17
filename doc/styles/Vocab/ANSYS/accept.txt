@@ -3,7 +3,7 @@ Ansys
 ansys
 AnsMath
 PyAnsys Math
-dof
+DOF
 eigenfrequencies
 eigenmodes
 Eigenproblem
