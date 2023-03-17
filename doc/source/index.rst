@@ -20,9 +20,9 @@ eigenproblems.
 
 Python and MATLAB eigensolvers are based on the publicly available
 LAPACK libraries and provide reasonable solve time for eigenproblems
-with relatively small degrees of freedom (dof), perhaps 100,000.
+with relatively small degrees of freedom (DOF), perhaps 100,000.
 However, Ansys solvers are designed for the scale of hundreds of
-millions of dof, providing a variety of situations where you can
+millions of DOF, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning
 an entirely new language because PyAnsys Math is written in a similar manner
