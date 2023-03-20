@@ -64,7 +64,7 @@ print(pk.indptr[:10])
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Create an AnsMath sparse matrix from a SciPy sparse CSR matrix.
 # Then, transfer the SciPy CSR matrix back to PyAnsys Math.
-# 
+#
 # While this code uses a matrix that was originally within MAPDL, you can
 # load any CSR matrix into PyAnsys Math.
 

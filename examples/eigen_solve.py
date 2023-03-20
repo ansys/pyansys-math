@@ -133,6 +133,7 @@ print(res)
 ###############################################################################
 # Compute this residual for all eigenmodes
 
+
 def get_res(i):
     """Compute the residual for a given eigenmode."""
     # Eigenfrequency (Hz)

@@ -1780,7 +1780,9 @@ class AnsSolver(AnsMathObj):
             copy_mat = mat.copy()
             mat_id = copy_mat.id
         else:
-            self._mapdl._log.info("Performing factorization in place. This changes the input array.")
+            self._mapdl._log.info(
+                "Performing factorization in place. This changes the input array."
+            )
 
         if not algo:
             if mat.type == ObjType.DMAT:

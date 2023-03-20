@@ -19,7 +19,6 @@ This example shows how to perform these tasks:
 # Perform required imports.
 
 import math
-
 import time
 
 from ansys.mapdl.core import examples

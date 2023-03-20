@@ -182,7 +182,7 @@ w
 # Regardless of the underlying AnsMath object type, you are generally
 # able to perform most NumPy or SciPy operations on these arrays. You
 # can do this in one of two ways.
-# 
+#
 # You can convert a matrix to a NumPy array.
 
 apdl_mat = mm.rand(5, 5)
