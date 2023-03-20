@@ -30,8 +30,8 @@ PyAnsys Math
 PyAnsys Math is a Python repository holding Ansys mathematical libraries.
 To use them, you must have a local installation of Ansys Mechanical APDL.
 
-For more information on getting a licensed copy of Ansys Mechanical APDL, visit
-the `Ansys web site <https://www.ansys.com/>`_ .
+For information on getting a licensed copy of Ansys Mechanical APDL, visit
+the `Ansys web site <https://www.ansys.com/>`_.
 
 
 
@@ -43,12 +43,15 @@ For users
 The ``ansys.math.core`` package currently supports Python 3.7 through
 Python 3.10 on Windows, Mac OS, and Linux.
 
+Install the latest package for use with this command:
+
 .. code::
 
    pip install ansys-math-core
 
-Alternatively, install the latest from 
-`PyAnsys Math GitHub <https://github.com/pyansys/pyansys-math.git>`_ via:
+Alternatively, install the latest
+`PyAnsys Math GitHub <https://github.com/pyansys/pyansys-math.git>`_ package
+with this command:
 
 .. code::
 
@@ -58,7 +61,7 @@ Alternatively, install the latest from
 
 For developers
 ~~~~~~~~~~~~~~
-For a local *development* version, install with:
+For a local *development* version, install the latest package with:
 
 .. code::
 
@@ -66,8 +69,9 @@ For a local *development* version, install with:
    cd pyansys-math
    pip install -e .
 
-This allows you to install and edit the ``ansys-math-core`` module locally.
-The changes that you make are reflected in your setup
+
+Installing the development version allows you to edit the ``ansys-math-core``
+package locally. The changes that you make are reflected in your setup
 after restarting the Python kernel.
 
 
@@ -85,8 +89,8 @@ Check that you can start PyAnsys Math from Python by running this code:
     print(mm)
 
 
-If you see a response from the server, congratulations. You're ready
-to start using PyAnsys Math as a service.
+If you see a response from the server, you can start using PyAnsys Math
+as a service.
 
 Ansys software requirements
 ---------------------------

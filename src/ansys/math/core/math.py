@@ -103,13 +103,13 @@ class AnsMath:
     >>> import ansys.math.core.math as pymath
     >>> mm = pymath.AnsMath()
 
-    Vector addition
+    Add vectors.
 
     >>> v1 = mm.ones(10)
     >>> v2 = mm.ones(10)
     >>> v3 = v1 + v2
 
-    Matrix multiplcation (not yet available)
+    Multiply matrices (not yet available).
 
     >>> v1 = mm.ones(10)
     >>> m1 = mm.rand(10, 10)
@@ -157,7 +157,7 @@ class AnsMath:
         return self._status
 
     def status(self):
-        """Print out the status of all AnsMath objects.
+        """Print the status of all AnsMath objects.
 
         Examples
         --------
@@ -178,27 +178,23 @@ class AnsMath:
         Parameters
         ----------
         size : int
-            Size of the vector
-
+            Size of the vector.
         dtype : np.dtype, optional
             NumPy data type of the vector. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
-
         init : str, optional
             Initialization options.  Options are ``"ones"``, ``"zeros"``,
-            or ``"rand"``. The default is ``zeros``.
-
+            or ``"rand"``. The default is ``"zeros"``.
         name : str, optional
-            Give the vector a name.  Otherwise one will be automatically
-            generated.
-
+            AnsMath vector name. The default is ``None``, in which case a
+            name is automatically generated.
         asarray : bool, optional
             Whether the output is to be a NumPy array vector rather than an
             AnsMath vector. The default is ``False``.
 
         Returns
         -------
-        AnsVec or `numpy.ndarray`
+        AnsVec or numpy.ndarray
             AnsMath vector or NumPy array vector, depending on the value for
             the ``asarray`` parameter.
         """
@@ -244,7 +240,7 @@ class AnsMath:
 
         Returns
         -------
-        AnsMat or `numpy.ndarray`
+        AnsMat or numpy.ndarray
             AnsMath matrix or NumPy array matrix, depending on the value for
             the ``asarray`` parameter.
         """
@@ -286,7 +282,7 @@ class AnsMath:
         nrow : int
             Number of rows.
         ncol : int, optional
-            Number of columns.  If specified, returns a matrix.
+            Number of columns. If a value is specified, a matrix is returned.
         dtype : np.dtype, optional
             NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
@@ -299,10 +295,10 @@ class AnsMath:
 
         Returns
         -------
-        AnsVec, AnsMat, or `numpy.ndarray`
+        AnsVec, AnsMat, or numpy.ndarray
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
-            specified.
+            depending on the value for the ``asarray`` parameter and if a value for
+            the ``ncol`` parameter is specified.
 
         Examples
         --------
@@ -328,7 +324,7 @@ class AnsMath:
         nrow : int
             Number of rows.
         ncol : int, optional
-            Number of columns.  If specified, returns a matrix.
+            Number of columns. If a value is specified, a matrix is returned.
         dtype : np.dtype, optional
             NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
@@ -341,14 +337,14 @@ class AnsMath:
 
         Returns
         -------
-        AnsVec, AnsMat, or `numpy.ndarray`
+        AnsVec, AnsMat, or numpy.ndarray
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
-            specified.
+            depending on the value for the ``asarray`` parameter and if a value for
+            the ``ncol`` parameter is specified.
 
         Examples
         --------
-        Create a vector where all values are ones..
+        Create a vector where all values are ones.
 
         >>> import ansys.math.core.math as pymath
         >>> mm = pymath.AnsMath()
@@ -371,7 +367,7 @@ class AnsMath:
         nrow : int
             Number of rows.
         ncol : int, optional
-            Number of columns.  If specified, returns a matrix.
+            Number of columns. If a value is specified, a matrix is returned.
         dtype : np.dtype, optional
             NumPy data type of the object. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
@@ -384,10 +380,10 @@ class AnsMath:
 
         Returns
         -------
-        AnsVec, AnsMat, or `numpy.ndarray`
+        AnsVec, AnsMat, or numpy.ndarray
             AnsMath vector, NumPy array vector, AnsMath matrix, or NumPy array matrix,
-            depending on the value for the ``asarray`` parameter and on if ``ncol`` is
-            specified.
+            depending on the value for the ``asarray`` parameter and if a value for
+            the ``ncol`` parameter is specified.
 
         Examples
         --------
@@ -468,7 +464,7 @@ class AnsMath:
         ----------
         dtype : numpy.dtype, optional
             Data type to store the matrix as. The options are double
-            ("DOUBLE" or "D"), complex numbers ("COMPLEX" or "Z"),
+            (``"DOUBLE"`` or ``"D"``), complex numbers (``"COMPLEX"`` or ``"Z"``),
             or NumPy data type (``np.double``, ``np.int32``, and ``np.int64``).
             The default is ``np.double``.
         fname : str, optional
@@ -477,21 +473,21 @@ class AnsMath:
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         mat_id : str, optional
-            Matrix type. The default is ``"STIFF"``.
+            Matrix type. The default is ``"STIFF"``. Options are:
 
-            * ``"STIFF"`` - Stiffness matrix
-            * ``"MASS"`` - Mass matrix
-            * ``"DAMP"`` - Damping matrix
-            * ``"GMAT"`` - Constraint equation matrix
-            * ``"K_RE"`` - Real part of the stiffness matrix
-            * ``"K_IM"`` - Imaginary part of the stiffness matrix
+            * ``"STIFF"``: Stiffness matrix.
+            * ``"MASS"``: Mass matrix.
+            * ``"DAMP"``: Damping matrix.
+            * ``"GMAT"``: Constraint equation matrix.
+            * ``"K_RE"``: Real part of the stiffness matrix.
+            * ``"K_IM"``: Imaginary part of the stiffness matrix.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath matrix.
             The default is ``False``.
 
         Returns
         -------
-        AnsMat or `scipy.sparse.csr.csr_matrix`
+        AnsMat or scipy.sparse.csr.csr_matrix
             AnsMath matrix or SciPy sparse matrix, depending on the value for
             the ``asarray`` parameter.
 
@@ -633,7 +629,7 @@ class AnsMath:
 
         Returns
         -------
-        AnsMat or `scipy.sparse.csr.csr_matrix`
+        AnsMat or scipy.sparse.csr.csr_matrix
             AnsMath matrix or SciPy sparse matrix, depending on the value for
             the ``asarray`` parameter.
 
@@ -713,21 +709,21 @@ class AnsMath:
             Name of the file to read the vector from. The default is ``"file.full"``.
         mat_id : str, optional
             Vector ID to load.  If loading from a ``"*.full"`` file,
-            can be one of the following:
+            the vector ID can be one of the following:
 
-            * ``"RHS"`` - Load vector
-            * ``"GVEC"`` - Constraint equation constant terms
-            * ``"BACK"`` - Nodal mapping vector (internal to user)
-              If this is used, the default ``dtype`` is ``np.int32``.
-            * ``"FORWARD"`` - Nodal mapping vector (user to internal)
-              If this is used, the default ``dtype`` is ``np.int32``.
+            * ``"RHS"``: Load vector
+            * ``"GVEC"``: Constraint equation constant terms
+            * ``"BACK"``: Nodal mapping vector (internal to user)
+              If this vector ID is used, the default ``dtype`` is ``np.int32``.
+            * ``"FORWARD"`` - Nodal mapping vector (user to internal).
+              If this vector ID is used, the default ``dtype`` is ``np.int32``.
         asarray : bool, optional
             Whether to return a SciPy array rather than an AnsMath vector.
             The default is ``False``.
 
         Returns
         -------
-        AnsVec or `numpy.ndarray`
+        AnsVec or numpy.ndarray
             AnsMath vector or NumPy array vector, depending on the value for
             the ``asarray`` parameter.
 
@@ -772,7 +768,7 @@ class AnsMath:
         ----------
         data : np.ndarray, list
             NumPy array or Python list to push to MAPDL. It must be
-            1-dimensional.
+            one dimensional.
         name : str, optional
             AnsMath vector name. The default is ``None``, in which case
             a name is automatically generated.
@@ -817,9 +813,9 @@ class AnsMath:
 
         Returns
         -------
-        AnsVec or `numpy.ndarray`
+        AnsVec or numpy.ndarray
             AnsMath vector or NumPy array vector, depending on the value for
-            the ``asarray`` parameter, generated from the FULL file.
+            the ``asarray`` parameter.
 
         Examples
         --------
@@ -831,38 +827,38 @@ class AnsMath:
         return self.get_vec(dtype, name, fname, "RHS", asarray)
 
     def svd(self, mat, thresh="", sig="", v="", **kwargs):
-        """Apply an SVD Algorithm on a matrix.
+        """Apply an SVD algorithm on a matrix.
 
         The SVD algorithm is only applicable to dense matrices.
         Columns that are linearly dependent on others are removed,
         leaving the independent or basis vectors. The matrix is
-        resized according to the new size determined by the algorithm.
+        resized according to the new size determined by the SVD algorithm.
 
         For the SVD algorithm, the singular value decomposition of an
         input matrix is a factorization of the form:
 
         ``M = U*SIGMA*V.T``
 
-        For more details, see `Singular Value Decomposition
+        For more information, see `Singular Value Decomposition
         <https://en.wikipedia.org/wiki/Singular_value_decomposition>`_.
 
         Parameters
         ----------
         mat : AnsMat
-            The array to compress.
+            Array to compress.
         thresh : float, optional
-            Numerical threshold value used to manage the compression.
+            Numerical threshold value for managing the compression.
             The default is is 1E-7.
         sig : str, optional
-            Name of the vector used to store the ``SIGMA`` values.
+            Name of the vector for storing the ``SIGMA`` values.
         v : str, optional
-            Name of the vector used to store the values from ``v``.
-            See the equation above.
+            Name of the vector for storing the values from ``v``.
+            See the preceding equation.
 
         Examples
         --------
-        Apply SVD on an existing dense rectangular matrix, using
-        default threshold.  The matrix is modified in-place.
+        Apply the SVD algorithm on an existing dense rectangular matrix, using
+        the default threshold. The matrix is modified in-place.
 
         >>> mm.svd(mat)
         """
@@ -880,15 +876,15 @@ class AnsMath:
         Parameters
         ----------
         mat : AnsMat
-            The array to apply Modified Gram-Schmidt algorithm to.
+            Array to apply the Modified Gram-Schmidt algorithm to.
         thresh : float, optional
-            Numerical threshold value used to manage the compression.
-            The default value is 1E-14 for MGS.
+            Numerical threshold value for managing the compression.
+            For the MGS algorithm, the default value is ``1E-14``.
 
         Examples
         --------
-        Apply MGS on an existing dense rectangular matrix, using
-        default threshold. The AnsMath matrix is modified in-situ.
+        Apply the MGS algorithm on an existing dense rectangular matrix,
+        using the default threshold. The AnsMath matrix is modified in-situ.
 
         >>> mm.mgs(mat)
         """
@@ -896,15 +892,15 @@ class AnsMath:
         self._mapdl.run(f"*COMP,{mat.id},MGS,{thresh}", **kwargs)
 
     def sparse(self, mat, thresh="", **kwargs):
-        """Sparsify a existing matrix based on a threshold value.
+        """Sparsify an existing matrix based on a threshold value.
 
         Parameters
         ----------
         mat : AnsMat
-            The dense matrix to convert to a sparse matrix.
+            Dense matrix to convert to a sparse matrix.
         thresh : float, optional
-            Numerical threshold value used to sparsify. The default
-            value is 1E-16.
+            Numerical threshold value for sparsifying. The default
+            value is ``1E-16``.
         """
         kwargs.setdefault("mute", True)
         self._mapdl.run(f"*COMP,{mat.id},SPARSE,{thresh}", **kwargs)
@@ -917,7 +913,7 @@ class AnsMath:
         nev : int
             Number of eigenvalues to compute.
         k : AnsMat
-            AnsMath matrix representing the operation ``A * x`` where A is a
+            AnsMath matrix representing the operation ``A * x`` where ``A`` is a
             square matrix.
         m : AnsMat, optional
             AnsMath matrix representing the operation ``M * x`` for the
@@ -928,7 +924,7 @@ class AnsMath:
         Examples
         --------
         Solve an eigenproblem using the mass and stiffness matrices
-        stored from a prior ansys run.
+        stored from a prior Ansys run.
 
         >>> k = mm.stiff()
         >>> m = mm.mass()
@@ -1003,7 +999,7 @@ class AnsMath:
 
         Examples
         --------
-        Comupute the sum between two vectors.
+        Add two AnsMath vectors.
 
         >>> v = mm.ones(10)
         >>> w = mm.ones(10)
@@ -1050,8 +1046,9 @@ class AnsMath:
             sparse matrices.
         inplace : bool, optional
             Whether the factorization is performed on the input matrix
-            rather than on a copy of it, hence the input matrix
-            is not changed. The default is ``True``.
+            rather than on a copy of this matrix. Performing factorization on
+            a copy of this matrix would result in no changes to the input
+            matrix. The default is ``True``.
 
         Returns
         -------
@@ -1081,20 +1078,23 @@ class AnsMath:
         obj : AnsMat or AnsVec
             AnsMath object to compute the norm from.
         order : str
-            Mathematical norm to use.  One of:
+            Mathematical norm to use. The default is ``'NRM2'``.
+            Options are:
 
-            * ``'NRM2'``: L2 (Euclidean or SRSS) norm (default).
+            * ``'NRM2'``: L2 (Euclidean or SRSS) norm.
             * ``'NRM1'``: L1 (absolute sum) norm (vectors only).
-            * ``'NRMINF'`` Maximum norm.
+            * ``'NRMINF'``: Maximum norm.
         nrm : float
-            Norm of the matrix or vector(s).
+            Norm of the matrix or the one or more vectors.
 
         Examples
         --------
         Compute the norm of an AnsMath vector.
-        v = mm.ones(10)
-        print (mm.norm(v))
-        3.1622776601683795
+
+        >>> v = mm.ones(10)
+        >>> print (mm.norm(v))
+        >>> 3.1622776601683795
+
         """
         return obj.norm(nrmtype=order)
 
@@ -1299,16 +1299,16 @@ class AnsMathObj:
         Parameters
         ----------
         nrmtype : str, optional
-            Mathematical norm to use.  One of:
+            Mathematical norm to use. The default is ``'NRM2'``. Options are:
 
-            - ``'NRM2'``: L2 (Euclidean or SRSS) norm (default)
-            - ``'NRM1'``: L1 (absolute sum) norm (vectors only)
-            - ``'NRMINF'`` : Maximum norm
+            - ``'NRM2'``: L2 (Euclidean or SRSS) norm.
+            - ``'NRM1'``: L1 (absolute sum) norm (vectors only).
+            - ``'NRMINF'``: Maximum norm.
 
         Returns
         -------
         float
-            Norm of the matrix or vector(s).
+            Norm of the matrix or the one or more vectors.
 
         Examples
         --------
@@ -1396,7 +1396,7 @@ class AnsVec(AnsMathObj):
 
     @property
     def size(self):
-        """Number of items in this vector."""
+        """Number of items in the vector."""
         sz = self._mapdl.scalar_param(f"{self.id}_DIM")
         if sz is None:
             raise RuntimeError("This vector has been deleted within MAPDL.")
@@ -1414,10 +1414,10 @@ class AnsVec(AnsMathObj):
     def __mul__(self, vec):
         """Return the element-wise product with another AnsMath vector.
 
-        Also known as Hadamard product.
+        This value is known as a Hadamard product.
 
         .. note::
-            Requires at least MAPDL version 2021R2.
+            This method requires MAPDL 2021 R2 or later.
 
         Parameters
         ----------
@@ -1430,7 +1430,7 @@ class AnsVec(AnsMathObj):
             Hadamard product between this vector and the other vector.
         """
         if not server_meets_version(self._mapdl._server_version, (0, 4, 0)):  # pragma: no cover
-            raise VersionError("``AnsVec`` requires MAPDL version 2021 R2.")
+            raise VersionError("``AnsVec`` requires MAPDL version 2021 R2 or later.")
 
         if not isinstance(vec, AnsVec):
             raise TypeError("The object to be multiplied must be an AnsMath vector.")
@@ -1451,7 +1451,7 @@ class AnsVec(AnsMathObj):
         return objout
 
     def copy(self):
-        """Get a copy of this vector."""
+        """Get a copy of the vector."""
         return AnsVec(AnsMathObj.copy(self), self._mapdl)
 
     def dot(self, vec) -> float:
@@ -1499,17 +1499,17 @@ class AnsMat(AnsMathObj):
 
     @property
     def nrow(self) -> int:
-        """Number of columns in this matrix."""
+        """Number of columns in the matrix."""
         return int(self._mapdl.scalar_param(self.id + "_ROWDIM"))
 
     @property
     def ncol(self) -> int:
-        """Number of rows in this matrix."""
+        """Number of rows in the matrix."""
         return int(self._mapdl.scalar_param(self.id + "_COLDIM"))
 
     @property
     def size(self) -> int:
-        """Number of items in this matrix."""
+        """Number of items in the matrix."""
         return self.nrow * self.ncol
 
     @property
@@ -1521,7 +1521,7 @@ class AnsMat(AnsMathObj):
         return (self.nrow, self.ncol)
 
     def sym(self) -> bool:
-        """Return if matrix is symmetric.
+        """Return if the matrix is symmetric.
 
         Returns
         -------
@@ -1546,7 +1546,7 @@ class AnsMat(AnsMathObj):
         return True
 
     def asarray(self, dtype=None) -> np.ndarray:
-        """Return this vector as a NumPy array.
+        """Return the vector as a NumPy array.
 
         Parameters
         ----------
@@ -1673,7 +1673,7 @@ class AnsDenseMat(AnsMat):
         return f"AnsMath dense matrix ({self.nrow}, {self.ncol}"
 
     def copy(self):
-        """Return a copy of this matrix."""
+        """Return a copy of the matrix."""
         return AnsDenseMat(AnsMathObj.copy(self), self._mapdl)
 
 
@@ -1687,7 +1687,7 @@ class AnsSparseMat(AnsMat):
         return f"AnsMath sparse matrix ({self.nrow}, {self.ncol})"
 
     def copy(self):
-        """Return a copy of this matrix.
+        """Return a copy of the matrix.
 
         Matrix remains in MAPDL.
 
@@ -1704,7 +1704,7 @@ class AnsSparseMat(AnsMat):
         return AnsSparseMat(AnsMathObj.copy(self), self._mapdl)
 
     def todense(self) -> np.ndarray:
-        """Return this array as a NumPy dense array.
+        """Return the array as a NumPy dense array.
 
         Examples
         --------
@@ -1744,10 +1744,10 @@ class AnsSolver(AnsMathObj):
     def factorize(self, mat, algo=None, inplace=True):
         """Factorize a matrix.
 
-        Perform the numerical factorization of a linear solver system (:math:`A*x=b`).
+        Perform the numerical factorization of a linear solver system: (:math:`A*x=b`).
 
         .. warning:: By default, factorization modifies the input matrix ``mat``
-           in place. This behavior can be changed using the ``inplace`` argument.
+           in place. This behavior can be changed using the ``inplace`` parameter.
 
         Parameters
         ----------
@@ -1759,8 +1759,9 @@ class AnsSolver(AnsMathObj):
             sparse matrices.
         inplace : bool, optional
             Whether the factorization is performed on the input matrix
-            rather than on a copy of it, hence the input matrix
-            is not changed. The default is ``True``.
+            rather than on a copy of this matrix. Performing factorization on
+            a copy of this matrix would result in no changes to the input
+            matrix. The default is ``True``.
 
         Examples
         --------
@@ -1779,7 +1780,7 @@ class AnsSolver(AnsMathObj):
             copy_mat = mat.copy()
             mat_id = copy_mat.id
         else:
-            self._mapdl._log.info("Performing factorization inplace. This changes the input array.")
+            self._mapdl._log.info("Performing factorization in place. This changes the input array.")
 
         if not algo:
             if mat.type == ObjType.DMAT:
@@ -1799,12 +1800,12 @@ class AnsSolver(AnsMathObj):
         b : AnsVec
             AnsMath vector.
         x : AnsVec, optional
-            AnsMath vector to place the solution.
+            AnsMath vector to place the solution into.
 
         Returns
         -------
         AnsVec
-            Solution vector. Identical to ``x`` if supplied.
+            Solution vector, which is identical to the ``x`` parameter if supplied.
 
         Examples
         --------
