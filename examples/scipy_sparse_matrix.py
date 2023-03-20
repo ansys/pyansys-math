@@ -51,7 +51,8 @@ plt.show()
 # - ``pk.indptr``
 #
 # For more information, see SciPy's class description for the
-# `CSR (compressed sparse row) matrix <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_.
+# `CSR (compressed sparse row) matrix
+# <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_.
 
 print(pk.data[:10])
 print(pk.indices[:10])

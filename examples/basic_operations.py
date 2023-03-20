@@ -113,7 +113,7 @@ v *= 2
 print(v)
 
 ###############################################################################
-# Perform another in-Place multiplication.
+# Perform another in-place multiplication.
 
 v /= 2.0
 print(v)
