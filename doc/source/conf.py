@@ -40,11 +40,9 @@ warnings.filterwarnings(
 project = "ansys-math-core"
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
 author = "ANSYS, Inc."
-release = version = "0.1.dev0"
-switcher_version = get_version_match(__version__)
-
+release = version = __version__
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
-"""The canonical name of the webpage hosting the documentation."""
+switcher_version = get_version_match(__version__)
 
 # Select desired logo, theme, and declare the html title
 html_logo = pyansys_logo_black
