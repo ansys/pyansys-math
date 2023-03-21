@@ -20,6 +20,16 @@ Then add the import within this module to enable:
    referenced at the library level.
 
 """
-from ansys.math.core._version import __version__
 
 BUILDING_GALLERY = False
+
+# Version
+# ------------------------------------------------------------------------------
+
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:  # pragma: no cover
+    import importlib_metadata  # type: ignore
+
+__version__ = importlib_metadata.version(__name__.replace(".", "-"))
+"""PyAnsys Math version."""
