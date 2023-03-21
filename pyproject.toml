@@ -11,10 +11,10 @@ readme = "README.rst"
 requires-python = ">=3.7"
 license = {file = "LICENSE"}
 authors = [
-    {name = "ANSYS, Inc.", email = "pyansys.support@ansys.com"},
+    {name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"},
 ]
 maintainers = [
-    {name = "PyAnsys developers", email = "pyansys.maintainers@ansys.com"},
+    {name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"},
 ]
 classifiers=[
     "Development Status :: 4 - Beta",
@@ -22,6 +22,7 @@ classifiers=[
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
@@ -29,6 +30,7 @@ dependencies = [
     "ansys-mapdl-core>=0.64.0",
     "pyansys-tools-versioning>=0.3.3",
     "numpy>=1.14.0",
+    "importlib-metadata>=4.0,<5; python_version<='3.8'",
 ]
 
 [project.optional-dependencies]
@@ -66,7 +68,10 @@ doc = [
 name = "ansys.math.core"
 
 [project.urls]
+Homepage = "https://github.com/pyansys/ansys-math/"
+Documentation = "https://math.docs.pyansys.com"
 Source = "https://github.com/pyansys/ansys-math"
+Tracker = "https://github.com/pyansys/ansys-math/issues"
 
 [tool.black]
 line-length = 100
