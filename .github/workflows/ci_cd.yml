@@ -307,6 +307,7 @@ jobs:
           checkout: false
           skip-install: true
           sphinxopts: -j auto
+          requires-xvfb: true
 
 
   package:
