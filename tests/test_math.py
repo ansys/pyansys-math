@@ -517,7 +517,6 @@ def test_set_vector(mm, vec, pname):
 
 
 def test_set_vector_catch(mm):
-
     with pytest.raises(ValueError, match="':' is not permitted"):
         mm.set_vec(np.ones(10), "my:vec")
 
@@ -686,7 +685,6 @@ def test_factorize_inplace_arg(mm):
 
 
 def test_mult(mapdl, mm):
-
     rand_ = np.random.rand(100, 100)
 
     if not server_meets_version(mapdl._server_version, (0, 4, 0)):
@@ -711,7 +709,6 @@ def test__parm(mm):
 
     rand_ = np.random.rand(100, 100)
     if not server_meets_version(mm._mapdl._server_version, (0, 4, 0)):
-
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
