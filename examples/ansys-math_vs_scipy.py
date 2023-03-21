@@ -52,7 +52,7 @@ mm._mapdl.eplot()
 # Set up modal analysis
 # ~~~~~~~~~~~~~~~~~~~~~
 # Set up a modal analysis and form the :math:`K` and :math:`M` matrices.
-# MAPDL stores these matrices in a ``.FULL``file.
+# MAPDL stores these matrices in a ``.FULL`` file.
 
 print(mm._mapdl.slashsolu())
 print(mm._mapdl.antype(antype="MODAL"))

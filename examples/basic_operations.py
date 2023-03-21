@@ -51,7 +51,7 @@ plt.show()
 # Use operators on vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # Like NumPy vectors, AnsMath vectors can use most of the
-# standard operators, such as ``+,`` ``-``, ``+=``, ``-=``,
+# standard operators, such as ``+``, ``-``, ``+=``, ``-=``,
 # and ``*=``.
 #
 # Here this form is used: :math:`\vec{z}=\vec{v}+\vec{w}`
