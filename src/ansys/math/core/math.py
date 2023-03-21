@@ -120,15 +120,8 @@ class AnsMath:
     def __init__(self, mapdl=None, **kwargs):
         if mapdl is None:
             mapdl = launch_mapdl(**kwargs)
-            # if not isinstance(mapdl, MapdlGrpc):
-            #     raise TypeError("``mapdl`` must be a MapdlGrpc instance")
-        self._mapdl = mapdl
-        # self._mapdl_weakref = weakref.ref(mapdl)
 
-    # @property
-    # def _mapdl(self):
-    #     """Weakly referenced instance of mapdl."""
-    #     return self._mapdl_weakref()
+        self._mapdl = mapdl
 
     @property
     def _server_version(self):
@@ -1322,12 +1315,38 @@ class AnsMathObj:
         self._mapdl.run(f"*NRM,{self.id},{nrmtype},{val_name}", mute=True)
         return self._mapdl.scalar_param(val_name)
 
-    def axpy(self, op, val1, val2):
-        """Perform the matrix operation: ``M2= v*M1 + w*M2``."""
-        if not hasattr(op, "id"):
+    def axpy(self, obj, val1, val2):
+        """Perform the matrix operation: ``self= val1*obj + val2*self``.
+
+        Parameters
+        ----------
+        obj : AnsVec or AnsMat
+            AnsMath object.
+
+        val1 : float
+            Ratio applied to the AnsMath object.
+
+        val2 : float
+            Ratio applied to the self object.
+
+        Returns
+        -------
+        AnsVec or AnsMat
+            Matrix operation result of ``self= val1*obj + val2*self``.
+
+        Example
+        -------
+        >>> dim = 2
+        >>> m1 = mm.ones(dim, dim)
+        >>> m2 = mm.rand(dim, dim)
+        >>> m1.axpy(m2, 3, 4)
+        >>> m1.asarray()
+        array([[5.251066  , 6.16097347], [6.99155442, 6.79767208]])
+        """
+        if not hasattr(obj, "id"):
             raise TypeError("The object to be added must be an AnsMath object.")
         self._mapdl._log.info("Call MAPDL to perform an AXPY operation.")
-        self._mapdl.run(f"*AXPY,{val1},0,{op.id},{val2},0,{self.id}", mute=True)
+        self._mapdl.run(f"*AXPY,{val1},0,{obj.id},{val2},0,{self.id}", mute=True)
         return self
 
     def __add__(self, op2):
