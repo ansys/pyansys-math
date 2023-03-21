@@ -80,7 +80,7 @@ print(v2)
 
 ###############################################################################
 # Apply same features to dense arrays
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # You can apply the same features to dense APDL matrices and NumPy arrays.
 #
 # Allocate an AnsMath dense matrix.
