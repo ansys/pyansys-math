@@ -1334,8 +1334,8 @@ class AnsMathObj:
         AnsVec or AnsMat
             Matrix operation result of ``self= val1*obj + val2*self``.
 
-        Example
-        -------
+        Examples
+        --------
         >>> dim = 2
         >>> m1 = mm.ones(dim, dim)
         >>> m2 = mm.rand(dim, dim)
