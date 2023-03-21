@@ -26,7 +26,7 @@ mm = pymath.AnsMath()
 # Create and manipulate vectors
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Create two AnsMath vectors of size 5. The :math:`\vec{v}` method is initialized with
-# ones, and the $\vec{w}$ is filled with random values.
+# ones, and the :math:`\vec{w}` is filled with random values.
 #
 
 v = mm.ones(2)

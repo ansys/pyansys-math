@@ -448,7 +448,7 @@ class AnsMath:
         self._set_mat(name, matrix, triu)
         if sparse.issparse(matrix):
             ans_mat = AnsSparseMat(name, self._mapdl)
-        else :
+        else:
             ans_mat = AnsDenseMat(name, self._mapdl)
         return ans_mat
 
