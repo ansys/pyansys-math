@@ -183,7 +183,7 @@ class AnsMath:
             NumPy data type of the vector. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         init : str, optional
-            Initialization options.  Options are ``"ones"``, ``"zeros"``,
+            Initialization options. Options are ``"ones"``, ``"zeros"``,
             or ``"rand"``. The default is ``"zeros"``.
         name : str, optional
             AnsMath vector name. The default is ``None``, in which case a
@@ -229,13 +229,13 @@ class AnsMath:
             NumPy data type of the matrix. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is ``np.double``.
         init : str, optional
-            Initialization options.  Options are ``"zeros"``, ``"ones"``,
+            Initialization options. Options are ``"zeros"``, ``"ones"``,
             or ``"rand"``. The default is ``"zeros"``.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath matrix.
+            Whether to return a NumPy array rather than an AnsMath matrix.
             The default is ``False``.
 
         Returns
@@ -290,7 +290,7 @@ class AnsMath:
             AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath object.
+            Whether to return a NumPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
@@ -332,7 +332,7 @@ class AnsMath:
             AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath object.
+            Whether to return a NumPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
@@ -375,7 +375,7 @@ class AnsMath:
             AnsMath object name. The default is ``None``, in which case a
             name is automatically generated.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath object.
+            Whether to return a NumPy array rather than an AnsMath object.
             The default is ``False``.
 
         Returns
@@ -407,7 +407,7 @@ class AnsMath:
         Parameters
         ----------
         matrix : np.ndarray
-            NumPy array to send as a matrix to MAPDL.
+            SciPy matrix or NumPy array to send as a matrix to MAPDL.
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
@@ -447,8 +447,10 @@ class AnsMath:
 
         self._set_mat(name, matrix, triu)
         if sparse.issparse(matrix):
-            return AnsSparseMat(name, self._mapdl)
-        return AnsDenseMat(name, self._mapdl)
+            ans_mat = AnsSparseMat(name, self._mapdl)
+        else :
+            ans_mat = AnsDenseMat(name, self._mapdl)
+        return ans_mat
 
     def load_matrix_from_file(
         self,
@@ -708,7 +710,7 @@ class AnsMath:
         fname : str, optional
             Name of the file to read the vector from. The default is ``"file.full"``.
         mat_id : str, optional
-            Vector ID to load.  If loading from a ``"*.full"`` file,
+            Vector ID to load. If loading from a ``"*.full"`` file,
             the vector ID can be one of the following:
 
             * ``"RHS"``: Load vector
@@ -718,7 +720,7 @@ class AnsMath:
             * ``"FORWARD"`` - Nodal mapping vector (user to internal).
               If this vector ID is used, the default ``dtype`` is ``np.int32``.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath vector.
+            Whether to return a NumPy array rather than an AnsMath vector.
             The default is ``False``.
 
         Returns
@@ -808,7 +810,7 @@ class AnsMath:
         fname : str, optional
             Name of the file to read the vector from. The default is ``"file.full"``.
         asarray : bool, optional
-            Whether to return a SciPy array rather than an AnsMath vector.
+            Whether to return a NumPy array rather than an AnsMath vector.
             The default is ``False``.
 
         Returns
@@ -1041,7 +1043,7 @@ class AnsMath:
         mat : AnsMat
             AnsMath matrix.
         algo : str, optional
-            Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
+            Factorization algorithm. Options are ``"LAPACK"`` and ``"DSP"``.
             The default is ``"LAPACK"`` for dense matrices and ``"DSP"`` for
             sparse matrices.
         inplace : bool, optional
@@ -1105,7 +1107,7 @@ class AnsMath:
         Parameters
         ----------
         vname : str
-            Vector parameter name.  The character ":" is not allowed.
+            Vector parameter name. The character ":" is not allowed.
         arr : np.ndarray
             NumPy array to upload.
         dtype : np.dtype, optional
@@ -1144,7 +1146,7 @@ class AnsMath:
         Parameters
         ----------
         mname : str
-            Matrix parameter name.  The character ":" is not allowed.
+            Matrix parameter name. The character ":" is not allowed.
         arr : np.ndarray or scipy.sparse matrix
             Matrix to upload.
         sym : bool
@@ -1155,7 +1157,7 @@ class AnsMath:
             ``np.int32``, and ``np.int64``. The default is the current array
             type.
         chunk_size : int, optional
-            Chunk size in bytes.  The value must be less than 4MB.
+            Chunk size in bytes. The value must be less than 4MB.
 
         """
         from scipy import sparse
@@ -1754,7 +1756,7 @@ class AnsSolver(AnsMathObj):
         mat : AnsMat
             AnsMath matrix.
         algo : str, optional
-            Factorization algorithm.  Options are ``"LAPACK"`` and ``"DSP"``.
+            Factorization algorithm. Options are ``"LAPACK"`` and ``"DSP"``.
             The default is ``"LAPACK"`` for dense matrices and ``"DSP"`` for
             sparse matrices.
         inplace : bool, optional
