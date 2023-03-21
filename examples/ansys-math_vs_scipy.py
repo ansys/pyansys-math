@@ -1,22 +1,24 @@
 """
 .. _ref_ansys_math_vs_scipy:
 
-Compute Eigenvalues using PyAnsys Math or SciPy
------------------------------------------------
+Compute Eigenvalues using PyAnsys Math and SciPy
+------------------------------------------------
 
-This example shows:
+This example shows how to perform these tasks:
 
-- How to extract the stiffness and mass matrices from an MAPDL model.
-- How to use PyAnsys Math to compute the first eigenvalues
-- How to get these matrices using SciPy to obtain the same
+- Extract the stiffness and mass matrices from an MAPDL model.
+- Use PyAnsys Math to compute the first eigenvalues.
+- Get these matrices using SciPy to obtain the same
   solutions using Python resources.
-- How PyAnsys Math is faster than SciPy
+- See if PyAnsys Math is more accurate and faster than SciPy.
 """
 
-import math
-
 ###############################################################################
-# Load python packages we need for this example
+# Perform required imports and start PyAnsys Math
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Perform required imports.
+
+import math
 import time
 
 from ansys.mapdl.core import examples
@@ -27,25 +29,30 @@ from scipy.sparse.linalg import eigsh
 
 import ansys.math.core.math as pymath
 
-# Start PyAnsys Math.
+# Start PyAnsys Math as a service.
 mm = pymath.AnsMath()
 
 ###############################################################################
-# AnsMath EigenSolve
-# First load the input file using MAPDL.
-#
+# Load the input file
+# ~~~~~~~~~~~~~~~~~~~
+# Load the input file using MAPDL.
+
 print(mm._mapdl.input(examples.examples.wing_model))
 
 
 ###############################################################################
+# Plot and mesh
+# ~~~~~~~~~~~~~
 # Plot and mesh using the ``eplot`` method.
+
 mm._mapdl.eplot()
 
 
 ###############################################################################
-# Next, setup a modal Analysis and request the :math:`K` and math:`M`
-# matrices to be formed. MAPDL stores these matrices in a ``.FULL``
-# file.
+# Set up modal analysis
+# ~~~~~~~~~~~~~~~~~~~~~
+# Set up a modal analysis and form the :math:`K` and :math:`M` matrices.
+# MAPDL stores these matrices in a ``.FULL`` file.
 
 print(mm._mapdl.slashsolu())
 print(mm._mapdl.antype(antype="MODAL"))
@@ -57,8 +64,10 @@ output = mm._mapdl.solve()
 
 
 ###############################################################################
+# Read sparse matrices
+# ~~~~~~~~~~~~~~~~~~~~
 # Read the sparse matrices using PyAnsys Math.
-#
+
 mm._mapdl.finish()
 mm.free()
 k = mm.stiff(fname="file.full")
@@ -66,7 +75,9 @@ M = mm.mass(fname="file.full")
 
 
 ###############################################################################
-# Solve the eigenproblem using PyAnsys Math.
+# Solve eigenproblem
+# ~~~~~~~~~~~~~~~~~~
+# Solve the eigenproblme using PyAnsys Math.
 #
 nev = 10
 A = mm.mat(k.nrow, nev)
@@ -78,7 +89,9 @@ pymath_elapsed_time = t2 - t1
 print("\nElapsed time to solve this problem : ", pymath_elapsed_time)
 
 ###############################################################################
-# Print eigenfrequencies and accuracy.
+# Print eigenfrequencies and accuracy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Print the eigenfrequencies and the accuracy.
 #
 # Accuracy : :math:`\frac{||(K-\lambda.M).\phi||_2}{||K.\phi||_2}`
 #
@@ -103,12 +116,11 @@ for i in range(nev):
 
 
 ###############################################################################
-# Use SciPy to Solve the same Eigenproblem
+# Use SciPy to solve the same eigenproblem
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# First get MAPDL sparse matrices into the Python memory as SciPy
+# Get the MAPDL sparse matrices into Python memory as SciPy
 # matrices.
-#
+
 pk = k.asarray()
 pm = M.asarray()
 
@@ -124,8 +136,8 @@ plt.show(block=True)
 
 
 ###############################################################################
-# Make the sparse matrices for SciPy unsymmetric as symmetric matrices in SciPy
-# are memory inefficient.
+# Make the sparse matrices for SciPy unsymmetric because symmetric matrices
+# in SciPy are memory inefficient.
 #
 # :math:`K = K + K^T - diag(K)`
 #
@@ -136,7 +148,7 @@ pm = pm + pm.transpose() - pmd
 
 
 ###############################################################################
-# Plot matrices
+# Plot the matrices.
 #
 fig, (ax1, ax2) = plt.subplots(1, 2)
 fig.suptitle("K and M Matrix profiles")
@@ -148,7 +160,7 @@ plt.show(block=True)
 
 
 ###############################################################################
-# Solve the eigenproblem
+# Solve the eigenproblem.
 #
 t3 = time.time()
 vals, vecs = eigsh(A=pK, M=pm, k=10, sigma=1, which="LA")
@@ -158,7 +170,7 @@ print("\nElapsed time to solve this problem : ", scipy_elapsed_time)
 
 
 ###############################################################################
-# Convert Lambda values to Frequency values:
+# Convert lambda values to frequency values:
 # :math:`freq = \frac{\sqrt(\lambda)}{2.\pi}`
 #
 freqs = np.sqrt(vals) / (2 * math.pi)
@@ -188,8 +200,10 @@ for i in range(nev):
 
 
 ###############################################################################
-# PyAnsys Math is more accurate than SciPy.
-#
+# See if PyAnsys Math is more accurate than SciPy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Plot residual error to see if PyAnsys Math is more accurate than SciPy.
+
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = np.linspace(1, 10, 10)
@@ -203,11 +217,16 @@ plt.legend(loc="lower right")
 plt.show()
 
 ###############################################################################
-# PyAnsys Math is faster than SciPy.
-#
+# See if PyAnsys Math is faster than SciPy
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Plot elapsed time to see if PyAnsys Math is more accurate than SciPy.
+
 ratio = scipy_elapsed_time / pymath_elapsed_time
 print(f"PyAnsys Math is {ratio:.3} times faster.")
 
 ###############################################################################
+# Stop PyAnsys Math
+# ~~~~~~~~~~~~~~~~~
 # Stop PyAnsys Math.
+
 mm._mapdl.exit()

@@ -8,6 +8,11 @@ This example uses a verification manual input file, but you can use
 your own sparse or dense matrices.
 
 """
+###############################################################################
+# Perform required imports and start PyAnsys
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Perform required imports.
+
 import time
 
 from ansys.mapdl.core.examples import vmfiles
@@ -16,13 +21,15 @@ import numpy as np
 
 import ansys.math.core.math as pymath
 
-# Start PyAnsys Math.
+# Start PyAnsys Math as a service.
 mm = pymath.AnsMath()
 
 ###############################################################################
-# First we get the `STIFF` and `MASS` matrices from the full file
-# after running the input file from Verification Manual 153
-#
+# Get matrices
+# ~~~~~~~~~~~~
+# Run the input file from Verification Manual 153 and then
+# get the stiff (``k``) and mass (``m``) matrices from the FULL file.
+
 out = mm._mapdl.input(vmfiles["vm153"])
 
 k = mm.stiff(fname="PRSMEMB.full")
@@ -30,20 +37,27 @@ m = mm.mass(fname="PRSMEMB.full")
 
 
 ###############################################################################
-# Display size of the M and K matrices
+# Display size of the matrices
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Display size of the ``k`` and ``m`` matrices.
+
 print(m.shape)
 print(k.shape)
 
 ###############################################################################
-# Allocate an array to store the eigenshapes.
-# where `nev` is the number of eigenvalues requested
+# Allocate an array to store eigenshapes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Allocate an array to store the eigenshapes, where ``nev``` is the number
+# of eigenvalues requested,
 #
 nev = 10
 a = mm.mat(k.nrow, nev)
 a
 
 ###############################################################################
-# Perform the the modal analysis.
+# Perform modal analysis
+# ~~~~~~~~~~~~~~~~~~~~~~
+# Perform the modal analysis.
 #
 # The algorithm is automatically chosen with respect to the properties
 # of the matrices (such as scalar, storage, or symmetry).
@@ -56,16 +70,19 @@ print(f"Elapsed time to solve this problem: {time.time() - t1}")
 
 
 ###############################################################################
-# This is the vector of eigenfrequencies.
+# Print eigenfrequencies
+# ~~~~~~~~~~~~~~~~~~~~~~
+# Print the vector of eigenfrequencies.
+
 print(ev)
 
 ###############################################################################
 # Verify the accuracy of eigenresults
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Check the residual error for the first eigenresult
+# Check the residual error for the first eigenresult:
 # :math:`R_1=||(K-\lambda_1.M).\phi_1||_2`
 #
-# First, we compute :math:`\lambda_1 = \omega_1^2 = (2.\pi.f_1)^2`
+# First, compute :math:`\lambda_1 = \omega_1^2 = (2.\pi.f_1)^2`
 
 # Eigenfrequency (Hz)
 i = 0
@@ -75,16 +92,16 @@ lam = omega * omega
 
 
 ###############################################################################
-# Then we get the 1st Eigenshape :math:`\phi_1`, and compute
-# :math:`K.\phi_1` and :math:`M.\phi_1`
+# Then get the first eigenshape :math:`\phi_1` and compute both
+# :math:`K.\phi_1` and :math:`M.\phi_1`.
 
 # shape
 phi = a[0]
 
-# APDL Command: *MULT,K,,Phi,,KPhi
+# APDL command: *MULT,K,,Phi,,KPhi
 kphi = k.dot(phi)
 
-# APDL Command: *MULT,M,,Phi,,MPhi
+# APDL command: *MULT,M,,Phi,,MPhi
 mphi = m.dot(phi)
 
 
@@ -92,34 +109,33 @@ mphi = m.dot(phi)
 # Next, compute the :math:`||K.\phi_1||_2` quantity and normalize the
 # residual value.
 
-# APDL Command: *MULT,K,,Phi,,KPhi
+# APDL command: *MULT,K,,Phi,,KPhi
 kphi = k.dot(phi)
 
 
-# APDL Command: *NRM,KPhi,NRM2,KPhiNrm
+# APDL command: *NRM,KPhi,NRM2,KPhiNrm
 kphinrm = kphi.norm()
 
 
 ###############################################################################
-# Then we add these two vectors, using the :math:`\lambda_1` scalar
-# factor and finally compute the normalized residual value
+# Add these two vectors, using the :math:`\lambda_1` scalar
+# factor, and compute the normalized residual value:
 # :math:`\frac{R_1}{||K.\phi_1||_2}`
 
-# APDL Command: *AXPY,-lambda,,MPhi,1,,KPhi
+# APDL command: *AXPY,-lambda,,MPhi,1,,KPhi
 mphi *= lam
 kphi -= mphi
 
-# Compute the residual
+# Compute residual
 res = kphi.norm() / kphinrm
 print(res)
 
 ###############################################################################
-# This residual can be computed for all eigenmodes
-#
+# Compute this residual for all eigenmodes
 
 
 def get_res(i):
-    """Compute the residual for a given eigenmode"""
+    """Compute the residual for a given eigenmode."""
     # Eigenfrequency (Hz)
     f = ev[i]
 
@@ -138,14 +154,14 @@ def get_res(i):
     # M.Phi
     mphi = m.dot(phi)
 
-    # Normalization scalar value
+    # Normalize scalar value
     kphinrm = kphi.norm()
 
     # (K-\lambda.M).Phi
     mphi *= lam
     kphi -= mphi
 
-    # return the residual
+    # Return the residual
     return kphi.norm() / kphinrm
 
 
@@ -157,7 +173,9 @@ for i in range(nev):
     print(f"[{i}] : Freq = {f}\t - Residual = {pymath_acc[i]}")
 
 ###############################################################################
-# Plot accuracy of eigenresults.
+# Plot accuracy of eigenresults
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Plot tahe accuracy of the eigenresults.
 
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
@@ -171,5 +189,8 @@ ax.bar(x, pymath_acc, label="PyAnsys Math Results", color="orange")
 plt.show()
 
 ###############################################################################
+# Stop PyAnsys Math
+# ~~~~~~~~~~~~~~~~~
 # Stop PyAnsys Math.
+
 mm._mapdl.exit()

@@ -5,34 +5,33 @@ PyAnsys Math documentation
 Introduction
 ------------
 
-PyAnsys Math aims to gather all the mathematical calculation tools present
-in the Ansys software.
+PyAnsys Math aims to gather all mathematical calculation tools present
+in Ansys software.
 
-This library provides the ability to access and manipulate large
-sparse matrices and solve a variety of eigenproblems. It is presented in a
-similar manner to the popular `NumPy <numpy_docs_>`_ and
-`SciPy <scipy_docs_>`_ libraries.
+This Python library allows you to access and manipulate large sparse matrices
+and solve a variety of eigenproblems. It is presented in a similar manner to
+the popular `NumPy <numpy_docs_>`_ and `SciPy <scipy_docs_>`_ libraries.
 
-The PyAnsys Math command set is based on tools for manipulating large mathematical
+The command set for PyAnsys Math is based on tools for manipulating large mathematical
 matrices and vectors that provide access to standard linear algebra operations and the
-powerful sparse linear solvers of Ansys Mechanical APDL, providing the ability to solve
-eigenproblems.
+powerful sparse linear solvers of Ansys Mechanical APDL (MAPDL), providing the ability
+to solve eigenproblems.
 
 Python and MATLAB eigensolvers are based on the publicly available
-LAPACK libraries and provide reasonable solve time for eigenproblems
+LAPACK libraries and provide reasonable solve times for eigenproblems
 with relatively small degrees of freedom (DOF), perhaps 100,000.
 However, Ansys solvers are designed for the scale of hundreds of
 millions of DOF, providing a variety of situations where you can
 directly leverage Ansys high-performance solvers on a variety of
 eigenproblems. Fortunately, you can leverage this without relearning
 an entirely new language because PyAnsys Math is written in a similar manner
-as the ``NumPy`` and ``SciPy`` libraries. For example, here is a comparison between
+as the NumPy and SciPy libraries. For example, here is a comparison between
 the NumPy and SciPy linear algebra solvers and the PyAnsys Math solver:
 
-.. table:: ``NumPy`` and ``SciPy`` vs ``PyAnsys Math`` implementation
+.. table:: NumPy and SciPy versus PyAnsys Math implementation
 
    +--------------------------------------------+-----------------------------------+
-   | ``NumPy`` and ``SciPy``                    | ``PyAnsys Math``                  |
+   | NumPy and SciPy                            | PyAnsys Math                      |
    +============================================+===================================+
    | .. code:: python                           | .. code:: python                  |
    |                                            |                                   |
@@ -47,20 +46,16 @@ the NumPy and SciPy linear algebra solvers and the PyAnsys Math solver:
 Background
 ----------
 
-PyAnsys Math is a library using the Ansys Mechanical APDL (MAPDL) solver in the
-background.
+PyAnsys Math uses the MAPDL solver in the background. It is based on the
+``launch_mapdl()`` method from PyMAPDL's `ansys-mapdl-core <pymapdl_github_>`_
+package.
 
-It is based on the ``launch_mapdl()`` method from the `ansys-mapdl-core
-<pymapdl_github_>`_ library. The latter uses `gRPC <grpc_>`_, which allows
-the MAPDL solver to function as a server, ready to respond to connecting
-clients.
-
-Google Remote Procedure Calls, or gRPC, are used to establish secure 
-connections so that a client app can directly call methods on 
-a potentially remote MAPDL instance as if it were a local object. The 
-use of HTTP/2 makes it friendly to modern internet infrastructures. 
-This, along with the use of binary transmission formats, favors higher
-performance.
+Because PyMAPDL is `gRPC <grpc_>`_-based, the MAPDL solver can function as
+a server, ready to respond to connecting clients. With gRPC establishing
+secure connections, a client app can directly call methods on a potentially
+remote MAPDL instance as if it were a local object. The use of HTTP/2 makes
+gRPC friendly to modern internet infrastructures. This, along with the use
+of binary transmission formats, favors higher performance.
 
 
 Quick code
@@ -87,7 +82,7 @@ Here is a brief example of how you use PyAnsys Math:
       1.417e+00   1.997e+00   1.720e+00   1.933e+00   1.000e+00      <       5
 
 
-For additional PyAnsys Math examples, see :ref:`ref_pymath_examples`.
+For comprehensive PyAnsys Math examples, see :ref:`ref_pymath_examples`.
 
 
 .. toctree::
