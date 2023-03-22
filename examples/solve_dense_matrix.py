@@ -79,7 +79,7 @@ print(f"Elapsed time to solve the linear system using NumPy: {numpy_time} second
 # Plot the elapsed times for PyAnsys Math and Numpy to solve the dense
 # matrix linear system.
 #
-max_time = max(np.max(pymath_time), np.max(numpy_time))
+max_time = max(pymath_time, numpy_time)
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = ["PyAnsys Math", "NumPy"]
