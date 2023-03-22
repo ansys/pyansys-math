@@ -32,7 +32,7 @@ templates:
 
 If your issue does not fit into one of these categories, create your own issue.
 
-To reach the PyAnsys support team, email pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
+To reach the PyAnsys support team, email `pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
 
 
 Build documentation
