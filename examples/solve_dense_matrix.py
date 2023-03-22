@@ -83,9 +83,9 @@ max_time = max(np.max(pymath_time), np.max(numpy_time))
 fig = plt.figure(figsize=(12, 10))
 ax = plt.axes()
 x = ["PyAnsys Math", "NumPy"]
-y = [pymath_time, max_time + 0.2 * max_time]
+y = [pymath_time, numpy_time]
 plt.title("Elapsed time to solve the linear system")
-plt.ylim([0, 0.3])
+plt.ylim([0, max_time + 0.2 * max_time])
 plt.ylabel("Elapsed time (s)")
 ax.bar(x, y, color="orange")
 plt.show()
