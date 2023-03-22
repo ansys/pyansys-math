@@ -28,7 +28,7 @@ an entirely new language because PyAnsys Math is written in a similar manner
 as the NumPy and SciPy libraries. For example, here is a comparison between
 the NumPy and SciPy linear algebra solvers and the PyAnsys Math solver:
 
-.. table:: NumPy and SciPy versus PyAnsys Math implementation
+.. table:: NumPy and SciPy versus PyAnsys Math implementations
 
    +--------------------------------------------+-----------------------------------+
    | NumPy and SciPy                            | PyAnsys Math                      |
