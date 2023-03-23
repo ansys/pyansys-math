@@ -90,6 +90,7 @@ For comprehensive PyAnsys Math examples, see :ref:`ref_pymath_examples`.
    :maxdepth: 1
 
    getting_started/index
+   user_guide/index
    api/index
    examples/index
    contributing/index

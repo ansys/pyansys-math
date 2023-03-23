@@ -40,6 +40,11 @@ For users
 The ``ansys.math.core`` package currently supports Python 3.7 through
 Python 3.10 on Windows, Mac OS, and Linux.
 
+.. warning:: 
+
+   ``ansys.math.core`` will no longer support Python 3.7 by June 2023.
+
+
 Install the latest package for use with this command:
 
 .. code::
