@@ -27,7 +27,6 @@ mm = pymath.AnsMath()
 
 out = mm._mapdl.input(vmfiles["vm153"])
 k = mm.stiff(fname="PRSMEMB.full")
-k
 
 ################################################################################
 # Copy AnsMath sparse matrix to SciPy CSR matrix and plot
@@ -36,7 +35,7 @@ k
 # graph of the sparse matrix.
 
 pk = k.asarray()
-plt.spy(pk, color="orange")
+plt.spy(pk, color="orange", markersize=3)
 plt.title("AnsMath sparse matrix")
 plt.show()
 
