@@ -11,7 +11,6 @@ This example shows how to use PyAnsys Math to solve a dense matrix linear system
 import time
 
 import matplotlib.pyplot as plt
-import numpy as np
 import numpy.linalg as npl
 
 import ansys.math.core.math as pymath
