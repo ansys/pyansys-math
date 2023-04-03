@@ -15,3 +15,9 @@ You can use the AnsMath() method to launch an instance of PyAnsys Math.
     # Start PyAnsys Math.
     mm = pymath.AnsMath()
     print(mm)
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   arrays.rst
