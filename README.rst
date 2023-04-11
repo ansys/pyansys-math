@@ -82,7 +82,7 @@ Verify your installation
 
 Check that you can start PyAnsys Math from Python by running this code:
 
-.. code:: python
+.. code:: ipython3
 
     import ansys.math.core.math as pymath
 
