@@ -57,7 +57,7 @@ k
 # graph of the sparse matrix.
 
 pk = k.asarray()
-plt.spy(pk, color="orange")
+plt.spy(pk, color="orange", markersize=3)
 plt.title("AnsMath sparse matrix")
 plt.show()
 

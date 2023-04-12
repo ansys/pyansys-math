@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "ansys-math-core"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python wrapper for PyAnsys Math libraries."
 readme = "README.rst"
 requires-python = ">=3.7"
@@ -48,11 +48,11 @@ doc = [
     "Sphinx==5.3.0",
     "ansys-mapdl-core==0.64.0",
     "ansys-mapdl-reader==0.52.11",
-    "ansys-sphinx-theme==0.9.5",
+    "ansys-sphinx-theme==0.9.7",
     "jupyter_sphinx==0.4.0",
-    "jupyterlab==3.6.2",
+    "jupyterlab==3.6.3",
     "numpydoc==1.5.0",
-    "pandas==1.5.3",
+    "pandas==2.0.0",
     "pypandoc==1.11",
     "pytest-sphinx==0.5.0",
     "pyvista==0.38.5",

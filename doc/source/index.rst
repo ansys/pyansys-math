@@ -33,7 +33,7 @@ the NumPy and SciPy linear algebra solvers and the PyAnsys Math solver:
    +--------------------------------------------+-----------------------------------+
    | NumPy and SciPy                            | PyAnsys Math                      |
    +============================================+===================================+
-   | .. code:: python                           | .. code:: python                  |
+   | .. code:: python3                          | .. code:: python3                 |
    |                                            |                                   |
    |   k_py = k + sparse.triu(k, 1).T           |   k = mm.matrix(k_py, triu=True)  |
    |   m_py = m + sparse.triu(m, 1).T           |   m = mm.matrix(m_py, triu=True)  |
@@ -63,7 +63,7 @@ Quick code
 
 Here is a brief example of how you use PyAnsys Math:
 
-.. code:: python
+.. code:: python3
 
     import ansys.math.core.math as pymath
 
@@ -75,7 +75,9 @@ Here is a brief example of how you use PyAnsys Math:
 
     print(w)
 
-.. code:: output
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
 
       UDWZKD :
       Size : 5
@@ -90,6 +92,7 @@ For comprehensive PyAnsys Math examples, see :ref:`ref_pymath_examples`.
    :maxdepth: 1
 
    getting_started/index
-   api_ref/index
+   user_guide/index
+   api/index
    examples/index
    contributing/index
