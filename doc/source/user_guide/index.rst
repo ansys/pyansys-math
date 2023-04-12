@@ -8,7 +8,7 @@ Overview
 
 You can use the AnsMath() method to launch an instance of PyAnsys Math.
 
-.. code:: ipython3
+.. code:: python3
 
     import ansys.math.core.math as pymath
 

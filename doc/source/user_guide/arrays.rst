@@ -6,7 +6,7 @@ Handling arrays between PyAnsys Math and Python
 Sending arrays to PyAnsys Math
 ------------------------------
 
-.. code:: ipython3
+.. code:: python3
 
     import numpy as np
     import ansys.math.core.math as pymath
@@ -32,7 +32,7 @@ Sending arrays to PyAnsys Math
 Transfer a PyAnsys Math matrix to NumPy
 ---------------------------------------
 
-.. code:: ipython3
+.. code:: python3
 
     a_python = a_pymath.asarray()
     print((a == a_python).all())
