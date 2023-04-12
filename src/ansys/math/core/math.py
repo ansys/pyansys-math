@@ -1500,8 +1500,8 @@ class AnsVec(AnsMathObj):
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to upload the array as. The options are ``np.double``,
-            ``np.int32``, and ``np.int64``. The default is the current array
+            NumPy data type to upload the array as. The options are `np.double <numpy.double>`_,
+            `np.int32 <numpy.int32>`_, and `np.int64 <numpy.int64>`_. The default is the current array
             type.
 
         Returns

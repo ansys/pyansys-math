@@ -22,7 +22,7 @@ You can use the AnsMath() method to launch an instance of PyAnsys Math.
 
     APDLMATH PARAMETER STATUS-  (      0 PARAMETERS DEFINED)
 
-  Name                   Type            Mem. (MB)       Dims            Workspace
+   Name                   Type            Mem. (MB)       Dims            Workspace
 
 .. toctree::
    :hidden:
