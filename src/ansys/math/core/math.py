@@ -1520,10 +1520,8 @@ class AnsVec(AnsMathObj):
         [1 1 1 1 1 1 1 1 1 1]
 
         """
-        if dtype:
-            return self._mapdl._vec_data(self.id).astype(dtype)
-        else:
-            return self._mapdl._vec_data(self.id)
+        vec_data = self._mapdl._vec_data(self.id)
+        return vec_data.astype(dtype) if dtype else vec_data
 
     def __array__(self):
         """Allow NumPy to access this object as if it was an array."""

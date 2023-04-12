@@ -6,7 +6,7 @@ User guide
 Overview
 --------
 
-You can use the AnsMath() method to launch an instance of PyAnsys Math.
+You can use the ``AnsMath()`` method to launch an instance of PyAnsys Math.
 
 .. code:: python3
 
