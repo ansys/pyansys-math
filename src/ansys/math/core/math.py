@@ -1494,8 +1494,20 @@ class AnsVec(AnsMathObj):
         self._mapdl.run(f"*DOT,{self.id},{vec.id},py_val")
         return self._mapdl.scalar_param("py_val")
 
-    def asarray(self) -> np.ndarray:
-        """Return this vector as a NumPy array.
+    def asarray(self, dtype=None) -> np.ndarray:
+        """Return the vector as a NumPy array.
+
+        Parameters
+        ----------
+        dtype : numpy.dtype, optional
+            NumPy data type to upload the array as. The options are `np.double <numpy.double>`_,
+            `np.int32 <numpy.int32>`_, and `np.int64 <numpy.int64>`_. The default is the current array
+            type.
+
+        Returns
+        -------
+        np.ndarray
+            NumPy array with the defined data type.
 
         Examples
         --------
@@ -1504,8 +1516,12 @@ class AnsVec(AnsMathObj):
         >>> v = mm.ones(10)
         >>> v.asarray()
         [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+        >>> v.asarray(dtype=np.int32)
+        [1 1 1 1 1 1 1 1 1 1]
+
         """
-        return self._mapdl._vec_data(self.id)
+        vec_data = self._mapdl._vec_data(self.id)
+        return vec_data.astype(dtype) if dtype else vec_data
 
     def __array__(self):
         """Allow NumPy to access this object as if it was an array."""
@@ -1567,7 +1583,7 @@ class AnsMat(AnsMathObj):
         return True
 
     def asarray(self, dtype=None) -> np.ndarray:
-        """Return the vector as a NumPy array.
+        """Return the matrix as a NumPy array.
 
         Parameters
         ----------
@@ -1585,11 +1601,11 @@ class AnsMat(AnsMathObj):
         --------
         >>> import ansys.math.core.math as pymath
         >>> mm = pymath.AnsMath()
-        >>> v = mm.ones(10)
+        >>> v = mm.ones(2,2)
         >>> v.asarray()
-        [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
-        >>> v.asarray(dtype=np.int)
-        [1 1 1 1 1 1 1 1 1 1]
+        array([[1., 1.], [1., 1.]])
+        >>> v.asarray(dtype=np.int32)
+        array([[1, 1], [1, 1]])
 
         """
         if dtype:
