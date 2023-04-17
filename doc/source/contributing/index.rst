@@ -32,7 +32,7 @@ templates:
 
 If your issue does not fit into one of these categories, create your own issue.
 
-To reach the PyAnsys support team, email `pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
+To reach the project support team, email `pyansys.core@ansys.com <pyansys.core@ansys.com>`_.
 
 
 Build documentation
@@ -46,11 +46,9 @@ To build the PyAnsys Math documentation locally, in the root directory of the re
 Documentation for the latest stable release of PyAnsys Math is hosted at
 `PyAnsys Math Documentation <pymath_docs_>`_.
 
-Documentation for the latest development version, which tracks the
-``main`` branch, is hosted at 
-`Development PyAnsys Math Documentation <pymath_dev_docs_>`_.
-This version is automatically kept up to date via GitHub actions.
-
+In the upper right corner of the documentation’s title bar, there is an option for
+switching from viewing the documentation for the latest stable release to viewing
+the documentation for the development version or previously released versions.
 
 Adhere to code style
 --------------------
