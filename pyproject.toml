@@ -67,10 +67,10 @@ doc = [
 name = "ansys.math.core"
 
 [project.urls]
-Homepage = "https://github.com/pyansys/ansys-math/"
+Homepage = "https://github.com/ansys/ansys-math/"
 Documentation = "https://math.docs.pyansys.com"
-Source = "https://github.com/pyansys/ansys-math"
-Tracker = "https://github.com/pyansys/ansys-math/issues"
+Source = "https://github.com/ansys/ansys-math"
+Tracker = "https://github.com/ansys/ansys-math/issues"
 
 [tool.black]
 line-length = 100

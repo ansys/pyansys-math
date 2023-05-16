@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys code style checks
-        uses: pyansys/actions/code-style@v4
+        uses: ansys/actions/code-style@v4
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys documentation style checks
-        uses: pyansys/actions/doc-style@v4
+        uses: ansys/actions/doc-style@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,7 +70,7 @@ jobs:
             os: windows-latest
     steps:
       - name: Build wheelhouse and perform smoke test
-        uses: pyansys/actions/build-wheelhouse@v4
+        uses: ansys/actions/build-wheelhouse@v4
         with:
           library-name: ${{ env.PACKAGE_NAME }}
           library-namespace: ${{ env.PACKAGE_NAMESPACE }}
@@ -233,7 +233,7 @@ jobs:
 
       - name: "Install OS packages"
         run: |
-          sudo apt update 
+          sudo apt update
           sudo apt install pandoc
 
       - name: "Cache pip"
@@ -301,7 +301,7 @@ jobs:
       #     docker run -d --name dpfserver -p ${{ env.DPF_PORT }}:50052 ghcr.io/pyansys/dpf-core:22.2dev && echo "DPF Server active on port ${{ env.DPF_PORT }}."
 
       - name: "Run Ansys documentation building action"
-        uses: pyansys/actions/doc-build@v4
+        uses: ansys/actions/doc-build@v4
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           checkout: false
@@ -316,7 +316,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build library source and wheel artifacts
-        uses: pyansys/actions/build-library@v4
+        uses: ansys/actions/build-library@v4
         with:
           library-name: ${{ env.PACKAGE_NAME }}
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
@@ -330,7 +330,7 @@ jobs:
     needs: [package]
     steps:
       - name: "Deploy the latest documentation"
-        uses: pyansys/actions/doc-deploy-dev@v4
+        uses: ansys/actions/doc-deploy-dev@v4
         with:
             cname: ${{ env.DOCUMENTATION_CNAME }}
             token: ${{ secrets.GITHUB_TOKEN }}
@@ -344,14 +344,14 @@ jobs:
     steps:
 
     - name: "Release to the public PyPI repository"
-      uses: pyansys/actions/release-pypi-public@v4
+      uses: ansys/actions/release-pypi-public@v4
       with:
         library-name: ${{ env.PACKAGE_NAME }}
         twine-username: "__token__"
         twine-token: ${{ secrets.PYPI_TOKEN }}
 
     - name: "Release to GitHub"
-      uses: pyansys/actions/release-github@v4
+      uses: ansys/actions/release-github@v4
       with:
         library-name: ${{ env.PACKAGE_NAME }}
 
@@ -364,7 +364,7 @@ jobs:
     needs: [release]
     steps:
       - name: "Deploy the stable documentation"
-        uses: pyansys/actions/doc-deploy-stable@v4
+        uses: ansys/actions/doc-deploy-stable@v4
         with:
             cname: ${{ env.DOCUMENTATION_CNAME }}
             token: ${{ secrets.GITHUB_TOKEN }}
