@@ -44,12 +44,12 @@ tests = [
     "vtk==9.2.6",
 ]
 doc = [
-    "Sphinx==6.2.1",
+    "Sphinx==7.0.0",
     "ansys-mapdl-core==0.64.1",
     "ansys-mapdl-reader==0.52.12",
-    "ansys-sphinx-theme==0.9.8",
+    "ansys-sphinx-theme==0.9.9",
     "jupyter_sphinx==0.4.0",
-    "jupyterlab==3.6.3",
+    "jupyterlab==4.0.0",
     "numpydoc==1.5.0",
     "pandas==2.0.1",
     "pypandoc==1.11",
@@ -67,10 +67,10 @@ doc = [
 name = "ansys.math.core"
 
 [project.urls]
-Homepage = "https://github.com/pyansys/ansys-math/"
+Homepage = "https://github.com/ansys/ansys-math/"
 Documentation = "https://math.docs.pyansys.com"
-Source = "https://github.com/pyansys/ansys-math"
-Tracker = "https://github.com/pyansys/ansys-math/issues"
+Source = "https://github.com/ansys/ansys-math"
+Tracker = "https://github.com/ansys/ansys-math/issues"
 
 [tool.black]
 line-length = 100
