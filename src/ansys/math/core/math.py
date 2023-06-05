@@ -630,7 +630,9 @@ class AnsMath:
 
         Examples
         --------
-        >>> mass = mapdl.math.mass()
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
+        >>> mass = mm.mass()
         >>> mass
         AnsMath matrix 60 x 60
 
@@ -672,7 +674,9 @@ class AnsMath:
 
         Examples
         --------
-        >>> ans_mat = mapdl.math.damp()
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
+        >>> ans_mat = mm.damp()
         >>> ans_mat
         AnsMath Matrix 60 x 60
 
@@ -1367,7 +1371,8 @@ class AnsMathObj:
 
         Examples
         --------
-        >>> mm = mapdl.math
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
         >>> m1 = mm.rand(3, 3)
         >>> m2 = mm.rand(4,2)
         >>> res = m1.kron(m2)
@@ -1424,7 +1429,7 @@ class AnsMathObj:
 
     def __imul__(self, val):
         mapdl_version = self._mapdl.version
-        self._mapdl._log.info("Call Mapdl to scale the object")
+        self._mapdl._log.info("Call MAPDL to scale the object")
 
         if isinstance(val, AnsVec):
             if mapdl_version < 23.2:  # pragma: no cover
