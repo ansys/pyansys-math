@@ -17,7 +17,6 @@ Eigenshape
 eigenshapes
 eigensolvers
 MAPDL
-Mapdl
 mapdl
 my_mat
 nax
