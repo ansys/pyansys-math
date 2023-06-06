@@ -11,26 +11,27 @@ from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core._version import SUPPORTED_ANSYS_VERSIONS
 from ansys.mapdl.core.errors import MapdlExitedError
 from ansys.mapdl.core.launcher import MAPDL_DEFAULT_PORT, get_start_instance
-from ansys.mapdl.core.misc import get_ansys_bin
+from ansys.tools.path import find_ansys
 
 # Check if MAPDL is installed
 # NOTE: checks in this order to get the newest installed version
 
 
-valid_rver = [str(each) for each in SUPPORTED_ANSYS_VERSIONS]
+valid_rver = SUPPORTED_ANSYS_VERSIONS.keys()
 
-EXEC_FILE = None
-for rver in valid_rver:
-    if os.path.isfile(get_ansys_bin(rver)):
-        EXEC_FILE = get_ansys_bin(rver)
-        break
+EXEC_FILE, rver = find_ansys()
+if rver:
+    rver = int(rver * 10)
+    HAS_GRPC = int(rver) >= 211 or ON_CI
+else:
+    # assuming remote with gRPC
+    HAS_GRPC = True
 
 # Cache if gRPC MAPDL is installed.
 #
 # minimum version on linux.  Windows is v202, but using v211 for consistency
 # Override this if running on CI/CD and PYMAPDL_PORT has been specified
 ON_CI = "PYMAPDL_START_INSTANCE" in os.environ and "PYMAPDL_PORT" in os.environ
-HAS_GRPC = int(rver) >= 211 or ON_CI
 
 
 # determine if we can launch an instance of MAPDL locally
