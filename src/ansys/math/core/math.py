@@ -252,7 +252,7 @@ class AnsMath:
                 mat.rand()
             elif init == "ones":
                 mat.ones()
-            elif init == "zeros":
+            elif init == "zeros" or init is None:
                 mat.zeros()
             elif init is not None:
                 raise ValueError(f"Invalid initialization method '{init}'.")

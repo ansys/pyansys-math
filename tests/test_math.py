@@ -107,13 +107,11 @@ def test_vec(mm):
     assert isinstance(arr, np.ndarray)
 
 
-def test_vec_from_name(mm):
-    vec0 = mm.vec(10)
+@pytest.mark.parametrize("vecval", [np.zeros(10), np.array([1.0, 2.0, 8.0, 5.0, 6.2]), np.ones(3)])
+def test_vec_from_name(mm, vecval):
+    vec0 = mm.set_vec(vecval)
     vec1 = mm.vec(name=vec0.id)
-    assert np.allclose(vec0, vec1)
-
-    vec1 = mm.vec(name=vec0.id, asarray=True)
-    assert isinstance(vec1, np.ndarray)
+    assert np.allclose(vecval, vec1.asarray())
 
 
 def test_vec__mul__(mm):
@@ -346,6 +344,20 @@ def test_mat_from_name_sparse(mm):
     mat0 = mm.matrix(scipy_mat)
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
+
+
+@pytest.mark.parametrize(
+    "matval",
+    [
+        np.zeros((5, 5)),
+        np.array([[1.0, 2.0, 8.0, 5.0, 6.2], [5.1, 3.8, 8.2, 4.5, 2.0]]),
+        np.ones((3, 4)),
+    ],
+)
+def test_mat_from_name_sparse(mm, matval):
+    mat0 = mm.matrix(matval)
+    mat1 = mm.mat(name=mat0.id)
+    assert np.allclose(matval, mat1.asarray())
 
 
 def test_mat_invalid_dtype(mm):
