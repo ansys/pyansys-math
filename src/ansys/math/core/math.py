@@ -252,7 +252,9 @@ class AnsMath:
                 mat.rand()
             elif init == "ones":
                 mat.ones()
-            elif init != "zeros":
+            elif init == "zeros":
+                mat.zeros()
+            elif init is not None:
                 raise ValueError(f"Invalid initialization method '{init}'.")
         else:
             info = self._mapdl._data_info(name)
