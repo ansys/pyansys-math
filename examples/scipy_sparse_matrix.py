@@ -26,7 +26,8 @@ mm = pymath.AnsMath()
 # get the stiff (``k``) matrix from the FULL file.
 
 out = mm._mapdl.input(vmfiles["vm153"])
-k = mm.stiff(fname="PRSMEMB.full")
+fullfile = mm._mapdl.jobname + ".full"
+k = mm.stiff(fname=fullfile)
 
 ################################################################################
 # Copy AnsMath sparse matrix to SciPy CSR matrix and plot
