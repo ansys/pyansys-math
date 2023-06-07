@@ -165,7 +165,7 @@ class AnsMath:
         """
         print(self._status)
 
-    def vec(self, size=0, dtype=np.double, init="zeros", name=None, asarray=False):
+    def vec(self, size=0, dtype=np.double, init=None, name=None, asarray=False):
         """Create a vector.
 
         Parameters
@@ -209,7 +209,7 @@ class AnsMath:
 
         return vec
 
-    def mat(self, nrow=1, ncol=1, dtype=np.double, init="zeros", name=None, asarray=False):
+    def mat(self, nrow=1, ncol=1, dtype=np.double, init=None, name=None, asarray=False):
         """Create a matrix.
 
         Parameters
