@@ -13,7 +13,7 @@ from ansys.mapdl.core.common_grpc import (
     DEFAULT_CHUNKSIZE,
     DEFAULT_FILE_CHUNK_SIZE,
 )
-from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc, VersionError
+from ansys.mapdl.core.errors import ANSYSDataTypeError, VersionError, protect_grpc
 from ansys.mapdl.core.launcher import launch_mapdl
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
