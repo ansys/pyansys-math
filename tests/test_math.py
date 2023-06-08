@@ -323,6 +323,7 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
     with pytest.raises(TypeError, match=r"``name`` parameter must be a string"):
         mm.load_matrix_from_file(name=1245)
 
+
 def test_mat_asarray(mm):
     mat0 = mm.mat(10, 10, asarray=True)
     mat1 = mm.mat(10, 10)
