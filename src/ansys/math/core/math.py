@@ -13,6 +13,7 @@ from ansys.mapdl.core.common_grpc import (
     DEFAULT_CHUNKSIZE,
     DEFAULT_FILE_CHUNK_SIZE,
 )
+from ansys.mapdl.core import VERSION_MAP
 from ansys.mapdl.core.errors import ANSYSDataTypeError, VersionError, protect_grpc
 from ansys.mapdl.core.launcher import launch_mapdl
 from ansys.mapdl.core.misc import load_file
@@ -1172,7 +1173,7 @@ class AnsMath:
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
 
-    @requires_version((0, 4, 0))
+    @requires_version((0, 4, 0), VERSION_MAP)
     def _send_dense(self, mname, arr, dtype, chunk_size):
         """Send a dense NumPy array/matrix to MAPDL."""
         if dtype is not None:
