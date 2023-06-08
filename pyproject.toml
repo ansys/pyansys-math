@@ -85,7 +85,7 @@ default_section = "THIRDPARTY"
 src_paths = ["doc", "src", "tests"]
 
 [tool.coverage.run]
-source = ["src"]
+source = ["ansys/pyansys-math"]
 
 [tool.coverage.report]
 show_missing = true
