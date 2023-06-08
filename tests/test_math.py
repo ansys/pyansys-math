@@ -323,25 +323,10 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
     with pytest.raises(TypeError, match=r"``name`` parameter must be a string"):
         mm.load_matrix_from_file(name=1245)
 
-
-def test_mat_from_name(mm):
-    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
-    # value other than the default one.
-    mat1 = mm.mat(name=mat0.id)
-    assert np.allclose(mat0, mat1)
-
-
 def test_mat_asarray(mm):
     mat0 = mm.mat(10, 10, asarray=True)
     mat1 = mm.mat(10, 10)
     assert np.allclose(mat0, mat1.asarray())
-
-
-def test_mat_from_name_sparse(mm):
-    scipy_mat = sparse.random(5, 5, density=1, format="csr")
-    mat0 = mm.matrix(scipy_mat)
-    mat1 = mm.mat(name=mat0.id)
-    assert np.allclose(mat0, mat1)
 
 
 @pytest.mark.parametrize(
@@ -352,10 +337,24 @@ def test_mat_from_name_sparse(mm):
         np.ones((3, 4)),
     ],
 )
-def test_mat_from_name_sparse(mm, matval):
+def test_mat_array_from_name(mm, matval):
     mat0 = mm.matrix(matval)
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(matval, mat1.asarray())
+
+
+def test_mat_mapdl_from_name(mm):
+    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
+    # value other than the default one.
+    mat1 = mm.mat(name=mat0.id)
+    assert np.allclose(mat0, mat1)
+
+
+def test_mat_from_name_sparse(mm):
+    scipy_mat = sparse.random(5, 5, density=1, format="csr")
+    mat0 = mm.matrix(scipy_mat)
+    mat1 = mm.mat(name=mat0.id)
+    assert np.allclose(mat0, mat1)
 
 
 def test_mat_invalid_dtype(mm):
@@ -697,7 +696,7 @@ def test_factorize_inplace_arg(mm):
 def test_mult(mapdl, mm):
     rand_ = np.random.rand(100, 100)
 
-    if not mm._server_version[1] >= 4:
+    if not mm._server_version[1] > 4:
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -718,7 +717,7 @@ def test__parm(mm):
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not mm._server_version[1] >= 4:
+    if not mm._server_version[1] > 4:
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
