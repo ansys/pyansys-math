@@ -1457,7 +1457,7 @@ class AnsVec(AnsMathObj):
             Hadamard product between this vector and the other vector.
         """
         if not server_meets_version(self._mapdl._server_version, (0, 4, 0)):  # pragma: no cover
-            raise VersionError("``AnsVec`` requires MAPDL version 2021R2")
+            raise VersionError("``AnsVec`` requires MAPDL version 2021 R2 or later.")
 
         if not isinstance(vec, AnsVec):
             raise TypeError("The object to be multiplied must be an AnsMath vector.")
