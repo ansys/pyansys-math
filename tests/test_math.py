@@ -5,7 +5,6 @@ import re
 from ansys.mapdl.core.errors import ANSYSDataTypeError, VersionError
 from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
-from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
 import pytest
 from scipy import sparse
