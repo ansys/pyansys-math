@@ -2,7 +2,7 @@
 import os
 import re
 
-from ansys.mapdl.core.errors import ANSYSDataTypeError
+from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
 from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
 from ansys.tools.versioning.exceptions import VersionError
@@ -332,6 +332,13 @@ def test_mat_asarray(mm):
     assert np.allclose(mat0, mat1.asarray())
 
 
+def test_mat_from_name_mapdl(mm):
+    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
+    # value other than the default one.
+    mat1 = mm.mat(name=mat0.id)
+    assert np.allclose(mat0, mat1)
+
+
 @pytest.mark.parametrize(
     "matval",
     [
@@ -340,17 +347,14 @@ def test_mat_asarray(mm):
         np.ones((3, 4)),
     ],
 )
-def test_mat_array_from_name(mm, matval):
-    mat0 = mm.matrix(matval)
-    mat1 = mm.mat(name=mat0.id)
-    assert np.allclose(matval, mat1.asarray())
-
-
-def test_mat_mapdl_from_name(mm):
-    mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
-    # value other than the default one.
-    mat1 = mm.mat(name=mat0.id)
-    assert np.allclose(mat0, mat1)
+def test_mat_from_name_dense(mm, matval):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
+        with pytest.raises(VersionError):
+            mat0 = mm.matrix(matval)
+    else:
+        mat0 = mm.matrix(matval)
+        mat1 = mm.mat(name=mat0.id)
+        assert np.allclose(matval, mat1.asarray())
 
 
 def test_mat_from_name_sparse(mm):
@@ -633,7 +637,7 @@ def test_invalid_sparse_name(mm):
 def test_free(mm):
     my_mat = mm.ones(10)
     mm.free()
-    with pytest.raises(RuntimeError, match="This vector has been deleted"):
+    with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
         my_mat.size
 
 
