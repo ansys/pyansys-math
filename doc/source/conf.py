@@ -118,12 +118,12 @@ sphinx_gallery_conf = {
     "thumbnail_size": (350, 350),
 }
 
-# Intersphinx mapping
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-    "scipy": ("https://docs.scipy.org/doc/scipy", None),
-    "numpy": ("https://numpy.org/doc/stable", None),
-}
+# # Intersphinx mapping
+# intersphinx_mapping = {
+#     "python": ("https://docs.python.org/3", None),
+#     "scipy": ("https://docs.scipy.org/doc/scipy", None),
+#     "numpy": ("https://numpy.org/doc/stable", None),
+# }
 
 suppress_warnings = ["label.*"]
 # numpydoc configuration
