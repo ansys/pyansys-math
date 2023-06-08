@@ -698,7 +698,7 @@ def test_factorize_inplace_arg(mm):
 def test_mult(mapdl, mm):
     rand_ = np.random.rand(100, 100)
 
-    if not server_meets_version(mapdl._server_version, (0, 4, 0)):
+    if not mm._server_version[1] >= 4:
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -719,7 +719,7 @@ def test__parm(mm):
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not server_meets_version(mm._mapdl._server_version, (0, 4, 0)):
+    if not mm._server_version[1] >= 4:
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
