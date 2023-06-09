@@ -27,7 +27,7 @@ mm = pymath.AnsMath()
 # After a solve command, the ``FULL`` file contains the assembled stiffness
 # matrix, mass matrix, and load vector.
 #
-out = mm._mapdl.input(vmfiles["vm153"])
+out = mm._mapdl.input(vmfiles["vm152"])
 
 ###############################################################################
 # List files in current directory
@@ -47,7 +47,8 @@ mm._mapdl.list_files()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Print the dimensions of the sparse matrix.
 
-k = mm.stiff(fname="PRSMEMB.full", name="K")
+fullfile = mm._mapdl.jobname + ".full"
+k = mm.stiff(fname=fullfile, name="K")
 k
 
 ################################################################################
@@ -74,8 +75,7 @@ ky
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Extract the load vector from the FULL file and print the norm of this
 # vector.
-
-b = mm.rhs(fname="PRSMEMB.full", name="B")
+b = mm.rhs(fname=fullfile, name="B")
 b.norm()
 
 ###############################################################################

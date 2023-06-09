@@ -2,7 +2,7 @@
 import os
 import re
 
-from ansys.mapdl.core.errors import ANSYSDataTypeError
+from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
 from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
 from ansys.tools.versioning.exceptions import VersionError
@@ -107,13 +107,11 @@ def test_vec(mm):
     assert isinstance(arr, np.ndarray)
 
 
-def test_vec_from_name(mm):
-    vec0 = mm.vec(10)
+@pytest.mark.parametrize("vecval", [np.zeros(10), np.array([1.0, 2.0, 8.0, 5.0, 6.2]), np.ones(3)])
+def test_vec_from_name(mm, vecval):
+    vec0 = mm.set_vec(vecval)
     vec1 = mm.vec(name=vec0.id)
-    assert np.allclose(vec0, vec1)
-
-    vec1 = mm.vec(name=vec0.id, asarray=True)
-    assert isinstance(vec1, np.ndarray)
+    assert np.allclose(vecval, vec1.asarray())
 
 
 def test_vec__mul__(mm):
@@ -328,17 +326,35 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
         mm.load_matrix_from_file(name=1245)
 
 
-def test_mat_from_name(mm):
+def test_mat_asarray(mm):
+    mat0 = mm.mat(10, 10, asarray=True)
+    mat1 = mm.mat(10, 10)
+    assert np.allclose(mat0, mat1.asarray())
+
+
+def test_mat_from_name_mapdl(mm):
     mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
     # value other than the default one.
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
 
 
-def test_mat_asarray(mm):
-    mat0 = mm.mat(10, 10, asarray=True)
-    mat1 = mm.mat(10, 10)
-    assert np.allclose(mat0, mat1.asarray())
+@pytest.mark.parametrize(
+    "matval",
+    [
+        np.zeros((5, 5)),
+        np.array([[1.0, 2.0, 8.0, 5.0, 6.2], [5.1, 3.8, 8.2, 4.5, 2.0]]),
+        np.ones((3, 4)),
+    ],
+)
+def test_mat_from_name_dense(mm, matval):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
+        with pytest.raises(VersionError):
+            mat0 = mm.matrix(matval)
+    else:
+        mat0 = mm.matrix(matval)
+        mat1 = mm.mat(name=mat0.id)
+        assert np.allclose(matval, mat1.asarray())
 
 
 def test_mat_from_name_sparse(mm):
@@ -621,7 +637,7 @@ def test_invalid_sparse_name(mm):
 def test_free(mm):
     my_mat = mm.ones(10)
     mm.free()
-    with pytest.raises(RuntimeError, match="This vector has been deleted"):
+    with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
         my_mat.size
 
 
@@ -687,7 +703,7 @@ def test_factorize_inplace_arg(mm):
 def test_mult(mapdl, mm):
     rand_ = np.random.rand(100, 100)
 
-    if not server_meets_version(mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -708,7 +724,7 @@ def test__parm(mm):
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not server_meets_version(mm._mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
