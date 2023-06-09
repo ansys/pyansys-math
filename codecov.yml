@@ -2,6 +2,7 @@ comment:
   layout: "diff"
   behavior: default
   require_changes: true  # Avoid coverage comment if no files are changed.
+  github_checks: true
 
 coverage:
   range: 70..100
