@@ -85,9 +85,9 @@ html_context = {
 extensions = [
     "jupyter_sphinx",
     "notfound.extension",  # for the not found page.
+    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "numpydoc",
     "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",

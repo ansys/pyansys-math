@@ -15,7 +15,7 @@
 .. _grpc: https://grpc.io/
 .. _numpy_docs: https://numpy.org/doc/stable/
 .. _precommit: https://pre-commit.com/
-.. _scipy_docs: https://docs.scipy.org/doc/scipy/reference/
+.. _scipy_docs: https://docs.scipy.org/doc/scipy/
 
 .. #Other projects
 .. _dpf_post_docs: https://post.docs.pyansys.com/

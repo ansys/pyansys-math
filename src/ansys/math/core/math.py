@@ -8,17 +8,21 @@ from warnings import warn
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
+from ansys.mapdl.core import VERSION_MAP, launch_mapdl
 from ansys.mapdl.core.common_grpc import (
     ANSYS_VALUE_TYPE,
     DEFAULT_CHUNKSIZE,
     DEFAULT_FILE_CHUNK_SIZE,
 )
-from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
-from ansys.mapdl.core.launcher import launch_mapdl
+from ansys.mapdl.core.errors import (
+    ANSYSDataTypeError,
+    MapdlRuntimeError,
+    VersionError,
+    protect_grpc,
+)
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
 from ansys.tools.versioning import requires_version
-from ansys.tools.versioning.exceptions import VersionError
 from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
 
@@ -165,7 +169,7 @@ class AnsMath:
         """
         print(self._status)
 
-    def vec(self, size=0, dtype=np.double, init="zeros", name=None, asarray=False):
+    def vec(self, size=0, dtype=np.double, init=None, name=None, asarray=False):
         """Create a vector.
 
         Parameters
@@ -209,7 +213,7 @@ class AnsMath:
 
         return vec
 
-    def mat(self, nrow=1, ncol=1, dtype=np.double, init="zeros", name=None, asarray=False):
+    def mat(self, nrow=1, ncol=1, dtype=np.double, init=None, name=None, asarray=False):
         """Create a matrix.
 
         Parameters
@@ -252,7 +256,9 @@ class AnsMath:
                 mat.rand()
             elif init == "ones":
                 mat.ones()
-            elif init != "zeros":
+            elif init == "zeros" or init is None:
+                mat.zeros()
+            elif init is not None:
                 raise ValueError(f"Invalid initialization method '{init}'.")
         else:
             info = self._mapdl._data_info(name)
@@ -1188,7 +1194,7 @@ class AnsMath:
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
 
-    @requires_version((0, 4, 0))
+    @requires_version((0, 4, 0), VERSION_MAP)
     def _send_dense(self, mname, arr, dtype, chunk_size):
         """Send a dense NumPy array/matrix to MAPDL."""
         if dtype is not None:
@@ -1493,10 +1499,10 @@ class AnsVec(AnsMathObj):
 
     @property
     def size(self):
-        """Number of items in the vector."""
+        """Number of items in this vector."""
         sz = self._mapdl.scalar_param(f"{self.id}_DIM")
         if sz is None:
-            raise RuntimeError("This vector has been deleted within MAPDL.")
+            raise MapdlRuntimeError("This vector has been deleted within MAPDL.")
         return int(sz)
 
     def __repr__(self):
