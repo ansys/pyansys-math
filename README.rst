@@ -23,6 +23,10 @@ PyAnsys Math
   :target: https://github.com/psf/black
   :alt: black
 
+.. |pre-commit| image:: https://results.pre-commit.ci/badge/github/ansys/pyansys-math/main.svg
+   :target: https://results.pre-commit.ci/latest/github/ansys/pyansys-math/main
+   :alt: pre-commit.ci status
+
 
 PyAnsys Math is a Python repository holding Ansys mathematical libraries.
 To use them, you must have a local installation of Ansys Mechanical APDL.
