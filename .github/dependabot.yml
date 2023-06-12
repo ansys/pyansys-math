@@ -6,8 +6,8 @@ updates:
     schedule:
       interval: "weekly"
     labels:
-      - "Maintenance"
-      - "Dependencies"
+      - "maintenance"
+      - "dependencies"
 
   - package-ecosystem: "github-actions"
     directory: "/"
