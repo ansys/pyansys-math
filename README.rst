@@ -10,11 +10,11 @@ PyAnsys Math
 .. |pypi| image:: https://img.shields.io/pypi/v/ansys-math-core.svg?logo=python&logoColor=white
    :target: https://pypi.org/project/ansys-math-core/
 
-.. |codecov| image:: https://codecov.io/gh/pyansys/pyansys-math/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/pyansys/pyansys-math
+.. |codecov| image:: https://codecov.io/gh/ansys/pyansys-math/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/ansys/pyansys-math
 
-.. |GH-CI| image:: https://github.com/pyansys/pyansys-math/actions/workflows/ci_cd.yml/badge.svg
-   :target: https://github.com/pyansys/pyansys-math/actions/workflows/ci_cd.yml
+.. |GH-CI| image:: https://github.com/ansys/pyansys-math/actions/workflows/ci_cd.yml/badge.svg
+   :target: https://github.com/ansys/pyansys-math/actions/workflows/ci_cd.yml
 
 .. |MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -22,6 +22,10 @@ PyAnsys Math
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=flat
   :target: https://github.com/psf/black
   :alt: black
+
+.. |pre-commit| image:: https://results.pre-commit.ci/badge/github/ansys/pyansys-math/main.svg
+   :target: https://results.pre-commit.ci/latest/github/ansys/pyansys-math/main
+   :alt: pre-commit.ci status
 
 
 PyAnsys Math is a Python repository holding Ansys mathematical libraries.
@@ -37,13 +41,8 @@ Installation
 
 For users
 ~~~~~~~~~
-The ``ansys.math.core`` package currently supports Python 3.7 through
-Python 3.10 on Windows, Mac OS, and Linux.
-
-.. warning:: 
-
-   ``ansys.math.core`` will no longer support Python 3.7 by June 2023.
-
+The ``ansys.math.core`` package currently supports Python 3.8 through
+Python 3.11 on Windows, Mac OS, and Linux.
 
 Install the latest package for use with this command:
 
@@ -52,12 +51,12 @@ Install the latest package for use with this command:
    pip install ansys-math-core
 
 Alternatively, install the latest
-`PyAnsys Math GitHub <https://github.com/pyansys/pyansys-math.git>`_ package
+`PyAnsys Math GitHub <https://github.com/ansys/pyansys-math.git>`_ package
 with this command:
 
 .. code::
 
-   pip install git+https://github.com/pyansys/pyansys-math.git
+   pip install git+https://github.com/ansys/pyansys-math.git
 
 
 
@@ -67,7 +66,7 @@ For a local *development* version, install the latest package with:
 
 .. code::
 
-   git clone https://github.com/pyansys/pyansys-math.git
+   git clone https://github.com/ansys/pyansys-math.git
    cd pyansys-math
    pip install -e .
 

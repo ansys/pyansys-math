@@ -2,7 +2,7 @@
 import os
 import re
 
-from ansys.mapdl.core.errors import ANSYSDataTypeError
+from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
 from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
 from ansys.tools.versioning.exceptions import VersionError
@@ -25,10 +25,37 @@ directory creation.
 )
 
 
+PATH = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(PATH, "test_files")
+
+
 @pytest.fixture(scope="module")
 def mm(mapdl):
     mm = pymath.AnsMath(mapdl)
     return mm
+
+
+@pytest.fixture()
+def cube_with_damping(mm):
+    mm._mapdl.prep7()
+    db = os.path.join(lib_path, "model_damping.db")
+    mm._mapdl.upload(db)
+    mm._mapdl.resume("model_damping.db")
+    mm._mapdl.mp("dens", 1, 7800 / 0.5)
+
+    mm._mapdl.slashsolu()
+    mm._mapdl.antype("modal")
+    mm._mapdl.modopt("damp", 5)
+    mm._mapdl.mxpand(5)
+    mm._mapdl.mascale(0.15)
+
+    mm._mapdl.alphad(10)
+    mm._mapdl.solve()
+    mm._mapdl.save()
+    if mm._mapdl._distributed:
+        mm._mapdl.aux2()
+        mm._mapdl.combine("full")
+        mm._mapdl.slashsolu()
 
 
 def test_ones(mm):
@@ -73,6 +100,19 @@ def test_inplace_mult(mm):
     assert v[0] == 2
 
 
+def test_inplace_mult_with_vec(mm):
+    mapdl_version = mm._mapdl.version
+    if mapdl_version < 23.2:
+        pytest.skip("Requires MAPDL 2023 R2 or later.")
+
+    m1 = mm.rand(3, 3)
+    m2 = m1.copy()
+    v1 = mm.ones(3)
+    v1.const(2)
+    m2 *= v1
+    assert np.allclose(m2, np.multiply(m1, v1) * v1)
+
+
 def test_set_vec_large(mm):
     # send a vector larger than the gRPC size limit of 4 MB
     sz = 1000000
@@ -107,8 +147,9 @@ def test_vec(mm):
     assert isinstance(arr, np.ndarray)
 
 
-def test_vec_from_name(mm):
-    vec0 = mm.vec(10)
+@pytest.mark.parametrize("vecval", [np.zeros(10), np.array([1.0, 2.0, 8.0, 5.0, 6.2]), np.ones(3)])
+def test_vec_from_name(mm, vecval):
+    vec0 = mm.set_vec(vecval)
     vec1 = mm.vec(name=vec0.id)
     assert np.allclose(vec0, vec1)
 
@@ -210,7 +251,7 @@ def test_matrix_matmult(mm):
     assert np.allclose(m1.asarray() @ m2.asarray(), m3.asarray())
 
 
-def test_getitem(mm):
+def test_getitem_AnsMat(mm):
     size_i, size_j = (3, 3)
     mat = mm.rand(size_i, size_j)
     np_mat = mat.asarray()
@@ -220,6 +261,49 @@ def test_getitem(mm):
         for j in range(size_j):
             # recall that MAPDL uses fortran order
             assert vec[j] == np_mat[j, i]
+
+
+@pytest.mark.parametrize("dtype_", [np.int64, np.double, np.complex128])
+def test_getitem_AnsVec(mm, dtype_):
+    size_i = 3
+    vec = mm.rand(size_i, dtype=dtype_)
+    np_vec = vec.asarray()
+    for i in range(size_i):
+        assert vec[i] == np_vec[i]
+
+
+@pytest.mark.parametrize("dtype_", [np.double, np.complex128])
+def test_kron_product(mm, dtype_):
+    mapdl_version = mm._mapdl.version
+    if mapdl_version < 23.2:
+        pytest.skip("Requires MAPDL 2023 R2 or later.")
+
+    m1 = mm.rand(3, 3, dtype=dtype_)
+    m2 = mm.rand(2, 2, dtype=dtype_)
+    v1 = mm.rand(2, dtype=dtype_)
+    v2 = mm.rand(4, dtype=dtype_)
+    # *kron product between matrix and another matrix
+    res1 = m1.kron(m2)
+
+    # *kron product between Vector and a matrix
+    res2 = v1.kron(m2)
+
+    # *kron product between Vector and another Vector
+    res3 = v1.kron(v2)
+
+    assert np.allclose(res1.asarray(), np.kron(m1, m2))
+    assert np.allclose(res2.asarray(), np.kron(v1.asarray().reshape(2, 1), m2))
+    assert np.allclose(res3.asarray(), np.kron(v1, v2))
+
+
+def test_kron_product_unsupported_dtype(mm):
+    mapdl_version = mm._mapdl.version
+    if mapdl_version < 23.2:
+        pytest.skip("Requires MAPDL 2023 R2 or later.")
+
+    with pytest.raises(TypeError, match=r"Must be an ApdlMathObj"):
+        m1 = mm.rand(3, 3)
+        m1.kron(2)
 
 
 def test_load_stiff_mass(mm, cube_solve, tmpdir):
@@ -328,17 +412,35 @@ def test_load_matrix_from_file_incorrect_name(mm, cube_solve):
         mm.load_matrix_from_file(name=1245)
 
 
-def test_mat_from_name(mm):
+def test_mat_asarray(mm):
+    mat0 = mm.mat(10, 10, asarray=True)
+    mat1 = mm.mat(10, 10)
+    assert np.allclose(mat0, mat1.asarray())
+
+
+def test_mat_from_name_mapdl(mm):
     mat0 = mm.mat(10, 10, init="ones")  # The test has to be done with a
     # value other than the default one.
     mat1 = mm.mat(name=mat0.id)
     assert np.allclose(mat0, mat1)
 
 
-def test_mat_asarray(mm):
-    mat0 = mm.mat(10, 10, asarray=True)
-    mat1 = mm.mat(10, 10)
-    assert np.allclose(mat0, mat1.asarray())
+@pytest.mark.parametrize(
+    "matval",
+    [
+        np.zeros((5, 5)),
+        np.array([[1.0, 2.0, 8.0, 5.0, 6.2], [5.1, 3.8, 8.2, 4.5, 2.0]]),
+        np.ones((3, 4)),
+    ],
+)
+def test_mat_from_name_dense(mm, matval):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
+        with pytest.raises(VersionError):
+            mat0 = mm.matrix(matval)
+    else:
+        mat0 = mm.matrix(matval)
+        mat1 = mm.mat(name=mat0.id)
+        assert np.allclose(matval, mat1.asarray())
 
 
 def test_mat_from_name_sparse(mm):
@@ -621,7 +723,7 @@ def test_invalid_sparse_name(mm):
 def test_free(mm):
     my_mat = mm.ones(10)
     mm.free()
-    with pytest.raises(RuntimeError, match="This vector has been deleted"):
+    with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
         my_mat.size
 
 
@@ -687,7 +789,7 @@ def test_factorize_inplace_arg(mm):
 def test_mult(mapdl, mm):
     rand_ = np.random.rand(100, 100)
 
-    if not server_meets_version(mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -708,7 +810,7 @@ def test__parm(mm):
     mat = sparse.random(sz, sz, density=0.05, format="csr")
 
     rand_ = np.random.rand(100, 100)
-    if not server_meets_version(mm._mapdl._server_version, (0, 4, 0)):
+    if not server_meets_version(mm._server_version, (0, 4, 0)):
         with pytest.raises(VersionError):
             AA = mm.matrix(rand_, name="AA")
 
@@ -773,6 +875,42 @@ def test_vec2(mm):
     parameter_ = mm._parm["ASDF"]
     assert parameter_["type"] == "VEC"
     assert parameter_["dimensions"] == vec_.size
+
+
+def test_damp_matrix(mm, cube_with_damping):
+    d = mm.damp()
+    m = mm.mass()
+
+    assert d.shape == m.shape
+    assert isinstance(d, pymath.AnsMat)
+
+
+def test_damp_matrix_as_array(mm, cube_with_damping):
+    d = mm.damp()
+    d = d.asarray()
+
+    assert sparse.issparse(d)
+    assert all([each > 0 for each in d.shape])
+
+    d = mm.damp(asarray=True)
+    assert sparse.issparse(d)
+    assert all([each > 0 for each in d.shape])
+
+
+@pytest.mark.parametrize("dtype_", [np.int64, np.double])
+def test_damp_matrix_dtype(mm, cube_with_damping, dtype_):
+    d = mm.stiff(asarray=True, dtype=dtype_)
+
+    assert sparse.issparse(d)
+    assert all([each > 0 for each in d.shape])
+    assert d.dtype == dtype_
+
+    d = mm.stiff(dtype=dtype_)
+    d = d.asarray(dtype=dtype_)
+
+    assert sparse.issparse(d)
+    assert all([each > 0 for each in d.shape])
+    assert d.dtype == dtype_
 
 
 @pytest.fixture(scope="module")

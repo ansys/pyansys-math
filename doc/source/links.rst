@@ -4,8 +4,8 @@
 .. #PyAnsys Math related
 .. _pymath_docs: https://math.docs.pyansys.com/
 .. _pymath_dev_docs: https://math.docs.pyansys.com/dev/
-.. _pymath_issues: https://github.com/pyansys/pyansys-math/issues
-.. _pymath_github: https://github.com/pyansys/pyansys-math.git
+.. _pymath_issues: https://github.com/ansys/pyansys-math/issues
+.. _pymath_github: https://github.com/ansys/pyansys-math.git
 
 .. #MAPDL related
 .. _mapdl_tech_show: https://ansyshelp.ansys.com/account/secured?returnurl=/Views/Secured/corp/v222/en/wb_wbtec/wb_wbtec.html
@@ -15,7 +15,7 @@
 .. _grpc: https://grpc.io/
 .. _numpy_docs: https://numpy.org/doc/stable/
 .. _precommit: https://pre-commit.com/
-.. _scipy_docs: https://docs.scipy.org/doc/scipy/reference/
+.. _scipy_docs: https://docs.scipy.org/doc/scipy/
 
 .. #Other projects
 .. _dpf_post_docs: https://post.docs.pyansys.com/
@@ -42,5 +42,5 @@
 
 .. #PyMAPDL related
 .. _pymapdl_docs: https://mapdl.docs.pyansys.com
-.. _pymapdl_github: https://github.com/pyansys/pymapdl
+.. _pymapdl_github: https://github.com/ansys/pymapdl
 .. _pymapdl_examples: https://mapdl.docs.pyansys.com/dev/examples/index.html

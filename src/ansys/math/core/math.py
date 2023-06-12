@@ -8,17 +8,21 @@ from warnings import warn
 
 from ansys.api.mapdl.v0 import ansys_kernel_pb2 as anskernel
 from ansys.api.mapdl.v0 import mapdl_pb2 as pb_types
+from ansys.mapdl.core import VERSION_MAP, launch_mapdl
 from ansys.mapdl.core.common_grpc import (
     ANSYS_VALUE_TYPE,
     DEFAULT_CHUNKSIZE,
     DEFAULT_FILE_CHUNK_SIZE,
 )
-from ansys.mapdl.core.errors import ANSYSDataTypeError, protect_grpc
-from ansys.mapdl.core.launcher import launch_mapdl
+from ansys.mapdl.core.errors import (
+    ANSYSDataTypeError,
+    MapdlRuntimeError,
+    VersionError,
+    protect_grpc,
+)
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
 from ansys.tools.versioning import requires_version
-from ansys.tools.versioning.exceptions import VersionError
 from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
 
@@ -165,7 +169,7 @@ class AnsMath:
         """
         print(self._status)
 
-    def vec(self, size=0, dtype=np.double, init="zeros", name=None, asarray=False):
+    def vec(self, size=0, dtype=np.double, init=None, name=None, asarray=False):
         """Create a vector.
 
         Parameters
@@ -209,7 +213,7 @@ class AnsMath:
 
         return vec
 
-    def mat(self, nrow=1, ncol=1, dtype=np.double, init="zeros", name=None, asarray=False):
+    def mat(self, nrow=1, ncol=1, dtype=np.double, init=None, name=None, asarray=False):
         """Create a matrix.
 
         Parameters
@@ -252,7 +256,9 @@ class AnsMath:
                 mat.rand()
             elif init == "ones":
                 mat.ones()
-            elif init != "zeros":
+            elif init == "zeros" or init is None:
+                mat.zeros()
+            elif init is not None:
                 raise ValueError(f"Invalid initialization method '{init}'.")
         else:
             info = self._mapdl._data_info(name)
@@ -630,7 +636,9 @@ class AnsMath:
 
         Examples
         --------
-        >>> mass = mapdl.math.mass()
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
+        >>> mass = mm.mass()
         >>> mass
         AnsMath matrix 60 x 60
 
@@ -672,7 +680,9 @@ class AnsMath:
 
         Examples
         --------
-        >>> ans_mat = mapdl.math.damp()
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
+        >>> ans_mat = mm.damp()
         >>> ans_mat
         AnsMath Matrix 60 x 60
 
@@ -900,7 +910,18 @@ class AnsMath:
         kwargs.setdefault("mute", True)
         self._mapdl.run(f"*COMP,{mat.id},SPARSE,{thresh}", **kwargs)
 
-    def eigs(self, nev, k, m=None, c=None, phi=None, algo=None, fmin=None, fmax=None):
+    def eigs(
+        self,
+        nev,
+        k,
+        m=None,
+        c=None,
+        phi=None,
+        algo=None,
+        fmin=None,
+        fmax=None,
+        cpxmod=None,
+    ):
         """Solve an eigenproblem.
 
         Parameters
@@ -931,6 +952,8 @@ class AnsMath:
             fmin = ""
         if not fmax:
             fmax = ""
+        if not cpxmod:
+            cpxmod = ""
 
         cid = ""
         if not c:
@@ -945,7 +968,7 @@ class AnsMath:
 
         self._mapdl.run("/SOLU", mute=True)
         self._mapdl.run("antype,modal", mute=True)
-        self._mapdl.run(f"modopt,{algo},{nev},{fmin},{fmax}", mute=True)
+        self._mapdl.run(f"modopt,{algo},{nev},{fmin},{fmax},{cpxmod}", mute=True)
         ev = self.vec()
 
         phistr = "" if not phi else phi.id
@@ -1171,7 +1194,7 @@ class AnsMath:
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
 
-    @requires_version((0, 4, 0))
+    @requires_version((0, 4, 0), VERSION_MAP)
     def _send_dense(self, mname, arr, dtype, chunk_size):
         """Send a dense NumPy array/matrix to MAPDL."""
         if dtype is not None:
@@ -1349,6 +1372,53 @@ class AnsMathObj:
         self._mapdl.run(f"*AXPY,{val1},0,{obj.id},{val2},0,{self.id}", mute=True)
         return self
 
+    def kron(self, obj):
+        """Calculates the Kronecker product of two matrices/vectors
+
+        Parameters
+        ----------
+        obj : ``AnsVec`` or ``AnsMat``
+            AnsMath object.
+
+        Returns
+        -------
+        ``AnsMat`` or ``AnsVec``
+            Kronecker product between the two matrices/vectors.
+
+        .. note::
+            Requires at least MAPDL version 2023R2.
+
+        Examples
+        --------
+        >>> import ansys.math.core.math as pymath
+        >>> mm = pymath.AnsMath()
+        >>> m1 = mm.rand(3, 3)
+        >>> m2 = mm.rand(4,2)
+        >>> res = m1.kron(m2)
+        """
+
+        mapdl_version = self._mapdl.version
+        if mapdl_version < 23.2:  # pragma: no cover
+            raise VersionError("``kron`` requires MAPDL version 2023R2")
+
+        if not isinstance(obj, AnsMath):
+            raise TypeError("Must be an AnsMath object.")
+
+        if not isinstance(self, (AnsMat, AnsVec)):
+            raise TypeError(f"Kron product aborted: Unknown obj type ({self.type})")
+        if not isinstance(obj, (AnsMat, AnsVec)):
+            raise TypeError(f"Kron product aborted: Unknown obj type ({obj.type})")
+
+        name = id_generator()  # internal name of the new vector/matrix
+        # perform the Kronecker product
+        self._mapdl.run(f"*KRON,{self.id},{obj.id},{name}")
+
+        if isinstance(self, AnsVec) and isinstance(obj, AnsVec):
+            objout = AnsVec(name, self._mapdl)
+        else:
+            objout = AnsMat(name, self._mapdl)
+        return objout
+
     def __add__(self, op2):
         if not hasattr(op2, "id"):
             raise TypeError("The object to be added must be an AnsMath object.")
@@ -1377,8 +1447,20 @@ class AnsMathObj:
         return self.axpy(op, -1, 1)
 
     def __imul__(self, val):
-        self._mapdl._log.info("Call MAPDL to scale the object.")
-        self._mapdl.run(f"*SCAL,{self.id},{val}", mute=True)
+        mapdl_version = self._mapdl.version
+        self._mapdl._log.info("Call MAPDL to scale the object")
+
+        if isinstance(val, AnsVec):
+            if mapdl_version < 23.2:  # pragma: no cover
+                raise VersionError("Scaling by a vector requires MAPDL version 2023R2 or superior.")
+            else:
+                self._mapdl._log.info(f"Scaling ({self.type}) by a vector")
+                self._mapdl.run(f"*SCAL,{self.id},{val.id}", mute=False)
+        elif isinstance(val, (int, float)):
+            self._mapdl.run(f"*SCAL,{self.id},{val}", mute=True)
+        else:
+            raise TypeError(f"The provided type {type(val)} is not supported.")
+
         return self
 
     def __itruediv__(self, val):
@@ -1417,20 +1499,34 @@ class AnsVec(AnsMathObj):
 
     @property
     def size(self):
-        """Number of items in the vector."""
+        """Number of items in this vector."""
         sz = self._mapdl.scalar_param(f"{self.id}_DIM")
         if sz is None:
-            raise RuntimeError("This vector has been deleted within MAPDL.")
+            raise MapdlRuntimeError("This vector has been deleted within MAPDL.")
         return int(sz)
 
     def __repr__(self):
         return f"AnsMath vector size {self.size}"
 
     def __getitem__(self, num):
+        info = self._mapdl._data_info(self.id)
+        dtype = ANSYS_VALUE_TYPE[info.stype]
         if num < 0:
-            raise ValueError("Negative indices are not permitted.")
-        self._mapdl.run(f"pyval={self.id}({num+1})", mute=True)
-        return self._mapdl.scalar_param("pyval")
+            raise ValueError("Negative indices not permitted")
+
+        self._mapdl.run(f"pyval_={self.id}({num+1})", mute=True)
+        item_val = self._mapdl.scalar_param("pyval_")
+
+        if MYCTYPE[dtype].upper() in ["C", "Z"]:
+            self._mapdl.run(f"pyval_img_={self.id}({num+1},2)", mute=True)
+            img_val = self._mapdl.scalar_param("pyval_img_")
+            item_val = item_val + img_val * 1j
+
+            # Clean parameters
+            self._mapdl.run("item_val =")
+            self._mapdl.run("pyval_img_=")
+
+        return item_val
 
     def __mul__(self, vec):
         """Return the element-wise product with another AnsMath vector.
@@ -1501,8 +1597,8 @@ class AnsVec(AnsMathObj):
         ----------
         dtype : numpy.dtype, optional
             NumPy data type to upload the array as. The options are `np.double <numpy.double>`_,
-            `np.int32 <numpy.int32>`_, and `np.int64 <numpy.int64>`_. The default is the current array
-            type.
+            `np.int32 <numpy.int32>`_, and `np.int64 <numpy.int64>`_. The default is the current
+            array type.
 
         Returns
         -------

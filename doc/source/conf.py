@@ -51,7 +51,7 @@ html_short_title = html_title = "PyAnsys Math"
 
 # specify the location of your github repo
 html_theme_options = {
-    "github_url": "https://github.com/pyansys/pyansys-math",
+    "github_url": "https://github.com/ansys/pyansys-math",
     "check_switcher": False,
     "show_prev_next": False,
     "show_breadcrumbs": True,
@@ -63,7 +63,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "Support",
-            "url": "https://github.com/pyansys/pyansys-math/discussions",
+            "url": "https://github.com/ansys/pyansys-math/discussions",
             "icon": "fa fa-comment fa-fw",
         },
     ],
@@ -85,9 +85,9 @@ html_context = {
 extensions = [
     "jupyter_sphinx",
     "notfound.extension",  # for the not found page.
+    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "numpydoc",
     "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
