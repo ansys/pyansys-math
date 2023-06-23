@@ -150,6 +150,26 @@ class AnsMath:
         """
         self._mapdl.run("*FREE,ALL", mute=True)
 
+    def free(self, mat=None):
+        """Delete an AnsMath object.
+
+        mat: AnsMath object, optional
+            AnsMath object to be deleted. Default value is None;
+            all the AnsMath objects are deleted.
+
+        Examples
+        --------
+        >>> u = mm.vec(10)
+        >>> v = mm.vec(10)
+        >>> mm.free(u)
+        >>> mm.status()
+
+        """
+        if mat is not None:
+            self._mapdl.run(f"*FREE,{mat.id}", mute=True)
+        else:
+            self._mapdl.run("*FREE,ALL", mute=True)
+
     def __repr__(self):
         return self._status
 
