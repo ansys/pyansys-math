@@ -739,6 +739,13 @@ def test_free_mat(mm):
         my_mat1.size
 
 
+def test_free_mat_failing(mm):
+    my_mat1 = mm.ones(10)
+    arrmy_mat1 = my_mat1.asarray()
+    with pytest.raises(TypeError, match="The object to delete needs to be an AnsMath object."):
+        mm.free(arrmy_mat1)
+
+
 def test_repr(mm):
     assert mm._status == repr(mm)
 

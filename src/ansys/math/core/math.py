@@ -156,7 +156,10 @@ class AnsMath:
 
         """
         if mat is not None:
-            self._mapdl.run(f"*FREE,{mat.id}", mute=True)
+            if isinstance(mat, AnsMathObj):
+                self._mapdl.run(f"*FREE,{mat.id}", mute=True)
+            else:
+                raise TypeError("The object to delete needs to be an AnsMath object.")
         else:
             self._mapdl.run("*FREE,ALL", mute=True)
 
