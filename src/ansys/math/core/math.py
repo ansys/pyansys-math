@@ -141,14 +141,27 @@ class AnsMath:
     def _parm(self):
         return interp_star_status(self._status)
 
-    def free(self):
-        """Delete all AnsMath objects.
+    def free(self, mat=None):
+        """Delete AnsMath objects.
+
+        mat: AnsMath object, optional
+            AnsMath object to be deleted. Default value is None;
+            all the AnsMath objects are deleted.
 
         Examples
         --------
+        >>> u = mm.vec(10)
         >>> mm.free()
+        >>> mm.status()
+
         """
-        self._mapdl.run("*FREE,ALL", mute=True)
+        if mat is not None:
+            if isinstance(mat, AnsMathObj):
+                self._mapdl.run(f"*FREE,{mat.id}", mute=True)
+            else:
+                raise TypeError("The object to delete needs to be an AnsMath object.")
+        else:
+            self._mapdl.run("*FREE,ALL", mute=True)
 
     def __repr__(self):
         return self._status
