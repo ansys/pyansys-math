@@ -141,17 +141,8 @@ class AnsMath:
     def _parm(self):
         return interp_star_status(self._status)
 
-    def free(self):
-        """Delete all AnsMath objects.
-
-        Examples
-        --------
-        >>> mm.free()
-        """
-        self._mapdl.run("*FREE,ALL", mute=True)
-
     def free(self, mat=None):
-        """Delete an AnsMath object.
+        """Delete AnsMath objects.
 
         mat: AnsMath object, optional
             AnsMath object to be deleted. Default value is None;
@@ -160,8 +151,7 @@ class AnsMath:
         Examples
         --------
         >>> u = mm.vec(10)
-        >>> v = mm.vec(10)
-        >>> mm.free(u)
+        >>> mm.free()
         >>> mm.status()
 
         """
