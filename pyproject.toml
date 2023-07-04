@@ -46,7 +46,7 @@ tests = [
     "vtk==9.2.6",
 ]
 doc = [
-    "Sphinx==6.2.1",
+    "Sphinx==7.0.1",
     "ansys-mapdl-core==0.65.0",
     "ansys-mapdl-reader==0.52.17",
     "ansys-sphinx-theme==0.9.9",
@@ -58,10 +58,11 @@ doc = [
     "pytest-sphinx==0.5.0",
     "pyvista==0.40.0",
     "sphinx-autobuild==2021.3.14",
-    "sphinx-autodoc-typehints==1.23.0",
+    "sphinx-autodoc-typehints==1.23.3",
     "sphinx-copybutton==0.5.2",
     "sphinx-notfound-page==0.8.3",
     "sphinx-gallery==0.13.0",
+    "trame==2.5.0",
     "vtk==9.2.6",
 ]
 
