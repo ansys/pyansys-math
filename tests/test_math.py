@@ -720,11 +720,30 @@ def test_invalid_sparse_name(mm):
         mm.matrix(mat, name=1)
 
 
-def test_free(mm):
-    my_mat = mm.ones(10)
+def test_free_all(mm):
+    my_mat1 = mm.ones(10)
+    my_mat2 = mm.ones(10)
     mm.free()
     with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
-        my_mat.size
+        my_mat1.size
+    with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
+        my_mat2.size
+
+
+def test_free_mat(mm):
+    my_mat1 = mm.ones(10)
+    my_mat2 = mm.ones(10)
+    mm.free(my_mat1)
+    assert my_mat2.size == 10
+    with pytest.raises(MapdlRuntimeError, match="This vector has been deleted"):
+        my_mat1.size
+
+
+def test_free_mat_failing(mm):
+    my_mat1 = mm.ones(10)
+    arrmy_mat1 = my_mat1.asarray()
+    with pytest.raises(TypeError, match="The object to delete needs to be an AnsMath object."):
+        mm.free(arrmy_mat1)
 
 
 def test_repr(mm):
