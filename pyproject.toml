@@ -68,7 +68,6 @@ doc = [
     "sphinxcontrib-websupport==1.2.6",
     "trame==3.2.4",
     "typed-ast==1.5.5",
-    "vtk==9.2.6",
 ]
 
 [tool.flit.module]

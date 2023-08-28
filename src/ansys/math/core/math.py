@@ -122,6 +122,7 @@ class AnsMath:
     """
 
     def __init__(self, mapdl=None, **kwargs):
+        """Initiate a common class for abstract math object."""
         if mapdl is None:
             mapdl = launch_mapdl(**kwargs)
 
@@ -1274,6 +1275,7 @@ class AnsMathObj:
     """Provides the common class for AnsMath objects."""
 
     def __init__(self, id_, mapdl=None, dtype=ObjType.GEN):
+        """Initiate a common class for AnsMath objects."""
         if mapdl is None:
             mapdl = launch_mapdl()
         self.id = id_
@@ -1495,6 +1497,7 @@ class AnsVec(AnsMathObj):
     """Provides the AnsMath vector objects."""
 
     def __init__(self, id_, mapdl, dtype=np.double, init=None):
+        """Initiate an AnsMath vector object."""
         AnsMathObj.__init__(self, id_, mapdl, ObjType.VEC)
 
         if init not in ["ones", "zeros", "rand", None]:
@@ -1641,6 +1644,7 @@ class AnsMat(AnsMathObj):
     """Provides the AnsMath matrix objects."""
 
     def __init__(self, id_, mapdl, type_=ObjType.DMAT):
+        """Initiate an AnsMath matrix object."""
         AnsMathObj.__init__(self, id_, mapdl, type_)
 
     @property
@@ -1809,6 +1813,7 @@ class AnsDenseMat(AnsMat):
     """Provides the AnsMath dense matrix objects."""
 
     def __init__(self, uid, mapdl):
+        """Initiate an AnsMath dense matrix object."""
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
 
     def __array__(self):
@@ -1827,6 +1832,7 @@ class AnsSparseMat(AnsMat):
     """Provides the AnsMath sparse matrix objects."""
 
     def __init__(self, uid, mapdl):
+        """Initiate an AnsMath sparse matrix object."""
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
