@@ -299,6 +299,9 @@ jobs:
           pip uninstall vtk -y
           pip install --extra-index-url https://wheels.vtk.org vtk-osmesa
 
+      - name: List
+        run: pip list
+
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v4
         with:
