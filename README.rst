@@ -51,12 +51,12 @@ Install the latest package for use with this command:
    pip install ansys-math-core
 
 Alternatively, install the latest
-`PyAnsys Math GitHub <https://github.com/ansys/pyansys-math.git>`_ package
+`PyAnsys Math GitHub <https://github.com/ansys/pyansys-math>`_ package
 with this command:
 
 .. code::
 
-   pip install git+https://github.com/ansys/pyansys-math.git
+   pip install git+https://github.com/ansys/pyansys-math
 
 
 
@@ -66,7 +66,7 @@ For a local *development* version, install the latest package with:
 
 .. code::
 
-   git clone https://github.com/ansys/pyansys-math.git
+   git clone https://github.com/ansys/pyansys-math
    cd pyansys-math
    pip install -e .
 
