@@ -72,12 +72,12 @@ For a local *development* version, install the latest package with:
 
 
 Installing the development version allows you to edit the ``ansys-math-core``
-package locally. The changes that you do are reflected in your setups
-after restarting the python kernel.
+package locally. The changes that you make are reflected in your setup
+after restarting the Python kernel.
 
 
-Verify your installations
---------------------------
+Verify your installation
+------------------------
 
 Check that you can start PyAnsys Math from Python by running this code:
 
@@ -90,8 +90,8 @@ Check that you can start PyAnsys Math from Python by running this code:
     print(mm)
 
 
-If you see a response from the server, you can start using PyAnsysMath
-as a service .
+If you see a response from the server, you can start using PyAnsys Math
+as a service.
 
 Ansys software requirements
 ---------------------------
