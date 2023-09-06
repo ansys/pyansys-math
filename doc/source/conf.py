@@ -15,15 +15,12 @@ import ansys.math.core.math as pymath
 # Manage errors
 pyvista.set_error_output_file("errors.txt")
 
-# Ensure that offscreen rendering is used for docs generation
-pyvista.OFF_SCREEN = True
-
 # must be less than or equal to the XVFB window size
 try:
-    pyvista.global_theme.window_size = np.array([1024, 768])
+    pyvista.global_theme.window_size = np.array([1024, 768])*2
 except AttributeError:
     # for compatibility with pyvista < 0.40
-    pyvista.rcParams["window_size"] = np.array([1024, 768])
+    pyvista.rcParams["window_size"] = np.array([1024, 768])*2
 
 pyvista.set_plot_theme("document")
 # Save figures in specified directory
@@ -34,7 +31,9 @@ if not os.path.exists(pyvista.FIGURE_PATH):
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
 pymath.BUILDING_GALLERY = True
-os.environ["PYVISTA_BUILDING_GALLERY"] = "true"
+
+# Ensure that offscreen rendering is used for docs generation
+pyvista.OFF_SCREEN = True
 
 # suppress annoying matplotlib bug
 warnings.filterwarnings(
@@ -91,8 +90,6 @@ html_context = {
 
 # Sphinx extensions
 extensions = [
-    "jupyter_sphinx",
-    "notfound.extension",  # for the not found page.
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -100,7 +97,6 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
-    "sphinx.ext.graphviz",
     "pyvista.ext.viewer_directive",
 ]
 
@@ -123,9 +119,8 @@ sphinx_gallery_conf = {
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-math-core",
     "image_scrapers": (DynamicScraper(), "matplotlib"),
-    "ignore_pattern": "flycheck*",
+    "ignore_pattern": r"__init__\.py",
     "thumbnail_size": (350, 350),
-    "reset_modules_order": "both",
 }
 
 # Intersphinx mapping

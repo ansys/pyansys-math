@@ -47,6 +47,8 @@ print(mm._mapdl.input(examples.examples.wing_model))
 
 mm._mapdl.eplot()
 
+# %%
+
 
 ###############################################################################
 # Set up modal analysis
