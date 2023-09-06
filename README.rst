@@ -56,7 +56,7 @@ with this command:
 
 .. code::
 
-   pip install git+https://github.com/ansys/pyansys-math
+   pip install git+https://github.com/ansys/pyansys-math.git
 
 
 
