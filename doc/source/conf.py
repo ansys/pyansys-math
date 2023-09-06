@@ -18,7 +18,6 @@ pyvista.set_error_output_file("errors.txt")
 # must be less than or equal to the XVFB window size
 pyvista.global_theme.window_size = np.array([1024, 768])
 
-pyvista.set_plot_theme("document")
 # Save figures in specified directory
 pyvista.FIGURE_PATH = os.path.join(os.path.abspath("./images/"), "auto-generated/")
 if not os.path.exists(pyvista.FIGURE_PATH):
@@ -115,7 +114,7 @@ sphinx_gallery_conf = {
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-math-core",
     "image_scrapers": (DynamicScraper(), "matplotlib"),
-    "ignore_pattern": r"__init__\.py",
+    "ignore_pattern": "flycheck*",
     "thumbnail_size": (350, 350),
 }
 
