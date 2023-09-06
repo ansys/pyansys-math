@@ -66,7 +66,7 @@ For a local *development* version, install the latest package with:
 
 .. code::
 
-   git clone https://github.com/ansys/pyansys-math
+   git clone https://github.com/ansys/pyansys-math.git
    cd pyansys-math
    pip install -e .
 
