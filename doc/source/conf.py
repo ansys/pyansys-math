@@ -6,6 +6,7 @@ import warnings
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 import numpy as np
 import pyvista
+from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
 from sphinx_gallery.sorting import FileNameSortKey
 
 from ansys.math.core import __version__
@@ -14,15 +15,8 @@ import ansys.math.core.math as pymath
 # Manage errors
 pyvista.set_error_output_file("errors.txt")
 
-# Ensure that offscreen rendering is used for docs generation
-pyvista.OFF_SCREEN = True
-
 # must be less than or equal to the XVFB window size
-try:
-    pyvista.global_theme.window_size = np.array([1024, 768])
-except AttributeError:
-    # for compatibility with pyvista < 0.40
-    pyvista.rcParams["window_size"] = np.array([1024, 768])
+pyvista.global_theme.window_size = np.array([1024, 768])
 
 # Save figures in specified directory
 pyvista.FIGURE_PATH = os.path.join(os.path.abspath("./images/"), "auto-generated/")
@@ -32,6 +26,9 @@ if not os.path.exists(pyvista.FIGURE_PATH):
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
 pymath.BUILDING_GALLERY = True
+
+# Ensure that offscreen rendering is used for docs generation
+pyvista.OFF_SCREEN = True
 
 # suppress annoying matplotlib bug
 warnings.filterwarnings(
@@ -52,6 +49,7 @@ switcher_version = get_version_match(__version__)
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyAnsys Math"
+html_static_path = ["images/_static"]
 
 # specify the location of your github repo
 html_theme_options = {
@@ -87,8 +85,6 @@ html_context = {
 
 # Sphinx extensions
 extensions = [
-    "jupyter_sphinx",
-    "notfound.extension",  # for the not found page.
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -96,7 +92,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
-    "sphinx.ext.graphviz",
+    "pyvista.ext.viewer_directive",
 ]
 
 # -- Sphinx Gallery Options ---------------------------------------------------
@@ -117,7 +113,7 @@ sphinx_gallery_conf = {
     "backreferences_dir": None,
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-math-core",
-    "image_scrapers": ("pyvista", "matplotlib"),
+    "image_scrapers": (DynamicScraper(), "matplotlib"),
     "ignore_pattern": "flycheck*",
     "thumbnail_size": (350, 350),
 }
