@@ -17,10 +17,10 @@ pyvista.set_error_output_file("errors.txt")
 
 # must be less than or equal to the XVFB window size
 try:
-    pyvista.global_theme.window_size = np.array([1024, 768])*2
+    pyvista.global_theme.window_size = np.array([1024, 768]) * 2
 except AttributeError:
     # for compatibility with pyvista < 0.40
-    pyvista.rcParams["window_size"] = np.array([1024, 768])*2
+    pyvista.rcParams["window_size"] = np.array([1024, 768]) * 2
 
 pyvista.set_plot_theme("document")
 # Save figures in specified directory
