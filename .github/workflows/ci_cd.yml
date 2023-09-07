@@ -11,7 +11,7 @@ on:
       - main
 
 env:
-  MAIN_PYTHON_VERSION: '3.9'
+  MAIN_PYTHON_VERSION: '3.10'
   PACKAGE_NAME: 'ansys-math-core'
   PACKAGE_NAMESPACE: 'ansys.math.core'
   DOCKER_PACKAGE: ghcr.io/ansys/pymapdl/mapdl
@@ -87,7 +87,7 @@ jobs:
 
     steps:
       - name: "Install Git and checkout project"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: "Setup Python"
         uses: actions/setup-python@v4
@@ -224,7 +224,7 @@ jobs:
     steps:
         # This checkout is repeated later at the 'doc-build' action. This could be avoided by copything the sh file here, but introduces some code duplicity.
       - name: "Install Git and checkout project"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: "Setup Python"
         uses: actions/setup-python@v4
@@ -293,12 +293,14 @@ jobs:
       - name: "Install docs build requirements"
         run: |
           pip install .[doc]
+      
+      - name: Install VTK
+        run: |
+          pip uninstall vtk -y
+          pip install --extra-index-url https://wheels.vtk.org vtk-osmesa
 
-      # If DPF server is needed, uncomment
-      # - name: "DPF server activation"
-      #   run: |
-      #     docker pull ghcr.io/ansys/dpf-core:22.2dev
-      #     docker run -d --name dpfserver -p ${{ env.DPF_PORT }}:50052 ghcr.io/ansys/dpf-core:22.2dev && echo "DPF Server active on port ${{ env.DPF_PORT }}."
+      - name: List
+        run: pip list
 
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v4
