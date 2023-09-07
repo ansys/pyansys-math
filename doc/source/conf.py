@@ -49,7 +49,7 @@ switcher_version = get_version_match(__version__)
 html_logo = pyansys_logo_black
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyAnsys Math"
-html_static_path = ["images/_static"]
+html_static_path = ["_static"]
 
 # specify the location of your github repo
 html_theme_options = {
@@ -161,8 +161,6 @@ html_favicon = ansys_favicon
 # notfound.extension
 notfound_template = "404.rst"
 notfound_urls_prefix = "/../"
-
-# static path
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
