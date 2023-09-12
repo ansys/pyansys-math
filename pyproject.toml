@@ -40,7 +40,7 @@ tests = [
     "numpy==1.25.2",
     "scipy==1.11.2",
     "pyansys-tools-report==0.6.0",
-    "pytest==7.4.0",
+    "pytest==7.4.2",
     "pytest-cov==4.1.0",
     "pytest-rerunfailures==12.0",
     "pyvista==0.42.0",
