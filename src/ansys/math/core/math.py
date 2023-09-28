@@ -1170,7 +1170,7 @@ class AnsMath:
         self._mapdl._stub.SetVecData(chunks_generator)
 
     @protect_grpc
-    def _set_mat(self, mname, arr, sym=False, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
+    def _set_mat(self, mname, arr, sym=None, dtype=None, chunk_size=DEFAULT_CHUNKSIZE):
         """Transfer a 2D dense or sparse SciPy array to MAPDL as an AnsMath matrix.
 
         Parameters
@@ -1181,7 +1181,7 @@ class AnsMath:
             Matrix to upload.
         sym : bool
             Whether the matrix is symmetric rather than dense.
-            The default is ``False`` which means that the matrix is dense.
+            The default is ``None`` which means that the matrix will be tested whether it is symmetric or not.
         dtype : np.dtype, optional
             NumPy data type to upload the array as. The options are ``np.double``,
             ``np.int32``, and ``np.int64``. The default is the current array
@@ -1204,6 +1204,11 @@ class AnsMath:
                 raise ValueError("Arrays must be 2-dimensional.")
 
         if sparse.issparse(arr):
+            if sym is None:
+                if sparse.issymmetric(arr):
+                    sym = "TRUE"
+                else:
+                    sym = "FALSE"
             self._send_sparse(mname, arr, sym, dtype, chunk_size)
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
@@ -1227,8 +1232,6 @@ class AnsMath:
 
     def _send_sparse(self, mname, arr, sym, dtype, chunk_size):
         """Send a SciPy sparse sparse matrix to MAPDL."""
-        if sym is None:
-            raise ValueError("The symmetric flag ``sym`` must be set for a sparse matrix.")
         from scipy import sparse
 
         arr = sparse.csr_matrix(arr)
@@ -1681,19 +1684,40 @@ class AnsMat(AnsMathObj):
         """
 
         info = self._mapdl._data_info(self.id)
+        sym = False
 
         if server_meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
-            return info.mattype in [
-                0,
-                1,
-                2,
-            ]  # [UPPER, LOWER, DIAG] respectively
+            type_mat = info.mattype is 2  # [UPPER=0, LOWER=1, DIAG=2, FULL=3]
+            if type_mat is 2:
+                sym = True
 
-        warn(
-            "Call to ``sym`` method cannot evaluate if this matrix is symmetric "
-            "with this version of MAPDL."
-        )
-        return True
+            else:
+                check = True
+                if info.objtype == 2:  # DMAT
+                    n = info.size1
+                    i = 2
+                    j = 1
+                    t = 1e-16
+                    while i < n and check is True:
+                        while j < i and check is True:
+                            if abs(self[i][j] - self[j][i]) > t:
+                                check = False
+                            j += 1
+                        i += 1
+
+                    sym = check
+
+                elif info.objtype == 3:  # SMAT
+                    mat = self.asarray()
+                    sym = bool(np.all(np.abs(mat.data - (mat.T).data) < 1e-16))
+
+        else:
+            warn(
+                "Call to ``sym`` method cannot evaluate if this matrix is symmetric "
+                "with this version of MAPDL. The default result is set to False."
+            )
+
+        return sym
 
     def asarray(self, dtype=None) -> np.ndarray:
         """Return the matrix as a NumPy array.

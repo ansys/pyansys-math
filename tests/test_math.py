@@ -720,6 +720,16 @@ def test_invalid_sparse_name(mm):
         mm.matrix(mat, name=1)
 
 
+def test_sym_dmat(mm):
+    dmat = mm.ones(10, 10)
+    assert dmat.sym() is True
+
+
+def test_sym_smat(mm):
+    smat = mm.matrix(sparse.eye(10, 10))
+    assert smat.sym() is True
+
+
 def test_free_all(mm):
     my_mat1 = mm.ones(10)
     my_mat2 = mm.ones(10)
