@@ -1687,8 +1687,8 @@ class AnsMat(AnsMathObj):
         sym = False
 
         if server_meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
-            type_mat = info.mattype is 2  # [UPPER=0, LOWER=1, DIAG=2, FULL=3]
-            if type_mat is 2:
+            type_mat = info.mattype
+            if type_mat == 2:  # [UPPER=0, LOWER=1, DIAG=2, FULL=3]
                 sym = True
 
             else:
