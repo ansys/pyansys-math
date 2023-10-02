@@ -234,7 +234,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update
-          sudo apt install pandoc
+          sudo apt install pandoc xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -322,7 +322,7 @@ jobs:
   doc-deploy-dev:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main' This is commented for development purpose. Needs to be reactivated before merging.
     runs-on: ubuntu-latest
     needs: [package]
     steps:
