@@ -20,10 +20,10 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  RESET_AUTOSUMMARY_CACHE: 3
-  RESET_EXAMPLES_CACHE: 3
-  RESET_DOC_BUILD_CACHE: 3
-  RESET_PIP_CACHE: 3
+  RESET_AUTOSUMMARY_CACHE: 1
+  RESET_EXAMPLES_CACHE: 1
+  RESET_DOC_BUILD_CACHE: 1
+  RESET_PIP_CACHE: 1
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -234,7 +234,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update
-          sudo apt install pandoc xvfb
+          sudo apt-get install pandoc xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -244,9 +244,9 @@ jobs:
           restore-keys: |
             Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: "Install ansys-math-core"
+      - name: "Install ansys-math-core and docs build requirements"
         run: |
-          pip install .
+          pip install .[doc]
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v3.0.0
@@ -289,10 +289,6 @@ jobs:
           key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}
-      
-      - name: "Install docs build requirements"
-        run: |
-          pip install .[doc]
 
       - name: List
         run: pip list
