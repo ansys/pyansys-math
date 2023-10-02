@@ -163,7 +163,7 @@ def sparse_asym_mat():
 
 @pytest.fixture
 def sparse_sym_mat(sparse_asym_mat):
-    return sparse_asym_mat + sparse_asym_mat.T
+    return sparse_asym_mat + (sparse_asym_mat.T)
 
 
 @pytest.fixture
@@ -173,4 +173,4 @@ def dense_asym_mat():
 
 @pytest.fixture
 def dense_sym_mat(dense_asym_mat):
-    return dense_asym_mat + dense_asym_mat.T
+    return dense_asym_mat + (dense_asym_mat.T)

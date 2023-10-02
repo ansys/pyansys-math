@@ -183,7 +183,7 @@ def test_shape(mm):
 
 
 @pytest.mark.parametrize("sparse_mat", ["sparse_asym_mat", "sparse_sym_mat"])
-def test_matrix(mm, sparse_mat, request):
+def test_sparse_matrix(mm, sparse_mat, request):
     sparse_mat = request.getfixturevalue(sparse_mat)
     assert sparse_mat.data.nbytes // 1024**2 > 4, "Must test over gRPC message limit"
 
@@ -745,7 +745,7 @@ def test_sym_dmat(mm, dense_sym_mat):
 
 
 def test_sym_smat(mm, sparse_sym_mat):
-    smat = mm.matrix(sparse_sym_mat)
+    smat = mm.matrix(sparse_sym_mat, sym=True)
     if not server_meets_version(mm._server_version, (0, 5, 0)):
         assert smat.sym() is False
     else:

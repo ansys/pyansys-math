@@ -25,6 +25,7 @@ from ansys.mapdl.core.parameters import interp_star_status
 from ansys.tools.versioning import requires_version
 from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
+from scipy import linalg, sparse
 
 MYCTYPE = {
     np.int32: "I",
@@ -455,8 +456,6 @@ class AnsMath:
             name = id_generator()
         elif not isinstance(name, str):
             raise TypeError("``name`` parameter must be a string")
-
-        from scipy import sparse
 
         self._set_mat(name, matrix, sym)
         if sparse.issparse(matrix):
@@ -1190,7 +1189,6 @@ class AnsMath:
             Chunk size in bytes. The value must be less than 4MB.
 
         """
-        from scipy import sparse
 
         if ":" in mname:
             raise ValueError("The character ':' is not permitted in the name of an AnsMath matrix.")
@@ -1205,10 +1203,10 @@ class AnsMath:
 
         if sparse.issparse(arr):
             if sym is None:
-                if sparse.issymmetric(arr):
-                    sym = "TRUE"
+                if linalg.issymmetric(arr):
+                    sym = True
                 else:
-                    sym = "FALSE"
+                    sym = False
             self._send_sparse(mname, arr, sym, dtype, chunk_size)
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
@@ -1232,7 +1230,6 @@ class AnsMath:
 
     def _send_sparse(self, mname, arr, sym, dtype, chunk_size):
         """Send a SciPy sparse sparse matrix to MAPDL."""
-        from scipy import sparse
 
         arr = sparse.csr_matrix(arr)
 
