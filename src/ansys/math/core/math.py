@@ -1710,7 +1710,11 @@ class AnsMat(AnsMathObj):
 
                 elif info.objtype == 3:  # SMAT
                     mat = self.asarray()
-                    sym = bool(np.all(np.abs(mat.data - (mat.T).data) < 1e-16))
+                    matT = mat.T
+                    sym = (
+                        bool(np.allclose(mat.data, matT.data))
+                        and bool(np.allclose(mat.indices, matT.indices))
+                    ) and bool(np.allclose(mat.indptr, matT.indptr))
 
         else:
             warn("``sym`` requires MAPDL version 2022R2 or later. The default value is False.")

@@ -1,7 +1,9 @@
 import os
 from pathlib import Path
 
+import numpy as np
 import pytest
+from scipy import sparse
 
 # import time
 
@@ -152,3 +154,23 @@ def cube_solve(cleared, mapdl):
 
     # solve first 10 non-trivial modes
     out = mapdl.modal_analysis(nmode=10, freqb=1)
+
+
+@pytest.fixture
+def sparse_asym_mat():
+    return sparse.random(5000, 5000, density=0.05, format="csr")
+
+
+@pytest.fixture
+def sparse_sym_mat(sparse_asym_mat):
+    return sparse_asym_mat + sparse_asym_mat.T
+
+
+@pytest.fixture
+def dense_asym_mat():
+    return np.random.rand(1000, 1000)
+
+
+@pytest.fixture
+def dense_sym_mat(dense_asym_mat):
+    return dense_asym_mat + dense_asym_mat.T
