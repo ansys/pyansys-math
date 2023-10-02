@@ -199,6 +199,10 @@ def test_matrix(mm, sparse_mat, request):
 
 @pytest.mark.parametrize("dense_mat", ["dense_asym_mat", "dense_sym_mat"])
 def test_dense_matrix(mm, dense_mat, request):
+    mapdl_version = mm._mapdl.version
+    if mapdl_version < 21.2:
+        pytest.skip("Requires MAPDL 2021 R2 or later.")
+
     dense_mat = request.getfixturevalue(dense_mat)
 
     name = "TMP_MATRIX"
