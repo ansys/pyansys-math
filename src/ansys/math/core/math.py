@@ -1419,7 +1419,7 @@ class AnsMathObj:
         if mapdl_version < 23.2:  # pragma: no cover
             raise VersionError("``kron`` requires MAPDL version 2023R2")
 
-        if not isinstance(obj, AnsMath):
+        if not isinstance(obj, AnsMathObj):
             raise TypeError("Must be an AnsMath object.")
 
         if not isinstance(self, (AnsMat, AnsVec)):
