@@ -722,12 +722,18 @@ def test_invalid_sparse_name(mm):
 
 def test_sym_dmat(mm):
     dmat = mm.ones(10, 10)
-    assert dmat.sym() is True
+    if not server_meets_version(mm._server_version, (0, 5, 0)):
+        assert dmat.sym() is False
+    else:
+        assert dmat.sym() is True
 
 
 def test_sym_smat(mm):
     smat = mm.matrix(sparse.eye(10, 10))
-    assert smat.sym() is True
+    if not server_meets_version(mm._server_version, (0, 5, 0)):
+        assert smat.sym() is False
+    else:
+        assert smat.sym() is True
 
 
 def test_free_all(mm):

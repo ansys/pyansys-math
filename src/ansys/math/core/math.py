@@ -1681,41 +1681,40 @@ class AnsMat(AnsMathObj):
         bool
             ``True`` when this matrix is symmetric.
 
+        Notes
+        -----
+            ``sym`` requires MAPDL version 2022R2 or later. If a previous version is used, the default value is False.
+
         """
 
         info = self._mapdl._data_info(self.id)
-        sym = False
 
         if server_meets_version(self._mapdl._server_version, (0, 5, 0)):  # pragma: no cover
+            sym = True
             type_mat = info.mattype
             if type_mat == 2:  # [UPPER=0, LOWER=1, DIAG=2, FULL=3]
-                sym = True
+                pass  # A diagonal matrix is symmetric.
 
             else:
-                check = True
                 if info.objtype == 2:  # DMAT
                     n = info.size1
                     i = 2
                     j = 1
                     t = 1e-16
-                    while i < n and check is True:
-                        while j < i and check is True:
+                    while i < n and sym is True:
+                        while j < i and sym is True:
                             if abs(self[i][j] - self[j][i]) > t:
-                                check = False
+                                sym = False
                             j += 1
                         i += 1
-
-                    sym = check
 
                 elif info.objtype == 3:  # SMAT
                     mat = self.asarray()
                     sym = bool(np.all(np.abs(mat.data - (mat.T).data) < 1e-16))
 
         else:
-            warn(
-                "Call to ``sym`` method cannot evaluate if this matrix is symmetric "
-                "with this version of MAPDL. The default result is set to False."
-            )
+            warn("``sym`` requires MAPDL version 2022R2 or later. The default value is False.")
+            sym = False
 
         return sym
 

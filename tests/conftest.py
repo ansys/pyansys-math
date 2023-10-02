@@ -11,7 +11,7 @@ from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core._version import SUPPORTED_ANSYS_VERSIONS
 from ansys.mapdl.core.errors import MapdlExitedError
 from ansys.mapdl.core.launcher import MAPDL_DEFAULT_PORT, get_start_instance
-from ansys.tools.path import find_ansys
+from ansys.tools.path import find_mapdl
 
 # Check if MAPDL is installed
 # NOTE: checks in this order to get the newest installed version
@@ -19,7 +19,7 @@ from ansys.tools.path import find_ansys
 
 valid_rver = SUPPORTED_ANSYS_VERSIONS.keys()
 
-EXEC_FILE, rver = find_ansys()
+EXEC_FILE, rver = find_mapdl()
 if rver:
     rver = int(rver * 10)
     HAS_GRPC = int(rver) >= 211 or ON_CI
@@ -57,8 +57,8 @@ remote server with:
 {os_msg}
 
 If you do have Ansys installed, you may have to patch pymapdl to
-automatically find your Ansys installation.  Email the developer at:
-alexander.kaszynski@ansys.com
+automatically find your Ansys installation.  Email the developers at:
+pyansys.core@ansys.com
 
 """
 
