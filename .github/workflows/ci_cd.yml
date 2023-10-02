@@ -83,7 +83,7 @@ jobs:
     needs: [smoke-tests]
     strategy:
       matrix:
-        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
+        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu', 'v23.1.0', 'v23.2.0']
 
     steps:
       - name: "Install Git and checkout project"
