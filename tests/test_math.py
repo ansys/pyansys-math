@@ -736,16 +736,16 @@ def test_invalid_sparse_name(mm):
         mm.matrix(mat, name=1)
 
 
-def test_sym_dmat(mm):
-    dmat = mm.ones(10, 10)
+def test_sym_dmat(mm, dense_sym_mat):
+    dmat = mm.matrix(dense_sym_mat)
     if not server_meets_version(mm._server_version, (0, 5, 0)):
         assert dmat.sym() is False
     else:
         assert dmat.sym() is True
 
 
-def test_sym_smat(mm):
-    smat = mm.matrix(sparse.eye(10, 10))
+def test_sym_smat(mm, sparse_sym_mat):
+    smat = mm.matrix(sparse_sym_mat)
     if not server_meets_version(mm._server_version, (0, 5, 0)):
         assert smat.sym() is False
     else:

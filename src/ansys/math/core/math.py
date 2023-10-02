@@ -414,7 +414,7 @@ class AnsMath:
             return self.vec(nrow, dtype, init="rand", name=name, asarray=asarray)
         return self.mat(nrow, ncol, dtype, init="rand", name=name, asarray=asarray)
 
-    def matrix(self, matrix, name=None, triu=False):
+    def matrix(self, matrix, name=None, sym=None):
         """Send a SciPy matrix or NumPy array to MAPDL.
 
         Parameters
@@ -424,9 +424,9 @@ class AnsMath:
         name : str, optional
             AnsMath matrix name. The default is ``None``, in which case a
             name is automatically generated.
-        triu : bool, optional
-            Whether the matrix is the upper triangular. The default is ``False``,
-            which means that the matrix is unsymmetric.
+        sym : bool, optional
+            Whether the matrix is symmetric rather than dense.
+            The default is ``None`` which means that the matrix will be tested whether it is symmetric or not.
 
         Returns
         -------
@@ -458,7 +458,7 @@ class AnsMath:
 
         from scipy import sparse
 
-        self._set_mat(name, matrix, triu)
+        self._set_mat(name, matrix, sym)
         if sparse.issparse(matrix):
             ans_mat = AnsSparseMat(name, self._mapdl)
         else:
