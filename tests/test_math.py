@@ -745,7 +745,7 @@ def test_sym_dmat(mm, dense_sym_mat):
 
 
 def test_sym_smat(mm, sparse_sym_mat):
-    smat = mm.matrix(sparse_sym_mat, sym=True)
+    smat = mm.matrix(sparse_sym_mat)
     if not server_meets_version(mm._server_version, (0, 5, 0)):
         assert smat.sym() is False
     else:

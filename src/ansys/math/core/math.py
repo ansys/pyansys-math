@@ -25,7 +25,7 @@ from ansys.mapdl.core.parameters import interp_star_status
 from ansys.tools.versioning import requires_version
 from ansys.tools.versioning.utils import server_meets_version
 import numpy as np
-from scipy import linalg, sparse
+from scipy import sparse
 
 MYCTYPE = {
     np.int32: "I",
@@ -1203,10 +1203,11 @@ class AnsMath:
 
         if sparse.issparse(arr):
             if sym is None:
-                if linalg.issymmetric(arr):
-                    sym = True
-                else:
-                    sym = False
+                arrT = arr.T
+                sym = (
+                    bool(np.allclose(arr.data, arrT.data))
+                    and bool(np.allclose(arr.indices, arrT.indices))
+                ) and bool(np.allclose(arr.indptr, arrT.indptr))
             self._send_sparse(mname, arr, sym, dtype, chunk_size)
         else:  # must be dense matrix
             self._send_dense(mname, arr, dtype, chunk_size)
@@ -1249,9 +1250,9 @@ class AnsMath:
 
         # data vector
         dataname = f"{mname}_DATA"
-        ans_vec = self.set_vec(arr.data, dataname)
+        self.set_vec(arr.data, dataname)
         if dtype is None:
-            info = self._mapdl._data_info(ans_vec.id)
+            info = self._mapdl._data_info(dataname)
             dtype = ANSYS_VALUE_TYPE[info.stype]
 
         # indptr vector
@@ -1266,8 +1267,7 @@ class AnsMath:
 
         flagsym = "TRUE" if sym else "FALSE"
         self._mapdl.run(
-            f"*SMAT,{mname},{MYCTYPE[dtype]},ALLOC,CSR,{indptrname},{indxname},"
-            f"{dataname},{flagsym}"
+            f"*SMAT,{mname},{MYCTYPE[dtype]},ALLOC,CSR,{indptrname},{indxname},{dataname},{flagsym}"
         )
 
 
