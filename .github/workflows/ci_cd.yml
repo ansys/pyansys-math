@@ -242,25 +242,25 @@ jobs:
         uses: actions/cache@v3
         with:
           path: doc/source/examples
-          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ github.sha }}
           restore-keys: |
-            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-
 
-      # - name: "Cache docs build directory"
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: doc/_build
-      #     key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
-      #     restore-keys: |
-      #       doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+      - name: "Cache docs build directory"
+        uses: actions/cache@v3
+        with:
+          path: doc/_build
+          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ github.sha }}
+          restore-keys: |
+            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}
 
       - name: "Cache autosummary"
         uses: actions/cache@v3
         with:
           path: doc/source/**/_autosummary/*.rst
-          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ github.sha }}
           restore-keys: |
-            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
 
       - name: List
         run: pip list
