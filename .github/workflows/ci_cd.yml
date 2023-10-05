@@ -238,13 +238,13 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
-      - name: "Cache examples"
-        uses: actions/cache@v3
-        with:
-          path: doc/source/examples
-          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
-          restore-keys: |
-            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+      # - name: "Cache examples"
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: doc/source/examples
+      #     key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+      #     restore-keys: |
+      #       Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
 
       - name: "Cache docs build directory"
         uses: actions/cache@v3
@@ -290,7 +290,7 @@ jobs:
   doc-deploy-dev:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
-    # if: github.ref == 'refs/heads/main' This is commented for development purpose. Needs to be reactivated before merging.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: [package]
     steps:
