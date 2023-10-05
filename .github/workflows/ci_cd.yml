@@ -238,21 +238,21 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
-      # - name: "Cache examples"
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: doc/source/examples
-      #     key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
-      #     restore-keys: |
-      #       Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
-
-      - name: "Cache docs build directory"
+      - name: "Cache examples"
         uses: actions/cache@v3
         with:
-          path: doc/_build
-          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          path: doc/source/examples
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+
+      # - name: "Cache docs build directory"
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: doc/_build
+      #     key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+      #     restore-keys: |
+      #       doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}
 
       - name: "Cache autosummary"
         uses: actions/cache@v3
