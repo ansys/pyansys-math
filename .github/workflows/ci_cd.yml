@@ -226,27 +226,22 @@ jobs:
       - name: "Install Git and checkout project"
         uses: actions/checkout@v4
 
-      - name: "Setup Python"
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+      # - name: "Install OS packages"
+      #   run: |
+      #     sudo apt update
+      #     sudo apt-get install pandoc xvfb
 
-      - name: "Install OS packages"
-        run: |
-          sudo apt update
-          sudo apt-get install pandoc xvfb
+      # - name: "Cache pip"
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ~/.cache/pip
+      #     key: Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
+      #     restore-keys: |
+      #       Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: "Cache pip"
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
-          restore-keys: |
-            Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}
-
-      - name: "Install ansys-math-core and docs build requirements"
-        run: |
-          pip install .[doc]
+      # - name: "Install ansys-math-core and docs build requirements"
+      #   run: |
+      #     pip install .[doc]
 
       - name: "Login in Github container registry"
         uses: docker/login-action@v3.0.0
@@ -261,10 +256,10 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
-      - name: "Retrieve AnsysMath version"
-        run: |
-          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_ENV
-          echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
+      # - name: "Retrieve AnsysMath version"
+      #   run: |
+      #     echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_ENV
+      #     echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
 
       # - name: "Cache examples"
       #   uses: actions/cache@v3
@@ -297,10 +292,12 @@ jobs:
         uses: ansys/actions/doc-build@v4
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-          checkout: false
-          skip-install: true
+          skip-dependencies-cache: true
           sphinxopts: -j auto
           requires-xvfb: true
+          skip-json-build: true
+          checkout: false
+          # skip-install: true
 
       # - name: "Build documentation"
       #   run: |
