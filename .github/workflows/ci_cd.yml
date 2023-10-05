@@ -272,6 +272,7 @@ jobs:
           skip-dependencies-cache: true
           sphinxopts: -j auto
           requires-xvfb: true
+          skip-json-build: true
           checkout: false
 
 
