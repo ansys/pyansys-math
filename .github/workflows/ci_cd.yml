@@ -274,6 +274,7 @@ jobs:
           requires-xvfb: true
           skip-json-build: true
           checkout: false
+          dependencies: 'pandoc'
 
 
   package:
