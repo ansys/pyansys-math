@@ -21,9 +21,9 @@ env:
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
   RESET_PIP_CACHE: 1
-  # RESET_AUTOSUMMARY_CACHE: 1
-  # RESET_EXAMPLES_CACHE: 1
-  # RESET_DOC_BUILD_CACHE: 1
+  RESET_AUTOSUMMARY_CACHE: 1
+  RESET_EXAMPLES_CACHE: 1
+  RESET_DOC_BUILD_CACHE: 1
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -252,29 +252,29 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
-      # - name: "Cache examples"
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: doc/source/examples
-      #     key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ github.sha }}
-      #     restore-keys: |
-      #       Examples-v${{ env.RESET_EXAMPLES_CACHE }}-
+      - name: "Cache examples"
+        uses: actions/cache@v3
+        with:
+          path: doc/source/examples
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ github.sha }}
+          restore-keys: |
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-
 
-      # - name: "Cache docs build directory"
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: doc/_build
-      #     key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ github.sha }}
-      #     restore-keys: |
-      #       doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}
+      - name: "Cache docs build directory"
+        uses: actions/cache@v3
+        with:
+          path: doc/_build
+          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ github.sha }}
+          restore-keys: |
+            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}
 
-      # - name: "Cache autosummary"
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: doc/source/**/_autosummary/*.rst
-      #     key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ github.sha }}
-      #     restore-keys: |
-      #       autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
+      - name: "Cache autosummary"
+        uses: actions/cache@v3
+        with:
+          path: doc/source/**/_autosummary/*.rst
+          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ github.sha }}
+          restore-keys: |
+            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
 
       - name: List
         run: pip list
