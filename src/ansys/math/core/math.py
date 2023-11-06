@@ -1855,9 +1855,10 @@ class AnsDenseMat(AnsMat):
 class AnsSparseMat(AnsMat):
     """Provides the AnsMath sparse matrix objects."""
 
-    def __init__(self, uid, mapdl):
+    def __init__(self, uid, mapdl, sym=True):
         """Initiate an AnsMath sparse matrix object."""
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
+        self.sym = sym
 
     def __repr__(self):
         return f"AnsMath sparse matrix ({self.nrow}, {self.ncol})"
@@ -1877,7 +1878,7 @@ class AnsSparseMat(AnsMat):
         AnsMath sparse matrix (126, 126)
 
         """
-        return AnsSparseMat(AnsMathObj.copy(self), self._mapdl)
+        return AnsSparseMat(AnsMathObj.copy(self), self._mapdl, self._sym)
 
     def todense(self) -> np.ndarray:
         """Return the array as a NumPy dense array.
