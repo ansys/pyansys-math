@@ -97,7 +97,7 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt update
-          sudo apt-get install pandoc
+          sudo apt-get install pandoc libgl1-mesa-glx xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -234,7 +234,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update
-          sudo apt install pandoc
+          sudo apt install pandoc libgl1-mesa-glx xvfb
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -304,7 +304,6 @@ jobs:
           checkout: false
           skip-install: true
           sphinxopts: -j auto
-          requires-xvfb: true
 
 
   package:
