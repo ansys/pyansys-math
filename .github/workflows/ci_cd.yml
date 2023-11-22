@@ -83,7 +83,7 @@ jobs:
     needs: [smoke-tests]
     strategy:
       matrix:
-        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
+        mapdl-version: ['v23.1.0', 'v23.2.0', 'v24.1.0']
 
     steps:
       - name: "Install Git and checkout project"
@@ -97,7 +97,7 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt update
-          sudo apt-get install pandoc xvfb libgl1-mesa-glx libgomp
+          sudo apt-get install pandoc xvfb libgl1-mesa-glx
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -234,7 +234,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update
-          sudo apt install pandoc xvfb libgl1-mesa-glx libgomp
+          sudo apt install pandoc xvfb libgl1-mesa-glx libgomp1
 
       - name: "Cache pip"
         uses: actions/cache@v3
