@@ -97,7 +97,7 @@ jobs:
       - name: "Install os packages"
         run: |
           sudo apt-get update
-          sudo apt-get install pandoc xvfb libgl1-mesa-glx
+          sudo apt-get install -y pandoc xvfb libgl1-mesa-glx
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -236,7 +236,7 @@ jobs:
           sudo apt update
           sudo apt install pandoc xvfb libgl1-mesa-glx
           sudo apt-get update
-          sudo apt-get libgomp1
+          sudo apt-get install -y libgomp1
 
       - name: "Cache pip"
         uses: actions/cache@v3
