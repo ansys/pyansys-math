@@ -6,7 +6,8 @@ import warnings
 from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
 import numpy as np
 import pyvista
-from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
+
+# from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
 from sphinx_gallery.sorting import FileNameSortKey
 
 from ansys.math.core import __version__
@@ -29,6 +30,7 @@ pymath.BUILDING_GALLERY = True
 
 # Ensure that offscreen rendering is used for docs generation
 pyvista.OFF_SCREEN = True
+pyvista.set_plot_theme("document")
 
 # suppress annoying matplotlib bug
 warnings.filterwarnings(
@@ -113,7 +115,7 @@ sphinx_gallery_conf = {
     "backreferences_dir": None,
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-math-core",
-    "image_scrapers": (DynamicScraper(), "matplotlib"),
+    "image_scrapers": ("pyvista", "matplotlib"),
     "ignore_pattern": "flycheck*",
     "thumbnail_size": (350, 350),
 }
