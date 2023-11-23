@@ -301,7 +301,7 @@ def test_kron_product_unsupported_dtype(mm):
     if mapdl_version < 23.2:
         pytest.skip("Requires MAPDL 2023 R2 or later.")
 
-    with pytest.raises(TypeError, match=r"Must be an ApdlMathObj"):
+    with pytest.raises(TypeError, match=r"Must be an AnsMath object."):
         m1 = mm.rand(3, 3)
         m1.kron(2)
 
