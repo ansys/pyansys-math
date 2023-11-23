@@ -233,8 +233,8 @@ jobs:
 
       - name: "Install OS packages"
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc libgl1-mesa-glx
+          sudo apt update
+          sudo apt install pandoc libgl1-mesa-glx
 
       - name: "Cache pip"
         uses: actions/cache@v3
