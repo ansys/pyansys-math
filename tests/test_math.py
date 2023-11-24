@@ -481,20 +481,19 @@ def test_solve_alt(mm, cube_solve):
 def test_solve_eigs_km(mapdl, mm, cube_solve):
     mapdl.post1()
     resp = mapdl.set("LIST")
-    w_n = np.array(re.findall(r"\s\d*\.\d\s", resp), np.float32)
+    w_n = np.array(re.findall(r"\s\d*\.\d*\s", resp), np.float32)
 
     k = mm.stiff()
     m = mm.mass()
     vec = mm.eigs(w_n.size, k, m, fmin=1)
     eigval = vec.asarray()
-    assert resp == 8  # for testing purposes
     assert np.allclose(w_n, eigval, atol=0.1)
 
 
 def test_solve_py(mapdl, mm, cube_solve):
     mapdl.post1()
     resp = mapdl.set("LIST")
-    w_n = np.array(re.findall(r"\s\d*\.\d\s", resp), np.float32)
+    w_n = np.array(re.findall(r"\s\d*\.\d*\s", resp), np.float32)
 
     # load by default from file.full
     k = mm.stiff()
