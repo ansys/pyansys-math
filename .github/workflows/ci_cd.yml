@@ -234,7 +234,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt update
-          sudo apt install pandoc libgl1-mesa-glx
+          sudo apt install pandoc
 
       - name: "Cache pip"
         uses: actions/cache@v3
@@ -304,6 +304,7 @@ jobs:
           checkout: false
           skip-install: true
           sphinxopts: -j auto
+          requires-xvfb: true
 
 
   package:
