@@ -487,6 +487,7 @@ def test_solve_eigs_km(mapdl, mm, cube_solve):
     m = mm.mass()
     vec = mm.eigs(w_n.size, k, m, fmin=1)
     eigval = vec.asarray()
+    assert resp == 8  # for testing purposes
     assert np.allclose(w_n, eigval, atol=0.1)
 
 
