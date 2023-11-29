@@ -14,16 +14,16 @@ env:
   MAIN_PYTHON_VERSION: '3.10'
   PACKAGE_NAME: 'ansys-math-core'
   PACKAGE_NAMESPACE: 'ansys.math.core'
-  DOCKER_PACKAGE: ghcr.io/ansys/pymapdl/mapdl
-  DOCKER_IMAGE_VERSION_DOCS_BUILD: v22.2.0
+  DOCKER_PACKAGE: ghcr.io/ansys/mapdl
+  DOCKER_IMAGE_VERSION_DOCS_BUILD: v23.1.0
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  RESET_AUTOSUMMARY_CACHE: 3
-  RESET_EXAMPLES_CACHE: 3
-  RESET_DOC_BUILD_CACHE: 3
-  RESET_PIP_CACHE: 3
+  RESET_AUTOSUMMARY_CACHE: 0
+  RESET_EXAMPLES_CACHE: 0
+  RESET_DOC_BUILD_CACHE: 0
+  RESET_PIP_CACHE: 0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -83,7 +83,7 @@ jobs:
     needs: [smoke-tests]
     strategy:
       matrix:
-        mapdl-version: ['v21.1.1', 'v21.2.1', 'v22.1.0', 'v22.2.0', 'v22.2-ubuntu']
+        mapdl-version: ['v23.1.0', 'v23.2.0', 'v24.1.0']
 
     steps:
       - name: "Install Git and checkout project"
@@ -94,10 +94,10 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: "Install os packages"
+      - name: "Install OS packages"
         run: |
-          sudo apt update
-          sudo apt-get install pandoc
+          sudo apt-get update
+          sudo apt-get install -y pandoc xvfb libgl1-mesa-glx
 
       - name: "Cache pip"
         uses: actions/cache@v3
