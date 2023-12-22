@@ -1,12 +1,21 @@
 Documentation:
 - changed-files:
-  - any-glob-to-any-file: ['doc/source/**/*']
+  - any-glob-to-any-file: 
+      - 'doc/source/**/*'
 Maintenance:
 - changed-files:
-  - any-glob-to-any-file: ['.github/**/*', 'codecov.yml', '.flake8', '.coveragerc', 'doc/styles/**/*', 'pyproject.toml']
+  - any-glob-to-any-file: 
+      - '.github/**/*'
+      - 'codecov.yml'
+      - '.flake8'
+      - '.coveragerc'
+      - 'doc/styles/**/*'
+      - 'pyproject.toml'
 Dependencies:
 - changed-files:
-  - any-glob-to-any-file: ['pyproject.toml']
+  - any-glob-to-any-file: 
+      - 'pyproject.toml'
 CI/CD:
 - changed-files:
-  - any-glob-to-any-file: ['.github/**/*']
+  - any-glob-to-any-file: 
+      - '.github/**/*'
