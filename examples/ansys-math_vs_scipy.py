@@ -21,7 +21,7 @@ This example shows how to perform these tasks:
 import math
 import time
 
-from ansys.mapdl.core import examples
+from ansys.mapdl.core.examples import examples
 import matplotlib.pylab as plt
 import numpy as np
 import scipy
@@ -37,7 +37,7 @@ mm = pymath.AnsMath()
 # ~~~~~~~~~~~~~~~~~~~
 # Load the input file using MAPDL.
 
-print(mm._mapdl.input(examples.examples.wing_model))
+print(mm._mapdl.input(examples.wing_model))
 
 
 ###############################################################################
