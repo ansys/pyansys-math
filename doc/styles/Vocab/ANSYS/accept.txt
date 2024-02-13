@@ -3,7 +3,7 @@ ANSYS
 Ansys
 ansys
 AnsMath
-PyAnsys
+[Pp]y[Aa]nsys
 Math
 DOF
 eigenfrequencies
