@@ -59,7 +59,7 @@ doc = [
     "pyvista[jupyter,trame]==0.43.3",
     "scipy==1.12.0",
     "sphinx-autobuild==2024.2.4",
-    "sphinx-autodoc-typehints==1.25.3",
+    "sphinx-autodoc-typehints==2.0.0",
     "sphinx-copybutton==0.5.2",
     "sphinx-notfound-page==1.0.0",
     "sphinx-gallery==0.15.0",
