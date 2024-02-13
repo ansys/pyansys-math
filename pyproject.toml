@@ -56,7 +56,7 @@ doc = [
     "numpydoc==1.6.0",
     "pypandoc==1.12",
     "pytest-sphinx==0.6.0",
-    "pyvista[jupyter,trame]==0.43.2",
+    "pyvista[jupyter,trame]==0.43.3",
     "scipy==1.12.0",
     "sphinx-autobuild==2024.2.4",
     "sphinx-autodoc-typehints==1.25.3",
