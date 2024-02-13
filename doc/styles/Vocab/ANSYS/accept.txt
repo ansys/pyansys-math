@@ -1,3 +1,4 @@
+API
 ANSYS
 Ansys
 ansys
@@ -28,6 +29,7 @@ numpy
 pres
 parm
 PyMAPDL
+[Pp]ython
 SciPy
 scipy
 struc
