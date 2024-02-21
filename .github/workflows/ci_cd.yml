@@ -217,6 +217,8 @@ jobs:
     name: "Doc building"
     runs-on: ubuntu-latest
     needs: [doc-style]
+    outputs:
+      ANSYSMATH_VERSION: ${{ steps.version.outputs.ANSYSMATH_VERSION }}
     env:
       PYMAPDL_PORT: 21000  # default won't work on GitHub runners
       PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
@@ -257,33 +259,33 @@ jobs:
 
       - name: "Retrieve AnsysMath version"
         run: |
-          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_ENV
+          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $>> $GITHUB_OUTPUT
           echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
 
       - name: "Cache examples"
         uses: actions/cache@v4
         with:
           path: doc/source/examples
-          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Cache docs build directory"
         uses: actions/cache@v4
         with:
           path: doc/_build
-          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
 
       - name: "Cache autosummary"
         uses: actions/cache@v4
         with:
           path: doc/source/**/_autosummary/*.rst
-          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
+          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v5
