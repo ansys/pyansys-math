@@ -280,7 +280,7 @@ jobs:
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
 
       - name: "Run Ansys documentation building action"
-        uses: ansys/actions/doc-build@v4
+        uses: ansys/actions/doc-build@v5
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           skip-install: true
