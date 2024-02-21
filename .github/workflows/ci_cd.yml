@@ -255,29 +255,35 @@ jobs:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
           MAPDL_IMAGE: '${{ env.DOCKER_PACKAGE }}:${{ env.DOCKER_IMAGE_VERSION_DOCS_BUILD }}'
 
+      - name: "Retrieve AnsysMath version"
+        run: |
+          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_ENV
+          echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
+
       - name: "Cache examples"
         uses: actions/cache@v4
         with:
           path: doc/source/examples
-          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ github.sha }}
+          key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-
+            Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ env.ANSYSMATH_VERSION }}
 
       - name: "Cache docs build directory"
         uses: actions/cache@v4
         with:
           path: doc/_build
-          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ github.sha }}
+          key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}
+            doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ env.ANSYSMATH_VERSION }}
+
 
       - name: "Cache autosummary"
         uses: actions/cache@v4
         with:
           path: doc/source/**/_autosummary/*.rst
-          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ github.sha }}
+          key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}-${{ github.sha }}
           restore-keys: |
-            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
+            autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ env.ANSYSMATH_VERSION }}
 
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v5
