@@ -260,7 +260,7 @@ jobs:
       - name: "Retrieve AnsysMath version"
         id: version
         run: |
-          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $>> $GITHUB_OUTPUT
+          echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_OUTPUT
           echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
 
       - name: "Cache examples"
