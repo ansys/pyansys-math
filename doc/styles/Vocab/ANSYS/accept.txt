@@ -1,8 +1,10 @@
+API
 ANSYS
 Ansys
 ansys
 AnsMath
-PyAnsys Math
+[Pp]y[Aa]nsys
+Math
 DOF
 eigenfrequencies
 eigenmodes
@@ -28,6 +30,7 @@ numpy
 pres
 parm
 PyMAPDL
+[Pp]ython
 SciPy
 scipy
 struc
