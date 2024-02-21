@@ -229,11 +229,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      
-      - name: "Install os packages"
-        run: |
-          sudo apt update
-          sudo apt install pandoc
 
       - name: "Cache pip"
         uses: actions/cache@v4
@@ -284,29 +279,16 @@ jobs:
           restore-keys: |
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}
 
-      - name: "List installed packages"
-        run: pip list
-
-      # - name: "Run Ansys documentation building action"
-      #   uses: ansys/actions/doc-build@v4
-      #   with:
-      #     python-version: ${{ env.MAIN_PYTHON_VERSION }}
-      #     skip-install: true
-      #     checkout: false
-      #     sphinxopts: -j auto --keep-going
-      #     requires-xvfb: true
-      #     skip-json-build: true
-      
-      - name: "Build documentation"
-        run: |
-          xvfb-run make -C doc html SPHINXOPTS="-j auto --keep-going"
-
-      - name: "Upload HTML Documentation"
-        uses: actions/upload-artifact@v4
+      - name: "Run Ansys documentation building action"
+        uses: ansys/actions/doc-build@v4
         with:
-          name: documentation-html
-          path: doc/_build/html
-          retention-days: 7
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          skip-install: true
+          checkout: false
+          sphinxopts: -j auto --keep-going
+          requires-xvfb: true
+          skip-json-build: true
+          dependencies: pandoc
 
 
   package:
