@@ -20,10 +20,10 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  RESET_PIP_CACHE: 5
-  RESET_AUTOSUMMARY_CACHE: 5
-  RESET_EXAMPLES_CACHE: 5
-  RESET_DOC_BUILD_CACHE: 5
+  RESET_PIP_CACHE: 6
+  RESET_AUTOSUMMARY_CACHE: 6
+  RESET_EXAMPLES_CACHE: 6
+  RESET_DOC_BUILD_CACHE: 6
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
