@@ -20,7 +20,7 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  USE_CACHE: FALSE
+  USE_CACHE: 'FALSE'
   RESET_PIP_CACHE: 8
   RESET_AUTOSUMMARY_CACHE: 8
   RESET_EXAMPLES_CACHE: 8
