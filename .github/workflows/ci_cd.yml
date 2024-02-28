@@ -234,11 +234,6 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: "Install os packages"
-        run: |
-          sudo apt update
-          sudo apt install pandoc
-
       - name: "Cache pip"
         if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
@@ -303,11 +298,11 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           skip-install: true
-          skip-dependencies-cache: true
           checkout: false
           requires-xvfb: true
           sphinxopts: -j auto --keep-going
           check-links: false
+          dependencies: pandoc
 
 
   package:
