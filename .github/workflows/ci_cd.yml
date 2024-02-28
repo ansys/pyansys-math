@@ -20,7 +20,7 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  USE_CACHE: true
+  USE_CACHE: TRUE
   RESET_PIP_CACHE: 8
   RESET_AUTOSUMMARY_CACHE: 8
   RESET_EXAMPLES_CACHE: 8
@@ -102,7 +102,7 @@ jobs:
 
       - name: "Cache pip"
         uses: actions/cache@v4
-        if: ${{ env.USE_CACHE }} == 'true'
+        if: ${{ env.USE_CACHE }} == 'TRUE'
         with:
           path: ~/.cache/pip
           key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}-${{ hashFiles('pyproject.toml') }}
@@ -241,7 +241,7 @@ jobs:
 
       - name: "Cache pip"
         uses: actions/cache@v4
-        if: ${{ env.USE_CACHE }} == 'true'
+        if: ${{ env.USE_CACHE }} == 'TRUE'
         with:
           path: ~/.cache/pip
           key: Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
@@ -273,7 +273,7 @@ jobs:
 
       - name: "Cache examples"
         uses: actions/cache@v4
-        if: ${{ env.USE_CACHE }} == 'true'
+        if: ${{ env.USE_CACHE }} == 'TRUE'
         with:
           path: doc/source/examples
           key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
@@ -282,7 +282,7 @@ jobs:
 
       - name: "Cache docs build directory"
         uses: actions/cache@v4
-        if: ${{ env.USE_CACHE }} == 'true'
+        if: ${{ env.USE_CACHE }} == 'TRUE'
         with:
           path: doc/_build
           key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
@@ -291,7 +291,7 @@ jobs:
 
       - name: "Cache autosummary"
         uses: actions/cache@v4
-        if: ${{ env.USE_CACHE }} == 'true'
+        if: ${{ env.USE_CACHE }} == 'TRUE'
         with:
           path: doc/source/**/_autosummary/*.rst
           key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
