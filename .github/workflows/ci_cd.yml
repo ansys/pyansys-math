@@ -20,10 +20,10 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  RESET_PIP_CACHE: 7
-  RESET_AUTOSUMMARY_CACHE: 7
-  RESET_EXAMPLES_CACHE: 7
-  RESET_DOC_BUILD_CACHE: 7
+  RESET_PIP_CACHE: 8
+  RESET_AUTOSUMMARY_CACHE: 8
+  RESET_EXAMPLES_CACHE: 8
+  RESET_DOC_BUILD_CACHE: 8
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -292,15 +292,19 @@ jobs:
           restore-keys: |
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
-      - name: "Run Ansys documentation building action"
-        uses: ansys/actions/doc-build@v5
-        with:
-          python-version: ${{ env.MAIN_PYTHON_VERSION }}
-          skip-install: true
-          checkout: false
-          sphinxopts: -j auto --keep-going
-          requires-xvfb: true
-          skip-json-build: true
+      - name: "Build documentation"
+        run: |
+          xvfb-run make -C doc html SPHINXOPTS="-j auto --keep-going"
+
+      # - name: "Run Ansys documentation building action"
+      #   uses: ansys/actions/doc-build@v5
+      #   with:
+      #     python-version: ${{ env.MAIN_PYTHON_VERSION }}
+      #     skip-install: true
+      #     checkout: false
+      #     sphinxopts: -j auto --keep-going
+      #     requires-xvfb: true
+      #     skip-json-build: true
 
 
   package:
