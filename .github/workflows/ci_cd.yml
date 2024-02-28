@@ -101,8 +101,8 @@ jobs:
           sudo apt-get install -y pandoc xvfb libgl1-mesa-glx
 
       - name: "Cache pip"
-        uses: actions/cache@v4
         if: ${{ env.USE_CACHE }} == 'TRUE'
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: Python-v${{ env.RESET_PIP_CACHE }}-${{ runner.os }}-${{ matrix.mapdl-version }}-${{ hashFiles('pyproject.toml') }}
@@ -240,8 +240,8 @@ jobs:
           sudo apt install pandoc
 
       - name: "Cache pip"
-        uses: actions/cache@v4
         if: ${{ env.USE_CACHE }} == 'TRUE'
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: Python-v${{ env.RESET_PIP_CACHE }}-Linux-${{ env.MAIN_PYTHON_VERSION }}-${{ hashFiles('pyproject.toml') }}
@@ -272,8 +272,8 @@ jobs:
           echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
 
       - name: "Cache examples"
-        uses: actions/cache@v4
         if: ${{ env.USE_CACHE }} == 'TRUE'
+        uses: actions/cache@v4
         with:
           path: doc/source/examples
           key: Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
@@ -281,8 +281,8 @@ jobs:
             Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Cache docs build directory"
-        uses: actions/cache@v4
         if: ${{ env.USE_CACHE }} == 'TRUE'
+        uses: actions/cache@v4
         with:
           path: doc/_build
           key: doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
@@ -290,8 +290,8 @@ jobs:
             doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Cache autosummary"
-        uses: actions/cache@v4
         if: ${{ env.USE_CACHE }} == 'TRUE'
+        uses: actions/cache@v4
         with:
           path: doc/source/**/_autosummary/*.rst
           key: autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}-${{ github.sha }}
