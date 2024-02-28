@@ -270,7 +270,13 @@ jobs:
         run: |
           echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_OUTPUT
           echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
+      
 
+      - name: "Printing USE_CACHE value"
+        run: |
+          echo "USE_CACHE: ${{ env.USE_CACHE }}"
+          echo ${{ env.USE_CACHE }} == 'TRUE'
+    
       - name: "Cache examples"
         if: ${{ env.USE_CACHE }} == 'TRUE'
         uses: actions/cache@v4
