@@ -101,7 +101,7 @@ jobs:
           sudo apt-get install -y pandoc xvfb libgl1-mesa-glx
 
       - name: "Cache pip"
-        if: ${{ env.USE_CACHE }} == 'TRUE'
+        if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
@@ -240,7 +240,7 @@ jobs:
           sudo apt install pandoc
 
       - name: "Cache pip"
-        if: ${{ env.USE_CACHE }} == 'TRUE'
+        if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
@@ -275,10 +275,10 @@ jobs:
       - name: "Printing USE_CACHE value"
         run: |
           echo "USE_CACHE: ${{ env.USE_CACHE }}"
-          echo ${{ env.USE_CACHE }} == 'TRUE'
+          echo ${{ env.USE_CACHE == 'TRUE' }}
     
       - name: "Cache examples"
-        if: ${{ env.USE_CACHE }} == 'TRUE'
+        if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
         with:
           path: doc/source/examples
@@ -287,7 +287,7 @@ jobs:
             Examples-v${{ env.RESET_EXAMPLES_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Cache docs build directory"
-        if: ${{ env.USE_CACHE }} == 'TRUE'
+        if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
         with:
           path: doc/_build
@@ -296,7 +296,7 @@ jobs:
             doc-build-v${{ env.RESET_DOC_BUILD_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
       - name: "Cache autosummary"
-        if: ${{ env.USE_CACHE }} == 'TRUE'
+        if: ${{ env.USE_CACHE == 'TRUE' }}
         uses: actions/cache@v4
         with:
           path: doc/source/**/_autosummary/*.rst
