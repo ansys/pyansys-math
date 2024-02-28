@@ -311,6 +311,7 @@ jobs:
           skip-dependencies-cache: true
           checkout: false
           requires-xvfb: true
+          sphinxopts: -j auto --keep-going
 
 
   package:
