@@ -20,11 +20,11 @@ env:
   PYMAPDL_START_INSTANCE: FALSE
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
-  USE_CACHE: 'FALSE'
-  RESET_PIP_CACHE: 8
-  RESET_AUTOSUMMARY_CACHE: 8
-  RESET_EXAMPLES_CACHE: 8
-  RESET_DOC_BUILD_CACHE: 8
+  USE_CACHE: 'TRUE'
+  RESET_PIP_CACHE: 0
+  RESET_AUTOSUMMARY_CACHE: 0
+  RESET_EXAMPLES_CACHE: 0
+  RESET_DOC_BUILD_CACHE: 0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -299,8 +299,8 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           skip-install: true
           checkout: false
-          requires-xvfb: true
           sphinxopts: -j auto --keep-going
+          requires-xvfb: true
           check-links: false
           dependencies: pandoc
 
@@ -320,7 +320,7 @@ jobs:
   doc-deploy-dev:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
-    # if: github.ref == 'refs/heads/main' To be reactivated when merging to main
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: [package]
     steps:
