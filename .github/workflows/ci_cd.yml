@@ -301,7 +301,6 @@ jobs:
           checkout: false
           sphinxopts: -j auto --keep-going
           requires-xvfb: true
-          check-links: false
           dependencies: pandoc
 
 
