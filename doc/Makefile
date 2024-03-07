@@ -2,10 +2,11 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -j auto
+SPHINXOPTS    = -j auto -W --keep-going
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = _build
+EXAMPDIR      = source/examples
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -22,7 +23,7 @@ help:
 # Customized clean due to examples gallery
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf $(SOURCEDIR)/examples
+	rm -rf $(EXAMPDIR)
 	find . -type d -name "_autosummary" -exec rm -rf {} +
 
 # Customized pdf fov svg format images
