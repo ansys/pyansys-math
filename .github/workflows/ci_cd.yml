@@ -302,6 +302,7 @@ jobs:
           sphinxopts: -j auto --keep-going
           requires-xvfb: true
           dependencies: pandoc
+          check-links: false
 
 
   package:
