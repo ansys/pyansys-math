@@ -207,3 +207,7 @@ htmlhelp_basename = "pyansysmathdoc"
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [(master_doc, "ansys.math.core", "ansys.math.core Documentation", [author], 1)]
+
+linkcheck_ignore = [
+    "https://www.ansys.com/*",
+]
