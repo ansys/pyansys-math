@@ -43,7 +43,7 @@ tests = [
     "pytest==8.1.1",
     "pytest-cov==4.1.0",
     "pytest-rerunfailures==13.0",
-    "pyvista==0.43.3",
+    "pyvista==0.43.4",
     "vtk==9.3.0",
 ]
 doc = [
