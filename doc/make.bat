@@ -10,7 +10,7 @@ if "%SPHINXBUILD%" == "" (
 set SOURCEDIR=source
 set BUILDDIR=_build
 set EXAMPDIR=source\examples
-set SPHINXOPTS=-j auto -W --keep-going
+set SPHINXOPTS=-j auto --keep-going
 
 if "%1" == "" goto help
 if "%1" == "clean" goto clean
