@@ -64,7 +64,7 @@ doc = [
     "sphinx-design==0.5.0",
     "sphinx-notfound-page==1.0.0",
     "sphinx-gallery==0.15.0",
-    "trame==3.5.2",
+    "trame==3.5.4",
     "vtk==9.3.0",
 ]
 
