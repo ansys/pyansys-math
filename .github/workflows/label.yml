@@ -1,7 +1,10 @@
 name: "Pull Request Labeler"
 on:
   pull_request:
-    types: [opened, reopened]
+    # opened, reopened, and synchronize are default for pull_request
+    # edited - when PR title or body is changed
+    # labeled - when labels are added to PR
+    types: [opened, reopened, synchronize, edited, labeled]
   push:
     branches: [ main ]
     paths:
@@ -96,3 +99,15 @@ jobs:
           - [maintenance](https://github.com/ansys/pyansys-math/pulls?q=label%3Amaintenance+)
           - [release](https://github.com/ansys/pyansys-math/pulls?q=label%3Arelease+)
           - [ci/cd](https://github.com/ansys/pyansys-math/pulls?q=label%3Aci%2Fcd+)
+  
+  changelog-fragment:
+    name: "Create changelog fragment"
+    needs: [labeler]
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: ansys/actions/doc-changelog@v6
+      with:
+        token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}

@@ -32,6 +32,20 @@ concurrency:
 
 jobs:
 
+
+  update-changelog:
+    name: "Update CHANGELOG (on release)"
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: ansys/actions/doc-deploy-changelog@v6
+        with:
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+
+
   code-style:
     name: "Code style"
     runs-on: ubuntu-latest
@@ -77,6 +91,7 @@ jobs:
           library-namespace: ${{ env.PACKAGE_NAMESPACE }}
           operating-system: ${{ matrix.os }}
           python-version: ${{ matrix.python-version }}
+
 
   build-test:
     name: "Build and unit testing"
