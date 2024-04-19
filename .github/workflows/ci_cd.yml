@@ -189,22 +189,22 @@ jobs:
           name: ${{ matrix.mapdl-version }}-remote.xml
           path: ./${{ matrix.mapdl-version }}-remote.xml
 
-      - name: "Display Docker files structures"
-        if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
-        run: |
-          .ci/display_logs.sh
-
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
+          MAPDL_VERSION: ${{ matrix.mapdl-version }}
+          MAPDL_INSTANCE: mapdl
+          LOG_NAMES: logs-${{ matrix.mapdl-version }}
         run: |
           .ci/collect_mapdl_logs.sh
+
+      - name: "Display Docker files structures"
+        if: always()
+        env:
+          MAPDL_INSTANCE: mapdl
+          LOG_NAMES: logs-${{ matrix.mapdl-version }}
+        run: |
+          .ci/display_logs.sh
 
 
   doc-build:
@@ -301,23 +301,23 @@ jobs:
           requires-xvfb: true
           dependencies: pandoc
           check-links: false
-
-      - name: "Display Docker files structures"
-        if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
-        run: |
-          .ci/display_logs.sh
   
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
           MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          MAPDL_INSTANCE: MAPDL_0
+          MAPDL_INSTANCE: mapdl
           LOG_NAMES: logs-build-docs
         run: |
           .ci/collect_mapdl_logs.sh
+
+      - name: "Display Docker files structures"
+        if: always()
+        env:
+          MAPDL_INSTANCE: mapdl
+          LOG_NAMES: logs-build-docs
+        run: |
+          .ci/display_logs.sh
 
   package:
     name: "Package library"
