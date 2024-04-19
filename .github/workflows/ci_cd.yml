@@ -146,10 +146,10 @@ jobs:
           echo "Launching MAPDL service at PID: $DOCKER_PID"
           echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
 
-          - name: "Setup Python"
-          uses: actions/setup-python@v5
-          with:
-            python-version: ${{ env.MAIN_PYTHON_VERSION }}
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: "Install OS packages"
         run: |
@@ -302,6 +302,22 @@ jobs:
           dependencies: pandoc
           check-links: false
 
+      - name: "Display Docker files structures"
+        if: always()
+        env:
+          MAPDL_INSTANCE: MAPDL_0
+          LOG_NAMES: logs-build-docs
+        run: |
+          .ci/display_logs.sh
+  
+      - name: "Collect MAPDL logs on failure"
+        if: always()
+        env:
+          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          MAPDL_INSTANCE: MAPDL_0
+          LOG_NAMES: logs-build-docs
+        run: |
+          .ci/collect_mapdl_logs.sh
 
   package:
     name: "Package library"
