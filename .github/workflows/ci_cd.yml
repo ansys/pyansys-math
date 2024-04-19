@@ -101,12 +101,8 @@ jobs:
     strategy:
       matrix:
         mapdl-version: [
-          'v23.1.0',
           'v23.1-ubuntu',
           'v23.2.0',
-          'v23.2-ubuntu',
-          'v24.1.0',
-          'v24.1-ubuntu',
           'v24.1-ubuntu-student',
           ]
     outputs:
