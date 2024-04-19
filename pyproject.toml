@@ -97,3 +97,38 @@ show_missing = true
 skip = '*.pyc,*.txt,*.gif,*.png,*.jpg,*.js,*.html,*.doctree,*.ttf,*.woff,*.woff2,*.eot,*.mp4,*.inv,*.pickle,*.ipynb,flycheck*,./.git/*,./.hypothesis/*,*.yml,./doc/build/*,./doc/images/*,./dist/*,*~,.hypothesis*,./doc/source/examples/*,*cover,*.dat,*.mac,build,./docker/mapdl/v*,./factory/*,PKG-INFO,*.mypy_cache/*,./docker/mapdl/*,./_unused/*'
 ignore-words = "doc/styles/config/vocabularies/ANSYS/accept.txt"
 quiet-level = 3
+
+[tool.towncrier]
+package = "ansys.math.core"
+directory = "doc/changelog.d"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+underlines = ["", "", ""]
+template = "doc/changelog.d/changelog_template.jinja"
+title_format = "## [{version}](https://github.com/ansys/pyansys-math/releases/tag/v{version}) - {project_date}"
+issue_format = "[#{issue}](https://github.com/ansys/pyansys-math/pull/{issue})"
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dependencies"
+name = "Dependencies"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "miscellaneous"
+name = "Miscellaneous"
+showcontent = true
