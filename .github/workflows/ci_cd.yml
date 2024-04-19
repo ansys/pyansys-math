@@ -193,7 +193,7 @@ jobs:
         if: always()
         env:
           MAPDL_VERSION: ${{ matrix.mapdl-version }}
-          MAPDL_INSTANCE: mapdl
+          MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-${{ matrix.mapdl-version }}
         run: |
           .ci/collect_mapdl_logs.sh
@@ -201,7 +201,7 @@ jobs:
       - name: "Display Docker files structures"
         if: always()
         env:
-          MAPDL_INSTANCE: mapdl
+          MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-${{ matrix.mapdl-version }}
         run: |
           .ci/display_logs.sh
@@ -306,7 +306,7 @@ jobs:
         if: always()
         env:
           MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          MAPDL_INSTANCE: mapdl
+          MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-build-docs
         run: |
           .ci/collect_mapdl_logs.sh
@@ -314,7 +314,7 @@ jobs:
       - name: "Display Docker files structures"
         if: always()
         env:
-          MAPDL_INSTANCE: mapdl
+          MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-build-docs
         run: |
           .ci/display_logs.sh
