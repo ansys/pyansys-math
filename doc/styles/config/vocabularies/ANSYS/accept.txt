@@ -5,6 +5,7 @@ ansys
 AnsMath
 [Pp]y[Aa]nsys
 Math
+doc
 DOF
 eigenfrequencies
 eigenmodes
@@ -18,6 +19,9 @@ eigenresults
 Eigenshape
 eigenshapes
 eigensolvers
+feat
+fix
+maint
 MAPDL
 mapdl
 my_mat
