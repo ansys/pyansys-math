@@ -1,3 +1,15 @@
+.. _ref_release_notes:
+
+Release notes
+=============
+
+This document contains the release notes for the PyAnsys Math project.
+
+.. vale off
+
+.. towncrier release notes start
+
+
 `0.1.4 <https://github.com/ansys/pyansys-math/releases/tag/v0.1.4>`_ - 2024-04-22
 =================================================================================
 
@@ -29,13 +41,4 @@ Dependencies
 - maint: bump sphinx from 7.2.6 to 7.3.7 `#320 <https://github.com/ansys/pyansys-math/pull/320>`_
 - maint: bump jupyterlab from 4.1.5 to 4.1.6 `#321 <https://github.com/ansys/pyansys-math/pull/321>`_
 
-.. _ref_release_notes:
-
-Release notes
-=============
-
-This document contains the release notes for the PyAnsys Math project.
-
-.. vale off
-
-.. towncrier release notes start
+.. vale on
