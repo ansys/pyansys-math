@@ -1,5 +1,7 @@
 # CHANGELOG
 
-This project uses [towncrier](https://towncrier.readthedocs.io/) and the changes for the upcoming release can be found in <https://github.com/ansys/pyansys-math/tree/main/doc/changelog.d/>.
+This project uses [towncrier](https://towncrier.readthedocs.io/) to generate changelogs. 
 
-<!-- towncrier release notes start -->
+Refer to the [raw release notes](doc/source/changelog.rst) for more information.
+
+[Published release notes](https://math.docs.pyansys.com/version/stable/changelog.html) can be found in the online documentation.

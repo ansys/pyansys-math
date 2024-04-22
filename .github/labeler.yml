@@ -1,6 +1,7 @@
 documentation:
 - changed-files:
   - any-glob-to-any-file: 'doc/source/**/*'
+  - any-glob-to-any-file: 'examples/**/*'
 maintenance:
 - changed-files:
   - any-glob-to-any-file: '.github/**/*'
