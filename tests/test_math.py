@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Test AnsMath functionality."""
 import os
 import re
@@ -301,7 +323,7 @@ def test_kron_product_unsupported_dtype(mm):
     if mapdl_version < 23.2:
         pytest.skip("Requires MAPDL 2023 R2 or later.")
 
-    with pytest.raises(TypeError, match=r"Must be an ApdlMathObj"):
+    with pytest.raises(TypeError, match=r"Must be an AnsMath object."):
         m1 = mm.rand(3, 3)
         m1.kron(2)
 
@@ -481,7 +503,7 @@ def test_solve_alt(mm, cube_solve):
 def test_solve_eigs_km(mapdl, mm, cube_solve):
     mapdl.post1()
     resp = mapdl.set("LIST")
-    w_n = np.array(re.findall(r"\s\d*\.\d\s", resp), np.float32)
+    w_n = np.array(re.findall(r"\s\d*\.\d*\s", resp), np.float32)
 
     k = mm.stiff()
     m = mm.mass()
@@ -493,7 +515,7 @@ def test_solve_eigs_km(mapdl, mm, cube_solve):
 def test_solve_py(mapdl, mm, cube_solve):
     mapdl.post1()
     resp = mapdl.set("LIST")
-    w_n = np.array(re.findall(r"\s\d*\.\d\s", resp), np.float32)
+    w_n = np.array(re.findall(r"\s\d*\.\d*\s", resp), np.float32)
 
     # load by default from file.full
     k = mm.stiff()

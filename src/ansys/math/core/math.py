@@ -1,3 +1,25 @@
+# Copyright (C) 2023 - 2024 ANSYS, Inc. and/or its affiliates.
+# SPDX-License-Identifier: MIT
+#
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 """Contains the Math classes, allowing for math operations within
 PyAnsys Math from Python."""
 from enum import Enum
@@ -122,6 +144,7 @@ class AnsMath:
     """
 
     def __init__(self, mapdl=None, **kwargs):
+        """Initiate a common class for abstract math object."""
         if mapdl is None:
             mapdl = launch_mapdl(**kwargs)
 
@@ -1274,6 +1297,7 @@ class AnsMathObj:
     """Provides the common class for AnsMath objects."""
 
     def __init__(self, id_, mapdl=None, dtype=ObjType.GEN):
+        """Initiate a common class for AnsMath objects."""
         if mapdl is None:
             mapdl = launch_mapdl()
         self.id = id_
@@ -1414,7 +1438,7 @@ class AnsMathObj:
         if mapdl_version < 23.2:  # pragma: no cover
             raise VersionError("``kron`` requires MAPDL version 2023R2")
 
-        if not isinstance(obj, AnsMath):
+        if not isinstance(obj, AnsMathObj):
             raise TypeError("Must be an AnsMath object.")
 
         if not isinstance(self, (AnsMat, AnsVec)):
@@ -1495,6 +1519,7 @@ class AnsVec(AnsMathObj):
     """Provides the AnsMath vector objects."""
 
     def __init__(self, id_, mapdl, dtype=np.double, init=None):
+        """Initiate an AnsMath vector object."""
         AnsMathObj.__init__(self, id_, mapdl, ObjType.VEC)
 
         if init not in ["ones", "zeros", "rand", None]:
@@ -1609,8 +1634,8 @@ class AnsVec(AnsMathObj):
         Parameters
         ----------
         dtype : numpy.dtype, optional
-            NumPy data type to upload the array as. The options are `np.double <numpy.double>`_,
-            `np.int32 <numpy.int32>`_, and `np.int64 <numpy.int64>`_. The default is the current
+            NumPy data type to upload the array as. The options are :class:`numpy.double`,
+            :class:`numpy.int32`, and :class:`numpy.int64`. The default is the current
             array type.
 
         Returns
@@ -1641,6 +1666,7 @@ class AnsMat(AnsMathObj):
     """Provides the AnsMath matrix objects."""
 
     def __init__(self, id_, mapdl, type_=ObjType.DMAT):
+        """Initiate an AnsMath matrix object."""
         AnsMathObj.__init__(self, id_, mapdl, type_)
 
     @property
@@ -1809,6 +1835,7 @@ class AnsDenseMat(AnsMat):
     """Provides the AnsMath dense matrix objects."""
 
     def __init__(self, uid, mapdl):
+        """Initiate an AnsMath dense matrix object."""
         AnsMat.__init__(self, uid, mapdl, ObjType.DMAT)
 
     def __array__(self):
@@ -1827,6 +1854,7 @@ class AnsSparseMat(AnsMat):
     """Provides the AnsMath sparse matrix objects."""
 
     def __init__(self, uid, mapdl):
+        """Initiate an AnsMath sparse matrix object."""
         AnsMat.__init__(self, uid, mapdl, ObjType.SMAT)
 
     def __repr__(self):
