@@ -9,6 +9,20 @@ This document contains the release notes for the PyAnsys Math project.
 
 .. towncrier release notes start
 
+`0.1.5 <https://github.com/ansys/pyansys-math/releases/tag/v0.1.5>`_ - 2024-04-22
+=================================================================================
+
+Changed
+^^^^^^^
+
+- chore: update CHANGELOG for v0.1.4 `#325 <https://github.com/ansys/pyansys-math/pull/325>`_
+- ci: establish stage dependencies for release `#327 <https://github.com/ansys/pyansys-math/pull/327>`_
+
+
+Miscellaneous
+^^^^^^^^^^^^^
+
+- docs: title level for release notes `#326 <https://github.com/ansys/pyansys-math/pull/326>`_
 
 `0.1.4 <https://github.com/ansys/pyansys-math/releases/tag/v0.1.4>`_ - 2024-04-22
 =================================================================================
