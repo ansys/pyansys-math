@@ -193,7 +193,7 @@ jobs:
         if: always()
         env:
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
+          LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
         run: |
           .ci/display_logs.sh
 
@@ -202,22 +202,22 @@ jobs:
         env:
           MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests
+          LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
         run: |
           .ci/collect_mapdl_logs.sh
 
       - name: "Tar logs"
         if: always()
         run: |
-          cp log.txt ./logs-build-tests/
-          tar cvzf ./logs-build-tests.tgz ./logs-build-tests
+          cp log.txt ./logs-build-tests-${{ matrix.mapdl-version }}/
+          tar cvzf ./logs-build-tests-${{ matrix.mapdl-version }}.tgz ./logs-build-tests-${{ matrix.mapdl-version }}
 
       - name: "Upload logs to GitHub"
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: logs-build-tests.tgz
-          path: ./logs-build-tests.tgz
+          name: logs-build-tests-${{ matrix.mapdl-version }}.tgz
+          path: ./logs-build-tests-${{ matrix.mapdl-version }}.tgz
 
       - name: "Display MAPDL Logs"
         if: always()
@@ -226,9 +226,9 @@ jobs:
       - name: "List main files"
         if: always()
         run: |
-          if compgen -G './logs-build-tests/*.err' > /dev/null ;then for f in ./logs-build-tests/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
-          if compgen -G './logs-build-tests/*.log' > /dev/null ;then for f in ./logs-build-tests/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
-          if compgen -G './logs-build-tests/*.out' > /dev/null ;then for f in ./logs-build-tests/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests-${{ matrix.mapdl-version }}/*.err' > /dev/null ;then for f in ./logs-build-tests-${{ matrix.mapdl-version }}/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests-${{ matrix.mapdl-version }}/*.log' > /dev/null ;then for f in ./logs-build-tests-${{ matrix.mapdl-version }}/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests-${{ matrix.mapdl-version }}/*.out' > /dev/null ;then for f in ./logs-build-tests-${{ matrix.mapdl-version }}/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
   doc-build:
     name: "Doc building"
