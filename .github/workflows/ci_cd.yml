@@ -202,23 +202,22 @@ jobs:
         env:
           MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
+          LOG_NAMES: logs-build-tests
         run: |
           .ci/collect_mapdl_logs.sh
 
       - name: "Tar logs"
         if: always()
         run: |
-          cp -f doc/_build/latex/*.log ./logs-build-docs/
-          cp log.txt ./logs-build-docs/
-          tar cvzf ./logs-build-docs.tgz ./logs-build-docs
+          cp log.txt ./logs-build-tests/
+          tar cvzf ./logs-build-tests.tgz ./logs-build-tests
 
       - name: "Upload logs to GitHub"
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: logs-build-docs.tgz
-          path: ./logs-build-docs.tgz
+          name: logs-build-tests.tgz
+          path: ./logs-build-tests.tgz
 
       - name: "Display MAPDL Logs"
         if: always()
@@ -227,10 +226,9 @@ jobs:
       - name: "List main files"
         if: always()
         run: |
-          if compgen -G 'doc/_build/latex/*.log' > /dev/null ;then for f in doc/_build/latex/*.log; do echo "::group:: Output latex log file $f" && cat $f && echo "::endgroup::" ; done; fi
-          if compgen -G './logs-build-docs/*.err' > /dev/null ;then for f in ./logs-build-docs/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
-          if compgen -G './logs-build-docs/*.log' > /dev/null ;then for f in ./logs-build-docs/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
-          if compgen -G './logs-build-docs/*.out' > /dev/null ;then for f in ./logs-build-docs/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests/*.err' > /dev/null ;then for f in ./logs-build-tests/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests/*.log' > /dev/null ;then for f in ./logs-build-tests/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-tests/*.out' > /dev/null ;then for f in ./logs-build-tests/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
   doc-build:
     name: "Doc building"
