@@ -112,33 +112,22 @@ jobs:
       - name: "Install Git and checkout project"
         uses: actions/checkout@v4
 
-      - name: "Login in Github container registry"
+      - name: "Login in Github Container registry"
         uses: docker/login-action@v3.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Getting SMP/DMP mode"
-        id: distributed_mode
-        run: |
-          image=${{ matrix.mapdl-version }}
-          export distributed_mode="smp"
-          if [[ $image == *".1."* ]]; then
-            export distributed_mode="dmp";
-          fi
-          echo "Distributed mode: $distributed_mode"
-          echo "distributed_mode=$(echo $distributed_mode)" >> $GITHUB_OUTPUT
-  
       - name: "Pull, launch, and validate MAPDL service"
         id: start_mapdl
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_VERSION: ${{ matrix.mapdl-version }}
-          DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
+          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          DISTRIBUTED_MODE: "dmp"
         run: |
           export INSTANCE_NAME=MAPDL_0
-          .ci/start_mapdl.sh &> mapdl_launch.log & export DOCKER_PID=$!
+          .ci/start_mapdl.sh & export DOCKER_PID=$!
           echo "Launching MAPDL service at PID: $DOCKER_PID"
           echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
 
@@ -165,6 +154,21 @@ jobs:
         run: |
           python -m pip install .[tests]
 
+      - name: "Test virtual framebuffer"
+        run: |
+          xvfb-run python .ci/display_test.py
+
+      - name: "Retrieve PyMAPDL version"
+        id: version
+        run: |
+          echo "PYMAPDL_VERSION=$(python -c 'from ansys.mapdl.core import __version__; print(__version__)')" >> $GITHUB_OUTPUT
+          echo "PyMAPDL version is: $(python -c "from ansys.mapdl.core import __version__; print(__version__)")"
+
+      - name: "Waiting for the services to be up"
+        timeout-minutes: 15
+        run: |
+          .ci/waiting_services.sh
+
       - name: "Unit testing"
         run: |
           pytest -v --durations=10 --maxfail=10 \
@@ -185,23 +189,48 @@ jobs:
           name: ${{ matrix.mapdl-version }}-remote.xml
           path: ./${{ matrix.mapdl-version }}-remote.xml
 
-      - name: "Collect MAPDL logs on failure"
-        if: always()
-        env:
-          MAPDL_VERSION: ${{ matrix.mapdl-version }}
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-${{ matrix.mapdl-version }}
-        run: |
-          .ci/collect_mapdl_logs.sh
-
       - name: "Display Docker files structures"
         if: always()
         env:
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-${{ matrix.mapdl-version }}
+          LOG_NAMES: logs-build-docs
         run: |
           .ci/display_logs.sh
 
+      - name: "Collect MAPDL logs on failure"
+        if: always()
+        env:
+          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          MAPDL_INSTANCE: MAPDL_0
+          LOG_NAMES: logs-build-docs
+        run: |
+          .ci/collect_mapdl_logs.sh
+
+      - name: "Tar logs"
+        if: always()
+        run: |
+          cp -f doc/_build/latex/*.log ./logs-build-docs/
+          cp log.txt ./logs-build-docs/
+          tar cvzf ./logs-build-docs.tgz ./logs-build-docs
+
+      - name: "Upload logs to GitHub"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-build-docs.tgz
+          path: ./logs-build-docs.tgz
+
+      - name: "Display MAPDL Logs"
+        if: always()
+        run: cat log.txt
+
+      - name: "List main files"
+        if: always()
+        run: |
+          if compgen -G 'doc/_build/latex/*.log' > /dev/null ;then for f in doc/_build/latex/*.log; do echo "::group:: Output latex log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.err' > /dev/null ;then for f in ./logs-build-docs/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.log' > /dev/null ;then for f in ./logs-build-docs/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.out' > /dev/null ;then for f in ./logs-build-docs/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
 
   doc-build:
     name: "Doc building"
@@ -287,6 +316,11 @@ jobs:
           restore-keys: |
             autosummary-v${{ env.RESET_AUTOSUMMARY_CACHE }}-${{ steps.version.outputs.ANSYSMATH_VERSION }}
 
+      - name: "Waiting for the services to be up"
+        timeout-minutes: 15
+        run: |
+          .ci/waiting_services.sh
+
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@v6
         with:
@@ -297,7 +331,15 @@ jobs:
           requires-xvfb: true
           dependencies: pandoc
           check-links: false
-  
+
+      - name: "Display Docker files structures"
+        if: always()
+        env:
+          MAPDL_INSTANCE: MAPDL_0
+          LOG_NAMES: logs-build-docs
+        run: |
+          .ci/display_logs.sh
+
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
@@ -307,13 +349,32 @@ jobs:
         run: |
           .ci/collect_mapdl_logs.sh
 
-      - name: "Display Docker files structures"
+      - name: "Tar logs"
         if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
         run: |
-          .ci/display_logs.sh
+          cp -f doc/_build/latex/*.log ./logs-build-docs/
+          cp log.txt ./logs-build-docs/
+          tar cvzf ./logs-build-docs.tgz ./logs-build-docs
+
+      - name: "Upload logs to GitHub"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-build-docs.tgz
+          path: ./logs-build-docs.tgz
+
+      - name: "Display MAPDL Logs"
+        if: always()
+        run: cat log.txt
+
+      - name: "List main files"
+        if: always()
+        run: |
+          if compgen -G 'doc/_build/latex/*.log' > /dev/null ;then for f in doc/_build/latex/*.log; do echo "::group:: Output latex log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.err' > /dev/null ;then for f in ./logs-build-docs/*.err; do echo "::group:: Error file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.log' > /dev/null ;then for f in ./logs-build-docs/*.log; do echo "::group:: Log file $f" && cat $f && echo "::endgroup::" ; done; fi
+          if compgen -G './logs-build-docs/*.out' > /dev/null ;then for f in ./logs-build-docs/*.out; do echo "::group:: Output file $f" && cat $f && echo "::endgroup::" ; done; fi
+  
 
   package:
     name: "Package library"
