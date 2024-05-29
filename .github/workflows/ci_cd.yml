@@ -93,6 +93,19 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
 
+  check-vulnerabilities:
+    name: "Check library vulnerabilities (default mode - only on main)"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check library vulnerabilities with default mode"
+        uses: ansys/actions/check-vulnerabilities@v6.0
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+          python-package-name: 'ansys-<product>-<library>'
+
+
   build-test:
     name: "Build and unit testing"
     runs-on: ubuntu-latest
@@ -222,6 +235,7 @@ jobs:
       - name: "Display MAPDL Logs"
         if: always()
         run: cat log.txt
+
 
   doc-build:
     name: "Doc building"
@@ -357,6 +371,7 @@ jobs:
       - name: "Display MAPDL Logs"
         if: always()
         run: cat log.txt
+
 
   package:
     name: "Package library"
