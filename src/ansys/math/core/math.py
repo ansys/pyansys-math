@@ -24,7 +24,6 @@
 PyAnsys Math from Python."""
 from enum import Enum
 import os
-import random
 import string
 from warnings import warn
 
@@ -68,6 +67,7 @@ if os.name == "nt":
 def id_generator(size=6, chars=string.ascii_uppercase):
     """Generate a random string"""
     import secrets
+
     return "".join(secrets.choice(string) for _ in range(size))
 
 
