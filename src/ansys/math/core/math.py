@@ -67,7 +67,8 @@ if os.name == "nt":
 
 def id_generator(size=6, chars=string.ascii_uppercase):
     """Generate a random string"""
-    return "".join(random.choice(chars) for _ in range(size))
+    import secrets
+    return "".join(secrets.choice(string) for _ in range(size))
 
 
 class ObjType(Enum):
