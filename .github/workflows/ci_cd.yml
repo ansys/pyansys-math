@@ -99,11 +99,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check library vulnerabilities with development mode"
-        uses: ansys/actions/check-vulnerabilities@v6.0
+        uses: ansys/actions/check-vulnerabilities@v6
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
-          python-package-name: 'ansys-math-core'
+          python-package-name: ${{ env.PACKAGE_NAME }}
           dev-mode: true
 
 
@@ -113,11 +113,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check library vulnerabilities with default mode"
-        uses: ansys/actions/check-vulnerabilities@v6.0
+        uses: ansys/actions/check-vulnerabilities@v6
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
-          python-package-name: 'ansys-math-core'
+          python-package-name: ${{ env.PACKAGE_NAME }}
 
 
   build-test:
