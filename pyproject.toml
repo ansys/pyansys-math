@@ -47,7 +47,7 @@ tests = [
     "vtk==9.3.1",
 ]
 doc = [
-    "Sphinx==7.3.7",
+    "Sphinx==8.0.2",
     "ansys-mapdl-core==0.68.4",
     "ansys-mapdl-reader==0.53.0",
     "ansys-sphinx-theme==0.16.6",
