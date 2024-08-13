@@ -47,10 +47,10 @@ tests = [
     "vtk==9.3.1",
 ]
 doc = [
-    "Sphinx==7.3.7",
+    "Sphinx==8.0.2",
     "ansys-mapdl-core==0.68.4",
     "ansys-mapdl-reader==0.53.0",
-    "ansys-sphinx-theme==0.16.6",
+    "ansys-sphinx-theme==1.0.3",
     "jupyter_sphinx==0.5.3",
     "jupyterlab==4.2.4",
     "numpydoc==1.8.0",
@@ -61,7 +61,7 @@ doc = [
     "sphinx-autobuild==2024.4.16",
     "sphinx-autodoc-typehints==2.2.3",
     "sphinx-copybutton==0.5.2",
-    "sphinx-design==0.6.0",
+    "sphinx-design==0.6.1",
     "sphinx-notfound-page==1.0.4",
     "sphinx-gallery==0.17.1",
     "trame==3.6.3",
