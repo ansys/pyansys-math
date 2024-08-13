@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import warnings
 
-from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
+from ansys_sphinx_theme import ansys_favicon, get_version_match
 import numpy as np
 import pyvista
 from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
@@ -42,14 +42,14 @@ release = version = __version__
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 switcher_version = get_version_match(__version__)
 
-# Select desired logo, theme, and declare the html title
-html_logo = pyansys_logo_black
+# Select desired theme, and declare the html title
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyAnsys Math"
 html_static_path = ["_static"]
 
 # specify the location of your github repo
 html_theme_options = {
+    "logo": "pyansys",
     "github_url": "https://github.com/ansys/pyansys-math",
     "check_switcher": False,
     "show_prev_next": False,
