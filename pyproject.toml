@@ -52,7 +52,7 @@ doc = [
     "ansys-mapdl-reader==0.53.0",
     "ansys-sphinx-theme==0.16.6",
     "jupyter_sphinx==0.5.3",
-    "jupyterlab==4.2.3",
+    "jupyterlab==4.2.4",
     "numpydoc==1.8.0",
     "pypandoc==1.13",
     "pytest-sphinx==0.6.3",
@@ -63,7 +63,7 @@ doc = [
     "sphinx-copybutton==0.5.2",
     "sphinx-design==0.6.0",
     "sphinx-notfound-page==1.0.4",
-    "sphinx-gallery==0.17.0",
+    "sphinx-gallery==0.17.1",
     "trame==3.6.3",
     "vtk==9.3.1",
 ]
@@ -129,4 +129,19 @@ showcontent = true
 [[tool.towncrier.type]]
 directory = "miscellaneous"
 name = "Miscellaneous"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "maintenance"
+name = "Maintenance"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "test"
+name = "Test"
 showcontent = true
