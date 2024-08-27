@@ -38,7 +38,7 @@ dependencies = [
 tests = [
     "ansys-mapdl-core==0.68.4",
     "numpy==1.26.4",
-    "scipy==1.14.0",
+    "scipy==1.14.1",
     "pyansys-tools-report==0.8.0",
     "pytest==8.3.2",
     "pytest-cov==5.0.0",
@@ -57,7 +57,7 @@ doc = [
     "pypandoc==1.13",
     "pytest-sphinx==0.6.3",
     "pyvista[jupyter,trame]==0.44.1",
-    "scipy==1.14.0",
+    "scipy==1.14.1",
     "sphinx-autobuild==2024.4.16",
     "sphinx-autodoc-typehints==2.2.3",
     "sphinx-copybutton==0.5.2",
