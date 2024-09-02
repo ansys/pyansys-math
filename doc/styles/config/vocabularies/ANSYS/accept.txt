@@ -1,8 +1,11 @@
+API
 ANSYS
 Ansys
 ansys
 AnsMath
-PyAnsys Math
+[Pp]y[Aa]nsys
+Math
+doc
 DOF
 eigenfrequencies
 eigenmodes
@@ -16,6 +19,9 @@ eigenresults
 Eigenshape
 eigenshapes
 eigensolvers
+feat
+fix
+maint
 MAPDL
 mapdl
 my_mat
@@ -28,6 +34,7 @@ numpy
 pres
 parm
 PyMAPDL
+[Pp]ython
 SciPy
 scipy
 struc

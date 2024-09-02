@@ -96,3 +96,4 @@ For comprehensive PyAnsys Math examples, see :ref:`ref_pymath_examples`.
    api/index
    examples/index
    contributing/index
+   changelog

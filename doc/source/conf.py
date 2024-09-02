@@ -1,11 +1,13 @@
 """Sphinx documentation configuration file."""
+
 from datetime import datetime
 import os
 import warnings
 
-from ansys_sphinx_theme import ansys_favicon, get_version_match, pyansys_logo_black
+from ansys_sphinx_theme import ansys_favicon, get_version_match
 import numpy as np
 import pyvista
+from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
 from sphinx_gallery.sorting import FileNameSortKey
 
 from ansys.math.core import __version__
@@ -16,11 +18,6 @@ pyvista.set_error_output_file("errors.txt")
 
 # must be less than or equal to the XVFB window size
 pyvista.global_theme.window_size = np.array([1024, 768])
-
-# Save figures in specified directory
-pyvista.FIGURE_PATH = os.path.join(os.path.abspath("./images/"), "auto-generated/")
-if not os.path.exists(pyvista.FIGURE_PATH):
-    os.makedirs(pyvista.FIGURE_PATH)
 
 # necessary when building the sphinx gallery
 pyvista.BUILDING_GALLERY = True
@@ -45,14 +42,14 @@ release = version = __version__
 cname = os.getenv("DOCUMENTATION_CNAME", "<DEFAULT_CNAME>")
 switcher_version = get_version_match(__version__)
 
-# Select desired logo, theme, and declare the html title
-html_logo = pyansys_logo_black
+# Select desired theme, and declare the html title
 html_theme = "ansys_sphinx_theme"
 html_short_title = html_title = "PyAnsys Math"
 html_static_path = ["_static"]
 
 # specify the location of your github repo
 html_theme_options = {
+    "logo": "pyansys",
     "github_url": "https://github.com/ansys/pyansys-math",
     "check_switcher": False,
     "show_prev_next": False,
@@ -91,6 +88,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
+    "sphinx_design",
     "sphinx_gallery.gen_gallery",
     "pyvista.ext.viewer_directive",
 ]
@@ -113,7 +111,7 @@ sphinx_gallery_conf = {
     "backreferences_dir": None,
     # Modules for which function level galleries are created.  In
     "doc_module": "ansys-math-core",
-    "image_scrapers": ("pyvista", "matplotlib"),
+    "image_scrapers": (DynamicScraper(), "matplotlib"),
     "ignore_pattern": "flycheck*",
     "thumbnail_size": (350, 350),
 }
@@ -209,3 +207,12 @@ htmlhelp_basename = "pyansysmathdoc"
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [(master_doc, "ansys.math.core", "ansys.math.core Documentation", [author], 1)]
+
+linkcheck_ignore = [
+    "https://www.ansys.com/*",
+]
+
+# If we are on a release, we have to ignore the "release" URLs, since it is not
+# available until the release is published.
+if switcher_version != "dev":
+    linkcheck_ignore.append(f"https://github.com/ansys/pyansys-math/releases/tag/v{__version__}")
