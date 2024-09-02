@@ -36,36 +36,36 @@ dependencies = [
 
 [project.optional-dependencies]
 tests = [
-    "ansys-mapdl-core==0.68.1",
+    "ansys-mapdl-core==0.68.4",
     "numpy==2.0.0",
-    "scipy==1.13.1",
-    "pyansys-tools-report==0.7.3",
-    "pytest==8.2.2",
+    "scipy==1.14.1",
+    "pyansys-tools-report==0.8.0",
+    "pytest==8.3.2",
     "pytest-cov==5.0.0",
     "pytest-rerunfailures==14.0",
-    "pyvista==0.43.9",
-    "vtk==9.3.0",
+    "pyvista==0.44.1",
+    "vtk==9.3.1",
 ]
 doc = [
-    "Sphinx==7.3.7",
-    "ansys-mapdl-core==0.68.1",
+    "Sphinx==8.0.2",
+    "ansys-mapdl-core==0.68.4",
     "ansys-mapdl-reader==0.53.0",
-    "ansys-sphinx-theme==0.16.5",
+    "ansys-sphinx-theme==1.0.7",
     "jupyter_sphinx==0.5.3",
-    "jupyterlab==4.2.2",
-    "numpydoc==1.7.0",
+    "jupyterlab==4.2.4",
+    "numpydoc==1.8.0",
     "pypandoc==1.13",
     "pytest-sphinx==0.6.3",
-    "pyvista[jupyter,trame]==0.43.8",
-    "scipy==1.13.1",
+    "pyvista[jupyter,trame]==0.44.1",
+    "scipy==1.14.1",
     "sphinx-autobuild==2024.4.16",
-    "sphinx-autodoc-typehints==2.1.1",
+    "sphinx-autodoc-typehints==2.2.3",
     "sphinx-copybutton==0.5.2",
-    "sphinx-design==0.6.0",
-    "sphinx-notfound-page==1.0.2",
-    "sphinx-gallery==0.16.0",
-    "trame==3.6.2",
-    "vtk==9.3.0",
+    "sphinx-design==0.6.1",
+    "sphinx-notfound-page==1.0.4",
+    "sphinx-gallery==0.17.1",
+    "trame==3.6.3",
+    "vtk==9.3.1",
 ]
 
 [tool.flit.module]
@@ -129,4 +129,19 @@ showcontent = true
 [[tool.towncrier.type]]
 directory = "miscellaneous"
 name = "Miscellaneous"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "maintenance"
+name = "Maintenance"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "test"
+name = "Test"
 showcontent = true
