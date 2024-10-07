@@ -58,7 +58,7 @@ doc = [
     "pytest-sphinx==0.6.3",
     "pyvista[jupyter,trame]==0.44.1",
     "scipy==1.14.1",
-    "sphinx-autobuild==2024.9.19",
+    "sphinx-autobuild==2024.10.3",
     "sphinx-autodoc-typehints==2.4.4",
     "sphinx-copybutton==0.5.2",
     "sphinx-design==0.6.1",
