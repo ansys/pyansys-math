@@ -41,7 +41,7 @@ Installation
 
 For users
 ~~~~~~~~~
-The ``ansys.math.core`` package currently supports Python 3.9 through
+The ``ansys.math.core`` package currently supports Python 3.10 through
 Python 3.12 on Windows, Mac OS, and Linux.
 
 Install the latest package for use with this command:
