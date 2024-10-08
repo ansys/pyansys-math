@@ -1,10 +1,10 @@
-# Authors
+# Contributors
 
 ## Project Lead
 
 * [Camille Latapie](https://github.com/clatapie)
 
-## Contributors
+## Individual Contributors
 
 * [Frederic Thevenon](https://github.com/FredAns)
 * [Alexander Kaszynski](https://github.com/akaszynski)
