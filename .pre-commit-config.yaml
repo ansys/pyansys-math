@@ -19,7 +19,7 @@ repos:
   rev: 1.19.0
   hooks:
   - id: blacken-docs
-    additional_dependencies: [black==24.4.2]
+    additional_dependencies: [black==24.10.0]
     args:
       - --line-length=100
 
