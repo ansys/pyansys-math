@@ -52,7 +52,7 @@ doc = [
     "jupyter_sphinx==0.5.3",
     "jupyterlab==4.2.5",
     "numpydoc==1.8.0",
-    "pypandoc==1.13",
+    "pypandoc==1.14",
     "pytest-sphinx==0.6.3",
     "pyvista[jupyter,trame]==0.44.1",
     "scipy==1.14.1",
