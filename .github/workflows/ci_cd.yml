@@ -37,7 +37,7 @@ jobs:
   update-changelog:
     name: "Update CHANGELOG (on release)"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
       pull-requests: write
@@ -50,7 +50,7 @@ jobs:
 
   code-style:
     name: "Code style"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: PyAnsys code style checks
         uses: ansys/actions/code-style@v8
@@ -60,7 +60,7 @@ jobs:
 
   doc-style:
     name: "Documentation Style Check"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "PyAnsys documentation style checks"
         uses: ansys/actions/doc-style@v8
@@ -75,7 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-22.04, windows-latest, macos-latest]
         python-version: ['3.10', '3.11', '3.12']
         # Only perform wheelhouse builds for Windows and macOS when releasing
         should-release: 
@@ -97,7 +97,7 @@ jobs:
   check-vulnerabilities-dev:
     name: "Check library vulnerabilities (development mode)"
     if: github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check library vulnerabilities with development mode"
         uses: ansys/actions/check-vulnerabilities@v8
@@ -111,7 +111,7 @@ jobs:
   check-vulnerabilities-main:
     name: "Check library vulnerabilities (default mode - only on main)"
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check library vulnerabilities with default mode"
         uses: ansys/actions/check-vulnerabilities@v8
@@ -123,7 +123,7 @@ jobs:
 
   build-test:
     name: "Build and unit testing"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     needs: [smoke-tests]
     strategy:
@@ -254,7 +254,7 @@ jobs:
 
   doc-build:
     name: "Doc building"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [doc-style]
     outputs:
       ANSYSMATH_VERSION: ${{ steps.version.outputs.ANSYSMATH_VERSION }}
@@ -392,7 +392,7 @@ jobs:
   package:
     name: "Package library"
     needs: [doc-build, build-test]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Build library source and wheel artifacts"
         uses: ansys/actions/build-library@v8
@@ -405,7 +405,7 @@ jobs:
     name: "Deploy development documentation"
     # Deploy development only when merging to main
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [check-vulnerabilities-main, package]
     steps:
       - name: "Deploy the latest documentation"
@@ -421,7 +421,7 @@ jobs:
     name: "Release project to public PyPI and GitHub"
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     needs:  [package, update-changelog]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
 
     - name: "Release to the public PyPI repository"
@@ -441,7 +441,7 @@ jobs:
     name: "Deploy stable documentation"
     # Deploy release documentation when creating a new tag
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [release]
     steps:
       - name: "Deploy the stable documentation"
