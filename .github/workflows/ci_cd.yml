@@ -167,7 +167,7 @@ jobs:
       - name: "Install OS packages"
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc xvfb libgl1-mesa-glx
+          sudo apt-get install -y pandoc xvfb libgl1
 
       - name: "Cache pip"
         if: env.USE_CACHE == true
