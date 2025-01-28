@@ -262,6 +262,7 @@ jobs:
       PYMAPDL_PORT: 21000  # default won't work on GitHub runners
       PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
       PYMAPDL_START_INSTANCE: FALSE
+      LIBGL_ALWAYS_SOFTWARE: 1
     steps:
       - name: "Install Git and checkout project"
         uses: actions/checkout@v4
