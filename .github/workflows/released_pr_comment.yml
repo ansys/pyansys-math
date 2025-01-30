@@ -1,0 +1,25 @@
+name: Comment on released PRs
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    name: Comment on released PRs
+    env:
+        PACKAGE_NAME: 'ansys-math-core'
+    steps:
+      - name: Comment on PRs
+        uses: rdlf0/comment-released-prs-action@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-body: |-
+            Released in [{{name}}]({{html_url}}).
+
+            This comment thread has been locked. If you are still experiencing this issue after upgrading to
+            ${{ env.PACKAGE_NAME }} v[{{name}}]({{html_url}}), please open a new issue."
+          add-label: true
+          label-pattern: "release-{{name}}"
