@@ -437,7 +437,7 @@ jobs:
       with:
         library-name: ${{ env.PACKAGE_NAME }}
 
-    - name: "Add a comment on PRs"
+    - name: "Add a comment on released PRs"
       uses: rdlf0/comment-released-prs-action@v3
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
