@@ -9,6 +9,58 @@ This document contains the release notes for the PyAnsys Math project.
 
 .. towncrier release notes start
 
+`0.2.1 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.1>`_ - 2025-01-31
+=================================================================================
+
+Added
+^^^^^
+
+- feat: adding PR comments on release `#467 <https://github.com/ansys/pyansys-math/pull/467>`_
+
+
+Fixed
+^^^^^
+
+- fix: avoid the usage of attrs 24.3.0 (temporary) `#466 <https://github.com/ansys/pyansys-math/pull/466>`_
+
+
+Dependencies
+^^^^^^^^^^^^
+
+- maint: bump sphinx-autodoc-typehints from 2.4.4 to 2.5.0 `#427 <https://github.com/ansys/pyansys-math/pull/427>`_
+- maint: bump ansys-mapdl-core from 0.68.5 to 0.68.6 `#428 <https://github.com/ansys/pyansys-math/pull/428>`_
+- maint: bump pypandoc from 1.13 to 1.14 `#429 <https://github.com/ansys/pyansys-math/pull/429>`_
+- maint: bump sphinx from 8.0.2 to 8.1.3 `#430 <https://github.com/ansys/pyansys-math/pull/430>`_
+- maint: bump ansys-sphinx-theme from 1.1.2 to 1.1.4 `#431 <https://github.com/ansys/pyansys-math/pull/431>`_
+- maint: bump sphinx-gallery from 0.17.1 to 0.18.0 `#434 <https://github.com/ansys/pyansys-math/pull/434>`_
+- maint: bump trame from 3.6.5 to 3.7.0 `#435 <https://github.com/ansys/pyansys-math/pull/435>`_
+- maint: bump pyansys-tools-report from 0.8.0 to 0.8.1 `#436 <https://github.com/ansys/pyansys-math/pull/436>`_
+- maint: bump ansys-sphinx-theme from 1.1.4 to 1.1.7 `#437 <https://github.com/ansys/pyansys-math/pull/437>`_
+- maint: bump pytest-cov from 5.0.0 to 6.0.0 `#440 <https://github.com/ansys/pyansys-math/pull/440>`_
+- maint: bump numpy from 2.1.2 to 2.1.3 `#442 <https://github.com/ansys/pyansys-math/pull/442>`_
+- maint: bump ansys-sphinx-theme from 1.1.7 to 1.2.1 `#445 <https://github.com/ansys/pyansys-math/pull/445>`_
+- maint: bump jupyterlab from 4.2.5 to 4.3.1 `#446 <https://github.com/ansys/pyansys-math/pull/446>`_
+- maint: bump ansys-sphinx-theme from 1.2.1 to 1.2.2 `#448 <https://github.com/ansys/pyansys-math/pull/448>`_
+- maint: bump pytest-rerunfailures from 14.0 to 15.0 `#449 <https://github.com/ansys/pyansys-math/pull/449>`_
+- maint: bump ansys-mapdl-reader from 0.54.1 to 0.54.2 `#450 <https://github.com/ansys/pyansys-math/pull/450>`_
+- maint: bump pyvista[jupyter,trame] from 0.44.1 to 0.44.2 `#451 <https://github.com/ansys/pyansys-math/pull/451>`_, `#457 <https://github.com/ansys/pyansys-math/pull/457>`_
+- maint: bump jupyterlab from 4.3.1 to 4.3.4 `#460 <https://github.com/ansys/pyansys-math/pull/460>`_
+- maint: bump ansys-sphinx-theme from 1.2.2 to 1.2.6 `#462 <https://github.com/ansys/pyansys-math/pull/462>`_
+- maint: bump numpy from 2.1.3 to 2.2.2 `#464 <https://github.com/ansys/pyansys-math/pull/464>`_
+- maint: bump sphinx-autodoc-typehints from 2.5.0 to 3.0.1 `#465 <https://github.com/ansys/pyansys-math/pull/465>`_
+
+
+Documentation
+^^^^^^^^^^^^^
+
+- chore: update CHANGELOG for v0.2.0 `#426 <https://github.com/ansys/pyansys-math/pull/426>`_
+
+
+Maintenance
+^^^^^^^^^^^
+
+- maint: bump codecov/codecov-action from 4 to 5 in the actions group `#444 <https://github.com/ansys/pyansys-math/pull/444>`_
+
 `0.2.0 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.0>`_ - 2024-10-08
 =================================================================================
 
