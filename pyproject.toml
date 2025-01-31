@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # Check https://flit.readthedocs.io/en/latest/pyproject_toml.html for all available sections
 name = "ansys-math-core"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Python wrapper for PyAnsys Math libraries."
 readme = "README.rst"
 requires-python = ">=3.10"
