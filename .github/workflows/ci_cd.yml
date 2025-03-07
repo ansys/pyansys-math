@@ -131,7 +131,9 @@ jobs:
         mapdl-version: [
           'v23.1-ubuntu',
           'v23.2.0',
-          'v24.1-ubuntu-student',
+          'v24.1-ubuntu',
+          'v24.2-ubuntu',
+          'v25.1-ubuntu',
           ]
     outputs:
       DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
@@ -147,12 +149,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: "Getting SMP/DMP mode"
+        id: distributed_mode
+        run: |
+          image=${{ matrix.mapdl-version }}
+          export distributed_mode="smp"
+          if [[ $image == *".1."* ]]; then
+            export distributed_mode="dmp";
+          fi
+          echo "Distributed mode: $distributed_mode"
+          echo "distributed_mode=$(echo $distributed_mode)" >> $GITHUB_OUTPUT
+
       - name: "Pull, launch, and validate MAPDL service"
         id: start_mapdl
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          DISTRIBUTED_MODE: "dmp"
+          MAPDL_VERSION: ${{ matrix.mapdl-version }}
+          DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
         run: |
           export INSTANCE_NAME=MAPDL_0
           .ci/start_mapdl.sh & export DOCKER_PID=$!
@@ -228,7 +241,7 @@ jobs:
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          MAPDL_VERSION: ${{ matrix.mapdl-version }}
           MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
         run: |
