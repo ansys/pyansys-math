@@ -131,7 +131,8 @@ jobs:
         mapdl-version: [
           'v23.1-ubuntu',
           'v23.2.0',
-          'v24.1-ubuntu-student',
+          'v24.1-ubuntu',
+          'v24.2-ubuntu',
           ]
     outputs:
       DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
