@@ -199,7 +199,7 @@ jobs:
 
       - name: "Unit testing"
         run: |
-          pytest -v --durations=10 --maxfail=10 \
+          pytest -vvv --color=yes -rxXsa --durations=10 --maxfail=10 \
             --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError \
             --cov=ansys.math.core --cov-report=xml:${{ matrix.mapdl-version }}-remote.xml \
             --cov-report=html --cov-report term
