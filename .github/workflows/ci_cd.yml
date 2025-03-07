@@ -136,7 +136,6 @@ jobs:
     outputs:
       DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
 
-
     steps:
       - name: "Install Git and checkout project"
         uses: actions/checkout@v4
