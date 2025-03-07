@@ -15,7 +15,7 @@ env:
   PACKAGE_NAME: 'ansys-math-core'
   PACKAGE_NAMESPACE: 'ansys.math.core'
   MAPDL_PACKAGE: ghcr.io/ansys/mapdl
-  MAPDL_IMAGE_VERSION_DOCS_BUILD: v24.1-ubuntu-student
+  MAPDL_IMAGE_VERSION_DOCS_BUILD: v24.1-ubuntu
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
   PYMAPDL_START_INSTANCE: FALSE
   PYANSYS_OFF_SCREEN: True
@@ -199,7 +199,7 @@ jobs:
 
       - name: "Unit testing"
         run: |
-          pytest -v --durations=10 --maxfail=10 \
+          pytest -vvv --color=yes -rxXsa --durations=10 --maxfail=10 \
             --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError \
             --cov=ansys.math.core --cov-report=xml:${{ matrix.mapdl-version }}-remote.xml \
             --cov-report=html --cov-report term
