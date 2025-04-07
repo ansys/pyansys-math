@@ -6,10 +6,10 @@
 
 ## Individual Contributors
 
-* [Frederic Thevenon](https://github.com/FredAns)
-* [Alexander Kaszynski](https://github.com/akaszynski)
-* [Roberto Pastor](https://github.com/RobPasMue)
-* [Revathy Venugopal](https://github.com/Revathyvenugopal162)
-* [Germán Martínez](https://github.com/germa89)
+* [Dipin Nair](https://github.com/dipinknair)
+* [Germán Martínez Ayuso](https://www.linkedin.com/in/gmartinezayuso/),](https://github.com/germa89)
+* [Jorge Martínez](https://github.com/jorgepiloto)
 * [Kathy Pippert](https://github.com/PipKat)
 * [Maxime Rey](https://github.com/MaxJPRey)
+* [Revathy Venugopal](https://github.com/Revathyvenugopal162)
+* [Roberto Pastor Muela](https://github.com/RobPasMue)
