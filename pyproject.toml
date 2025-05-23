@@ -21,6 +21,7 @@ classifiers=[
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
@@ -42,7 +43,7 @@ tests = [
     "pytest==8.3.5",
     "pytest-cov==6.1.1",
     "pytest-rerunfailures==15.0",
-    "pyvista==0.44.2",
+    "pyvista==0.45.2",
     "vtk==9.3.1",
 ]
 doc = [
