@@ -9,6 +9,128 @@ This document contains the release notes for the PyAnsys Math project.
 
 .. towncrier release notes start
 
+`0.2.3 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.3>`_ - May 23, 2025
+===================================================================================
+
+.. tab-set::
+
+
+  .. tab-item:: Added
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - feat: update changelog template
+          - `#480 <https://github.com/ansys/pyansys-math/pull/480>`_
+
+        * - feat: supporting python ``3.13``
+          - `#511 <https://github.com/ansys/pyansys-math/pull/511>`_
+
+
+  .. tab-item:: Dependencies
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - maint: bump jupyterlab from 4.3.4 to 4.3.5
+          - `#471 <https://github.com/ansys/pyansys-math/pull/471>`_
+
+        * - maint: bump pypandoc from 1.14 to 1.15
+          - `#473 <https://github.com/ansys/pyansys-math/pull/473>`_
+
+        * - maint: bump scipy from 1.14.1 to 1.15.2
+          - `#477 <https://github.com/ansys/pyansys-math/pull/477>`_
+
+        * - maint: bump pytest from 8.3.3 to 8.3.5
+          - `#478 <https://github.com/ansys/pyansys-math/pull/478>`_
+
+        * - maint: bump trame from 3.7.0 to 3.8.1
+          - `#483 <https://github.com/ansys/pyansys-math/pull/483>`_
+
+        * - maint: bump ansys-sphinx-theme from 1.2.6 to 1.3.3
+          - `#488 <https://github.com/ansys/pyansys-math/pull/488>`_
+
+        * - maint: bump numpy from 2.2.2 to 2.2.4
+          - `#489 <https://github.com/ansys/pyansys-math/pull/489>`_
+
+        * - maint: bump sphinx-gallery from 0.18.0 to 0.19.0
+          - `#491 <https://github.com/ansys/pyansys-math/pull/491>`_
+
+        * - maint: bump jupyterlab from 4.3.5 to 4.3.6
+          - `#492 <https://github.com/ansys/pyansys-math/pull/492>`_
+
+        * - maint: bump sphinx-notfound-page from 1.0.4 to 1.1.0
+          - `#493 <https://github.com/ansys/pyansys-math/pull/493>`_
+
+        * - maint: bump pyansys-tools-report from 0.8.1 to 0.8.2
+          - `#494 <https://github.com/ansys/pyansys-math/pull/494>`_
+
+        * - maint: bump vtk from 9.3.1 to 9.4.2
+          - `#495 <https://github.com/ansys/pyansys-math/pull/495>`_
+
+        * - maint: bump pytest-cov from 6.0.0 to 6.1.1
+          - `#497 <https://github.com/ansys/pyansys-math/pull/497>`_
+
+        * - maint: bump ansys-sphinx-theme from 1.3.3 to 1.4.2
+          - `#498 <https://github.com/ansys/pyansys-math/pull/498>`_
+
+        * - fix: removing ``attrs`` max version as it is no longer an issue
+          - `#499 <https://github.com/ansys/pyansys-math/pull/499>`_
+
+        * - maint: bump ansys-mapdl-core from 0.68.6 to 0.69.3
+          - `#500 <https://github.com/ansys/pyansys-math/pull/500>`_
+
+        * - maint: bump pyvista from 0.44.2 to 0.45.2
+          - `#509 <https://github.com/ansys/pyansys-math/pull/509>`_
+
+        * - maint: bump pyvista[jupyter,trame] from 0.44.2 to 0.45.2
+          - `#510 <https://github.com/ansys/pyansys-math/pull/510>`_
+
+
+  .. tab-item:: Miscellaneous
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - [pre-commit.ci] pre-commit autoupdate
+          - `#476 <https://github.com/ansys/pyansys-math/pull/476>`_, `#487 <https://github.com/ansys/pyansys-math/pull/487>`_, `#503 <https://github.com/ansys/pyansys-math/pull/503>`_
+
+
+  .. tab-item:: Documentation
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - chore: update CHANGELOG for v0.2.2
+          - `#470 <https://github.com/ansys/pyansys-math/pull/470>`_
+
+
+  .. tab-item:: Maintenance
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - ci: not using student for doc build
+          - `#479 <https://github.com/ansys/pyansys-math/pull/479>`_
+
+        * - ci: fix ``MAPDL`` version in ``build-test`` action
+          - `#482 <https://github.com/ansys/pyansys-math/pull/482>`_
+
+        * - maint: bump docker/login-action from 3.3.0 to 3.4.0 in the actions group
+          - `#490 <https://github.com/ansys/pyansys-math/pull/490>`_
+
+        * - docs: Update ``CONTRIBUTORS.md`` with the latest contributors
+          - `#496 <https://github.com/ansys/pyansys-math/pull/496>`_
+
+        * - maint: bump ansys/actions from 8 to 9 in the actions group
+          - `#502 <https://github.com/ansys/pyansys-math/pull/502>`_
+
+
 `0.2.2 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.2>`_ - 2025-01-31
 =================================================================================
 
