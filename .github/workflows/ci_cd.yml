@@ -431,36 +431,39 @@ jobs:
 
 
   release:
-    name: "Release project to public PyPI and GitHub"
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs:  [package, update-changelog]
+    name: "Release project"
+    if: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') }}
+    needs: [package, update-changelog]
     runs-on: ubuntu-latest
-    env:
-      PACKAGE_NAME: 'ansys-math-core'
+    environment: release
+    permissions:
+      id-token: write
+      contents: write
     steps:
-    - name: "Release to the public PyPI repository"
-      uses: ansys/actions/release-pypi-public@v9
-      with:
-        library-name: ${{ env.PACKAGE_NAME }}
-        twine-username: "__token__"
-        twine-token: ${{ secrets.PYPI_TOKEN }}
+      - name: "Download the library artifacts from build-library step"
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: ${{ env.PACKAGE_NAME }}-artifacts
+          path: ${{ env.PACKAGE_NAME }}-artifacts
 
-    - name: "Release to GitHub"
-      uses: ansys/actions/release-github@v9
-      with:
-        library-name: ${{ env.PACKAGE_NAME }}
+      - name: "Display structure of downloaded files"
+        run: ls -Rla
 
-    - name: "Add a comment on released PRs"
-      uses: rdlf0/comment-released-prs-action@v3
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        comment-body: |-
-          Released in [{{name}}]({{html_url}}).
+      - name: "Release to PyPI using trusted publisher"
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # v1.12.4
+        with:
+          repository-url: "https://upload.pypi.org/legacy/"
+          print-hash: true
+          packages-dir: ${{ env.PACKAGE_NAME }}-artifacts
+          skip-existing: false
 
-          This comment thread has been locked. If you are still experiencing this issue after upgrading to
-          ${{ env.PACKAGE_NAME }} v[{{name}}]({{html_url}}), please open a new issue."
-        add-label: true
-        label-pattern: "release-{{name}}"
+      - name: "Release to GitHub"
+        uses: ansys/actions/release-github@2cf9a9c43235a000d613c2b13e64c954232a4553 # v9.0.9
+        with:
+          library-name: ${{ env.PACKAGE_NAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          add-artifact-attestation-notes: true
+          changelog-release-notes: true
 
 
   doc-deploy-stable:
