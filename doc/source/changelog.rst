@@ -9,6 +9,22 @@ This document contains the release notes for the PyAnsys Math project.
 
 .. towncrier release notes start
 
+`0.2.4 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.4>`_ - May 26, 2025
+===================================================================================
+
+.. tab-set::
+
+
+  .. tab-item:: Documentation
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - chore: update CHANGELOG for v0.2.3
+          - `#515 <https://github.com/ansys/pyansys-math/pull/515>`_
+
+
 `0.2.3 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.3>`_ - May 26, 2025
 ===================================================================================
 
