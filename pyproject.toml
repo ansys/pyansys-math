@@ -41,7 +41,7 @@ tests = [
     "pyansys-tools-report==0.8.2",
     "pytest==8.3.5",
     "pytest-cov==6.1.1",
-    "pytest-rerunfailures==15.0",
+    "pytest-rerunfailures==15.1",
     "pyvista==0.45.2",
     "vtk==9.4.2",
 ]
