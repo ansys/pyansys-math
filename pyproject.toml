@@ -51,7 +51,7 @@ doc = [
     "ansys-mapdl-reader==0.55.1",
     "ansys-sphinx-theme==1.4.2",
     "jupyter_sphinx==0.5.3",
-    "jupyterlab==4.3.6",
+    "jupyterlab==4.4.3",
     "numpydoc==1.8.0",
     "pypandoc==1.15",
     "pytest-sphinx==0.6.3",
