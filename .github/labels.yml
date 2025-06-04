@@ -28,4 +28,4 @@
 
 - name: testing
   description: Tests and test related changes
-  color: #c5def5
+  color: c5def5
