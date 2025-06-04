@@ -33,10 +33,42 @@ import pytest
 from scipy import sparse
 
 import ansys.math.core.math as pymath
-from conftest import mm
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(PATH, "test_files")
 
 # skip entire module unless HAS_GRPC
 pytestmark = pytest.mark.skip_grpc
+
+
+@pytest.fixture(scope="module")
+def mm(mapdl):
+    mm = pymath.AnsMath(mapdl)
+    return mm
+
+
+@pytest.fixture()
+def cube_with_damping(mm):
+    mm._mapdl.prep7()
+    db = os.path.join(lib_path, "model_damping.db")
+    mm._mapdl.upload(db)
+    mm._mapdl.resume("model_damping.db")
+    mm._mapdl.mp("dens", 1, 7800 / 0.5)
+
+    mm._mapdl.slashsolu()
+    mm._mapdl.antype("modal")
+    mm._mapdl.modopt("damp", 5)
+    mm._mapdl.mxpand(5)
+    mm._mapdl.mascale(0.15)
+
+    mm._mapdl.alphad(10)
+    mm._mapdl.solve()
+    mm._mapdl.save()
+    if mm._mapdl._distributed:
+        mm._mapdl.aux2()
+        mm._mapdl.combine("full")
+        mm._mapdl.slashsolu()
+
 
 skip_not_local = pytest.mark.skipif(
     not mm._mapdl._local,
