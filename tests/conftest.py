@@ -35,6 +35,8 @@ from ansys.mapdl.core.errors import MapdlExitedError
 from ansys.mapdl.core.launcher import MAPDL_DEFAULT_PORT, get_start_instance
 from ansys.tools.path import find_ansys
 
+import ansys.math.core.math as pymath
+
 # Check if MAPDL is installed
 # NOTE: checks in this order to get the newest installed version
 
@@ -86,6 +88,9 @@ alexander.kaszynski@ansys.com
 
 if START_INSTANCE and EXEC_FILE is None:
     raise RuntimeError(ERRMSG)
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(PATH, "test_files")
 
 
 @pytest.fixture(scope="session", params=LOCAL)
@@ -174,3 +179,32 @@ def cube_solve(cleared, mapdl):
 
     # solve first 10 non-trivial modes
     out = mapdl.modal_analysis(nmode=10, freqb=1)
+
+
+@pytest.fixture(scope="module")
+def mm(mapdl):
+    mm = pymath.AnsMath(mapdl)
+    return mm
+
+
+@pytest.fixture()
+def cube_with_damping(mm):
+    mm._mapdl.prep7()
+    db = os.path.join(lib_path, "model_damping.db")
+    mm._mapdl.upload(db)
+    mm._mapdl.resume("model_damping.db")
+    mm._mapdl.mp("dens", 1, 7800 / 0.5)
+
+    mm._mapdl.slashsolu()
+    mm._mapdl.antype("modal")
+    mm._mapdl.modopt("damp", 5)
+    mm._mapdl.mxpand(5)
+    mm._mapdl.mascale(0.15)
+
+    mm._mapdl.alphad(10)
+    mm._mapdl.solve()
+    mm._mapdl.save()
+    if mm._mapdl._distributed:
+        mm._mapdl.aux2()
+        mm._mapdl.combine("full")
+        mm._mapdl.slashsolu()
