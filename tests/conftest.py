@@ -87,9 +87,6 @@ alexander.kaszynski@ansys.com
 if START_INSTANCE and EXEC_FILE is None:
     raise RuntimeError(ERRMSG)
 
-PATH = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(PATH, "test_files")
-
 
 @pytest.fixture(scope="session", params=LOCAL)
 def mapdl(request, tmpdir_factory):

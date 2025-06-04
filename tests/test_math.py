@@ -47,6 +47,12 @@ def mm(mapdl):
     return mm
 
 
+@pytest.fixture
+def require_local_mapdl(mm):
+    if not mm._mapdl._local:
+        pytest.skip("Test requires a local MAPDL instance.")
+
+
 @pytest.fixture()
 def cube_with_damping(mm):
     mm._mapdl.prep7()
@@ -68,14 +74,6 @@ def cube_with_damping(mm):
         mm._mapdl.aux2()
         mm._mapdl.combine("full")
         mm._mapdl.slashsolu()
-
-
-skip_not_local = pytest.mark.skipif(
-    not mm._mapdl._local,
-    reason="""
-Test requires a local MAPDL instance.
-""",
-)
 
 
 def test_ones(mm):
@@ -770,8 +768,7 @@ def test_repr(mm):
     assert mm._status == repr(mm)
 
 
-@skip_not_local
-def test__load_file(mm, tmpdir):  # pragma: no cover
+def test__load_file(mm, tmpdir, require_local_mapdl):  # pragma: no cover
     # generating dummy file
     fname_ = random_string() + ".file"
     fname = str(tmpdir.mkdir("tmpdir").join(fname_))
