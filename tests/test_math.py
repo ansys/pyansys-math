@@ -46,6 +46,7 @@ Test requires a local MAPDL instance.
 """,
 )
 
+
 def test_ones(mm):
     v = mm.ones(10)
     assert v.size == 10
@@ -765,6 +766,7 @@ def test__load_file(mm, tmpdir):  # pragma: no cover
     assert fname_ == mm._load_file(fname)
     assert not os.path.exists(fname)
     assert fname_ in mm._mapdl.list_files()
+
 
 def test_status(mm, capsys):
     assert mm.status() is None
