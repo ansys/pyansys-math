@@ -25,7 +25,6 @@ import os
 import re
 
 from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
-from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
 from ansys.tools.versioning.exceptions import VersionError
 from ansys.tools.versioning.utils import server_meets_version
@@ -45,6 +44,7 @@ skip_not_local = pytest.mark.skipif(
 Test requires a local MAPDL instance.
 """,
 )
+
 
 def test_ones(mm):
     v = mm.ones(10)
@@ -765,6 +765,7 @@ def test__load_file(mm, tmpdir):  # pragma: no cover
     assert fname_ == mm._load_file(fname)
     assert not os.path.exists(fname)
     assert fname_ in mm._mapdl.list_files()
+
 
 def test_status(mm, capsys):
     assert mm.status() is None
