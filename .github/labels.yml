@@ -25,3 +25,7 @@
 - name: release
   description: Anything related to an incoming release
   color: ffffff
+
+- name: testing
+  description: Tests and test related changes
+  color: c5def5

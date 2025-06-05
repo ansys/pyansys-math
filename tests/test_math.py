@@ -25,7 +25,6 @@ import os
 import re
 
 from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
-from ansys.mapdl.core.launcher import get_start_instance
 from ansys.mapdl.core.misc import random_string
 from ansys.tools.versioning.exceptions import VersionError
 from ansys.tools.versioning.utils import server_meets_version
@@ -35,26 +34,23 @@ from scipy import sparse
 
 import ansys.math.core.math as pymath
 
-# skip entire module unless HAS_GRPC
-pytestmark = pytest.mark.skip_grpc
-
-skip_in_cloud = pytest.mark.skipif(
-    not get_start_instance(),
-    reason="""
-Must be able to launch MAPDL locally. Remote execution does not allow for
-directory creation.
-""",
-)
-
-
 PATH = os.path.dirname(os.path.abspath(__file__))
 lib_path = os.path.join(PATH, "test_files")
+
+# skip entire module unless HAS_GRPC
+pytestmark = pytest.mark.skip_grpc
 
 
 @pytest.fixture(scope="module")
 def mm(mapdl):
     mm = pymath.AnsMath(mapdl)
     return mm
+
+
+@pytest.fixture
+def require_local_mapdl(mm):
+    if not mm._mapdl._local:
+        pytest.skip("Test requires a local MAPDL instance.")
 
 
 @pytest.fixture()
@@ -772,12 +768,8 @@ def test_repr(mm):
     assert mm._status == repr(mm)
 
 
-def test__load_file(mm, tmpdir):  # pragma: no cover
+def test__load_file(mm, tmpdir, require_local_mapdl):  # pragma: no cover
     # generating dummy file
-    # mm._mapdl._local = True  # Uncomment to test locally.
-    if not mm._mapdl._local:
-        return True
-
     fname_ = random_string() + ".file"
     fname = str(tmpdir.mkdir("tmpdir").join(fname_))
 
@@ -802,7 +794,6 @@ def test__load_file(mm, tmpdir):  # pragma: no cover
     assert fname_ == mm._load_file(fname)
     assert not os.path.exists(fname)
     assert fname_ in mm._mapdl.list_files()
-    mm._mapdl._local = False
 
 
 def test_status(mm, capsys):
