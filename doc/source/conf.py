@@ -73,11 +73,14 @@ html_theme_options = {
 }
 
 html_context = {
-    "display_github": True,  # Integrate GitHub
+    "display_github": True,
     "github_user": "pyansys",
     "github_repo": "pyansys-math",
     "github_version": "main",
     "doc_path": "doc/source",
+    "pyansys_tags": [
+        "Structures"
+    ]
 }
 
 # Sphinx extensions
