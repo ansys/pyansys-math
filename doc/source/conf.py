@@ -78,9 +78,7 @@ html_context = {
     "github_repo": "pyansys-math",
     "github_version": "main",
     "doc_path": "doc/source",
-    "pyansys_tags": [
-        "Structures"
-    ]
+    "pyansys_tags": ["Structures"],
 }
 
 # Sphinx extensions
