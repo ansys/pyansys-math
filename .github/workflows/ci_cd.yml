@@ -15,7 +15,7 @@ env:
   PACKAGE_NAME: 'ansys-math-core'
   PACKAGE_NAMESPACE: 'ansys.math.core'
   MAPDL_PACKAGE: ghcr.io/ansys/mapdl
-  MAPDL_IMAGE_VERSION_DOCS_BUILD: v24.1-ubuntu-student
+  MAPDL_IMAGE_VERSION_DOCS_BUILD: v24.1-ubuntu
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
   PYMAPDL_START_INSTANCE: FALSE
   PYANSYS_OFF_SCREEN: True
@@ -42,17 +42,18 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: ansys/actions/doc-deploy-changelog@v7
+      - uses: ansys/actions/doc-deploy-changelog@v10
         with:
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
-
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
 
   code-style:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys code style checks
-        uses: ansys/actions/code-style@v7
+        uses: ansys/actions/code-style@v10
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -62,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "PyAnsys documentation style checks"
-        uses: ansys/actions/doc-style@v7
+        uses: ansys/actions/doc-style@v10
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -75,7 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
         # Only perform wheelhouse builds for Windows and macOS when releasing
         should-release: 
           - ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') }}
@@ -86,7 +87,7 @@ jobs:
             os: windows-latest
     steps:
       - name: "Build wheelhouse and perform smoke test"
-        uses: ansys/actions/build-wheelhouse@v7
+        uses: ansys/actions/build-wheelhouse@v10
         with:
           library-name: ${{ env.PACKAGE_NAME }}
           operating-system: ${{ matrix.os }}
@@ -99,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check library vulnerabilities with development mode"
-        uses: ansys/actions/check-vulnerabilities@v7
+        uses: ansys/actions/check-vulnerabilities@v10
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
@@ -113,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check library vulnerabilities with default mode"
-        uses: ansys/actions/check-vulnerabilities@v7
+        uses: ansys/actions/check-vulnerabilities@v10
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
@@ -122,7 +123,7 @@ jobs:
 
   build-test:
     name: "Build and unit testing"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     needs: [smoke-tests]
     strategy:
@@ -130,28 +131,41 @@ jobs:
         mapdl-version: [
           'v23.1-ubuntu',
           'v23.2.0',
-          'v24.1-ubuntu-student',
+          'v24.1-ubuntu',
+          'v24.2-ubuntu',
+          'v25.1-ubuntu',
           ]
     outputs:
       DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
 
     steps:
       - name: "Install Git and checkout project"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Login in Github Container registry"
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@v3.6.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: "Getting SMP/DMP mode"
+        id: distributed_mode
+        run: |
+          image=${{ matrix.mapdl-version }}
+          export distributed_mode="smp"
+          if [[ $image == *".1."* ]]; then
+            export distributed_mode="dmp";
+          fi
+          echo "Distributed mode: $distributed_mode"
+          echo "distributed_mode=$(echo $distributed_mode)" >> $GITHUB_OUTPUT
+
       - name: "Pull, launch, and validate MAPDL service"
         id: start_mapdl
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          DISTRIBUTED_MODE: "dmp"
+          MAPDL_VERSION: ${{ matrix.mapdl-version }}
+          DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
         run: |
           export INSTANCE_NAME=MAPDL_0
           .ci/start_mapdl.sh & export DOCKER_PID=$!
@@ -159,7 +173,7 @@ jobs:
           echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
 
       - name: "Setup Python"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -198,13 +212,13 @@ jobs:
 
       - name: "Unit testing"
         run: |
-          pytest -v --durations=10 --maxfail=10 \
+          pytest -vvv --color=yes -rxXsa --durations=10 --maxfail=10 \
             --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError \
             --cov=ansys.math.core --cov-report=xml:${{ matrix.mapdl-version }}-remote.xml \
             --cov-report=html --cov-report term
 
       - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
           name: ${{ matrix.mapdl-version }}-remote.xml
@@ -227,7 +241,7 @@ jobs:
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          MAPDL_VERSION: ${{ matrix.mapdl-version }}
           MAPDL_INSTANCE: MAPDL_0
           LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
         run: |
@@ -239,12 +253,12 @@ jobs:
           cp log.txt ./logs-build-tests-${{ matrix.mapdl-version }}/
           tar cvzf ./logs-build-tests-${{ matrix.mapdl-version }}.tgz ./logs-build-tests-${{ matrix.mapdl-version }}
 
-      - name: "Upload logs to GitHub"
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs-build-tests-${{ matrix.mapdl-version }}.tgz
-          path: ./logs-build-tests-${{ matrix.mapdl-version }}.tgz
+      # - name: "Upload logs to GitHub"
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: logs-build-tests-${{ matrix.mapdl-version }}.tgz
+      #     path: ./logs-build-tests-${{ matrix.mapdl-version }}.tgz
 
       - name: "Display MAPDL Logs"
         if: always()
@@ -253,7 +267,7 @@ jobs:
 
   doc-build:
     name: "Doc building"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [doc-style]
     outputs:
       ANSYSMATH_VERSION: ${{ steps.version.outputs.ANSYSMATH_VERSION }}
@@ -261,12 +275,13 @@ jobs:
       PYMAPDL_PORT: 21000  # default won't work on GitHub runners
       PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
       PYMAPDL_START_INSTANCE: FALSE
+      LIBGL_ALWAYS_SOFTWARE: 1
     steps:
       - name: "Install Git and checkout project"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Login in Github container registry"
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@v3.6.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -285,7 +300,7 @@ jobs:
           echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
 
       - name: "Setup Python"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -341,7 +356,7 @@ jobs:
           .ci/waiting_services.sh
 
       - name: "Run Ansys documentation building action"
-        uses: ansys/actions/doc-build@v7
+        uses: ansys/actions/doc-build@v10
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
           skip-install: true
@@ -375,12 +390,12 @@ jobs:
           cp log.txt ./logs-build-docs/
           tar cvzf ./logs-build-docs.tgz ./logs-build-docs
 
-      - name: "Upload logs to GitHub"
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs-build-docs.tgz
-          path: ./logs-build-docs.tgz
+      # - name: "Upload logs to GitHub"
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: logs-build-docs.tgz
+      #     path: ./logs-build-docs.tgz
 
       - name: "Display MAPDL Logs"
         if: always()
@@ -393,7 +408,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Build library source and wheel artifacts"
-        uses: ansys/actions/build-library@v7
+        uses: ansys/actions/build-library@v10
         with:
           library-name: ${{ env.PACKAGE_NAME }}
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
@@ -407,30 +422,48 @@ jobs:
     needs: [check-vulnerabilities-main, package]
     steps:
       - name: "Deploy the latest documentation"
-        uses: ansys/actions/doc-deploy-dev@v7
+        uses: ansys/actions/doc-deploy-dev@v10
         with:
-            cname: ${{ env.DOCUMENTATION_CNAME }}
-            token: ${{ secrets.GITHUB_TOKEN }}
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
 
 
   release:
-    name: "Release project to public PyPI and GitHub"
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-    needs:  [package, update-changelog]
+    name: "Release project"
+    if: ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') }}
+    needs: [package, update-changelog]
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+      contents: write
     steps:
+      - name: "Download the library artifacts from build-library step"
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ${{ env.PACKAGE_NAME }}-artifacts
+          path: ${{ env.PACKAGE_NAME }}-artifacts
 
-    - name: "Release to the public PyPI repository"
-      uses: ansys/actions/release-pypi-public@v7
-      with:
-        library-name: ${{ env.PACKAGE_NAME }}
-        twine-username: "__token__"
-        twine-token: ${{ secrets.PYPI_TOKEN }}
+      - name: "Display structure of downloaded files"
+        run: ls -Rla
 
-    - name: "Release to GitHub"
-      uses: ansys/actions/release-github@v7
-      with:
-        library-name: ${{ env.PACKAGE_NAME }}
+      - name: "Release to PyPI using trusted publisher"
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
+        with:
+          repository-url: "https://upload.pypi.org/legacy/"
+          print-hash: true
+          packages-dir: ${{ env.PACKAGE_NAME }}-artifacts
+          skip-existing: false
+
+      - name: "Release to GitHub"
+        uses: ansys/actions/release-github@v10
+        with:
+          library-name: ${{ env.PACKAGE_NAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          add-artifact-attestation-notes: true
+          changelog-release-notes: true
 
 
   doc-deploy-stable:
@@ -441,7 +474,9 @@ jobs:
     needs: [release]
     steps:
       - name: "Deploy the stable documentation"
-        uses: ansys/actions/doc-deploy-stable@v7
+        uses: ansys/actions/doc-deploy-stable@v10
         with:
-            cname: ${{ env.DOCUMENTATION_CNAME }}
-            token: ${{ secrets.GITHUB_TOKEN }}
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
