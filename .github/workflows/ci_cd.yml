@@ -242,13 +242,6 @@ jobs:
           cp log.txt ./logs-build-tests-${{ matrix.mapdl-version }}/
           tar cvzf ./logs-build-tests-${{ matrix.mapdl-version }}.tgz ./logs-build-tests-${{ matrix.mapdl-version }}
 
-      # - name: "Upload logs to GitHub"
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: logs-build-tests-${{ matrix.mapdl-version }}.tgz
-      #     path: ./logs-build-tests-${{ matrix.mapdl-version }}.tgz
-
       - name: "Display MAPDL Logs"
         if: always()
         run: cat log.txt
