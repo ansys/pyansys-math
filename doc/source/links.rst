@@ -33,7 +33,7 @@
 
 .. #PyAnsys
 .. _pyansys: https://docs.pyansys.com
-.. _pyansys_support: pyansys.support@ansys.com
+.. _pyansys_core: pyansys.core@ansys.com
 
 .. #PyAnsys Developer Guide
 .. _dev_guide_pyansys: https://dev.docs.pyansys.com/
