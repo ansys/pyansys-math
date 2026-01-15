@@ -122,6 +122,9 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     needs: [smoke-tests]
+    permissions:
+      contents: read # Needed to read repository contents for tests
+      packages: read # Needed to pull Docker images from GitHub packages
     strategy:
       matrix:
         mapdl-version: [
@@ -250,6 +253,9 @@ jobs:
     name: "Doc building"
     runs-on: ubuntu-22.04
     needs: [doc-style]
+    permissions:
+      contents: read  # Needed to read repository contents for documentation build
+      packages: read  # Needed to pull Docker images from GitHub packages
     outputs:
       ANSYSMATH_VERSION: ${{ steps.version.outputs.ANSYSMATH_VERSION }}
     env:
