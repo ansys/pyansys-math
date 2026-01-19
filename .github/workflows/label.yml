@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: "Changelog fragment"
-      uses: ansys/actions/doc-changelog@c2fa7c93f6883114e0e643599431b33d29f0b13f # v10.1.4
+      uses: ansys/actions/doc-changelog@41f86da4c9ead510db9135e428e33df9cc6f92e1 # v10.2.3
       with:
         token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
         bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
