@@ -22,6 +22,7 @@
 
 """Contains the Math classes, allowing for math operations within
 PyAnsys Math from Python."""
+
 from enum import Enum
 import os
 import string
