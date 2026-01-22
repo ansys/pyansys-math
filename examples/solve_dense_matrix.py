@@ -26,6 +26,7 @@ Use PyAnsys Math to solve a dense matrix linear system
 This example shows how to use PyAnsys Math to solve a dense matrix linear system.
 
 """
+
 # Perform required imports and start PyAnsys
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Perform required imports.
