@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 """Test AnsMath functionality."""
+
 import os
 import re
 
