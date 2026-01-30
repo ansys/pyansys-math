@@ -44,8 +44,7 @@ from ansys.mapdl.core.errors import (
 )
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
-from ansys.tools.common.versioning import requires_version
-from ansys.tools.common.versioning import server_meets_version
+from ansys.tools.common.versioning import requires_version, server_meets_version
 import numpy as np
 
 MYCTYPE = {
