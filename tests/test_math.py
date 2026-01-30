@@ -27,8 +27,8 @@ import re
 
 from ansys.mapdl.core.errors import ANSYSDataTypeError, MapdlRuntimeError
 from ansys.mapdl.core.misc import random_string
-from ansys.tools.versioning.exceptions import VersionError
-from ansys.tools.versioning.utils import server_meets_version
+from ansys.tools.common.exceptions import VersionError
+from ansys.tools.common.versioning import server_meets_version
 import numpy as np
 import pytest
 from scipy import sparse
