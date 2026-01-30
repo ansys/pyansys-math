@@ -23,6 +23,7 @@ env:
   PYANSYS_OFF_SCREEN: True
   PYMAPDL_PORT: 21000  # default won't work on GitHub runners
   PYMAPDL_DB_PORT: 21001  # default won't work on GitHub runners
+  PYMAPDL_GRPC_TRANSPORT: 'insecure'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
