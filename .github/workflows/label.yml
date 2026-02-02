@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to synchronize labels on pull requests
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -40,7 +40,7 @@ jobs:
     needs: [label-syncer]
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to add labels to pull requests
     runs-on: ubuntu-latest
     steps:
 
@@ -100,7 +100,7 @@ jobs:
     needs: labeler
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to add comments to pull requests
     steps:
     - name: "Suggest to add labels"
       uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
@@ -122,8 +122,8 @@ jobs:
     name: "Create changelog fragment"
     needs: [labeler]
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # Needed to add changelog files to the repository
+      pull-requests: write # Needed to add changelog files to the pull request
     runs-on: ubuntu-latest
     steps:
     - name: "Changelog fragment"
