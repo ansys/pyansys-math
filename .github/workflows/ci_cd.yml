@@ -133,6 +133,8 @@ jobs:
           'v25.1-ubuntu-cicd',
           'v25.2-ubuntu-cicd',
           ]
+    env: 
+      MAPDL_VERSION: ${{ matrix.mapdl-version }}
     outputs:
       DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
 
@@ -152,7 +154,7 @@ jobs:
       - name: "Getting SMP/DMP mode"
         id: distributed_mode
         run: |
-          image=${{ matrix.mapdl-version }}
+          image=$MAPDL_VERSION
           export distributed_mode="smp"
           if [[ $image == *".1."* ]]; then
             export distributed_mode="dmp";
@@ -164,7 +166,7 @@ jobs:
         id: start_mapdl
         env:
           LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_VERSION: ${{ matrix.mapdl-version }}
+          MAPDL_VERSION: $MAPDL_VERSION
           DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
         run: |
           export INSTANCE_NAME=MAPDL_0
@@ -205,44 +207,43 @@ jobs:
         run: |
           pytest -vvv --color=yes -rxXsa --durations=10 --maxfail=10 \
             --reruns 7 --reruns-delay 3 --only-rerun MapdlExitedError --only-rerun EmptyRecordError \
-            --cov=ansys.math.core --cov-report=xml:${{ matrix.mapdl-version }}-remote.xml \
+            --cov=ansys.math.core --cov-report=xml:$MAPDL_VERSION-remote.xml \
             --cov-report=html --cov-report term
 
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
-          name: ${{ matrix.mapdl-version }}-remote.xml
-          flags: remote,${{ matrix.mapdl-version }}
+          name: $MAPDL_VERSION-remote.xml
+          flags: remote,$MAPDL_VERSION
 
       - name: "Upload coverage artifacts"
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
-          name: ${{ matrix.mapdl-version }}-remote.xml
-          path: ./${{ matrix.mapdl-version }}-remote.xml
+          name: $MAPDL_VERSION-remote.xml
+          path: ./$MAPDL_VERSION-remote.xml
 
       - name: "Display Docker files structures"
         if: always()
         env:
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
+          LOG_NAMES: logs-build-tests-$MAPDL_VERSION
         run: |
           .ci/display_logs.sh
 
       - name: "Collect MAPDL logs on failure"
         if: always()
         env:
-          MAPDL_VERSION: ${{ matrix.mapdl-version }}
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-${{ matrix.mapdl-version }}
+          LOG_NAMES: logs-build-tests-$MAPDL_VERSION
         run: |
           .ci/collect_mapdl_logs.sh
 
       - name: "Tar logs"
         if: always()
         run: |
-          cp log.txt ./logs-build-tests-${{ matrix.mapdl-version }}/
-          tar cvzf ./logs-build-tests-${{ matrix.mapdl-version }}.tgz ./logs-build-tests-${{ matrix.mapdl-version }}
+          cp log.txt ./logs-build-tests-$MAPDL_VERSION/
+          tar cvzf ./logs-build-tests-$MAPDL_VERSION.tgz ./logs-build-tests-$MAPDL_VERSION
 
       - name: "Display MAPDL Logs"
         if: always()
