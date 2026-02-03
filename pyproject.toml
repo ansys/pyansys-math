@@ -54,7 +54,7 @@ doc = [
     "jupyterlab==4.4.9",
     "numpydoc==1.10.0",
     "pypandoc==1.15",
-    "pytest-sphinx==0.6.3",
+    "pytest-sphinx==0.7.1",
     "pyvista[jupyter,trame]==0.46.4",
     "scipy==1.15.3",
     "sphinx-autobuild==2024.10.3",
