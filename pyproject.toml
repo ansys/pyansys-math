@@ -38,7 +38,7 @@ tests = [
     "ansys-tools-common==0.4.2",
     "numpy==2.2.6",
     "scipy==1.15.3",
-    "pytest==9.0.1",
+    "pytest==9.0.2",
     "pytest-cov==7.0.0",
     "pytest-rerunfailures==16.1",
     "pyvista==0.46.4",
