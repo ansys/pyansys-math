@@ -96,6 +96,7 @@ jobs:
         labels: bug
 
   commenter:
+    name: "Suggest to add labels"
     runs-on: ubuntu-latest
     needs: labeler
     permissions:
