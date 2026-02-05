@@ -241,8 +241,8 @@ jobs:
       - name: "Tar logs"
         if: always()
         run: |
-          cp log.txt ./logs-build-tests-${{ env.MAPDL_VERSION }}/
-          tar cvzf ./logs-build-tests-${{ env.MAPDL_VERSION }}.tgz ./logs-build-tests-${{ env.MAPDL_VERSION }}
+          cp log.txt ./logs-build-tests-$env.MAPDL_VERSION/
+          tar cvzf ./logs-build-tests-$MAPDL_VERSION.tgz ./logs-build-tests-$env.MAPDL_VERSION
 
       - name: "Display MAPDL Logs"
         if: always()
