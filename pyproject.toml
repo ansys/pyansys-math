@@ -48,7 +48,7 @@ doc = [
     "Sphinx==8.1.3",
     "ansys-mapdl-core[graphics]==0.72.0",
     "ansys-mapdl-reader==0.55.2",
-    "ansys-sphinx-theme==1.6.3",
+    "ansys-sphinx-theme==1.7.0",
     "ansys-tools-common==0.4.2",
     "jupyter_sphinx==0.5.3",
     "jupyterlab==4.5.3",
