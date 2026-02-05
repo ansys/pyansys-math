@@ -213,20 +213,20 @@ jobs:
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
-          name: $MAPDL_VERSION-remote.xml
-          flags: remote,$MAPDL_VERSION
+          name: ${{ env.MAPDL_VERSION }}-remote.xml
+          flags: remote,${{ env.MAPDL_VERSION }}
 
       - name: "Upload coverage artifacts"
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
-          name: $MAPDL_VERSION-remote.xml
-          path: ./$MAPDL_VERSION-remote.xml
+          name: ${{ env.MAPDL_VERSION }}-remote.xml
+          path: ./${{ env.MAPDL_VERSION }}-remote.xml
 
       - name: "Display Docker files structures"
         if: always()
         env:
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-$MAPDL_VERSION
+          LOG_NAMES: logs-build-tests-${{ env.MAPDL_VERSION }}
         run: |
           .ci/display_logs.sh
 
@@ -234,15 +234,15 @@ jobs:
         if: always()
         env:
           MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-$MAPDL_VERSION
+          LOG_NAMES: logs-build-tests-${{ env.MAPDL_VERSION }}
         run: |
           .ci/collect_mapdl_logs.sh
 
       - name: "Tar logs"
         if: always()
         run: |
-          cp log.txt ./logs-build-tests-$MAPDL_VERSION/
-          tar cvzf ./logs-build-tests-$MAPDL_VERSION.tgz ./logs-build-tests-$MAPDL_VERSION
+          cp log.txt ./logs-build-tests-${{ env.MAPDL_VERSION }}/
+          tar cvzf ./logs-build-tests-${{ env.MAPDL_VERSION }}.tgz ./logs-build-tests-${{ env.MAPDL_VERSION }}
 
       - name: "Display MAPDL Logs"
         if: always()
