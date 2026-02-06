@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # SPDX-License-Identifier: MIT
 #
 #
@@ -22,6 +22,7 @@
 
 """Contains the Math classes, allowing for math operations within
 PyAnsys Math from Python."""
+
 from enum import Enum
 import os
 import string
@@ -43,8 +44,7 @@ from ansys.mapdl.core.errors import (
 )
 from ansys.mapdl.core.misc import load_file
 from ansys.mapdl.core.parameters import interp_star_status
-from ansys.tools.versioning import requires_version
-from ansys.tools.versioning.utils import server_meets_version
+from ansys.tools.common.versioning import requires_version, server_meets_version
 import numpy as np
 
 MYCTYPE = {
