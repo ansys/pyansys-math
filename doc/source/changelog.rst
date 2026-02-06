@@ -9,6 +9,209 @@ This document contains the release notes for the PyAnsys Math project.
 
 .. towncrier release notes start
 
+`0.2.5 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.5>`_ - February 06, 2026
+========================================================================================
+
+.. tab-set::
+
+
+  .. tab-item:: Dependencies
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - maint: bump ansys-mapdl-reader from 0.54.2 to 0.55.1
+          - `#517 <https://github.com/ansys/pyansys-math/pull/517>`_
+
+        * - maint: bump pytest-rerunfailures from 15.0 to 15.1
+          - `#518 <https://github.com/ansys/pyansys-math/pull/518>`_
+
+        * - maint: bump ansys-mapdl-core from 0.69.3 to 0.70.1
+          - `#519 <https://github.com/ansys/pyansys-math/pull/519>`_
+
+        * - maint: bump numpy from 2.2.4 to 2.2.6
+          - `#520 <https://github.com/ansys/pyansys-math/pull/520>`_
+
+        * - maint: bump scipy from 1.15.2 to 1.15.3
+          - `#521 <https://github.com/ansys/pyansys-math/pull/521>`_
+
+        * - maint: bump ansys-sphinx-theme from 1.4.2 to 1.5.2
+          - `#522 <https://github.com/ansys/pyansys-math/pull/522>`_
+
+        * - maint: bump jupyterlab from 4.3.6 to 4.4.3
+          - `#524 <https://github.com/ansys/pyansys-math/pull/524>`_
+
+        * - maint: bump pytest-cov from 6.1.1 to 6.2.1
+          - `#527 <https://github.com/ansys/pyansys-math/pull/527>`_
+
+
+  .. tab-item:: Miscellaneous
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - chore: adding ``SECURITY.md`` file
+          - `#525 <https://github.com/ansys/pyansys-math/pull/525>`_
+
+        * - Maint: bump ansys/actions from 9 to 10 in the actions group
+          - `#526 <https://github.com/ansys/pyansys-math/pull/526>`_
+
+        * - Maint: bump pytest from 8.4.0 to 8.4.1
+          - `#528 <https://github.com/ansys/pyansys-math/pull/528>`_
+
+        * - [pre-commit.ci] pre-commit autoupdate
+          - `#529 <https://github.com/ansys/pyansys-math/pull/529>`_, `#541 <https://github.com/ansys/pyansys-math/pull/541>`_, `#555 <https://github.com/ansys/pyansys-math/pull/555>`_, `#566 <https://github.com/ansys/pyansys-math/pull/566>`_, `#568 <https://github.com/ansys/pyansys-math/pull/568>`_, `#578 <https://github.com/ansys/pyansys-math/pull/578>`_, `#591 <https://github.com/ansys/pyansys-math/pull/591>`_
+
+        * - Maint: bump numpydoc from 1.8.0 to 1.9.0
+          - `#533 <https://github.com/ansys/pyansys-math/pull/533>`_
+
+        * - Maint: bump ansys-mapdl-core from 0.70.1 to 0.70.2
+          - `#534 <https://github.com/ansys/pyansys-math/pull/534>`_
+
+        * - Maint: bump ansys-sphinx-theme from 1.5.2 to 1.5.3
+          - `#536 <https://github.com/ansys/pyansys-math/pull/536>`_
+
+        * - Fix: ``security.md`` file
+          - `#537 <https://github.com/ansys/pyansys-math/pull/537>`_
+
+        * - Maint: bump jupyterlab from 4.4.3 to 4.4.5
+          - `#538 <https://github.com/ansys/pyansys-math/pull/538>`_
+
+        * - Maint: bump pyvista from 0.45.2 to 0.46.2
+          - `#544 <https://github.com/ansys/pyansys-math/pull/544>`_
+
+        * - Maint: bump ansys-mapdl-core[graphics] from 0.70.1 to 0.71.0
+          - `#545 <https://github.com/ansys/pyansys-math/pull/545>`_
+
+        * - Docs: update ``html_context`` with PyAnsys tags
+          - `#546 <https://github.com/ansys/pyansys-math/pull/546>`_
+
+        * - Maint: bump ansys-mapdl-core from 0.70.2 to 0.72.0
+          - `#548 <https://github.com/ansys/pyansys-math/pull/548>`_
+
+        * - Maint: bump the actions group across 1 directory with 6 updates
+          - `#552 <https://github.com/ansys/pyansys-math/pull/552>`_
+
+        * - Maint: bump pytest-rerunfailures from 15.1 to 16.0.1
+          - `#553 <https://github.com/ansys/pyansys-math/pull/553>`_
+
+        * - Maint: bump vtk from 9.4.2 to 9.5.2
+          - `#558 <https://github.com/ansys/pyansys-math/pull/558>`_
+
+        * - Maint: bump jupyterlab from 4.4.5 to 4.4.9
+          - `#559 <https://github.com/ansys/pyansys-math/pull/559>`_
+
+        * - Ci: comment out log upload steps in CI workflow
+          - `#561 <https://github.com/ansys/pyansys-math/pull/561>`_
+
+        * - Maint: bump pytest from 8.4.1 to 8.4.2
+          - `#562 <https://github.com/ansys/pyansys-math/pull/562>`_
+
+        * - Maint: bump pyvista from 0.46.2 to 0.46.3
+          - `#563 <https://github.com/ansys/pyansys-math/pull/563>`_
+
+        * - Maint: bump the actions group with 2 updates
+          - `#565 <https://github.com/ansys/pyansys-math/pull/565>`_, `#575 <https://github.com/ansys/pyansys-math/pull/575>`_
+
+        * - Docs: PyAnsys email address
+          - `#570 <https://github.com/ansys/pyansys-math/pull/570>`_
+
+        * - Ci: enabling \`\`check-actions-security\`\`
+          - `#571 <https://github.com/ansys/pyansys-math/pull/571>`_
+
+        * - Maint: bump pytest-cov from 6.2.1 to 7.0.0
+          - `#573 <https://github.com/ansys/pyansys-math/pull/573>`_
+
+        * - Maint: bump ansys-sphinx-theme from 1.6.1 to 1.6.3
+          - `#574 <https://github.com/ansys/pyansys-math/pull/574>`_
+
+        * - CHORE:   Update missing or outdated files
+          - `#576 <https://github.com/ansys/pyansys-math/pull/576>`_
+
+        * - Maint: bump ansys-mapdl-core[graphics] from 0.71.0 to 0.71.1
+          - `#577 <https://github.com/ansys/pyansys-math/pull/577>`_
+
+        * - Maint: bump pytest from 8.4.2 to 9.0.1
+          - `#579 <https://github.com/ansys/pyansys-math/pull/579>`_
+
+        * - Maint: bump pyvista from 0.46.3 to 0.46.4
+          - `#580 <https://github.com/ansys/pyansys-math/pull/580>`_
+
+        * - Chore: Update missing or outdated files
+          - `#582 <https://github.com/ansys/pyansys-math/pull/582>`_, `#595 <https://github.com/ansys/pyansys-math/pull/595>`_
+
+        * - Maint: bump the actions group across 1 directory with 4 updates
+          - `#583 <https://github.com/ansys/pyansys-math/pull/583>`_
+
+        * - Maint: bump ansys-mapdl-core[graphics] from 0.71.1 to 0.71.3
+          - `#585 <https://github.com/ansys/pyansys-math/pull/585>`_
+
+        * - Maint: bump ansys-mapdl-reader from 0.55.1 to 0.55.2
+          - `#586 <https://github.com/ansys/pyansys-math/pull/586>`_
+
+        * - Maint: bump numpydoc from 1.9.0 to 1.10.0
+          - `#588 <https://github.com/ansys/pyansys-math/pull/588>`_
+
+        * - Maint: bump pytest-rerunfailures from 16.0.1 to 16.1
+          - `#589 <https://github.com/ansys/pyansys-math/pull/589>`_
+
+        * - Maint: bump the actions group across 1 directory with 5 updates
+          - `#592 <https://github.com/ansys/pyansys-math/pull/592>`_
+
+        * - Maint: bump sphinx-gallery from 0.19.0 to 0.20.0
+          - `#596 <https://github.com/ansys/pyansys-math/pull/596>`_
+
+        * - Maint: bump pytest from 9.0.1 to 9.0.2
+          - `#597 <https://github.com/ansys/pyansys-math/pull/597>`_
+
+        * - Maint: bump pytest-sphinx from 0.6.3 to 0.7.1
+          - `#598 <https://github.com/ansys/pyansys-math/pull/598>`_
+
+        * - Maint: bump jupyterlab from 4.4.9 to 4.5.3
+          - `#599 <https://github.com/ansys/pyansys-math/pull/599>`_
+
+        * - Maint: bump ansys-sphinx-theme from 1.6.3 to 1.7.0
+          - `#601 <https://github.com/ansys/pyansys-math/pull/601>`_
+
+        * - Maint: bump pypandoc from 1.15 to 1.16.2
+          - `#603 <https://github.com/ansys/pyansys-math/pull/603>`_
+
+
+  .. tab-item:: Documentation
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - chore: update CHANGELOG for v0.2.4
+          - `#516 <https://github.com/ansys/pyansys-math/pull/516>`_
+
+        * - Fix: CICD
+          - `#584 <https://github.com/ansys/pyansys-math/pull/584>`_
+
+
+  .. tab-item:: Maintenance
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - Feat: removing deprecated packages
+          - `#594 <https://github.com/ansys/pyansys-math/pull/594>`_
+
+
+  .. tab-item:: Test
+
+    .. list-table::
+        :header-rows: 0
+        :widths: auto
+
+        * - maint: bump pytest from 8.3.5 to 8.4.0
+          - `#523 <https://github.com/ansys/pyansys-math/pull/523>`_
+
+
 `0.2.4 <https://github.com/ansys/pyansys-math/releases/tag/v0.2.4>`_ - May 26, 2025
 ===================================================================================
 
