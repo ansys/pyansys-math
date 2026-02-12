@@ -17,7 +17,7 @@ env:
   PACKAGE_NAME: 'ansys-math-core'
   PACKAGE_NAMESPACE: 'ansys.math.core'
   MAPDL_PACKAGE: ghcr.io/ansys/mapdl
-  MAPDL_IMAGE_VERSION_DOCS_BUILD: v24.1-ubuntu
+  MAPDL_IMAGE_VERSION_DOCS_BUILD: v25.2-ubuntu-cicd
   DOCUMENTATION_CNAME: 'math.docs.pyansys.com'
   PYMAPDL_START_INSTANCE: FALSE
   PYANSYS_OFF_SCREEN: True
@@ -128,15 +128,12 @@ jobs:
     strategy:
       matrix:
         mapdl-version: [
-          'v24.1-ubuntu',
           'v24.2-ubuntu-cicd',
           'v25.1-ubuntu-cicd',
           'v25.2-ubuntu-cicd',
           ]
     env: 
       MAPDL_VERSION: ${{ matrix.mapdl-version }}
-    outputs:
-      DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
 
     steps:
       - name: "Install Git and checkout project"
@@ -151,27 +148,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Getting SMP/DMP mode"
-        id: distributed_mode
-        run: |
-          image=$MAPDL_VERSION
-          export distributed_mode="smp"
-          if [[ $image == *".1."* ]]; then
-            export distributed_mode="dmp";
-          fi
-          echo "Distributed mode: $distributed_mode"
-          echo "distributed_mode=$(echo $distributed_mode)" >> $GITHUB_OUTPUT
-
-      - name: "Pull, launch, and validate MAPDL service"
-        id: start_mapdl
-        env:
-          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          DISTRIBUTED_MODE: ${{ steps.distributed_mode.outputs.distributed_mode }}
-        run: |
-          export INSTANCE_NAME=MAPDL_0
-          .ci/start_mapdl.sh & export DOCKER_PID=$!
-          echo "Launching MAPDL service at PID: $DOCKER_PID"
-          echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
+      - name: "Launch MAPDL instance using action"
+        uses: ansys/pymapdl/.github/actions/launch-mapdl-docker@main
+        with:
+          mapdl-image: ${{ env.MAPDL_PACKAGE }}:${{ env.MAPDL_VERSION }}
+          license-server: ${{ secrets.LICENSE_SERVER }}
+          pymapdl-port: ${{ env.PYMAPDL_PORT }}
 
       - name: "Setup Python"
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -197,11 +179,6 @@ jobs:
           echo "PYMAPDL_VERSION=$(python -c 'from ansys.mapdl.core import __version__; print(__version__)')" >> $GITHUB_OUTPUT
           echo "PyMAPDL version is: $(python -c "from ansys.mapdl.core import __version__; print(__version__)")"
 
-      - name: "Waiting for the services to be up"
-        timeout-minutes: 15
-        run: |
-          .ci/waiting_services.sh
-
       - name: "Unit testing"
         run: |
           pytest -vvv --color=yes -rxXsa --durations=10 --maxfail=10 \
@@ -221,33 +198,6 @@ jobs:
         with:
           name: ${{ env.MAPDL_VERSION }}-remote.xml
           path: ./${{ env.MAPDL_VERSION }}-remote.xml
-
-      - name: "Display Docker files structures"
-        if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-${{ env.MAPDL_VERSION }}
-        run: |
-          .ci/display_logs.sh
-
-      - name: "Collect MAPDL logs on failure"
-        if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-tests-${{ env.MAPDL_VERSION }}
-        run: |
-          .ci/collect_mapdl_logs.sh
-
-      - name: "Tar logs"
-        if: always()
-        run: |
-          cp log.txt ./logs-build-tests-$MAPDL_VERSION/
-          tar cvzf ./logs-build-tests-$MAPDL_VERSION.tgz ./logs-build-tests-$MAPDL_VERSION
-
-      - name: "Display MAPDL Logs"
-        if: always()
-        run: cat log.txt
-
 
   doc-build:
     name: "Doc building"
@@ -273,17 +223,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Pull, launch, and validate MAPDL service"
-        id: start_mapdl
-        env:
-          LICENSE_SERVER: ${{ secrets.LICENSE_SERVER }}
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          DISTRIBUTED_MODE: "dmp"
-        run: |
-          export INSTANCE_NAME=MAPDL_0
-          .ci/start_mapdl.sh &> mapdl_launch.log & export DOCKER_PID=$!
-          echo "Launching MAPDL service at PID: $DOCKER_PID"
-          echo "DOCKER_PID=$(echo $DOCKER_PID)" >> $GITHUB_OUTPUT
+      - name: "Launch MAPDL instance using action"
+        uses: ansys/pymapdl/.github/actions/launch-mapdl-docker@main
+        with:
+          mapdl-image: ${{ env.MAPDL_PACKAGE }}:${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
+          license-server: ${{ secrets.LICENSE_SERVER }}
+          pymapdl-port: ${{ env.PYMAPDL_PORT }}
 
       - name: "Setup Python"
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -300,11 +245,6 @@ jobs:
           echo "ANSYSMATH_VERSION=$(python -c 'from ansys.math.core import __version__; print(__version__)')" >> $GITHUB_OUTPUT
           echo "AnsysMath version is: $(python -c "from ansys.math.core import __version__; print(__version__)")"
 
-      - name: "Waiting for the services to be up"
-        timeout-minutes: 15
-        run: |
-          .ci/waiting_services.sh
-
       - name: "Run Ansys documentation building action"
         uses: ansys/actions/doc-build@36cd86710c966963f4dcec56a9670171618cf76a # v10.2.4
         with:
@@ -315,41 +255,6 @@ jobs:
           requires-xvfb: true
           dependencies: pandoc
           check-links: false
-
-      - name: "Display Docker files structures"
-        if: always()
-        env:
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
-        run: |
-          .ci/display_logs.sh
-
-      - name: "Collect MAPDL logs on failure"
-        if: always()
-        env:
-          MAPDL_VERSION: ${{ env.MAPDL_IMAGE_VERSION_DOCS_BUILD }}
-          MAPDL_INSTANCE: MAPDL_0
-          LOG_NAMES: logs-build-docs
-        run: |
-          .ci/collect_mapdl_logs.sh
-
-      - name: "Tar logs"
-        if: always()
-        run: |
-          cp -f doc/_build/latex/*.log ./logs-build-docs/
-          cp log.txt ./logs-build-docs/
-          tar cvzf ./logs-build-docs.tgz ./logs-build-docs
-
-      # - name: "Upload logs to GitHub"
-      #   if: always()
-      #   uses: actions/upload-artifact@v6
-      #   with:
-      #     name: logs-build-docs.tgz
-      #     path: ./logs-build-docs.tgz
-
-      - name: "Display MAPDL Logs"
-        if: always()
-        run: cat log.txt
 
 
   package:
