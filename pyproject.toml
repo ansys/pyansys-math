@@ -51,7 +51,7 @@ doc = [
     "ansys-sphinx-theme==1.7.0",
     "ansys-tools-common==0.4.2",
     "jupyter_sphinx==0.5.3",
-    "jupyterlab==4.5.3",
+    "jupyterlab==4.5.4",
     "numpydoc==1.10.0",
     "pypandoc==1.16.2",
     "pytest-sphinx==0.7.1",
