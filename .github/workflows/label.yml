@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to synchronize labels on pull requests
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
@@ -40,7 +40,7 @@ jobs:
     needs: [label-syncer]
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to add labels to pull requests
     runs-on: ubuntu-latest
     steps:
 
@@ -96,11 +96,12 @@ jobs:
         labels: bug
 
   commenter:
+    name: "Suggest to add labels"
     runs-on: ubuntu-latest
     needs: labeler
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Needed to add comments to pull requests
     steps:
     - name: "Suggest to add labels"
       uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
@@ -122,12 +123,12 @@ jobs:
     name: "Create changelog fragment"
     needs: [labeler]
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # Needed to add changelog files to the repository
+      pull-requests: write # Needed to add changelog files to the pull request
     runs-on: ubuntu-latest
     steps:
     - name: "Changelog fragment"
-      uses: ansys/actions/doc-changelog@c2fa7c93f6883114e0e643599431b33d29f0b13f # v10.1.4
+      uses: ansys/actions/doc-changelog@36cd86710c966963f4dcec56a9670171618cf76a # v10.2.4
       with:
         token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
         bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
