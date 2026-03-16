@@ -28,6 +28,7 @@ This example shows how to get AnsMath sparse matrices into SciPy
 sparse matrices.
 
 """
+
 ###############################################################################
 # Perform required imports and start PyAnsys
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

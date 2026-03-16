@@ -33,7 +33,7 @@ from ansys.mapdl.core import launch_mapdl
 from ansys.mapdl.core._version import SUPPORTED_ANSYS_VERSIONS
 from ansys.mapdl.core.errors import MapdlExitedError
 from ansys.mapdl.core.launcher import MAPDL_DEFAULT_PORT, get_start_instance
-from ansys.tools.path import find_ansys
+from ansys.tools.common.path import find_ansys
 
 # Check if MAPDL is installed
 # NOTE: checks in this order to get the newest installed version

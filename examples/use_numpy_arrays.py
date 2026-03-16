@@ -30,6 +30,7 @@ and Python.
     This example requires Ansys 2021 R2 or later.
 
 """
+
 # Perform required imports and start PyAnsys
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Perform required imports.
