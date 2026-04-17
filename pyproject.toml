@@ -41,7 +41,7 @@ tests = [
     "pytest==9.0.3",
     "pytest-cov==7.0.0",
     "pytest-rerunfailures==16.1",
-    "pyvista==0.47.0",
+    "pyvista==0.47.3",
     "vtk==9.5.2",
 ]
 doc = [
@@ -55,7 +55,7 @@ doc = [
     "numpydoc==1.10.0",
     "pypandoc==1.17",
     "pytest-sphinx==0.7.1",
-    "pyvista[jupyter,trame]==0.47.0",
+    "pyvista[jupyter,trame]==0.47.3",
     "scipy==1.15.3",
     "sphinx-autobuild==2024.10.3",
     "sphinx-autodoc-typehints==3.0.1",
