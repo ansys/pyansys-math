@@ -22,6 +22,7 @@ classifiers=[
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
@@ -51,7 +52,7 @@ doc = [
     "ansys-sphinx-theme==1.7.2",
     "ansys-tools-common==0.5.0",
     "jupyter_sphinx==0.5.3",
-    "jupyterlab==4.5.6",
+    "jupyterlab==4.5.7",
     "numpydoc==1.10.0",
     "pypandoc==1.17",
     "pytest-sphinx==0.7.1",
