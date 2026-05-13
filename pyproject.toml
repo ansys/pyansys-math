@@ -40,7 +40,7 @@ tests = [
     "numpy==2.2.6",
     "scipy==1.15.3",
     "pytest==9.0.3",
-    "pytest-cov==7.0.0",
+    "pytest-cov==7.1.0",
     "pytest-rerunfailures==16.1",
     "pyvista==0.47.0",
     "vtk==9.5.2",
