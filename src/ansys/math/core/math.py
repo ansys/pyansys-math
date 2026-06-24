@@ -1406,6 +1406,15 @@ class AnsMathObj:
         """
         if not hasattr(obj, "id"):
             raise TypeError("The object to be added must be an AnsMath object.")
+
+        # Check if the object in question is a matrix or a vector
+        if hasattr(obj, "ncol"):
+            if (self.ncol != obj.ncol) or (self.nrow != obj.nrow):
+                raise ValueError("The objects to be added have unequal dimensions")
+        else:
+            if self.size != obj.size:
+                raise ValueError("The objects to be added have unequal dimension")
+
         self._mapdl._log.info("Call MAPDL to perform an AXPY operation.")
         self._mapdl.run(f"*AXPY,{val1},0,{obj.id},{val2},0,{self.id}", mute=True)
         return self
